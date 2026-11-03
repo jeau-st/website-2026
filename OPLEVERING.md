@@ -18,7 +18,6 @@ het er staat, kan de site niet live.
 | --- | --- | --- |
 | Twee cases | `src/data/site.ts`, `cases` | Situatie, aanpak en resultaat, geanonimiseerd. Zonder deze inhoud is `/werk` een lege pagina; haal hem dan uit het menu in `src/components/Kop.astro`. |
 | Antwoord op "Hoe lang duurt een traject?" | `src/data/site.ts`, `vragen` | Een realistische bandbreedte, bijvoorbeeld apart voor een kleine inrichting en voor een migratie met koppelingen. |
-| Inhoud van het onderhoudsabonnement | `src/data/site.ts`, `nabouw` | Wat zit erin en in welke vorm. Zonder prijs, zolang de regel geen prijzen op de site geldt. |
 
 ## Instellen voor of na livegang
 

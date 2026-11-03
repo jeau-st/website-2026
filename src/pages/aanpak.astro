@@ -3,8 +3,9 @@ import Basis from "../layouts/Basis.astro";
 import Sectie from "../components/Sectie.astro";
 import Knop from "../components/Knop.astro";
 import Denkstap from "../components/Denkstap.astro";
+import Niveau from "../components/Niveau.astro";
 import Processtap from "../components/Processtap.astro";
-import { denkwijze, processtappen } from "../data/site";
+import { denkwijze, niveaus, processtappen } from "../data/site";
 ---
 
 <Basis
@@ -37,7 +38,22 @@ import { denkwijze, processtappen } from "../data/site";
   </Sectie>
 
   <Sectie
+    id="niveaus"
+    kop="Waar sta jij?"
+    intro="Niet iedereen begint bij 01. Lees deze vier door en kijk welke het meest op jouw bedrijf lijkt."
+  >
+    <ol class="mt-12">
+      {niveaus.map((niveau) => <Niveau niveau={niveau} />)}
+    </ol>
+    <p class="max-w-2xl border-t border-rand/60 pt-8 text-zacht">
+      Zit je ertussenin, dan is dat normaal. Verkoop staat vaak op een ander
+      niveau dan de administratie.
+    </p>
+  </Sectie>
+
+  <Sectie
     id="stappen"
+    vlak
     kop="Zo loopt een opdracht"
     intro="De vier stappen hierboven zijn de denkwijze. Hieronder staat hoe dat in de praktijk verloopt, met per stap wat ik doe, wat jij doet en wat er aan het eind ligt."
   >
@@ -53,7 +69,7 @@ import { denkwijze, processtappen } from "../data/site";
   {/* Dit stond als raster van vier gelijke blokjes. Zo gelijk van vorm en
       lengte leest het als een sjabloon, dus nu een lijst met blokken die
       net zo lang zijn als ze hoeven te zijn. */}
-  <Sectie id="werkwijze" vlak kop="Hoe ik werk">
+  <Sectie id="werkwijze" kop="Hoe ik werk">
     <div class="mt-12 max-w-2xl space-y-10">
       <div>
         <h3 class="text-lg text-tekst">
@@ -90,7 +106,7 @@ import { denkwijze, processtappen } from "../data/site";
     </div>
   </Sectie>
 
-  <Sectie id="plannen">
+  <Sectie id="plannen" vlak>
     <div class="max-w-2xl">
       <h2 class="text-3xl text-tekst sm:text-4xl">
         Waar jouw rondje begint, weet ik nog niet

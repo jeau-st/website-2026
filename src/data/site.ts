@@ -141,16 +141,59 @@ export const diensten: Dienst[] = [
   },
 ];
 
+export type Niveau = {
+  nummer: string;
+  titel: string;
+  herkenning: string;
+  begin: string;
+};
+
+/**
+ * De vier niveaus vallen samen met de vier stappen uit `denkwijze`: waar je
+ * staat bepaalt waar je begint. Leesbaar bedoeld, zodat iemand zichzelf
+ * herkent zonder vragenlijst. De interactieve scan staat in ST-50.
+ */
+export const niveaus: Niveau[] = [
+  {
+    nummer: "01",
+    titel: "Het zit in hoofden",
+    herkenning:
+      "Iedereen werkt op zijn eigen manier en dat gaat goed zolang er niemand uitvalt. Een klant staat op vier plekken en welke klopt, weet niemand zeker.",
+    begin: "Begin bij het proces. Vastleggen en standaardiseren.",
+  },
+  {
+    nummer: "02",
+    titel: "Het proces staat, het handwerk ook",
+    herkenning:
+      "Er is één manier van werken en die staat ergens opgeschreven. Alleen tikt iedereen de hele dag dingen over van het ene scherm naar het andere.",
+    begin: "Begin bij het handwerk waar de meeste tijd in gaat zitten.",
+  },
+  {
+    nummer: "03",
+    titel: "Het loopt, maar je vliegt op gevoel",
+    herkenning:
+      "De systemen geven elkaar door wat nodig is. Of het beter gaat dan vorig kwartaal is een kwestie van gevoel, want de cijfers staan verspreid of kloppen niet.",
+    begin: "Begin bij meten. Een paar getallen waar je iets aan hebt.",
+  },
+  {
+    nummer: "04",
+    titel: "Je stuurt op wat je ziet",
+    herkenning:
+      "Je weet waar het stokt en je kunt een verandering doorrekenen voordat je hem doorvoert.",
+    begin: "Blijf rondjes maken. Daar hoef ik niet per se bij te zijn.",
+  },
+];
+
 export type Nastap = {
   titel: string;
   tekst: string;
-  todo?: string;
 };
 
 /**
  * Het ritme na de oplevering. Dit is zelf een verkoopargument, dus het
  * staat als eigen sectie op de pagina en niet als voetnoot bij support.
- * De vorm van het abonnement is nog niet gekozen, dus daar staat een TODO.
+ * Het abonnement krijgt wel een vorm en geen prijs: prijzen staan niet
+ * op deze site.
  */
 export const nabouw: Nastap[] = [
   {
@@ -166,8 +209,7 @@ export const nabouw: Nastap[] = [
   {
     titel: "Een onderhoudsabonnement",
     tekst:
-      "Wil je me vast bij de hand hebben, dan heet dat bij mij een onderhoudsabonnement. Geen afkorting, geen contract waar je een jurist bij nodig hebt.",
-    todo: "wat er precies in het onderhoudsabonnement zit",
+      "Wil je me vast bij de hand hebben, dan kan dat met een onderhoudsabonnement. Geen afkorting, geen contract waar je een jurist bij nodig hebt. Je krijgt het tweewekelijks overleg, een vraagbaak voor je superusers en de kleine aanpassingen die onderweg nodig zijn. Wat er precies in past, spreken we af op wat je gebruikt.",
   },
 ];
 

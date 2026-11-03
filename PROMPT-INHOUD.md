@@ -80,24 +80,30 @@ oplevering staat als `nabouw` en als sectie "En dan gaat het pas werken".
 De symmetrie is uit de diensten, de processtappen en de principes op de
 aanpakpagina gehaald.
 
-Nog niet geschreven, omdat de keuzes hieronder nog openstaan: de quickscan,
-de calculator en alles over prijzen en doelgroepgrootte.
+De vier niveaus staan als `niveaus` en als sectie "Waar sta jij?" op de
+aanpakpagina. Over de calculator staat nog niets op de site, want die botst
+met de regel geen prijzen.
 
-## Openstaande keuzes
+## Gemaakte keuzes
 
-Deze moet Joost beslissen voordat de inhoud af kan.
+Joost heeft deze op 3 november 2026 beslist.
 
-1. Is de quickscan een besluit of nog een idee? Het is een flinke bouw.
-2. Wat levert de quickscan op: een niveau, een score, een advies, of alle drie?
-   Voorstel: vier niveaus die samenvallen met de vier stappen hierboven, zodat
-   de uitslag meteen zegt waar je begint.
-3. Vraagt de quickscan om een mailadres? Dat botst met de regel dat er geen
-   contactformulier als hoofdroute op de site staat.
-4. Krijgt het onderhoudsabonnement een prijs of een vorm? Nu geldt: geen
-   prijzen op de site.
-5. Loopt het onderhoudsabonnement via FortCRM of onder eigen vlag?
-6. 1 tot 20 man is smaller dan wat er nu staat. De teksten noemen MKB en
-   scale-ups. Aanscherpen naar 1 tot 20, of allebei bedienen?
+1. **Quickscan: nog niet bouwen, wel tonen.** De vier niveaus staan als
+   leesbare sectie op de aanpakpagina, zodat iemand zichzelf herkent zonder
+   vragenlijst. De interactieve bouw blijft in ST-50 staan.
+2. **Wat de scan oplevert: vier niveaus die samenvallen met de vier stappen.**
+   Waar je staat bepaalt waar je begint.
+3. **Geen mailadres.** Vervalt met keuze 1: zonder vragenlijst is er niets om
+   een adres voor te vragen. De regel geen contactformulier als hoofdroute
+   blijft heel.
+4. **Onderhoudsabonnement: wel een vorm, geen prijs.** De site noemt wat
+   erin zit en geen bedragen.
+5. **FortCRM wordt niet genoemd.** De vermelding is van de pagina Over mij
+   af. Let op: daarmee staat de Pipedrive-partnerstatus nergens meer als
+   argument.
+6. **Doelgroep blijft MKB en scale-ups.** Niet aangescherpt naar 1 tot 20 man.
+   De teksten in deze prompt noemen die bandbreedte nog wel als beeld van de
+   lezer; dat is de typische klant, niet de afbakening.
 
 ## Waar de losse ideeën staan
 
@@ -108,8 +114,8 @@ punten. Haal ze daar op voordat je er inhoud voor schrijft.
 - Prijscalculator: [ST-49](https://jeaust.atlassian.net/browse/ST-49)
 
 Allebei zijn het ingangen bovenaan de trechter. Ze kunnen elkaar in de weg
-zitten, dus er moet er een de hoofdingang worden. Zolang dat niet gekozen is,
-blijft het kennismakingsgesprek de primaire actie op elke pagina.
+zitten, dus er moet er een de hoofdingang worden. Zolang geen van beide
+gebouwd is, blijft het kennismakingsgesprek de primaire actie op elke pagina.
 
 De calculator raakt bovendien de regel dat er geen prijzen op de site staan.
 Zolang die regel geldt, schrijf je de inhoud zonder bedragen.
