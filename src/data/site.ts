@@ -353,8 +353,8 @@ export const werkKort = [
     kop: "Aanpak",
     punten: [
       "Pipedrive leidend voor contacten en voortgang",
-      "Een database erachter voor uren en verslaglegging",
-      "Koppelingen met n8n, tot aan tickets en formulieren",
+      "De systemen die je al hebt eraan koppelen, of er een database bij",
+      "Formulieren, tickets en documenten eraan vast, via n8n",
       "Dubbele records opruimen en de website en mail op orde",
     ],
   },
