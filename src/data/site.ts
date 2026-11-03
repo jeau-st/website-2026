@@ -375,4 +375,14 @@ export const cases: Case[] = [
       "Eén snelle site die het bureau zelf beheert, en de randzaken eromheen bij elkaar in één systeem. Via het formulier komen gekwalificeerde aanvragen binnen die meteen een afspraak kunnen inplannen. En je ziet per klant waar die in het proces zit.",
     todo: false,
   },
+  {
+    titel: "Webshop in antieke en designlampen",
+    situatie:
+      "De webshop was sterk verouderd. En de mail kwam bij klanten in de spam terecht, dus een bestelling of een vraag bleef soms onbeantwoord zonder dat iemand het doorhad.",
+    aanpak:
+      "De webshop vernieuwd. Daarna de mailinstellingen en de bijbehorende DNS-records op orde gebracht, zodat berichten vanaf het eigen domein ook echt aankomen.",
+    resultaat:
+      "Klanten vinden de winkel weer en kunnen hem bereiken. De verkoop trok aan.",
+    todo: false,
+  },
 ];
