@@ -209,7 +209,7 @@ export const nabouw: Nastap[] = [
   {
     titel: "Een onderhoudsabonnement",
     tekst:
-      "Wil je me vast bij de hand hebben, dan kan dat met een onderhoudsabonnement. Je krijgt het tweewekelijks overleg, een vraagbaak voor je superusers en de kleine aanpassingen die onderweg nodig zijn. Wat er precies in past, spreken we af op wat je gebruikt.",
+      "Wil je me vast bij de hand hebben, dan kan dat met een onderhoudsabonnement. Je krijgt het tweewekelijks overleg, een vraagbaak voor je superusers en de kleine aanpassingen die onderweg nodig zijn.",
   },
 ];
 
