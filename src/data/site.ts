@@ -342,20 +342,38 @@ export type Case = {
   todo: boolean;
 };
 
-/** Nog geen cases vrijgegeven. Vul deze in of verwijder de sectie. */
+/** Geanonimiseerd. Zie OPLEVERING.md voor wat er nog bij moet. */
 export const cases: Case[] = [
   {
-    titel: "TODO: korte omschrijving van de klant, zonder naam",
-    situatie: "TODO: wat was de situatie",
-    aanpak: "TODO: wat heb je gedaan",
-    resultaat: "TODO: wat leverde het op",
-    todo: true,
+    titel: "Maatschappelijke organisatie die gezinnen en oppassen koppelt",
+    situatie:
+      "Aanmeldingen, matches, uren en subsidies liepen door losse systemen. Dezelfde gegevens moesten op meerdere plekken kloppen, dus dat kostte elke week tijd. Google Ads zag de formulieren wel, maar wist niet welke klikken tot een match leidden.",
+    aanpak:
+      "Pipedrive leidend gemaakt voor contacten en matches, Airtable voor uren en vergoedingen. De twee praten via n8n met elkaar: elke nacht een sync, en een melding in Teams zodra er iets misgaat. Intakes en gewonnen deals gaan dezelfde weg terug naar Google Ads.",
+    resultaat:
+      "Eén beeld per match, van aanmelding tot uren. Gaat er iets mis, dan zie je het dezelfde dag en niet pas bij de controle. Google Ads stuurt nu op intakes en gewonnen deals.",
+    todo: false,
   },
   {
-    titel: "TODO: korte omschrijving van de klant, zonder naam",
-    situatie: "TODO: wat was de situatie",
-    aanpak: "TODO: wat heb je gedaan",
-    resultaat: "TODO: wat leverde het op",
-    todo: true,
+    titel:
+      "Landelijke vrijwilligersorganisatie die mensen werft via events",
+    situatie:
+      "Aanmeldingen kwamen binnen via websiteformulieren, profielformulieren en een ticketsysteem. Wie zich vaker aanmeldde, kreeg een tweede contact en een tweede deal. Profielgegevens kwamen niet altijd door en de opvolging liep achter.",
+    aanpak:
+      "Pipedrive werd de plek waar elke aanmelding landt. Formulieren, tickets en check-ins hangen er met n8n aan. Een bestaand contact wordt herkend en aangevuld, dus wat er al stond blijft staan. De gegevens die in oude inzendingen ontbraken heb ik nagevuld, eerst op een proef en daarna gecontroleerd.",
+    resultaat:
+      "Aanmeldingen, tickets, check-ins en downloads lopen nu vanzelf door. Download iemand de brochure, dan staat er een contact in Pipedrive en een week later een opvolgtaak. De onvolledige contacten zijn bijgewerkt. Loopt een run vast, dan krijg ik een melding.",
+    todo: false,
+  },
+  {
+    titel:
+      "Zelfstandig architect, gespecialiseerd in verbouwing van bestaande woningen",
+    situatie:
+      "Twee websites op Squarespace, allebei met teruglopend bezoek. Mail, domeinen en hosting lagen bij drie partijen. Contactgegevens zaten in mailboxen en werden met de hand overgezet. En hij wilde zijn eigen teksten kunnen aanpassen.",
+    aanpak:
+      "Eerst een SEO-audit, daarna de twee sites samengevoegd onder één domein met redirects. Alleen de artikelen die iets deden zijn mee. De nieuwe site draait op Astro en Cloudflare, Nederlands en Engels, met Keystatic om zelf te schrijven. Mail, domeinen en DNS staan nu op zijn eigen accounts.",
+    resultaat:
+      "Eén snelle site die hij zelf beheert, en één aanspreekpunt voor alles eromheen. Aanmeldingen komen binnen in Pipedrive en de mails die hij vaak stuurt staan klaar als sjabloon. Wat het doet voor bezoek en vindbaarheid is over een paar maanden pas te zeggen.",
+    todo: false,
   },
 ];

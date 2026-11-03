@@ -14,7 +14,8 @@ het er staat, kan de site niet live.
 
 | Wat | Waar | Toelichting |
 | --- | --- | --- |
-| Twee cases | `src/data/site.ts`, `cases` | Situatie, aanpak en resultaat, geanonimiseerd. Zonder deze inhoud is `/werk` een lege pagina; haal hem dan uit het menu in `src/components/Kop.astro`. |
+| Toestemming van de architect | `src/data/site.ts`, `cases` | Case 03 is herkenbaar voor wie in die hoek zit, terwijl erboven staat dat de cases geanonimiseerd zijn. Vraag toestemming, en dan mag zijn naam er ook bij, of maak de omschrijving vager. |
+| Resultaat van case 03 | `src/data/site.ts`, `cases` | Daar staat nu dat bezoek en vindbaarheid pas over een paar maanden te zeggen zijn. Vul dat aan zodra je het weet. |
 | Antwoord op "Hoe lang duurt een traject?" | `src/data/site.ts`, `vragen` | Een realistische bandbreedte, bijvoorbeeld apart voor een kleine inrichting en voor een migratie met koppelingen. |
 
 ## Instellen voor of na livegang
