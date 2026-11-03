@@ -70,7 +70,7 @@ export const denkwijze: Denkstap[] = [
     nummer: "01",
     titel: "Eerst het proces",
     tekst:
-      "We leggen vast hoe het nu echt gaat, niet hoe het bedoeld was. Daarna kiezen we één manier van werken in plaats van drie. Sla je die stap over, dan gaat de rommel straks alleen sneller.",
+      "We leggen vast hoe het nu echt gaat, inclusief de omwegen die niemand opschrijft. Daarna kiezen we één manier van werken in plaats van drie. Sla je die stap over, dan gaat de rommel straks alleen sneller.",
   },
   {
     nummer: "02",
@@ -82,7 +82,7 @@ export const denkwijze: Denkstap[] = [
     nummer: "03",
     titel: "Dan meetbaar maken",
     tekst:
-      "Niet meten om het meten, maar een paar cijfers waar je iets aan hebt. Want je verbetert alleen waar je zicht op hebt.",
+      "Een paar cijfers waar je iets aan hebt. Want je verbetert alleen waar je zicht op hebt.",
   },
   {
     nummer: "04",
@@ -102,7 +102,7 @@ export const diensten: Dienst[] = [
   {
     titel: "CRM-inrichting",
     tekst:
-      "Pipedrive ingericht op hoe jij verkoopt, niet op hoe de standaardinstelling het bedoelt.",
+      "Pipedrive ingericht op hoe jij verkoopt, inclusief de stappen die alleen bij jou zo gaan.",
     punten: [
       "Pipelines en fases die je proces volgen",
       "Migratie uit Excel, mailbox of een oud systeem",
@@ -209,7 +209,7 @@ export const nabouw: Nastap[] = [
   {
     titel: "Een onderhoudsabonnement",
     tekst:
-      "Wil je me vast bij de hand hebben, dan kan dat met een onderhoudsabonnement. Geen afkorting, geen contract waar je een jurist bij nodig hebt. Je krijgt het tweewekelijks overleg, een vraagbaak voor je superusers en de kleine aanpassingen die onderweg nodig zijn. Wat er precies in past, spreken we af op wat je gebruikt.",
+      "Wil je me vast bij de hand hebben, dan kan dat met een onderhoudsabonnement. Je krijgt het tweewekelijks overleg, een vraagbaak voor je superusers en de kleine aanpassingen die onderweg nodig zijn. Wat er precies in past, spreken we af op wat je gebruikt.",
   },
 ];
 
@@ -263,7 +263,7 @@ export const processtappen: Processtap[] = [
     ik: "Ik spreek elke twee weken je superusers, kijk mee op de cijfers en stuur bij als het proces verandert.",
     jij: "Je wijst één of twee mensen aan die intern het aanspreekpunt worden.",
     resultaat:
-      "Het systeem groeit mee in plaats van te verouderen, en stap 01 begint opnieuw.",
+      "Het systeem groeit mee, en stap 01 begint opnieuw.",
   },
 ];
 
