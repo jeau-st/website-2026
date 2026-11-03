@@ -1,40 +1,44 @@
 @import "tailwindcss";
 
 /*
-  Palet afgeleid uit Van Gogh, Zelfportret met grijze vilthoed, maar met groen
-  in plaats van blauw als koele kant. De vaste merkkleuren staan onderaan;
-  daarboven staan de rolgebaseerde tokens die per thema wisselen.
+  Palet gemeten uit de scan van Van Gogh, Zelfportret met grijze vilthoed.
+  Niet geschat: elke merkkleur hieronder komt uit een cluster pixels in het
+  doek. De koele kant is groen, want de dominante kleur beslaat 32 procent
+  van het doek en heeft maar 18 procent verzadiging, dus die is vrijwel
+  groenzwart. De vaste merkkleuren staan onderaan; daarboven staan de
+  rolgebaseerde tokens die per thema wisselen.
 
   Licht is de standaard. Donker komt pas als de bezoeker erom vraagt via de
   schakelaar, niet vanzelf via de systeemvoorkeur.
 
-  Contrast licht: ink op linnen 12.9:1, pigment 7.0:1, accent 4.4:1.
-  Contrast donker: linnen op ink 12.9:1, muted 6.7:1, oker 6.0:1.
-  In licht kan oker #d08a45 niet: dat haalt maar 2.2:1. Daar geldt #97551c,
-  dat ook de knoptekst op 4.9:1 houdt.
+  Contrast licht: veen op krijt 14.2:1, wilg 8.5:1, accent 5.3:1.
+  Contrast donker: krijt op veen 14.2:1, hooi 7.2:1, accent 5.2:1.
+  Het accent verschilt per thema. Gebrand #90542c is in donker te donker voor
+  tekst op de knop, gloed #cf7f2e is in licht te licht. Beide halen 5.2:1 of
+  meer in hun eigen thema.
 */
 
 :root,
 :root[data-thema="licht"] {
   color-scheme: light;
-  --c-bg: #e8e1cc;
-  --c-vlak: #f1ebd8;
-  --c-rand: #c2b593;
-  --c-tekst: #102019;
-  --c-zacht: #235040;
-  --c-accent: #97551c;
-  --c-op-accent: #f1ebd8;
+  --c-bg: #ebf3ea;
+  --c-vlak: #dfe8de;
+  --c-rand: #b5c4b3;
+  --c-tekst: #182322;
+  --c-zacht: #374941;
+  --c-accent: #90542c;
+  --c-op-accent: #ebf3ea;
 }
 
 :root[data-thema="donker"] {
   color-scheme: dark;
-  --c-bg: #102019;
-  --c-vlak: #193025;
-  --c-rand: #235040;
-  --c-tekst: #e8e1cc;
-  --c-zacht: #a8a48e;
-  --c-accent: #d08a45;
-  --c-op-accent: #102019;
+  --c-bg: #182322;
+  --c-vlak: #20332c;
+  --c-rand: #374941;
+  --c-tekst: #ebf3ea;
+  --c-zacht: #adb084;
+  --c-accent: #cf7f2e;
+  --c-op-accent: #182322;
 }
 
 @theme {
@@ -53,13 +57,14 @@
   --color-op-accent: var(--c-op-accent);
 
   /* Vaste merkkleuren, alleen waar een kleur per se niet mag wisselen */
-  --color-ink: #102019;
-  --color-slate: #193025;
-  --color-pigment: #235040;
-  --color-oker: #d08a45;
-  --color-linnen: #e8e1cc;
-  --color-muted: #a8a48e;
-  --color-salie: #66a68b;
+  --color-veen: #182322; /* donkerste partij in de jas en de hoeken */
+  --color-mos: #20332c; /* het groenzwart van de achtergrond */
+  --color-wilg: #374941; /* middentoon in de jas en de revers */
+  --color-olijf: #8f925e; /* de groengele streken in hoed en gezicht */
+  --color-hooi: #adb084; /* lichtere olijf, de hoed */
+  --color-krijt: #ebf3ea; /* de koelste hooglichten in de hoed */
+  --color-gebrand: #90542c; /* oranjebruin uit de baard */
+  --color-gloed: #cf7f2e; /* het felste oranje uit de achtergrondstippen */
 }
 
 @layer base {
