@@ -87,3 +87,18 @@ Deze moet Joost beslissen voordat de inhoud af kan.
 5. Loopt het onderhoudsabonnement via FortCRM of onder eigen vlag?
 6. 1 tot 20 man is smaller dan wat er nu staat. De teksten noemen MKB en
    scale-ups. Aanscherpen naar 1 tot 20, of allebei bedienen?
+
+## Waar de losse ideeën staan
+
+De twee interactieve onderdelen zijn uitgewerkt in Jira, inclusief hun open
+punten. Haal ze daar op voordat je er inhoud voor schrijft.
+
+- Quickscan: [ST-50](https://jeaust.atlassian.net/browse/ST-50)
+- Prijscalculator: [ST-49](https://jeaust.atlassian.net/browse/ST-49)
+
+Allebei zijn het ingangen bovenaan de trechter. Ze kunnen elkaar in de weg
+zitten, dus er moet er een de hoofdingang worden. Zolang dat niet gekozen is,
+blijft het kennismakingsgesprek de primaire actie op elke pagina.
+
+De calculator raakt bovendien de regel dat er geen prijzen op de site staan.
+Zolang die regel geldt, schrijf je de inhoud zonder bedragen.
