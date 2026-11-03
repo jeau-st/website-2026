@@ -8,11 +8,13 @@ interface Props {
 const { punt } = Astro.props;
 ---
 
-<figure class="border-l border-rand pl-5">
+{/* Onder elkaar, dus de streep staat boven en niet links: drie smalle
+    kolommen braken de citaten over drie regels en lazen daardoor traag. */}
+<figure class="border-t border-rand pt-5">
   <blockquote>
     <p class="text-xl text-tekst">
       &ldquo;{punt.citaat}&rdquo;
     </p>
   </blockquote>
-  <figcaption class="mt-3 text-zacht">{punt.uitleg}</figcaption>
+  <figcaption class="mt-2 max-w-2xl text-zacht">{punt.uitleg}</figcaption>
 </figure>
