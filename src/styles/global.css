@@ -11,7 +11,7 @@
   Licht is de standaard. Donker komt pas als de bezoeker erom vraagt via de
   schakelaar, niet vanzelf via de systeemvoorkeur.
 
-  Contrast licht: veen op krijt 14.2:1, wilg 8.5:1, accent 5.3:1.
+  Contrast licht: veen op krijt 14.2:1, wilg 8.5:1 (ook de koppen), accent 5.3:1.
   Contrast donker: krijt op veen 14.2:1, hooi 7.2:1, accent 5.2:1.
   Het accent verschilt per thema. Gebrand #90542c is in donker te donker voor
   tekst op de knop, gloed #cf7f2e is in licht te licht. Beide halen 5.2:1 of
@@ -26,6 +26,11 @@
   --c-rand: #b5c4b3;
   --c-tekst: #182322;
   --c-zacht: #374941;
+  /* Wilg en niet mos: mos is van veen met het oog niet te onderscheiden,
+     dus dan is de kop alleen op papier groen. Wilg is ook de kleur van de
+     bijtekst, maar een kop van 30 tot 60 px op gewicht 600 blijft daar
+     ruim bovenuit komen. */
+  --c-kop: #374941;
   --c-accent: #90542c;
   --c-op-accent: #ebf3ea;
 }
@@ -37,6 +42,9 @@
   --c-rand: #374941;
   --c-tekst: #ebf3ea;
   --c-zacht: #adb084;
+  /* Geen groen in donker: mos haalt op veen 1.21:1 en wilg 1.68:1, en een
+     lichtgroen dat wel haalt is er niet zonder een negende kleur. */
+  --c-kop: #ebf3ea;
   --c-accent: #cf7f2e;
   --c-op-accent: #182322;
 }
@@ -58,6 +66,7 @@
   --color-rand: var(--c-rand);
   --color-tekst: var(--c-tekst);
   --color-zacht: var(--c-zacht);
+  --color-kop: var(--c-kop);
   --color-accent: var(--c-accent);
   --color-op-accent: var(--c-op-accent);
 
@@ -94,6 +103,9 @@
     font-weight: 600;
     letter-spacing: -0.02em;
     text-wrap: balance;
+    /* Kleur hier en niet als utility in de opmaak, anders moet je hem op
+       26 plekken zetten. Licht is mos, donker blijft krijt. */
+    color: var(--color-kop);
   }
   p {
     text-wrap: pretty;

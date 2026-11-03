@@ -30,7 +30,7 @@ const schoon = (tekst: string) => tekst.replace(/^TODO:\s*/, "");
         item.todo ? (
           <Todo wat={schoon(item.titel)} />
         ) : (
-          <h3 class="text-xl text-tekst">{item.titel}</h3>
+          <h3 class="text-xl">{item.titel}</h3>
         )
       }
 

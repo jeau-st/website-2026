@@ -41,6 +41,7 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 
 - Nederlands, je-vorm, geen em dash. Voor alle tekst geldt `SCHRIJFWIJZER.md`.
 - Geen verzonnen cijfers, testimonials of klantcases.
+- Koppen krijgen hun kleur uit `--c-kop`, niet uit een utility in de opmaak: wilg in licht, krijt in donker. Groen kan niet in allebei, want mos en wilg halen op veen 1.21:1 en 1.68:1.
 - Koppen staan in Inter, kleine labels en de tekeningen in IBM Plex Mono. LLPixel is alleen het woordmerk in Kop en Voet, op `text-3xl`: onder de 30 px wordt het pixelraster modderig.
 - Kleuren en fonts alleen via tokens uit `src/styles/global.css`. Gebruik de roltokens (`bg`, `vlak`, `rand`, `tekst`, `zacht`, `accent`), nooit de vaste merkkleuren: die wisselen niet mee met het thema.
 - Licht is de standaard, donker via `data-thema="donker"` op `<html>`. De systeemvoorkeur schakelt niet automatisch om.
