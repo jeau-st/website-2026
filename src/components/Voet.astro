@@ -15,20 +15,20 @@ const jaar = new Date().getFullYear();
 
     <div>
       <h2 class="text-sm font-semibold text-linnen">Contact</h2>
-      <ul class="mt-3 space-y-2 text-sm text-muted">
+      <ul class="mt-2 space-y-1 text-sm text-muted">
         <li>
-          <a class="hover:text-oker" href={`mailto:${bedrijf.email}`}>
+          <a class="inline-flex min-h-11 items-center hover:text-oker" href={`mailto:${bedrijf.email}`}>
             {bedrijf.email}
           </a>
         </li>
         <li>
-          <a class="hover:text-oker" href={bedrijf.telefoonLink}>
+          <a class="inline-flex min-h-11 items-center hover:text-oker" href={bedrijf.telefoonLink}>
             {bedrijf.telefoon}
           </a>
         </li>
         <li>
           <a
-            class="hover:text-oker"
+            class="inline-flex min-h-11 items-center hover:text-oker"
             href={bedrijf.linkedin}
             target="_blank"
             rel="noopener"
@@ -41,10 +41,10 @@ const jaar = new Date().getFullYear();
 
     <div>
       <h2 class="text-sm font-semibold text-linnen">Jeau.st</h2>
-      <ul class="mt-3 space-y-2 text-sm text-muted">
+      <ul class="mt-2 space-y-1 text-sm text-muted">
         <li>{bedrijf.plaats}</li>
         <li>KvK&nbsp;{bedrijf.kvk}</li>
-        <li><a class="hover:text-oker" href="/privacy">Privacy</a></li>
+        <li><a class="inline-flex min-h-11 items-center hover:text-oker" href="/privacy">Privacy</a></li>
       </ul>
     </div>
   </div>

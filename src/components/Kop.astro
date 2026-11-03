@@ -16,7 +16,7 @@ const actief = (href: string) => pad === href || pad === `${href}/`;
   <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
     <a
       href="/"
-      class="font-mono text-lg font-semibold text-linnen hover:text-oker"
+      class="inline-flex min-h-11 items-center font-mono text-lg font-semibold text-linnen hover:text-oker"
       aria-current={pad === "/" ? "page" : undefined}
     >
       jeau.st
@@ -29,7 +29,7 @@ const actief = (href: string) => pad === href || pad === `${href}/`;
             href={link.href}
             aria-current={actief(link.href) ? "page" : undefined}
             class:list={[
-              "text-sm hover:text-oker",
+              "inline-flex min-h-11 items-center text-sm hover:text-oker",
               actief(link.href) ? "text-oker" : "text-muted",
             ]}
           >
