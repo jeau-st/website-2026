@@ -1,11 +1,17 @@
 ---
 import Basis from "../layouts/Basis.astro";
-import Sectie from "../components/Sectie.astro";
+import Beeld from "../components/Beeld.astro";
+import Todo from "../components/Todo.astro";
+import kerk from "../assets/st/kerk.webp";
+import kaart from "../assets/st/kaart.webp";
+import muur from "../assets/st/muur.webp";
+import kinderen from "../assets/st/kinderen.webp";
 
 /**
- * Uitleg bij het domein. Staat los van de dienstenpagina's: wie hier komt
- * is nieuwsgierig, niet op zoek naar een offerte. Daarom geen knop naar de
- * planner onderaan, wel twee links naar partijen die er reizen heen maken.
+ * Uitleg bij het domein. Een doorlopend verhaal, geen secties: wie hier
+ * komt is nieuwsgierig en leest van boven naar beneden. De foto's doen
+ * wat tussenkoppen anders zouden doen en geven de tekst zijn adem.
+ * Geen knop naar de planner onderaan, wel twee links naar reizen.
  */
 const reizen = [
   {
@@ -23,118 +29,130 @@ const reizen = [
 
 <Basis
   titel="Waarom .st? | Jeau.st"
-  beschrijving="Het domein van Jeau.st eindigt op .st, het landendomein van São Tomé en Príncipe. Over de geschiedenis van die eilanden, ook de Nederlandse, en waarom je er heen zou gaan."
+  beschrijving="Het domein van Jeau.st eindigt op .st, het landendomein van Sao Tome en Principe. Over de geschiedenis van die eilanden, ook de Nederlandse, en waarom je er heen zou gaan."
 >
   <section class="px-4 py-20 sm:px-6 sm:py-24">
     <div class="mx-auto max-w-5xl">
       <h1 class="max-w-3xl text-4xl sm:text-5xl">.st?!</h1>
       <p class="mt-6 max-w-2xl text-lg text-zacht">
         Jeau.st eindigt op .st omdat mijn naam daar toevallig in past. Dat is
-        het landendomein van São Tomé en Príncipe. Toen ik eenmaal wist waar
-        die eilanden lagen, bleef ik lezen. Dit is wat ik vond.
+        het landendomein van São Tomé en Príncipe. Ik ben er twee keer
+        geweest, en sindsdien vertel ik graag waar die twee letters vandaan
+        komen.
       </p>
     </div>
   </section>
 
-  <Sectie id="eilanden" vlak kop="Twee eilanden op de evenaar">
-    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
-      <p>
-        São Tomé en Príncipe ligt in de Golf van Guinee, een paar honderd
-        kilometer voor de kust van Gabon. Twee vulkanische eilanden met
-        regenwoud tot aan het water, een paar kleine eilandjes eromheen, en
-        de evenaar die er dwars doorheen loopt. Er wonen ruim
-        tweehonderdduizend mensen, de taal is Portugees.
-      </p>
-      <p>
-        Op de Seychellen na is het het kleinste land van Afrika. De hoofdstad
-        heet ook São Tomé en je loopt er op een ochtend doorheen.
-      </p>
-    </div>
-  </Sectie>
+  <section class="border-t border-rand/60 bg-vlak px-4 py-20 sm:px-6 sm:py-28">
+    <div class="mx-auto max-w-5xl">
+      <div class="max-w-2xl space-y-4 text-zacht">
+        <p>
+          São Tomé en Príncipe ligt in de Golf van Guinee, een paar honderd
+          kilometer voor de kust van Gabon. Twee vulkanische eilanden met
+          regenwoud tot aan het water, een paar kleine eilandjes eromheen, en
+          de evenaar die er dwars doorheen loopt. Er wonen ruim
+          tweehonderdduizend mensen en de taal is Portugees. Op de Seychellen
+          na is het het kleinste land van Afrika.
+        </p>
+      </div>
 
-  <Sectie id="geschiedenis" kop="Suiker, cacao en slavernij">
-    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
-      <p>
-        Toen Portugese zeevaarders rond 1470 aankwamen, woonde er niemand.
-        Dat maakte de eilanden bruikbaar voor wat erna kwam. Er werd
-        suikerriet geplant en het werk werd gedaan door mensen die van het
-        vasteland werden weggehaald en tot slaaf gemaakt. São Tomé groeide uit
-        tot een doorvoerhaven in de trans-Atlantische slavenhandel, met
-        Brazilië als bestemming.
-      </p>
-      <p>
-        In de negentiende eeuw kwamen cacao en koffie, verbouwd op grote
-        plantages die roças heten. Begin twintigste eeuw was dit land een van
-        de grootste cacao-exporteurs ter wereld. De slavernij was toen
-        officieel afgeschaft, het werk op de roças bleef dwangarbeid onder een
-        andere naam. In 1975 werd het land onafhankelijk van Portugal.
-      </p>
-    </div>
-  </Sectie>
+      <Beeld
+        src={kerk}
+        alt="Een wit kerkje op de rotsen waar een rivier in zee uitkomt, met een rode houten brug ernaartoe en mensen onder de luifel."
+        bijschrift="Een kerkje op de plek waar de rivier de zee in gaat. De brug ernaartoe is van hout en rood geverfd, en op zondag staat de halve buurt onder de luifel."
+      />
 
-  <Sectie id="nederlands" vlak kop="De Nederlandse jaren">
-    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
-      <p>
-        In 1641 voer een vloot van de West-Indische Compagnie onder Cornelis
-        Jol, bijgenaamd Houtebeen, de haven van São Tomé binnen en nam het
-        eiland in. Datzelfde jaar viel Luanda. Dat was geen toeval: de WIC
-        had Nederlands-Brazilië in handen en wilde ook de aanvoer van tot
-        slaaf gemaakte mensen die de suikerplantages daar draaiende hield.
-      </p>
-      <p>
-        Lang duurde het niet. Het klimaat sloopte de bezetting en in 1648
-        stuurde Salvador Correia de Sá, gouverneur van Rio de Janeiro, een
-        vloot om het gebied terug te halen. Luanda viel als eerste, kort
-        daarna gaven de Nederlanders ook São Tomé op. Zeven jaar Nederlands
-        bestuur, en het ging van begin tot eind over slavenhandel. Je vindt
-        het nauwelijks terug in de Nederlandse geschiedenisles.
-      </p>
-    </div>
-  </Sectie>
+      <div class="max-w-2xl space-y-4 text-zacht">
+        <p>
+          Toen Portugese zeevaarders rond 1470 aankwamen, woonde er niemand.
+          Dat maakte de eilanden bruikbaar voor wat erna kwam. Er werd
+          suikerriet geplant en het werk werd gedaan door mensen die van het
+          vasteland werden weggehaald en tot slaaf gemaakt. São Tomé groeide
+          uit tot een doorvoerhaven in de trans-Atlantische slavenhandel, met
+          Brazilië als bestemming.
+        </p>
+        <p>
+          In de negentiende eeuw kwamen cacao en koffie, verbouwd op grote
+          plantages die roças heten. Begin twintigste eeuw was dit land een
+          van de grootste cacao-exporteurs ter wereld. De slavernij was toen
+          officieel afgeschaft, het werk op de roças bleef dwangarbeid onder
+          een andere naam. In 1975 werd het land onafhankelijk van Portugal.
+        </p>
+      </div>
 
-  <Sectie id="nu" kop="Hoe het er nu voor staat">
-    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
-      <p>
-        Het land is arm en kwetsbaar. Vrijwel alles komt per schip binnen,
-        inclusief de brandstof voor de elektriciteitscentrales, dus een
-        prijsstijging op de wereldmarkt komt hier hard aan. Stroomuitval is
-        gewoon. De cacao is nog steeds de belangrijkste export, tegenwoordig
-        vaak biologisch en met een keurmerk voor de Europese markt.
-      </p>
-      <p>
-        Werk is schaars, dus jonge mensen vertrekken naar Portugal. Er is
-        jaren gehoopt op olie voor de kust, die hoop heeft tot nu toe niets
-        opgeleverd. Toerisme groeit langzaam en is een van de weinige manieren
-        waarop geld in het land zelf terechtkomt.
-      </p>
-    </div>
-  </Sectie>
+      <Beeld
+        src={kaart}
+        alt="Een met de hand getekende zeventiende-eeuwse kaart met het opschrift Het Eylandt Sant Thome, met bergen, rivieren en de evenaar als rode lijn."
+        bijschrift="Het Eylandt Sant Thome, met de evenaar als rode lijn er dwars doorheen. Dat de kaart in het Nederlands is, zegt genoeg over wat hier te halen viel."
+        staand
+      />
 
-  <Sectie id="heen" vlak kop="Waarom je er heen zou gaan">
-    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
-      <p>
-        Het is er veilig. Criminaliteit tegen bezoekers is zeldzaam en de
-        sfeer is rustig en vriendelijk, iets wat vrijwel iedereen die er
-        geweest is als eerste noemt. En het is er prachtig: regenwoud dat tot
-        aan zee doorloopt, lege zwarte en gele stranden, en de Pico Cão
-        Grande, een rotspijp van ruim driehonderd meter die uit het groen
-        omhoog steekt.
-      </p>
-      <p>
-        Je kunt er slapen op een oude roça, cacao volgen van boon tot reep,
-        zeeschildpadden zien die eieren leggen en tussen juli en oktober
-        bultruggen voor de kust. Er komen weinig toeristen, dus je staat
-        nergens in de rij.
-      </p>
-    </div>
-  </Sectie>
+      <div class="max-w-2xl space-y-4 text-zacht">
+        <p>
+          In 1641 voer een vloot van de West-Indische Compagnie onder Cornelis
+          Jol, bijgenaamd Houtebeen, de haven van São Tomé binnen en nam het
+          eiland in. Datzelfde jaar viel Luanda. Dat was geen toeval: de WIC
+          had Nederlands-Brazilië in handen en wilde ook de aanvoer van tot
+          slaaf gemaakte mensen die de suikerplantages daar draaiende hield.
+        </p>
+        <p>
+          Lang duurde het niet. Het klimaat sloopte de bezetting en in 1648
+          stuurde Salvador Correia de Sá, gouverneur van Rio de Janeiro, een
+          vloot om het gebied terug te halen. Luanda viel als eerste, kort
+          daarna gaven de Nederlanders ook São Tomé op. Zeven jaar Nederlands
+          bestuur, en het ging van begin tot eind over slavenhandel. Je vindt
+          het nauwelijks terug in de Nederlandse geschiedenisles.
+        </p>
+      </div>
 
-  <Sectie id="boeken" kop="Zelf gaan">
-    <div class="mt-8 max-w-2xl">
-      <p class="text-zacht">
-        Er zijn twee makkelijke manieren om er te komen.
-      </p>
-      <ul class="mt-6 space-y-3">
+      <Beeld
+        src={muur}
+        alt="Een verweerde muur met een verbleekte verkiezingsmuurschildering: een gezicht dat grotendeels is weggesleten, met de woorden Vota, Vida en Amor ernaast."
+        bijschrift="Een verkiezingsmuur die een paar regenseizoenen verder is. Het gezicht is weg, de belofte staat er nog."
+      />
+
+      <div class="max-w-2xl space-y-4 text-zacht">
+        <p>
+          Het land is arm en kwetsbaar. Vrijwel alles komt per schip binnen,
+          inclusief de brandstof voor de elektriciteitscentrales, dus een
+          prijsstijging op de wereldmarkt komt hier hard aan. Stroomuitval is
+          gewoon. De cacao is nog steeds de belangrijkste export, tegenwoordig
+          vaak biologisch en met een keurmerk voor de Europese markt.
+        </p>
+        <p>
+          Werk is schaars, dus jonge mensen vertrekken naar Portugal. Er is
+          jaren gehoopt op olie voor de kust, die hoop heeft tot nu toe niets
+          opgeleverd. Toerisme groeit langzaam en is een van de weinige
+          manieren waarop geld in het land zelf terechtkomt.
+        </p>
+      </div>
+
+      <Beeld
+        src={kinderen}
+        alt="Een groep kinderen en een jongeman op een grasveld, poserend voor de camera met een bal bij hun voeten."
+        bijschrift="Op het veld bij het dorp. Tien minuten later speelden we mee."
+      />
+
+      <div class="max-w-2xl space-y-4 text-zacht">
+        <p>
+          En toch: het is er veilig. Criminaliteit tegen bezoekers is zeldzaam
+          en de sfeer is rustig en vriendelijk, iets wat vrijwel iedereen die
+          er geweest is als eerste noemt. Ook mooi: regenwoud dat tot aan zee
+          doorloopt, lege zwarte en gele stranden, en de Pico Cão Grande, een
+          rotspijp van ruim driehonderd meter die uit het groen omhoog steekt.
+        </p>
+        <p>
+          Je kunt er slapen op een oude roça, cacao volgen van boon tot reep,
+          zeeschildpadden zien die eieren leggen en tussen juli en oktober
+          bultruggen voor de kust. Er komen weinig toeristen, dus je staat
+          nergens in de rij.
+        </p>
+        <p>
+          Ga je zelf? Er zijn twee makkelijke manieren om er te komen.
+        </p>
+      </div>
+
+      <ul class="mt-6 max-w-2xl space-y-3">
         {
           reizen.map((reis) => (
             <li>
@@ -151,6 +169,10 @@ const reizen = [
           ))
         }
       </ul>
+
+      <div class="mt-12 max-w-2xl">
+        <Todo wat="zoek de herkomst van de oude kaart op en zet de bronvermelding onder de foto. De drie andere foto's zijn van jezelf, die kaart niet." />
+      </div>
     </div>
-  </Sectie>
+  </section>
 </Basis>
