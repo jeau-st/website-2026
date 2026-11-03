@@ -334,6 +334,41 @@ export const vragen: Vraag[] = [
   },
 ];
 
+/**
+ * De korte versie van de cases, voor op de homepage. Geen losse klanten,
+ * maar wat er in de vier opdrachten steeds terugkomt. De uitwerking
+ * staat op /werk.
+ */
+export const werkKort = [
+  {
+    kop: "Situatie",
+    punten: [
+      "Losse systemen met Excel ernaast",
+      "Dezelfde gegevens op meerdere plekken bijhouden",
+      "Aanmeldingen die ongestructureerd binnenkomen",
+      "Een verouderde site, en mail die in de spam belandt",
+    ],
+  },
+  {
+    kop: "Aanpak",
+    punten: [
+      "Pipedrive leidend voor contacten en voortgang",
+      "Een database erachter voor uren en verslaglegging",
+      "Koppelingen met n8n, tot aan tickets en formulieren",
+      "Dubbele records opruimen en de website en mail op orde",
+    ],
+  },
+  {
+    kop: "Resultaat",
+    punten: [
+      "Eén plek waar je ziet hoe iets ervoor staat",
+      "Minder overtypen en minder uitzoekwerk",
+      "Opvolgtaken en batches die vanzelf ontstaan",
+      "Aanvragen die bruikbaar binnenkomen",
+    ],
+  },
+];
+
 export type Case = {
   titel: string;
   situatie: string;

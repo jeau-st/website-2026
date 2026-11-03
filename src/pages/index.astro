@@ -11,20 +11,16 @@ import Dienst from "../components/Dienst.astro";
 import Cyclus from "../components/Cyclus.astro";
 import Stappenbalk from "../components/Stappenbalk.astro";
 import Nastap from "../components/Nastap.astro";
-import Case from "../components/Case.astro";
-import Todo from "../components/Todo.astro";
 import Vraag from "../components/Vraag.astro";
 import {
   aiStappen,
   bedrijf,
-  cases,
   diensten,
   nabouw,
   pijnpunten,
   vragen,
+  werkKort,
 } from "../data/site";
-
-const vrijgegevenCases = cases.filter((item) => !item.todo);
 
 /* Expres ongelijk van lengte en vorm. Vier punten met hetzelfde ritme
    lazen als een gegenereerd lijstje. Zie SCHRIJFWIJZER.md. */
@@ -32,8 +28,8 @@ const kernpunten = [
   "Je proces vastgelegd in Pipedrive, voor iedereen hetzelfde",
   "Eén bron van waarheid voor je hele team",
   "Koppelingen met de systemen die je al gebruikt",
+  "Rapportages waar je op kunt sturen",
   "Een basis die strak genoeg is voor AI",
-  "Iemand die betrokken blijft na livegang",
 ];
 ---
 
@@ -175,24 +171,36 @@ const kernpunten = [
     id="werk"
     vlak
     kop="Voorbeelden van werk"
-    intro="Geanonimiseerd, omdat het over de systemen van klanten gaat."
+    intro="Vier opdrachten, samengevat. Dit is wat er steeds terugkomt."
   >
-    {/* Twee lege cases naast elkaar vullen een heel scherm met niets.
-        Zolang er geen enkele is vrijgegeven staat hier alleen de melding;
-        de placeholders zelf staan op /werk en in OPLEVERING.md. */}
-    <div class="mt-10 max-w-2xl">
+    {/* De cases zelf staan op /werk. Ze hier ook voluit zetten maakte de
+        homepage twee keer zo lang met dezelfde tekst. */}
+    <dl class="mt-12 grid gap-10 md:grid-cols-3">
       {
-        vrijgegevenCases.length === 0 ? (
-          <Todo wat="er is nog geen case vrijgegeven. Vul ze in src/data/site.ts in, of haal deze sectie en Werk uit het menu." />
-        ) : (
-          <ol>
-            {vrijgegevenCases.map((item, i) => (
-              <Case item={item} nummer={String(i + 1).padStart(2, "0")} />
-            ))}
-          </ol>
-        )
+        werkKort.map((deel) => (
+          <div class="min-w-0 border-t border-rand/60 pt-5">
+            <dt class="font-mono text-sm text-zacht">{deel.kop}</dt>
+            <dd class="mt-3 min-w-0">
+              <ul class="space-y-2">
+                {deel.punten.map((punt) => (
+                  <li class="flex items-baseline gap-3 text-tekst">
+                    <span aria-hidden="true" class="font-mono text-sm text-zacht">
+                      &#8594;
+                    </span>
+                    <span class="min-w-0">{punt}</span>
+                  </li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        ))
       }
-    </div>
+    </dl>
+    <p class="mt-10">
+      <a class="tekstlink inline-flex min-h-11 items-center text-tekst" href="/werk">
+        Lees de vier cases uitgewerkt
+      </a>
+    </p>
   </Sectie>
 
   <Sectie id="over" kop="Over mij">
