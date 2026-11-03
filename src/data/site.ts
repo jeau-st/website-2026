@@ -19,8 +19,8 @@ export const bedrijf = {
 export const cta = {
   label: "Plan een belafspraak",
   toelichting: "30 minuten, via Teams",
-  /** TODO: vervang door de Pipedrive-afspraakplanner. */
-  url: "",
+  /** Microsoft Bookings, met de boekingscode in de link. */
+  url: "https://bookings.cloud.microsoft/bookwithme/user/2ef78e3c29ec43bca11be33f576a3e10@jeau.st/meetingtype/nlsRujOTgECJL73BYpJDlg2?bookingcode=abdaab6c-d3a2-44a2-a511-83faa3f1733e&anonymous&ismsaljsauthenabled&ep=mlink",
 } as const;
 
 /**
@@ -237,7 +237,7 @@ export const aiStappen: AiStap[] = [
     nummer: "03",
     titel: "Alles praat met elkaar",
     tekst:
-      "Met n8n hangt je CRM aan je boekhouding, mail, agenda en planning. Offerte akkoord, factuur klaar, project aangemaakt, team op de hoogte. Niemand tikt iets over.",
+      "Pipedrive koppelt goed met je boekhouding, mail, agenda en planning. Offerte akkoord, factuur klaar, project aangemaakt, team op de hoogte. Niemand tikt iets over.",
   },
 ];
 
