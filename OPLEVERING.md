@@ -18,6 +18,7 @@ het er staat, kan de site niet live.
 | --- | --- | --- |
 | Twee cases | `src/data/site.ts`, `cases` | Situatie, aanpak en resultaat, geanonimiseerd. Zonder deze inhoud is `/werk` een lege pagina; haal hem dan uit het menu in `src/components/Kop.astro`. |
 | Antwoord op "Hoe lang duurt een traject?" | `src/data/site.ts`, `vragen` | Een realistische bandbreedte, bijvoorbeeld apart voor een kleine inrichting en voor een migratie met koppelingen. |
+| Inhoud van het onderhoudsabonnement | `src/data/site.ts`, `nabouw` | Wat zit erin en in welke vorm. Zonder prijs, zolang de regel geen prijzen op de site geldt. |
 
 ## Instellen voor of na livegang
 
@@ -28,7 +29,8 @@ het er staat, kan de site niet live.
 
 ## Gecontroleerd en akkoord
 
-- Contrast op ink: linnen 12.7:1, muted 6.6:1, oker 5.8:1
+- Contrast licht: veen op krijt 14.2:1, wilg 8.5:1, accent 5.3:1
+- Contrast donker: krijt op veen 14.2:1, hooi 7.2:1, accent 5.2:1
 - Geen horizontale scroll op 375 px, hero past op 1280 bij 800
 - Eén h1 per pagina, zichtbare focusring, skip-link naar de inhoud
 - FAQ werkt zonder JavaScript

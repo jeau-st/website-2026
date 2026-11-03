@@ -72,6 +72,17 @@ woord. Dit geldt ook voor woorden die in het vak doodnormaal zijn.
 Geen klanten, cijfers, resultaten of testimonials. Ontbreekt iets, dan komt er
 een zichtbare TODO op de pagina. Geen prijzen.
 
+## Wat er inmiddels staat
+
+De denkwijze staat in `src/data/site.ts` als `denkwijze` en op de homepage en
+de aanpakpagina als eigen sectie, boven de projectvolgorde. Het ritme na de
+oplevering staat als `nabouw` en als sectie "En dan gaat het pas werken".
+De symmetrie is uit de diensten, de processtappen en de principes op de
+aanpakpagina gehaald.
+
+Nog niet geschreven, omdat de keuzes hieronder nog openstaan: de quickscan,
+de calculator en alles over prijzen en doelgroepgrootte.
+
 ## Openstaande keuzes
 
 Deze moet Joost beslissen voordat de inhoud af kan.

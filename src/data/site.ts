@@ -39,17 +39,56 @@ export const pijnpunten: Pijnpunt[] = [
   {
     citaat: "Data staat in vijf systemen",
     uitleg:
-      "Een klant staat in de mailbox, in een Excel, in de boekhouding en in het CRM. Welke klopt, weet niemand. Elke vraag over omzet of pipeline begint met uitzoeken in plaats van kijken.",
+      "Een klant staat in de mailbox, in een Excel, in de boekhouding en in het CRM. Welke klopt, weet niemand. Elke vraag over omzet of pipeline begint dus met uitzoeken in plaats van kijken.",
   },
   {
     citaat: "Iedereen doet het op zijn eigen manier",
     uitleg:
-      "Twee verkopers, drie werkwijzen. Dat gaat goed tot iemand uitvalt of er iemand bij komt. Dan blijkt dat het proces in hoofden zat en niet in het systeem.",
+      "Twee verkopers, drie werkwijzen. Dat gaat goed tot iemand uitvalt of er iemand bij komt.",
   },
   {
     citaat: "Automatiseren wil ik wel, maar waar begin ik",
     uitleg:
-      "Je ziet dat het handwerk je tijd kost, maar niet welke stap je als eerste moet pakken. Dus blijft het bij een voornemen en typt iedereen door.",
+      "Je ziet dat het handwerk tijd kost, maar niet welke stap je als eerste moet pakken. Dus blijft het bij een voornemen en typt iedereen door. Dat is precies waar de volgorde hieronder voor is.",
+  },
+];
+
+export type Denkstap = {
+  nummer: string;
+  titel: string;
+  tekst: string;
+};
+
+/**
+ * De ruggengraat van de site: niet wat ik doe, maar in welke volgorde.
+ * Dit is een rondje en geen rechte lijn, dus de vierde stap wijst terug
+ * naar de eerste. De processtappen verderop zijn de projectvolgorde;
+ * deze vier zijn de denkwijze en gaan voor.
+ */
+export const denkwijze: Denkstap[] = [
+  {
+    nummer: "01",
+    titel: "Eerst het proces",
+    tekst:
+      "We leggen vast hoe het nu echt gaat, niet hoe het bedoeld was. Daarna kiezen we één manier van werken in plaats van drie. Sla je die stap over, dan gaat de rommel straks alleen sneller.",
+  },
+  {
+    nummer: "02",
+    titel: "Dan pas automatiseren",
+    tekst:
+      "En niet alles. We beginnen waar de meeste tijd in gaat zitten.",
+  },
+  {
+    nummer: "03",
+    titel: "Dan meetbaar maken",
+    tekst:
+      "Niet meten om het meten, maar een paar cijfers waar je iets aan hebt. Want je verbetert alleen waar je zicht op hebt.",
+  },
+  {
+    nummer: "04",
+    titel: "Dan opnieuw",
+    tekst:
+      "Je bedrijf verandert, dus het proces verandert mee. Er komt geen moment waarop je klaar bent. Reken erop dat je dit rondje blijft maken.",
   },
 ];
 
@@ -77,17 +116,17 @@ export const diensten: Dienst[] = [
     punten: [
       "Koppelingen tussen CRM, administratie en mail",
       "Terugkerend handwerk weg",
-      "Signalen als er iets misgaat",
     ],
   },
   {
-    titel: "AI op je eigen data",
+    titel: "Cijfers waar je op kunt sturen",
     tekst:
-      "AI die je eigen gegevens kent in plaats van algemene antwoorden geeft. Via MCP en Claude, binnen de grenzen die je zelf stelt.",
+      "Als het proces staat en het handwerk weg is, kun je zien hoe het loopt. Een paar getallen die kloppen zijn meer waard dan een dashboard waar niemand naar kijkt.",
     punten: [
-      "Vragen stellen aan je eigen cijfers",
-      "Voorbereiding en samenvattingen",
-      "Afspraken over wat er wel en niet in gaat",
+      "Rapportage op wat je wilt weten",
+      "Signalen als er iets misgaat",
+      "AI die je eigen cijfers kent, via Claude en MCP",
+      "Afspraken over wat er wel en niet in de AI gaat",
     ],
   },
   {
@@ -96,9 +135,39 @@ export const diensten: Dienst[] = [
       "Een systeem werkt pas als het team het gebruikt. Daarom hoort uitleg en meekijken erbij, ook na de livegang.",
     punten: [
       "Training op de eigen werkwijze",
-      "Aanspreekpunt bij vragen",
+      "Een onderhoudsabonnement als je me vast bij de hand wilt",
       "Bijsturen als het proces verandert",
     ],
+  },
+];
+
+export type Nastap = {
+  titel: string;
+  tekst: string;
+  todo?: string;
+};
+
+/**
+ * Het ritme na de oplevering. Dit is zelf een verkoopargument, dus het
+ * staat als eigen sectie op de pagina en niet als voetnoot bij support.
+ * De vorm van het abonnement is nog niet gekozen, dus daar staat een TODO.
+ */
+export const nabouw: Nastap[] = [
+  {
+    titel: "Eén of twee superusers",
+    tekst:
+      "Binnen je bedrijf worden één of twee mensen de vraagbaak. Zij kennen het systeem van binnenuit, dus een collega met een vraag hoeft niet op mij te wachten.",
+  },
+  {
+    titel: "Elke twee weken overleg",
+    tekst:
+      "Met die mensen loop ik langs wat er af is, wat er nog loopt en wat er nieuw bij komt. Nieuwe wensen maken we scherp en zetten we op volgorde, zodat we aan het juiste werken.",
+  },
+  {
+    titel: "Een onderhoudsabonnement",
+    tekst:
+      "Wil je me vast bij de hand hebben, dan heet dat bij mij een onderhoudsabonnement. Geen afkorting, geen contract waar je een jurist bij nodig hebt.",
+    todo: "wat er precies in het onderhoudsabonnement zit",
   },
 ];
 
@@ -116,7 +185,7 @@ export const processtappen: Processtap[] = [
     titel: "Kennismaking",
     ik: "Ik vraag door op waar het nu vastloopt en zeg eerlijk of ik de juiste persoon ben.",
     jij: "Je plant een belafspraak van 30 minuten en vertelt wat er speelt.",
-    resultaat: "Een helder beeld of we verder gaan, en waarmee.",
+    resultaat: "Je weet of we verder gaan, en waarmee.",
   },
   {
     nummer: "02",
@@ -137,21 +206,22 @@ export const processtappen: Processtap[] = [
     titel: "Bouwen en koppelen",
     ik: "Ik richt het CRM in, migreer de data en bouw de koppelingen. Je kunt meekijken terwijl het groeit.",
     jij: "Je beantwoordt vragen onderweg en test tussendoor mee.",
-    resultaat: "Een werkende omgeving met je eigen data erin.",
+    resultaat: "Het systeem staat, met je eigen data erin.",
   },
   {
     nummer: "05",
     titel: "Training en livegang",
     ik: "Ik train het team op de eigen werkwijze en ben erbij op de dag dat het live gaat.",
     jij: "Je maakt tijd vrij voor het team en kiest de datum.",
-    resultaat: "Een team dat ermee werkt, en een korte handleiding op maat.",
+    resultaat: "Het team werkt ermee en er ligt een korte handleiding op maat.",
   },
   {
     nummer: "06",
-    titel: "Bijsturen en support",
-    ik: "Ik blijf bereikbaar, kijk periodiek mee en pas aan als je proces verandert.",
-    jij: "Je laat het weten als iets knelt of als er iets nieuws bij komt.",
-    resultaat: "Een systeem dat meegroeit in plaats van veroudert.",
+    titel: "Onderhoud en bijsturen",
+    ik: "Ik spreek elke twee weken je superusers, kijk mee op de cijfers en stuur bij als het proces verandert.",
+    jij: "Je wijst één of twee mensen aan die intern het aanspreekpunt worden.",
+    resultaat:
+      "Het systeem groeit mee in plaats van te verouderen, en stap 01 begint opnieuw.",
   },
 ];
 
@@ -180,7 +250,12 @@ export const vragen: Vraag[] = [
   {
     vraag: "Wat gebeurt er na de oplevering?",
     antwoord:
-      "Een systeem verandert mee met je bedrijf. Ik blijf bereikbaar voor vragen en kijk periodiek mee. Hoe intensief dat is, spreken we af op basis van wat je nodig hebt.",
+      "Binnen je bedrijf worden één of twee mensen superuser. Met hen zit ik elke twee weken samen: wat loopt er, wat is af en wat komt er nieuw bij. Wil je me vaster bij de hand hebben, dan heet dat een onderhoudsabonnement.",
+  },
+  {
+    vraag: "We hebben geen tijd voor een procesanalyse. Kan het niet sneller?",
+    antwoord:
+      "Het kan sneller, maar dan bouw ik op een aanname. Dat kost later meer tijd dan het nu scheelt. Het goede nieuws is dat de analyse klein mag blijven: vaak zijn een paar gesprekken en een middag meekijken genoeg om te zien waar het echt knelt.",
   },
   {
     vraag: "Hoe begint het?",

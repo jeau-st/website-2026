@@ -1,0 +1,22 @@
+---
+import type { Denkstap } from "../data/site";
+
+/**
+ * Eén stap uit de denkwijze. Bewust anders opgemaakt dan Processtap: die
+ * is een tijdlijn met bolletjes en een begin en een eind, dit is een rondje.
+ * Daarom het nummer groot in de kantlijn en geen verbindingslijn.
+ */
+interface Props {
+  stap: Denkstap;
+}
+
+const { stap } = Astro.props;
+---
+
+<li class="grid gap-x-6 gap-y-2 border-t border-rand/60 py-8 sm:grid-cols-[4rem_1fr]">
+  <p class="font-mono text-2xl text-zacht" aria-hidden="true">{stap.nummer}</p>
+  <div class="min-w-0 max-w-2xl">
+    <h3 class="text-xl text-tekst sm:text-2xl">{stap.titel}</h3>
+    <p class="mt-2 text-zacht">{stap.tekst}</p>
+  </div>
+</li>

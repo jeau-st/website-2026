@@ -5,13 +5,17 @@ import Knop from "../components/Knop.astro";
 import Pijnpunt from "../components/Pijnpunt.astro";
 import Schema from "../components/Schema.astro";
 import Dienst from "../components/Dienst.astro";
+import Denkstap from "../components/Denkstap.astro";
+import Nastap from "../components/Nastap.astro";
 import Processtap from "../components/Processtap.astro";
 import Case from "../components/Case.astro";
 import Vraag from "../components/Vraag.astro";
 import {
   bedrijf,
   cases,
+  denkwijze,
   diensten,
+  nabouw,
   pijnpunten,
   processtappen,
   vragen,
@@ -83,9 +87,30 @@ const kernpunten = [
   </Sectie>
 
   <Sectie
+    id="volgorde"
+    kop="De volgorde is het werk"
+    intro="Techniek is zelden het probleem. De volgorde waarin je hem inzet wel."
+  >
+    <ol class="mt-12">
+      {denkwijze.map((stap) => <Denkstap stap={stap} />)}
+    </ol>
+    {/* De cyclus moet je kunnen zien, anders leest het als vier losse
+        stappen met een einde. Het pijltje is versiering, de tekst zegt
+        hetzelfde. */}
+    <p class="flex max-w-2xl items-baseline gap-3 border-t border-rand/60 pt-8 text-zacht">
+      <span aria-hidden="true" class="font-mono text-sm">&#8593;</span>
+      <span class="min-w-0">
+        En dan weer naar 01. Elk rondje is kleiner dan het vorige, want er is
+        steeds minder te standaardiseren.
+      </span>
+    </p>
+  </Sectie>
+
+  <Sectie
     id="diensten"
+    vlak
     kop="Wat ik doe"
-    intro="Vier dingen, die in de praktijk vaak in elkaar overlopen."
+    intro="Dezelfde vier stappen, nu in wat er concreet gebouwd wordt."
   >
     <ol class="mt-12">
       {
@@ -98,9 +123,8 @@ const kernpunten = [
 
   <Sectie
     id="proces"
-    vlak
     kop="Hoe een traject loopt"
-    intro="Zes stappen. Per stap zie je wat ik doe, wat jij doet en wat er aan het eind ligt."
+    intro="De volgorde hierboven is de denkwijze. Dit is hoe een opdracht in de praktijk verloopt, met per stap wat ik doe, wat jij doet en wat er aan het eind ligt."
   >
     <ol class="mt-12">
       {
@@ -114,6 +138,17 @@ const kernpunten = [
         Lees de aanpak per stap
       </a>
     </p>
+  </Sectie>
+
+  <Sectie
+    id="daarna"
+    vlak
+    kop="En dan gaat het pas werken"
+    intro="De oplevering is het begin. Dit is het ritme daarna."
+  >
+    <div class="mt-12 grid gap-10 sm:grid-cols-2">
+      {nabouw.map((stap) => <Nastap stap={stap} />)}
+    </div>
   </Sectie>
 
   <Sectie
@@ -180,11 +215,11 @@ const kernpunten = [
   <Sectie id="plannen" vlak>
     <div class="max-w-2xl">
       <h2 class="text-3xl text-tekst sm:text-4xl">
-        Benieuwd of ik je verder kan helpen?
+        Vertel eerst eens wat er vastloopt
       </h2>
       <p class="mt-4 text-lg text-zacht">
-        Plan een belafspraak van 30 minuten. Je vertelt wat er vastloopt, ik
-        vraag door en zeg eerlijk of ik de juiste persoon ben.
+        Dertig minuten, via Teams. Ik vraag door en zeg eerlijk of ik de
+        juiste persoon ben. Zo niet, dan weet ik vaak wel iemand.
       </p>
       <div class="mt-8">
         <Knop toonToelichting />

@@ -1,0 +1,16 @@
+---
+import Todo from "./Todo.astro";
+import type { Nastap } from "../data/site";
+
+interface Props {
+  stap: Nastap;
+}
+
+const { stap } = Astro.props;
+---
+
+<div class="max-w-xl">
+  <h3 class="text-lg text-tekst">{stap.titel}</h3>
+  <p class="mt-2 text-zacht">{stap.tekst}</p>
+  {stap.todo && <Todo wat={stap.todo} />}
+</div>
