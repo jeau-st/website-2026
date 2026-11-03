@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import foto from "../assets/joost.webp";
 import Basis from "../layouts/Basis.astro";
+import Naamwissel from "../components/Naamwissel.astro";
 import Sectie from "../components/Sectie.astro";
 import Knop from "../components/Knop.astro";
 import AiStap from "../components/AiStap.astro";
@@ -12,6 +13,7 @@ import Cyclus from "../components/Cyclus.astro";
 import Stappenbalk from "../components/Stappenbalk.astro";
 import Nastap from "../components/Nastap.astro";
 import Vraag from "../components/Vraag.astro";
+import { kiesPersoon } from "../data/namen";
 import {
   aiStappen,
   bedrijf,
@@ -37,6 +39,10 @@ const faqSchema = {
     })),
 };
 
+/* De naam in de kop is niet vast: de build kiest er een, en Naamwissel
+   kiest bij elk bezoek opnieuw. Zie src/data/namen.ts. */
+const persoon = kiesPersoon();
+
 const kernpunten = [
   "Je proces vastgelegd in Pipedrive, voor iedereen hetzelfde",
   "Eén bron van waarheid voor je hele team",
@@ -56,15 +62,19 @@ const kernpunten = [
   <section class="px-4 py-20 sm:px-6 sm:py-28 lg:pt-10">
     <div class="mx-auto max-w-5xl">
       <h1 class="max-w-3xl text-4xl sm:text-5xl lg:text-6xl">
-        Dat doet Petra altijd
+        Dat doet <span data-naam>{persoon.naam}</span> altijd
       </h1>
       {/* De kop zegt niet wat Jeau.st doet, dus de derde zin hieronder moet
           dat wel doen. Titel en meta description blijven expliciet, want
           daarop landt iemand vanuit Google. */}
       <p class="mt-6 max-w-2xl text-lg text-zacht">
-        Tot Petra op vakantie is. Dan blijkt dat het proces alleen in haar
-        hoofd zat. Ik zet het in een systeem waar je team mee werkt.
+        Tot <span data-naam>{persoon.naam}</span> op vakantie is. Dan blijkt
+        dat het proces alleen in{" "}
+        <span data-bezittelijk>{persoon.bezittelijk}</span> hoofd zat. Ik zet
+        het in een systeem waar je team mee werkt.
       </p>
+
+      <Naamwissel />
 
       <Schema />
 

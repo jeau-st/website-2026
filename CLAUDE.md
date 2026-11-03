@@ -29,6 +29,7 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 ## Waar staat wat
 
 - `src/data/site.ts`: alle herhaalde inhoud en de TODO-placeholders
+- `src/data/namen.ts`: de tweehonderd namen waaruit de kop op de homepage kiest, en de functie die er een uitzoekt
 - `OPLEVERING.md`: wat Joost nog moet invullen voor livegang
 - `SCHRIJFWIJZER.md`: stem, verboden woorden en werkwijze voor alle tekst op de site
 - `docs/brand-persona.md`: wie er spreekt, de ideale klant, karakter en toon. Lees die voor je tekst schrijft
