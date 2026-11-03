@@ -1,5 +1,5 @@
 ---
-import { namen } from "../data/namen";
+import { personen } from "../data/namen";
 
 /**
  * Wisselt de naam in de kop bij elk bezoek. De pagina is statisch, dus de
@@ -12,15 +12,13 @@ import { namen } from "../data/namen";
  */
 ---
 
-<script is:inline define:vars={{ namen }}>
-  const vrouw = Math.random() < 0.5;
-  const lijst = vrouw ? namen.vrouwen : namen.mannen;
-  const naam = lijst[Math.floor(Math.random() * lijst.length)];
+<script is:inline define:vars={{ personen }}>
+  const gekozen = personen[Math.floor(Math.random() * personen.length)];
 
   for (const el of document.querySelectorAll("[data-naam]")) {
-    el.textContent = naam;
+    el.textContent = gekozen.naam;
   }
   for (const el of document.querySelectorAll("[data-bezittelijk]")) {
-    el.textContent = vrouw ? "haar" : "zijn";
+    el.textContent = gekozen.bezittelijk;
   }
 </script>

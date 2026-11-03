@@ -4,9 +4,9 @@
  * hoort niet altijd dezelfde te zijn: de persoon die het proces in haar of
  * zijn hoofd heeft zitten kan iedereen zijn.
  *
- * De twee lijsten zijn niet even lang, dus de keuze valt eerst op een
- * lijst en daarna op een naam. Anders zou de kop vaker een man noemen
- * omdat die lijst langer is.
+ * Alle namen zitten in één bak en elke naam heeft dezelfde kans. De
+ * verhouding tussen de twee lijsten blijft dus staan, want die is een
+ * afspiegeling van de beroepsbevolking.
  */
 export const namen = {
   mannen: [
@@ -221,11 +221,12 @@ export type Persoon = {
   bezittelijk: "haar" | "zijn";
 };
 
+/** Elke naam met het voornaamwoord dat erbij hoort, in één bak. */
+export const personen: Persoon[] = [
+  ...namen.vrouwen.map((naam): Persoon => ({ naam, bezittelijk: "haar" })),
+  ...namen.mannen.map((naam): Persoon => ({ naam, bezittelijk: "zijn" })),
+];
+
 export function kiesPersoon(): Persoon {
-  const vrouw = Math.random() < 0.5;
-  const lijst = vrouw ? namen.vrouwen : namen.mannen;
-  return {
-    naam: lijst[Math.floor(Math.random() * lijst.length)],
-    bezittelijk: vrouw ? "haar" : "zijn",
-  };
+  return personen[Math.floor(Math.random() * personen.length)];
 }
