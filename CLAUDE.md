@@ -42,7 +42,8 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 - Geen verzonnen cijfers, testimonials of klantcases.
 - Kleuren en fonts alleen via tokens uit `src/styles/global.css`. Gebruik de roltokens (`bg`, `vlak`, `rand`, `tekst`, `zacht`, `accent`), nooit de vaste merkkleuren: die wisselen niet mee met het thema.
 - Licht is de standaard, donker via `data-thema="donker"` op `<html>`. De systeemvoorkeur schakelt niet automatisch om.
-- In de lichte modus haalt oker `#D08A45` op linnen maar 2.2:1. Daar geldt `#9D5B20` met 4.1:1. Donker houdt oker.
+- De koele kant van het palet is groen, niet blauw: ink `#102019`, slate `#193025`, pigment `#235040`.
+- In de lichte modus haalt oker `#D08A45` op linnen maar 2.2:1. Daar geldt `#97551C`, dat ook de knoptekst op 4.9:1 houdt. Donker houdt oker.
 - Oker is de enige accentkleur en blijft spaarzaam.
 - Ontbrekende inhoud wordt een zichtbare TODO, nooit een verzonnen tekst.
 - Secrets alleen via `npx wrangler secret put` of `.env.local`, nooit in de repo.
