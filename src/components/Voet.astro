@@ -17,18 +17,18 @@ const jaar = new Date().getFullYear();
       <h2 class="text-sm font-semibold text-tekst">Contact</h2>
       <ul class="mt-2 space-y-1 text-sm text-zacht">
         <li>
-          <a class="inline-flex min-h-11 items-center hover:text-accent" href={`mailto:${bedrijf.email}`}>
+          <a class="tekstlink inline-flex min-h-11 items-center hover:text-tekst" href={`mailto:${bedrijf.email}`}>
             {bedrijf.email}
           </a>
         </li>
         <li>
-          <a class="inline-flex min-h-11 items-center hover:text-accent" href={bedrijf.telefoonLink}>
+          <a class="tekstlink inline-flex min-h-11 items-center hover:text-tekst" href={bedrijf.telefoonLink}>
             {bedrijf.telefoon}
           </a>
         </li>
         <li>
           <a
-            class="inline-flex min-h-11 items-center hover:text-accent"
+            class="tekstlink inline-flex min-h-11 items-center hover:text-tekst"
             href={bedrijf.linkedin}
             target="_blank"
             rel="noopener"
@@ -44,7 +44,7 @@ const jaar = new Date().getFullYear();
       <ul class="mt-2 space-y-1 text-sm text-zacht">
         <li>{bedrijf.plaats}</li>
         <li>KvK&nbsp;{bedrijf.kvk}</li>
-        <li><a class="inline-flex min-h-11 items-center hover:text-accent" href="/privacy">Privacy</a></li>
+        <li><a class="tekstlink inline-flex min-h-11 items-center hover:text-tekst" href="/privacy">Privacy</a></li>
       </ul>
     </div>
   </div>

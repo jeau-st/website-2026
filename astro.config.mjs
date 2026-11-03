@@ -24,7 +24,8 @@ export default defineConfig({
       provider: fontProviders.fontsource(),
       name: 'IBM Plex Mono',
       cssVariable: '--font-ibm-plex-mono',
-      weights: [400, 500],
+      // 600 voor de koppen: de mono is hier de displayletter, niet alleen label
+      weights: [400, 500, 600],
       styles: ['normal'],
       subsets: ['latin', 'latin-ext'],
     },

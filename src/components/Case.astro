@@ -2,11 +2,15 @@
 import Todo from "./Todo.astro";
 import type { Case } from "../data/site";
 
+/**
+ * Zelfde opbouw als de dienstenlijst: een regel met haarlijn, geen kaart.
+ */
 interface Props {
   item: Case;
+  nummer: string;
 }
 
-const { item } = Astro.props;
+const { item, nummer } = Astro.props;
 
 const delen = [
   { kop: "Situatie", tekst: item.situatie },
@@ -17,25 +21,31 @@ const delen = [
 const schoon = (tekst: string) => tekst.replace(/^TODO:\s*/, "");
 ---
 
-<article class="border border-rand/60 p-6 sm:p-8">
-  {
-    item.todo ? (
-      <Todo wat={schoon(item.titel)} />
-    ) : (
-      <h3 class="text-xl font-semibold text-tekst">{item.titel}</h3>
-    )
-  }
+<li class="border-t border-rand/60 py-8 first:border-t-0 first:pt-0">
+  <div class="grid gap-x-8 gap-y-4 sm:grid-cols-[3rem_1fr]">
+    <p class="font-mono text-sm text-zacht" aria-hidden="true">{nummer}</p>
 
-  <dl class="mt-4 space-y-4">
-    {
-      delen.map((deel) => (
-        <div>
-          <dt class="text-sm font-semibold text-zacht">{deel.kop}</dt>
-          <dd class="mt-1 min-w-0 text-tekst">
-            {item.todo ? <Todo wat={schoon(deel.tekst)} /> : deel.tekst}
-          </dd>
-        </div>
-      ))
-    }
-  </dl>
-</article>
+    <div class="min-w-0">
+      {
+        item.todo ? (
+          <Todo wat={schoon(item.titel)} />
+        ) : (
+          <h3 class="text-xl text-tekst">{item.titel}</h3>
+        )
+      }
+
+      <dl class="mt-4 grid gap-4 sm:grid-cols-3">
+        {
+          delen.map((deel) => (
+            <div class="min-w-0">
+              <dt class="font-mono text-sm text-zacht">{deel.kop}</dt>
+              <dd class="mt-1 min-w-0 text-tekst">
+                {item.todo ? <Todo wat={schoon(deel.tekst)} /> : deel.tekst}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </div>
+</li>

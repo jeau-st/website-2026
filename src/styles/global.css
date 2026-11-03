@@ -72,13 +72,32 @@
     outline-offset: 3px;
     border-radius: 2px;
   }
+  /* Koppen in de mono die het woordmerk ook is. Op dit formaat heeft die
+     letter karakter; Inter zou hier elke willekeurige site kunnen zijn.
+     Mono loopt breed, dus de tracking gaat strakker naarmate de kop groter is. */
   h1,
   h2,
   h3 {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    letter-spacing: -0.03em;
     text-wrap: balance;
   }
   p {
     text-wrap: pretty;
+  }
+
+  /* Links dragen geen accentkleur meer: oker is voor de actie en de focus.
+     Onderstreping doet het werk, met ruimte onder de letter. */
+  .tekstlink {
+    text-decoration: underline;
+    text-decoration-color: var(--color-rand);
+    text-underline-offset: 0.25em;
+    text-decoration-thickness: 1px;
+  }
+  .tekstlink:hover {
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 2px;
   }
   a,
   button,

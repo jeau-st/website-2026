@@ -15,7 +15,7 @@ const vrijgegeven = cases.filter((item) => !item.todo);
 >
   <section class="px-4 py-20 sm:px-6 sm:py-24">
     <div class="mx-auto max-w-5xl">
-      <h1 class="max-w-3xl text-4xl font-semibold text-tekst sm:text-5xl">
+      <h1 class="max-w-3xl text-4xl text-tekst sm:text-5xl">
         Voorbeelden van werk
       </h1>
       <p class="mt-6 max-w-2xl text-lg text-zacht">
@@ -32,14 +32,18 @@ const vrijgegeven = cases.filter((item) => !item.todo);
         <Todo wat="deze pagina staat nog volledig op placeholders. Vul de cases in src/data/site.ts in, of haal Werk uit het menu tot er inhoud is." />
       )
     }
-    <div class="mt-8 grid gap-6 sm:grid-cols-2">
-      {cases.map((item) => <Case item={item} />)}
-    </div>
+    <ol class="mt-8">
+      {
+        cases.map((item, i) => (
+          <Case item={item} nummer={String(i + 1).padStart(2, "0")} />
+        ))
+      }
+    </ol>
   </Sectie>
 
   <Sectie id="plannen">
     <div class="max-w-2xl">
-      <h2 class="text-3xl font-semibold text-tekst sm:text-4xl">
+      <h2 class="text-3xl text-tekst sm:text-4xl">
         Lijkt dit op wat jij nodig hebt?
       </h2>
       <p class="mt-4 text-lg text-zacht">

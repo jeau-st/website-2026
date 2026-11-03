@@ -1,0 +1,66 @@
+---
+/**
+ * Het beeld waar de pagina om onthouden moet worden: losse systemen die
+ * tot één stroom worden. Geen illustratie maar een tekening van het werk.
+ *
+ * Opgebouwd uit randen en tekst, niet uit een afbeelding, zodat het
+ * meeschaalt, meekleurt met het thema en geen bestand hoeft te laden.
+ * Twee opmaken: op mobiel gestapeld, vanaf sm de waaier naar binnen.
+ * Het geheel is aria-hidden, de figcaption vertelt hetzelfde in woorden.
+ */
+const bronnen = ["mailbox", "Excel", "boekhouding", "offertes", "WhatsApp"];
+---
+
+<figure class="mt-12">
+  <!-- Mobiel: gestapeld -->
+  <div class="sm:hidden" aria-hidden="true">
+    <ul class="flex flex-wrap justify-center gap-x-3 gap-y-1 font-mono text-sm text-zacht">
+      {bronnen.map((bron) => <li>{bron}</li>)}
+    </ul>
+    <div class="mx-auto mt-4 h-10 w-px bg-rand"></div>
+    <p
+      class="mx-auto w-fit border border-rand px-4 py-2 text-center font-mono text-sm text-tekst"
+    >
+      één plek
+    </p>
+    <div class="mx-auto h-10 w-px bg-rand"></div>
+    <p class="text-center font-mono text-sm text-tekst">overzicht</p>
+  </div>
+
+  <!-- Vanaf sm: de waaier naar binnen -->
+  <div
+    class="hidden sm:grid sm:w-fit sm:grid-cols-[15rem_3rem_max-content_3rem_max-content] sm:items-center sm:justify-start"
+    aria-hidden="true"
+  >
+    <div class="relative">
+      <ul class="space-y-3">
+        {
+          bronnen.map((bron) => (
+            <li class="flex items-center gap-3">
+              <span class="shrink-0 font-mono text-sm text-zacht">{bron}</span>
+              <span class="h-px flex-1 bg-rand" />
+            </li>
+          ))
+        }
+      </ul>
+      {/* De verzamellijn loopt van het midden van de eerste tot het midden
+          van de laatste regel, niet van rand tot rand */}
+      <span class="absolute inset-y-[0.6rem] right-0 w-px bg-rand"></span>
+    </div>
+
+    <span class="h-px w-full bg-rand"></span>
+
+    <p class="border border-rand px-4 py-3 font-mono text-sm text-tekst">
+      één plek
+    </p>
+
+    <span class="h-px w-full bg-rand"></span>
+
+    <p class="font-mono text-sm text-tekst">overzicht</p>
+  </div>
+
+  <figcaption class="sr-only">
+    Vijf losse systemen, mailbox, Excel, boekhouding, offertes en WhatsApp,
+    komen samen op één plek en leveren overzicht op.
+  </figcaption>
+</figure>
