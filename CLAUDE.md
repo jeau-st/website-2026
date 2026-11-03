@@ -17,6 +17,7 @@ npm install
 npm run dev
 npm run build
 npm run typecheck
+npm run schrijfwijzer
 npm run preview
 npm run deploy
 ```
@@ -30,6 +31,7 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 - `src/data/site.ts`: alle herhaalde inhoud en de TODO-placeholders
 - `OPLEVERING.md`: wat Joost nog moet invullen voor livegang
 - `SCHRIJFWIJZER.md`: stem, verboden woorden en werkwijze voor alle tekst op de site
+- `scripts/schrijfwijzer.mjs`: controleert de zichtbare tekst tegen die wijzer, draait met `npm run schrijfwijzer`
 - `src/pages`: routes, een bestand per pagina
 - `src/components`: Sectie, Knop, Kop, Voet, Todo en de inhoudsblokken
 - `src/layouts`: layouts, `Basis.astro` verzorgt head, taal en canonical
@@ -39,7 +41,7 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 
 ## Regels
 
-- Nederlands, je-vorm, geen em dash. Voor alle tekst geldt `SCHRIJFWIJZER.md`.
+- Nederlands, je-vorm, geen em dash. Voor alle tekst geldt `SCHRIJFWIJZER.md`. Draai `npm run schrijfwijzer` na elke tekstwijziging: fout betekent herschrijven, let op betekent zelf beoordelen.
 - Geen verzonnen cijfers, testimonials of klantcases.
 - Koppen krijgen hun kleur uit `--c-kop`, niet uit een utility in de opmaak: wilg in licht, krijt in donker. Groen kan niet in allebei, want mos en wilg halen op veen 1.21:1 en 1.68:1.
 - Koppen staan in Inter, kleine labels en de tekeningen in IBM Plex Mono. LLPixel is alleen het woordmerk in Kop en Voet, op `text-3xl`: onder de 30 px wordt het pixelraster modderig.

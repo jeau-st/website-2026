@@ -66,8 +66,9 @@ Daar mogen ze op een rij staan.
 
 1. Vraag eerst voor welke plek de tekst is, wat hij moet doen en hoe lang hij mag zijn.
 2. Lever twee varianten met een echt andere invalshoek, geen herformulering van dezelfde zin.
-3. Toets je eigen tekst daarna tegen de lijsten hierboven en herschrijf wat
-   erop lijkt. Zoek niet alleen op woorden: een tegenstelling is zinsbouw.
-   Zoeken op "naadloos" vindt niets in "ik bouw het niet alleen, ik weet ook",
-   terwijl dat precies de verboden vorm is.
+3. Draai `npm run schrijfwijzer`. Die controleert de zichtbare tekst op de
+   lijsten hierboven. Wat hij "fout" noemt moet weg; wat hij "let op" noemt
+   beoordeel je zelf met de wegstreeptoets. Het script zoekt op zinsbouw en
+   niet alleen op woorden, want zoeken op "naadloos" vindt niets in "ik bouw
+   het niet alleen, ik weet ook", terwijl dat precies de verboden vorm is.
 4. Lees hardop. Zou Joost dit zo zeggen tegen een klant? Zo niet, opnieuw.
