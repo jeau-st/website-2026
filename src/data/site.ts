@@ -122,7 +122,7 @@ export const diensten: Dienst[] = [
         alineas: [
           "Gegevens overzetten klinkt als kopiëren. Dat is het niet. In een oude database of een Excel staat elke kolom er met een reden, en die reden staat nergens opgeschreven. Een veld dat status heet, betekent bij verkoop iets anders dan bij de administratie. Voordat er iets overgaat, zoek ik uit hoe die gegevens tot stand zijn gekomen.",
           "Daarna gaan ze het nieuwe proces in, en dat is één manier van werken voor iedereen. Soms betekent dat samenvoegen, soms weggooien, en soms blijkt dat twee afdelingen hetzelfde woord voor iets anders gebruiken. Die gesprekken horen bij de inrichting.",
-          "Je kunt ook fris beginnen. Dat is sneller en het gebeurt vaker dan je zou denken. Toch neem ik de historie graag mee, want een klant van vier jaar geleden kan morgen bellen. Op dat moment wil je zien wat je destijds hebt afgesproken.",
+          "Je kunt ook fris beginnen. Dat is sneller en het gebeurt vaker dan je zou denken. Toch neem ik de historie mee, want een klant van vier jaar geleden kan morgen bellen. Op dat moment wil je zien wat je destijds hebt afgesproken.",
         ],
       },
     ],
@@ -166,7 +166,7 @@ export const diensten: Dienst[] = [
       {
         kop: "Wat je niet moet verwachten",
         alineas: [
-          "Dat het een knop is die je omzet en dat het daarna werkt zoals jij het wil. Een koppeling is maatwerk, en als je proces verandert, moet de koppeling mee veranderen. Daar denk ik graag in mee.",
+          "Dat het een knop is die je omzet en dat het daarna werkt zoals jij het wil. Een koppeling is maatwerk, en als je proces verandert, moet de koppeling mee veranderen. Daar denk ik in mee.",
         ],
       },
     ],
@@ -189,7 +189,7 @@ export const diensten: Dienst[] = [
         kop: "Het dashboard van een auto",
         alineas: [
           "Daar staan twee soorten cijfers op. Snelheid, toerental en temperatuur heb je nu nodig, daar stuur je op terwijl je rijdt. Het aantal gereden kilometers, de buitentemperatuur en wanneer je moet tanken zeggen iets over de komende tijd. Een rapportage werkt net zo, en als je die twee door elkaar zet kijkt niemand er meer naar.",
-          "Welke cijfers dat bij jou zijn, verschilt per bedrijf. Meestal gaat het over nieuwe aanmeldingen, hoe die ervoor staan, welke activiteiten eraan vasthangen, en wat er financieel aan zit te komen tegenover wat er binnen is.",
+          "Welke cijfers dat bij jou zijn, verschilt per bedrijf. Meestal gaat het over nieuwe aanvragen, hoe die ervoor staan, welke activiteiten eraan vasthangen, en wat er financieel aan zit te komen tegenover wat er binnen is.",
         ],
       },
       {
