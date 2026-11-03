@@ -31,6 +31,7 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 - `src/data/site.ts`: alle herhaalde inhoud en de TODO-placeholders
 - `OPLEVERING.md`: wat Joost nog moet invullen voor livegang
 - `SCHRIJFWIJZER.md`: stem, verboden woorden en werkwijze voor alle tekst op de site
+- `docs/palet.html`: het palet met stalen, gemeten aandelen en contrastcijfers. Staat buiten `src/pages` en `public`, dus de build neemt hem niet mee. Open hem vanaf schijf
 - `scripts/schrijfwijzer.mjs`: controleert de zichtbare tekst tegen die wijzer, draait met `npm run schrijfwijzer`
 - `src/pages`: routes, een bestand per pagina
 - `src/components`: Sectie, Knop, Kop, Voet, Todo en de inhoudsblokken
@@ -43,12 +44,12 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 
 - Nederlands, je-vorm, geen em dash. Voor alle tekst geldt `SCHRIJFWIJZER.md`. Draai `npm run schrijfwijzer` na elke tekstwijziging: fout betekent herschrijven, let op betekent zelf beoordelen.
 - Geen verzonnen cijfers, testimonials of klantcases.
-- Koppen krijgen hun kleur uit `--c-kop`, niet uit een utility in de opmaak: wilg in licht, krijt in donker. Groen kan niet in allebei, want mos en wilg halen op veen 1.21:1 en 1.68:1.
+- Koppen krijgen hun kleur uit `--c-kop`, niet uit een utility in de opmaak: een donker blauwgrijs in licht, een licht blauwgrijs in donker. Beide staan los van de tekstkleur.
 - Koppen staan in Inter, kleine labels en de tekeningen in IBM Plex Mono. Het woordmerk is een svg: als pixelfont werd het vlekkerig door de rasterizer, als pad schaalt het schoon. Kop en Voet zetten alleen de hoogte.
 - Kleuren en fonts alleen via tokens uit `src/styles/global.css`. Gebruik de roltokens (`bg`, `vlak`, `rand`, `tekst`, `zacht`, `accent`), nooit de vaste merkkleuren: die wisselen niet mee met het thema.
 - Licht is de standaard, donker via `data-thema="donker"` op `<html>`. De systeemvoorkeur schakelt niet automatisch om.
-- Het palet is gemeten uit de scan van Van Gogh, Zelfportret met grijze vilthoed. De koele kant is groen: veen `#182322`, mos `#20332C`, wilg `#374941`. De warme kant: olijf `#8F925E`, hooi `#ADB084`, krijt `#EBF3EA`.
-- Het accent verschilt per thema, want één oranje haalt niet in allebei de contrastnorm voor tekst op de knop. Licht gebruikt gebrand `#90542C`, donker gloed `#CF7F2E`.
+- Het palet is gemeten uit de museumscan van Van Gogh, Zelfportret met grijze vilthoed (s0016V1962), met k-means in Lab en een telling per kleurfamilie. Het doek is voor 49,6% blauw en voor 3,3% groen, dus het palet is blauw. De twee grootste clusters zijn staal `#41515C` en lei `#56646D`, samen 43% van het doek. Warm is oker `#816447` en vlam `#8D531F`, de oranje stippen. Alle rollen erven tint 204 (blauw) of tint 28 (oranje) en verschillen alleen in lichtheid.
+- Het accent verschilt per thema, want één oranje haalt niet in allebei de contrastnorm voor tekst op de knop. Licht gebruikt `#9E5514`, donker `#E1791C`. Allebei 4,6:1 op de vlakke baan, de krapste van de twee.
 - Het accent is de enige warme kleur in de interface en staat alleen op de primaire knop, de focusring en het woordmerk (via `merk`, dezelfde waarde). Niet op links, lijsten of pijltjes.
 - Ontbrekende inhoud wordt een zichtbare TODO, nooit een verzonnen tekst.
 - Secrets alleen via `npx wrangler secret put` of `.env.local`, nooit in de repo.

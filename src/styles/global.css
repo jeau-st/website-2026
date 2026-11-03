@@ -1,55 +1,63 @@
 @import "tailwindcss";
 
 /*
-  Palet gemeten uit de scan van Van Gogh, Zelfportret met grijze vilthoed.
-  Niet geschat: elke merkkleur hieronder komt uit een cluster pixels in het
-  doek. De koele kant is groen, want de dominante kleur beslaat 32 procent
-  van het doek en heeft maar 18 procent verzadiging, dus die is vrijwel
-  groenzwart. De vaste merkkleuren staan onderaan; daarboven staan de
-  rolgebaseerde tokens die per thema wisselen.
+  Palet gemeten uit de museumscan van Van Gogh, Zelfportret met grijze
+  vilthoed (Van Gogh Museum, s0016V1962). Niet geschat en niet onthouden:
+  de scan is door een k-means in Lab gehaald en per kleurfamilie geteld.
+
+  Wat die telling zegt, over het hele doek:
+    blauw 49,6%   grijs 18,6%   oranje 15,5%   geel 10,4%   groen 3,3%
+  Van alleen de kleurige pixels is 61% blauw en 4% groen. De twee grootste
+  clusters zijn allebei blauw, #41515c en #56646d, samen 43% van het doek.
+  Het is dus een blauw schilderij met warme toetsen, en het palet hoort
+  dat te volgen.
+
+  De rollen erven tint en verzadiging van die dominante blauwen (tint 204)
+  en van de oranje stippen (tint 28, verzadiging 78%). Alleen de lichtheid
+  is verschoven, en precies zo ver als het contrast vroeg. Het doek heeft
+  geen wit en geen zwart, dus de uiterste achtergronden zijn doorgetrokken
+  op diezelfde tint.
+
+  Contrast licht: tekst 13,0:1, kop 8,4:1, zacht 5,0:1, accent 4,6:1.
+  Contrast donker: tekst 13,0:1, kop 9,5:1, zacht 5,0:1, accent 4,6:1.
+  Die cijfers zijn tegen de vlakke baan gemeten, de krapste van de twee;
+  op de gewone achtergrond haalt alles meer.
+  Het accent verschilt per thema: een oranje dat in licht 4,5:1 haalt is in
+  donker te donker, en andersom.
 
   Licht is de standaard. Donker komt pas als de bezoeker erom vraagt via de
   schakelaar, niet vanzelf via de systeemvoorkeur.
-
-  Contrast licht: veen op krijt 14.2:1, wilg 8.5:1 (ook de koppen), accent 5.3:1
-  (ook het woordmerk).
-  Contrast donker: krijt op veen 14.2:1, hooi 7.2:1, accent 5.2:1.
-  Het accent verschilt per thema. Gebrand #90542c is in donker te donker voor
-  tekst op de knop, gloed #cf7f2e is in licht te licht. Beide halen 5.2:1 of
-  meer in hun eigen thema.
 */
-
 :root,
 :root[data-thema="licht"] {
   color-scheme: light;
-  --c-bg: #ebf3ea;
-  --c-vlak: #dfe8de;
-  --c-rand: #b5c4b3;
-  --c-tekst: #182322;
-  --c-zacht: #374941;
-  /* Wilg en niet mos: mos is van veen met het oog niet te onderscheiden,
-     dus dan is de kop alleen op papier groen. Wilg is ook de kleur van de
-     bijtekst, maar een kop van 30 tot 60 px op gewicht 600 blijft daar
-     ruim bovenuit komen. */
-  --c-kop: #374941;
-  --c-accent: #90542c;
-  --c-op-accent: #ebf3ea;
-  --c-merk: #90542c;
+  --c-bg: #f1f4f7;
+  --c-vlak: #e5eaee;
+  --c-rand: #becad2;
+  --c-tekst: #222b32;
+  --c-zacht: #516573;
+  /* Lichter dan de tekst, donkerder dan de bijtekst: een kop die rustig
+     blijft en toch niet voor bijtekst wordt aangezien. */
+  --c-kop: #34434c;
+  --c-accent: #9e5514;
+  --c-op-accent: #f1f4f7;
+  --c-merk: #9e5514;
 }
 
 :root[data-thema="donker"] {
   color-scheme: dark;
-  --c-bg: #182322;
-  --c-vlak: #20332c;
-  --c-rand: #374941;
-  --c-tekst: #ebf3ea;
-  --c-zacht: #adb084;
-  /* Geen groen in donker: mos haalt op veen 1.21:1 en wilg 1.68:1, en een
-     lichtgroen dat wel haalt is er niet zonder een negende kleur. */
-  --c-kop: #ebf3ea;
-  --c-accent: #cf7f2e;
-  --c-op-accent: #182322;
-  --c-merk: #cf7f2e;
+  --c-bg: #182127;
+  --c-vlak: #232e35;
+  --c-rand: #374650;
+  --c-tekst: #e0e6ea;
+  --c-zacht: #899eac;
+  /* In donker kan de kop wel een eigen kleur hebben: een licht blauwgrijs
+     haalt 9,5:1 op vlak en staat los van het bijna witte tekstwit. Met het
+     oude groene palet kon dat niet. */
+  --c-kop: #cdd7dd;
+  --c-accent: #e1791c;
+  --c-op-accent: #182127;
+  --c-merk: #e1791c;
 }
 
 @theme {
@@ -71,15 +79,16 @@
      zodat je de een kunt verzetten zonder de ander. */
   --color-merk: var(--c-merk);
 
-  /* Vaste merkkleuren, alleen waar een kleur per se niet mag wisselen */
-  --color-veen: #182322; /* donkerste partij in de jas en de hoeken */
-  --color-mos: #20332c; /* het groenzwart van de achtergrond */
-  --color-wilg: #374941; /* middentoon in de jas en de revers */
-  --color-olijf: #8f925e; /* de groengele streken in hoed en gezicht */
-  --color-hooi: #adb084; /* lichtere olijf, de hoed */
-  --color-krijt: #ebf3ea; /* de koelste hooglichten in de hoed */
-  --color-gebrand: #90542c; /* oranjebruin uit de baard */
-  --color-gloed: #cf7f2e; /* het felste oranje uit de achtergrondstippen */
+  /* Vaste merkkleuren, alleen waar een kleur per se niet mag wisselen.
+     Het percentage is het aandeel van het doek dat deze cluster beslaat. */
+  --color-inkt: #272b34; /* 3,8%, het diepste blauwzwart in de jas */
+  --color-nacht: #343e47; /* 6,9%, de schaduwkant van de achtergrond */
+  --color-staal: #41515c; /* 21,3%, een van de twee dragende blauwen */
+  --color-lei: #56646d; /* 21,8%, de grootste cluster van allemaal */
+  --color-steen: #737776; /* 9,1%, het bijna kleurloze grijs ertussen */
+  --color-oker: #816447; /* 7,1%, het bruin uit de baard */
+  --color-vilt: #bbb799; /* 6,0%, de hooglichten in de hoed */
+  --color-vlam: #8d531f; /* 4,6%, de oranje stippen in de achtergrond */
 }
 
 @layer base {

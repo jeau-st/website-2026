@@ -40,14 +40,14 @@ const schema = {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#ebf3ea" id="thema-kleur" />
+    <meta name="theme-color" content="#f1f4f7" id="thema-kleur" />
 
     <script is:inline>
       /* Voor het schilderen, anders flitst de pagina licht op bij donker. */
       try {
         if (localStorage.getItem("thema") === "donker") {
           document.documentElement.dataset.thema = "donker";
-          document.getElementById("thema-kleur")?.setAttribute("content", "#182322");
+          document.getElementById("thema-kleur")?.setAttribute("content", "#182127");
         }
       } catch (e) {
         /* privemodus: dan gewoon licht */

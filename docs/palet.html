@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Palet jeau.st</title>
+<style>
+  :root { color-scheme: light; }
+  body { margin:0; padding:2.5rem 1.5rem; background:#f1f4f7; color:#222b32;
+         font:16px/1.6 ui-sans-serif, system-ui, sans-serif; }
+  .wrap { max-width:60rem; margin:0 auto; }
+  h1 { font-size:2rem; margin:0 0 .5rem; letter-spacing:-.02em; }
+  h2 { font-size:1.25rem; margin:0 0 1rem; letter-spacing:-.02em; }
+  h3 { font-size:1rem; margin:2.5rem 0 .75rem; }
+  p.lead { color:#516573; max-width:44rem; margin:0 0 2rem; }
+  .thema { border:1px solid; padding:1.5rem; margin-bottom:1.5rem; }
+  table { width:100%; border-collapse:collapse; font-size:.875rem; }
+  th, td { text-align:left; padding:.4rem .6rem .4rem 0; vertical-align:middle; }
+  th { font-weight:600; opacity:.7; font-size:.8125rem; }
+  td.num, th:last-child { text-align:right; font-variant-numeric:tabular-nums; }
+  code { font:13px ui-monospace, Menlo, monospace; }
+  .staal { display:inline-block; width:1.5rem; height:1.5rem;
+            border:1px solid rgba(128,128,128,.45); vertical-align:middle; }
+  .staal.groot { width:2.5rem; height:2.5rem; margin-right:.75rem; }
+  .knop-rij { margin:1.25rem 0 0; display:flex; gap:1rem; align-items:center;
+               flex-wrap:wrap; font-size:.875rem; }
+  .knop { display:inline-block; padding:.6rem 1.1rem; font-weight:600; font-size:.9375rem; }
+  ul { list-style:none; padding:0; margin:0; }
+  li { display:flex; align-items:center; gap:.5rem; padding:.35rem 0; flex-wrap:wrap; }
+  .pct { font-variant-numeric:tabular-nums; color:#516573; font-size:.875rem; }
+  .uitleg { color:#516573; font-size:.875rem; }
+  .balk { display:flex; height:3.5rem; margin:.5rem 0 0; }
+  .deel { display:flex; align-items:center; justify-content:center; overflow:hidden; }
+  .deel span { color:#fff; font-size:.6875rem; text-align:center; line-height:1.2;
+                text-shadow:0 1px 2px rgba(0,0,0,.5); }
+  footer { margin-top:3rem; padding-top:1.5rem; border-top:1px solid #becad2;
+            color:#516573; font-size:.875rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Palet jeau.st</h1>
+  <p class="lead">Niet voor de site: dit bestand staat in <code>docs/</code> en wordt
+  niet meegebouwd. Alle kleuren komen uit de museumscan van Van Gogh, Zelfportret
+  met grijze vilthoed (Van Gogh Museum, s0016V1962), gemeten met k-means in Lab
+  en geteld per kleurfamilie. Contrast is berekend, niet geschat.</p>
+
+  <h3>Wat er in het doek zit</h3>
+  <div class="balk"><div class="deel" style="flex:49.6;background:#41515c" title="blauw 49,6%"><span>blauw<br>49,6%</span></div><div class="deel" style="flex:18.6;background:#737776" title="grijs 18,6%"><span>grijs<br>18,6%</span></div><div class="deel" style="flex:15.5;background:#8d531f" title="oranje 15,5%"><span>oranje<br>15,5%</span></div><div class="deel" style="flex:10.4;background:#bbb799" title="geel 10,4%"><span>geel<br>10,4%</span></div><div class="deel" style="flex:3.3;background:#4d6b4a" title="groen 3,3%"><span>groen<br>3,3%</span></div><div class="deel" style="flex:2.4;background:#8a3b2a" title="rood 2,4%"><span>rood<br>2,4%</span></div><div class="deel" style="flex:0.2;background:#5b4a6b" title="paars 0,2%"><span>paars<br>0,2%</span></div></div>
+  <p class="uitleg">Aandeel van alle pixels. Blauw is bijna de helft, groen is 3,3%.
+  Daarom is het palet blauw met warme toetsen.</p>
+
+  <h3>De rollen, per thema</h3>
+  <section class="thema" style="background:#f1f4f7;color:#222b32;border-color:#becad2">
+  <h2 style="color:#34434c">Licht</h2>
+  <table>
+    <thead><tr><th></th><th>rol</th><th>hex</th><th>waarvoor</th><th>contrast op bg / vlak</th></tr></thead>
+    <tbody><tr><td><span class="staal" style="background:#f1f4f7"></span></td><td><code>bg</code></td><td><code>#f1f4f7</code></td><td>achtergrond van de pagina</td><td class="num">n.v.t.</td></tr><tr><td><span class="staal" style="background:#e5eaee"></span></td><td><code>vlak</code></td><td><code>#e5eaee</code></td><td>de opgetilde baan, om en om</td><td class="num">n.v.t.</td></tr><tr><td><span class="staal" style="background:#becad2"></span></td><td><code>rand</code></td><td><code>#becad2</code></td><td>scheidslijnen, geen tekst</td><td class="num">1,51 / 1,38 (lijn, geen norm)</td></tr><tr><td><span class="staal" style="background:#222b32"></span></td><td><code>tekst</code></td><td><code>#222b32</code></td><td>lopende tekst</td><td class="num">13,03 / 11,88</td></tr><tr><td><span class="staal" style="background:#516573"></span></td><td><code>zacht</code></td><td><code>#516573</code></td><td>bijtekst en intro's</td><td class="num">5,50 / 5,01</td></tr><tr><td><span class="staal" style="background:#34434c"></span></td><td><code>kop</code></td><td><code>#34434c</code></td><td>alle koppen, via --c-kop</td><td class="num">9,27 / 8,44</td></tr><tr><td><span class="staal" style="background:#9e5514"></span></td><td><code>accent</code></td><td><code>#9e5514</code></td><td>primaire knop en focusring</td><td class="num">5,05 / 4,61</td></tr><tr><td><span class="staal" style="background:#9e5514"></span></td><td><code>merk</code></td><td><code>#9e5514</code></td><td>alleen het woordmerk</td><td class="num">5,05 / 4,61</td></tr></tbody>
+  </table>
+  <p class="knop-rij">
+    <span class="knop" style="background:#9e5514;color:#f1f4f7">Plan een belafspraak</span>
+    <span style="color:#516573">tekst op de knop: 5,05</span>
+  </p>
+</section>
+  <section class="thema" style="background:#182127;color:#e0e6ea;border-color:#374650">
+  <h2 style="color:#cdd7dd">Donker</h2>
+  <table>
+    <thead><tr><th></th><th>rol</th><th>hex</th><th>waarvoor</th><th>contrast op bg / vlak</th></tr></thead>
+    <tbody><tr><td><span class="staal" style="background:#182127"></span></td><td><code>bg</code></td><td><code>#182127</code></td><td>achtergrond van de pagina</td><td class="num">n.v.t.</td></tr><tr><td><span class="staal" style="background:#232e35"></span></td><td><code>vlak</code></td><td><code>#232e35</code></td><td>de opgetilde baan, om en om</td><td class="num">n.v.t.</td></tr><tr><td><span class="staal" style="background:#374650"></span></td><td><code>rand</code></td><td><code>#374650</code></td><td>scheidslijnen, geen tekst</td><td class="num">1,68 / 1,42 (lijn, geen norm)</td></tr><tr><td><span class="staal" style="background:#e0e6ea"></span></td><td><code>tekst</code></td><td><code>#e0e6ea</code></td><td>lopende tekst</td><td class="num">12,97 / 11,02</td></tr><tr><td><span class="staal" style="background:#899eac"></span></td><td><code>zacht</code></td><td><code>#899eac</code></td><td>bijtekst en intro's</td><td class="num">5,87 / 4,99</td></tr><tr><td><span class="staal" style="background:#cdd7dd"></span></td><td><code>kop</code></td><td><code>#cdd7dd</code></td><td>alle koppen, via --c-kop</td><td class="num">11,17 / 9,49</td></tr><tr><td><span class="staal" style="background:#e1791c"></span></td><td><code>accent</code></td><td><code>#e1791c</code></td><td>primaire knop en focusring</td><td class="num">5,41 / 4,59</td></tr><tr><td><span class="staal" style="background:#e1791c"></span></td><td><code>merk</code></td><td><code>#e1791c</code></td><td>alleen het woordmerk</td><td class="num">5,41 / 4,59</td></tr></tbody>
+  </table>
+  <p class="knop-rij">
+    <span class="knop" style="background:#e1791c;color:#182127">Plan een belafspraak</span>
+    <span style="color:#899eac">tekst op de knop: 5,41</span>
+  </p>
+</section>
+
+  <h3>Vaste merkkleuren</h3>
+  <p class="uitleg">Gebruik deze alleen waar een kleur per se niet mag wisselen
+  met het thema. In componenten gebruik je de roltokens hierboven.</p>
+  <ul><li><span class="staal groot" style="background:#272b34"></span><code>inkt</code> <code>#272b34</code><span class="pct">3,8% van het doek</span><span class="uitleg">het diepste blauwzwart in de jas</span></li><li><span class="staal groot" style="background:#343e47"></span><code>nacht</code> <code>#343e47</code><span class="pct">6,9% van het doek</span><span class="uitleg">de schaduwkant van de achtergrond</span></li><li><span class="staal groot" style="background:#41515c"></span><code>staal</code> <code>#41515c</code><span class="pct">21,3% van het doek</span><span class="uitleg">een van de twee dragende blauwen</span></li><li><span class="staal groot" style="background:#56646d"></span><code>lei</code> <code>#56646d</code><span class="pct">21,8% van het doek</span><span class="uitleg">de grootste cluster van allemaal</span></li><li><span class="staal groot" style="background:#737776"></span><code>steen</code> <code>#737776</code><span class="pct">9,1% van het doek</span><span class="uitleg">het bijna kleurloze grijs ertussen</span></li><li><span class="staal groot" style="background:#816447"></span><code>oker</code> <code>#816447</code><span class="pct">7,1% van het doek</span><span class="uitleg">het bruin uit de baard</span></li><li><span class="staal groot" style="background:#bbb799"></span><code>vilt</code> <code>#bbb799</code><span class="pct">6,0% van het doek</span><span class="uitleg">de hooglichten in de hoed</span></li><li><span class="staal groot" style="background:#8d531f"></span><code>vlam</code> <code>#8d531f</code><span class="pct">4,6% van het doek</span><span class="uitleg">de oranje stippen in de achtergrond</span></li></ul>
+
+  <footer>Gegenereerd bij het herzien van het palet op 3 november 2026.
+  Verander je een kleur, pas dan <code>src/styles/global.css</code> aan en werk
+  dit bestand bij.</footer>
+</div>
+</body>
+</html>
