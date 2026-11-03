@@ -1,0 +1,26 @@
+---
+import { cta } from "../data/site";
+
+/**
+ * De primaire actie op mobiel. In de balk bovenin paste hij niet: samen
+ * met het woordmerk en drie links liep de koppenbalk over 375 px heen.
+ * Daarom zweeft hij rechtsonder, waar je duim toch al zit.
+ *
+ * Vanaf sm staat hij weer gewoon in de balk, dus dan verdwijnt deze.
+ * Zonder planner-URL rendert hij niets; de hero toont dan de TODO.
+ */
+---
+
+{
+  cta.url && (
+    <a
+      class="fixed bottom-4 right-4 z-30 inline-flex min-h-11 items-center bg-accent px-5 py-3 text-sm font-semibold text-op-accent shadow-lg sm:hidden"
+      style="margin-bottom: env(safe-area-inset-bottom, 0px)"
+      href={cta.url}
+      target="_blank"
+      rel="noopener"
+    >
+      {cta.label}
+    </a>
+  )
+}

@@ -21,10 +21,10 @@ const actief = (href: string) => pad === href || pad === `${href}/`;
       class="inline-flex min-h-11 items-center text-merk"
       aria-current={pad === "/" ? "page" : undefined}
     >
-      <Woordmerk class="h-9" />
+      <Woordmerk class="h-6 sm:h-8" />
     </a>
 
-    <nav aria-label="Hoofdmenu" class="flex items-center gap-5 sm:gap-7">
+    <nav aria-label="Hoofdmenu" class="flex items-center gap-4 sm:gap-7">
       {
         links.map((link) => (
           <a
@@ -42,9 +42,12 @@ const actief = (href: string) => pad === href || pad === `${href}/`;
       <ThemaKnop />
       {
         /* Zonder planner-URL staat de TODO in de hero; in het menu zou hij
-           de balk uit elkaar trekken. */
+           de balk uit elkaar trekken. Verbergen gebeurt op de span: de
+           knop zet zelf inline-flex, en dat wint het van hidden. */
         cta.url && (
-          <Knop variant="lijn" class="hidden px-4 py-2 text-sm sm:inline-flex" />
+          <span class="hidden sm:inline-flex">
+            <Knop variant="lijn" class="px-4 py-2 text-sm" />
+          </span>
         )
       }
     </nav>

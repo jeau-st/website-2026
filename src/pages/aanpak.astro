@@ -5,8 +5,8 @@ import Knop from "../components/Knop.astro";
 import Denkstap from "../components/Denkstap.astro";
 import Cyclus from "../components/Cyclus.astro";
 import Niveau from "../components/Niveau.astro";
-import Processtap from "../components/Processtap.astro";
-import { denkwijze, niveaus, processtappen } from "../data/site";
+import Stappentabel from "../components/Stappentabel.astro";
+import { denkwijze, niveaus } from "../data/site";
 ---
 
 <Basis
@@ -53,13 +53,7 @@ import { denkwijze, niveaus, processtappen } from "../data/site";
     kop="Zo loopt een opdracht"
     intro="De vier stappen hierboven zijn de denkwijze. Hieronder staat hoe dat in de praktijk verloopt, met per stap wat ik doe, wat jij doet en wat er aan het eind ligt."
   >
-    <ol class="mt-12">
-      {
-        processtappen.map((stap, i) => (
-          <Processtap stap={stap} laatste={i === processtappen.length - 1} />
-        ))
-      }
-    </ol>
+    <Stappentabel />
   </Sectie>
 
   {/* Dit stond als raster van vier gelijke blokjes. Zo gelijk van vorm en

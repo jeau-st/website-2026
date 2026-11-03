@@ -1,0 +1,70 @@
+---
+import { processtappen } from "../data/site";
+
+/**
+ * De zes stappen als tabel: per rij een stap, en naast elkaar wat ik doe,
+ * wat jij doet en wat er aan het eind ligt. Als tijdlijn onder elkaar
+ * moest je drie keer scrollen om twee stappen te vergelijken.
+ *
+ * Onder md valt de tabel uit elkaar in blokken, want vier kolommen tekst
+ * passen niet op een telefoon. De rolnamen staan dan in de cel zelf,
+ * zodat je zonder koprij weet wat je leest.
+ */
+const kolommen = ["Ik doe", "Jij doet", "Aan het eind"];
+---
+
+<table class="mt-12 w-full border-collapse text-left">
+  <caption class="sr-only">
+    De zes stappen van een traject, met per stap de rolverdeling
+  </caption>
+  <thead class="hidden md:table-header-group">
+    <tr>
+      <th scope="col" class="w-48 border-b border-rand pb-3 pr-6 font-mono text-sm font-normal text-zacht">
+        Stap
+      </th>
+      {
+        kolommen.map((kop) => (
+          <th
+            scope="col"
+            class="border-b border-rand pb-3 pr-6 font-mono text-sm font-normal text-zacht last:pr-0"
+          >
+            {kop}
+          </th>
+        ))
+      }
+    </tr>
+  </thead>
+  <tbody>
+    {
+      processtappen.map((stap) => (
+        <tr class="block border-t border-rand/60 py-5 first:border-t-0 first:pt-0 md:table-row md:border-0 md:py-0">
+          <th
+            scope="row"
+            class="block pr-6 text-left align-top font-normal md:table-cell md:border-t md:border-rand/60 md:py-5"
+          >
+            <span class="font-mono text-sm text-zacht">{stap.nummer}</span>
+            <span class="mt-1 block text-lg text-tekst">{stap.titel}</span>
+          </th>
+          <td class="mt-3 block pr-6 align-top text-zacht md:mt-0 md:table-cell md:border-t md:border-rand/60 md:py-5">
+            <span class="mb-1 block font-mono text-sm text-zacht md:hidden">
+              Ik doe
+            </span>
+            {stap.ik}
+          </td>
+          <td class="mt-3 block pr-6 align-top text-zacht md:mt-0 md:table-cell md:border-t md:border-rand/60 md:py-5">
+            <span class="mb-1 block font-mono text-sm text-zacht md:hidden">
+              Jij doet
+            </span>
+            {stap.jij}
+          </td>
+          <td class="mt-3 block align-top text-tekst md:mt-0 md:table-cell md:border-t md:border-rand/60 md:py-5">
+            <span class="mb-1 block font-mono text-sm text-zacht md:hidden">
+              Aan het eind
+            </span>
+            {stap.resultaat}
+          </td>
+        </tr>
+      ))
+    }
+  </tbody>
+</table>
