@@ -1,7 +1,9 @@
 @import "tailwindcss";
 
-/* Tokens overgenomen uit de vorige site, zodat de huisstijl herkenbaar blijft.
-   Pas deze aan als het ontwerp van 2026 een ander palet krijgt. */
+/* Palet uit REDESIGN_BRIEF.md, afgeleid uit Van Gogh, Zelfportret met grijze
+   vilthoed. Donker: ink is de achtergrond, linnen de tekst.
+   Contrast op ink: linnen 12.7:1, muted 6.6:1, oker 5.8:1, teal 6.0:1.
+   Oker is de enige accentkleur en blijft spaarzaam. */
 @theme {
   /* De variabelen --font-inter en --font-ibm-plex-mono komen uit de fonts-config
      in astro.config.mjs en worden door de Font-component op de pagina gezet. */
@@ -11,11 +13,7 @@
   --color-ink: #14202a;
   --color-slate: #1e323b;
   --color-pigment: #274f5b;
-  /* oker en teal halen op linnen geen 3:1 en zijn dus decoratief.
-     Voor focusringen en interactieve randen oker-diep gebruiken (4.07:1).
-     muted haalt 1.92:1 en is nooit geschikt voor tekst op linnen. */
   --color-oker: #d08a45;
-  --color-oker-diep: #9d5b20;
   --color-linnen: #e8e1cc;
   --color-muted: #a8a48e;
   --color-teal: #6fa0ac;
@@ -24,13 +22,14 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    color-scheme: light;
+    color-scheme: dark;
     /* clip, niet hidden: hidden maakt van html een scrollcontainer */
     overflow-x: clip;
   }
   :focus-visible {
-    outline: 2px solid var(--color-oker-diep);
+    outline: 2px solid var(--color-oker);
     outline-offset: 3px;
+    border-radius: 2px;
   }
   h1,
   h2,
@@ -46,6 +45,10 @@
   summary,
   [role="button"] {
     touch-action: manipulation;
+  }
+  /* Ankerlinks vanuit de navigatie niet onder de rand van het scherm */
+  [id] {
+    scroll-margin-top: 5rem;
   }
 }
 
