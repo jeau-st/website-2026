@@ -84,18 +84,18 @@ const schema = {
   </Sectie>
 
   {
-    dienst.verhaal && (
-      <Sectie id="hoe" kop={dienst.verhaal.kop}>
+    dienst.verhaal?.map((blok, i) => (
+      <Sectie id={`hoe-${i + 1}`} vlak={i % 2 === 1} kop={blok.kop}>
         <div class="mt-8 max-w-2xl space-y-4 text-zacht">
-          {dienst.verhaal.alineas.map((alinea) => (
+          {blok.alineas.map((alinea) => (
             <p>{alinea}</p>
           ))}
         </div>
       </Sectie>
-    )
+    ))
   }
 
-  <Sectie id="verder" vlak={!!dienst.verhaal} kop="De andere drie">
+  <Sectie id="verder" vlak={(dienst.verhaal?.length ?? 0) % 2 === 0} kop="De andere drie">
     <ul class="mt-8 max-w-2xl space-y-3">
       {
         anderen.map((item) => (
@@ -120,7 +120,7 @@ const schema = {
     </p>
   </Sectie>
 
-  <Sectie id="plannen" vlak={!dienst.verhaal}>
+  <Sectie id="plannen" vlak={(dienst.verhaal?.length ?? 0) % 2 === 1}>
     <div class="max-w-2xl">
       <h2 class="text-3xl sm:text-4xl">Is dit wat je zoekt?</h2>
       <p class="mt-4 text-lg text-zacht">
