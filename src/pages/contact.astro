@@ -17,10 +17,10 @@ const gegevens = [
 >
   <section class="px-4 py-20 sm:px-6 sm:py-24">
     <div class="mx-auto max-w-5xl">
-      <h1 class="max-w-3xl text-4xl font-semibold text-linnen sm:text-5xl">
+      <h1 class="max-w-3xl text-4xl font-semibold text-tekst sm:text-5xl">
         Plan een belafspraak
       </h1>
-      <p class="mt-6 max-w-2xl text-lg text-muted">
+      <p class="mt-6 max-w-2xl text-lg text-zacht">
         Dertig minuten, via Teams. Je vertelt wat er vastloopt, ik vraag door
         en zeg eerlijk of ik de juiste persoon ben. Daar zit geen
         verplichting aan vast.
@@ -41,10 +41,10 @@ const gegevens = [
       {
         gegevens.map((item) => (
           <div>
-            <dt class="text-sm font-semibold text-muted">{item.kop}</dt>
+            <dt class="text-sm font-semibold text-zacht">{item.kop}</dt>
             <dd class="mt-1 min-w-0 break-words text-lg">
               <a
-                class="inline-flex min-h-11 items-center text-linnen hover:text-oker"
+                class="inline-flex min-h-11 items-center text-tekst hover:text-accent"
                 href={item.href}
                 target={item.extern ? "_blank" : undefined}
                 rel={item.extern ? "noopener" : undefined}
@@ -57,7 +57,7 @@ const gegevens = [
       }
     </dl>
 
-    <div class="mt-12 border-t border-pigment/60 pt-8 text-muted">
+    <div class="mt-12 border-t border-rand/60 pt-8 text-zacht">
       <p>
         {bedrijf.naam}, {bedrijf.plaats}
       </p>

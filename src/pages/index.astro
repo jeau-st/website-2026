@@ -30,10 +30,10 @@ const kernpunten = [
 >
   <section class="px-4 py-20 sm:px-6 sm:py-28">
     <div class="mx-auto max-w-5xl">
-      <h1 class="max-w-3xl text-4xl font-semibold text-linnen sm:text-5xl lg:text-6xl">
+      <h1 class="max-w-3xl text-4xl font-semibold text-tekst sm:text-5xl lg:text-6xl">
         Je werkt in vijf systemen en weet van geen enkele zeker of het klopt
       </h1>
-      <p class="mt-6 max-w-2xl text-lg text-muted">
+      <p class="mt-6 max-w-2xl text-lg text-zacht">
         Ik breng je CRM, je koppelingen en je processen terug tot iets dat
         klopt en dat je team ook echt gebruikt. Techniek, proces en
         begeleiding bij één persoon.
@@ -42,8 +42,8 @@ const kernpunten = [
       <ul class="mt-8 max-w-2xl space-y-3">
         {
           kernpunten.map((punt) => (
-            <li class="flex gap-3 text-linnen">
-              <span aria-hidden="true" class="mt-2.5 size-1.5 shrink-0 bg-oker" />
+            <li class="flex gap-3 text-tekst">
+              <span aria-hidden="true" class="mt-2.5 size-1.5 shrink-0 bg-accent" />
               <span class="min-w-0">{punt}</span>
             </li>
           ))
@@ -90,8 +90,8 @@ const kernpunten = [
         ))
       }
     </ol>
-    <p class="text-muted">
-      <a class="inline-flex min-h-11 items-center font-semibold text-oker hover:text-linnen" href="/aanpak">
+    <p class="text-zacht">
+      <a class="inline-flex min-h-11 items-center font-semibold text-accent hover:text-tekst" href="/aanpak">
         Lees de aanpak per stap
       </a>
     </p>
@@ -111,19 +111,19 @@ const kernpunten = [
     <div class="mt-10 grid gap-10 sm:grid-cols-[200px_1fr]">
       <div>
         <div
-          class="flex aspect-square w-full max-w-[200px] items-center justify-center border border-dashed border-oker/70 bg-oker/10 p-4 text-center font-mono text-sm text-oker"
+          class="flex aspect-square w-full max-w-[200px] items-center justify-center border border-dashed border-accent/70 bg-accent/10 p-4 text-center font-mono text-sm text-accent"
         >
           TODO: foto
         </div>
       </div>
 
       <div class="max-w-2xl">
-        <p class="text-lg text-linnen">
+        <p class="text-lg text-tekst">
           Ik ben {bedrijf.persoon}, koppelkoning en procesnerd uit {bedrijf.plaats}.
           Ik houd van systemen die met elkaar praten en van processen die
           kloppen omdat ze doordacht zijn, niet omdat ze altijd zo gingen.
         </p>
-        <p class="mt-4 text-muted">
+        <p class="mt-4 text-zacht">
           De afgelopen drie jaar deed ik drie volledige Pipedrive-implementaties,
           inclusief migraties en maatwerk. Daarvoor werkte ik zeven jaar als
           Business Consultant IT bij een energieleverancier, waar ik aan drie
@@ -131,12 +131,12 @@ const kernpunten = [
           ik bouw het niet alleen, ik weet ook wat er daarna in een organisatie
           gebeurt.
         </p>
-        <p class="mt-4 text-muted">
+        <p class="mt-4 text-zacht">
           Jeau.st is Pipedrive-partner via FortCRM.
         </p>
         <p class="mt-6">
           <a
-            class="inline-flex min-h-11 items-center font-semibold text-oker hover:text-linnen"
+            class="inline-flex min-h-11 items-center font-semibold text-accent hover:text-tekst"
             href={bedrijf.linkedin}
             target="_blank"
             rel="noopener"
@@ -156,10 +156,10 @@ const kernpunten = [
 
   <Sectie id="plannen" vlak>
     <div class="max-w-2xl">
-      <h2 class="text-3xl font-semibold text-linnen sm:text-4xl">
+      <h2 class="text-3xl font-semibold text-tekst sm:text-4xl">
         Benieuwd of ik je verder kan helpen?
       </h2>
-      <p class="mt-4 text-lg text-muted">
+      <p class="mt-4 text-lg text-zacht">
         Plan een belafspraak van 30 minuten. Je vertelt wat er vastloopt, ik
         vraag door en zeg eerlijk of ik de juiste persoon ben.
       </p>

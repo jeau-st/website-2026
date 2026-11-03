@@ -19,8 +19,8 @@ const kopId = id ? `${id}-kop` : undefined;
   id={id}
   aria-labelledby={kop ? kopId : undefined}
   class:list={[
-    "border-t border-pigment/60 px-4 py-20 sm:px-6 sm:py-28",
-    vlak && "bg-slate",
+    "border-t border-rand/60 px-4 py-20 sm:px-6 sm:py-28",
+    vlak && "bg-vlak",
     extra,
   ]}
 >
@@ -29,11 +29,11 @@ const kopId = id ? `${id}-kop` : undefined;
       (kop || intro) && (
         <header class="max-w-2xl">
           {kop && (
-            <h2 id={kopId} class="text-3xl font-semibold text-linnen sm:text-4xl">
+            <h2 id={kopId} class="text-3xl font-semibold text-tekst sm:text-4xl">
               {kop}
             </h2>
           )}
-          {intro && <p class="mt-4 text-lg text-muted">{intro}</p>}
+          {intro && <p class="mt-4 text-lg text-zacht">{intro}</p>}
         </header>
       )
     }

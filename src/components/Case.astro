@@ -17,12 +17,12 @@ const delen = [
 const schoon = (tekst: string) => tekst.replace(/^TODO:\s*/, "");
 ---
 
-<article class="border border-pigment/60 p-6 sm:p-8">
+<article class="border border-rand/60 p-6 sm:p-8">
   {
     item.todo ? (
       <Todo wat={schoon(item.titel)} />
     ) : (
-      <h3 class="text-xl font-semibold text-linnen">{item.titel}</h3>
+      <h3 class="text-xl font-semibold text-tekst">{item.titel}</h3>
     )
   }
 
@@ -30,8 +30,8 @@ const schoon = (tekst: string) => tekst.replace(/^TODO:\s*/, "");
     {
       delen.map((deel) => (
         <div>
-          <dt class="text-sm font-semibold text-muted">{deel.kop}</dt>
-          <dd class="mt-1 min-w-0 text-linnen">
+          <dt class="text-sm font-semibold text-zacht">{deel.kop}</dt>
+          <dd class="mt-1 min-w-0 text-tekst">
             {item.todo ? <Todo wat={schoon(deel.tekst)} /> : deel.tekst}
           </dd>
         </div>

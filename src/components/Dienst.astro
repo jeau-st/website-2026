@@ -8,14 +8,14 @@ interface Props {
 const { dienst } = Astro.props;
 ---
 
-<article class="border border-pigment/60 p-6 sm:p-8">
-  <h3 class="text-xl font-semibold text-linnen">{dienst.titel}</h3>
-  <p class="mt-3 text-muted">{dienst.tekst}</p>
+<article class="border border-rand/60 p-6 sm:p-8">
+  <h3 class="text-xl font-semibold text-tekst">{dienst.titel}</h3>
+  <p class="mt-3 text-zacht">{dienst.tekst}</p>
   <ul class="mt-5 space-y-2">
     {
       dienst.punten.map((punt) => (
-        <li class="flex gap-3 text-sm text-linnen">
-          <span aria-hidden="true" class="mt-2 size-1.5 shrink-0 bg-oker" />
+        <li class="flex gap-3 text-sm text-tekst">
+          <span aria-hidden="true" class="mt-2 size-1.5 shrink-0 bg-accent" />
           <span class="min-w-0">{punt}</span>
         </li>
       ))

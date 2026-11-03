@@ -1,15 +1,57 @@
 @import "tailwindcss";
 
-/* Palet uit REDESIGN_BRIEF.md, afgeleid uit Van Gogh, Zelfportret met grijze
-   vilthoed. Donker: ink is de achtergrond, linnen de tekst.
-   Contrast op ink: linnen 12.7:1, muted 6.6:1, oker 5.8:1, teal 6.0:1.
-   Oker is de enige accentkleur en blijft spaarzaam. */
+/*
+  Palet uit REDESIGN_BRIEF.md, afgeleid uit Van Gogh, Zelfportret met grijze
+  vilthoed. De vaste merkkleuren staan onderaan; daarboven staan de
+  rolgebaseerde tokens die per thema wisselen.
+
+  Licht is de standaard. Donker komt pas als de bezoeker erom vraagt via de
+  schakelaar, niet vanzelf via de systeemvoorkeur.
+
+  Contrast licht: ink op linnen 12.7:1, pigment 6.8:1, accent 4.1:1.
+  Contrast donker: linnen op ink 12.7:1, muted 6.6:1, oker 5.8:1.
+  In licht kan oker #d08a45 niet: dat haalt maar 2.2:1. Daar geldt #9d5b20.
+*/
+
+:root,
+:root[data-thema="licht"] {
+  color-scheme: light;
+  --c-bg: #e8e1cc;
+  --c-vlak: #f1ebd8;
+  --c-rand: #c2b593;
+  --c-tekst: #14202a;
+  --c-zacht: #274f5b;
+  --c-accent: #9d5b20;
+  --c-op-accent: #f1ebd8;
+}
+
+:root[data-thema="donker"] {
+  color-scheme: dark;
+  --c-bg: #14202a;
+  --c-vlak: #1e323b;
+  --c-rand: #274f5b;
+  --c-tekst: #e8e1cc;
+  --c-zacht: #a8a48e;
+  --c-accent: #d08a45;
+  --c-op-accent: #14202a;
+}
+
 @theme {
   /* De variabelen --font-inter en --font-ibm-plex-mono komen uit de fonts-config
      in astro.config.mjs en worden door de Font-component op de pagina gezet. */
   --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-ibm-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
 
+  /* Rolgebaseerd: deze gebruik je in componenten */
+  --color-bg: var(--c-bg);
+  --color-vlak: var(--c-vlak);
+  --color-rand: var(--c-rand);
+  --color-tekst: var(--c-tekst);
+  --color-zacht: var(--c-zacht);
+  --color-accent: var(--c-accent);
+  --color-op-accent: var(--c-op-accent);
+
+  /* Vaste merkkleuren, alleen waar een kleur per se niet mag wisselen */
   --color-ink: #14202a;
   --color-slate: #1e323b;
   --color-pigment: #274f5b;
@@ -22,12 +64,11 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    color-scheme: dark;
     /* clip, niet hidden: hidden maakt van html een scrollcontainer */
     overflow-x: clip;
   }
   :focus-visible {
-    outline: 2px solid var(--color-oker);
+    outline: 2px solid var(--color-accent);
     outline-offset: 3px;
     border-radius: 2px;
   }

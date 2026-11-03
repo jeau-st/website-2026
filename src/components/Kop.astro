@@ -1,5 +1,6 @@
 ---
 import Knop from "./Knop.astro";
+import ThemaKnop from "./ThemaKnop.astro";
 import { cta } from "../data/site";
 
 const pad = Astro.url.pathname;
@@ -12,11 +13,11 @@ const links = [
 const actief = (href: string) => pad === href || pad === `${href}/`;
 ---
 
-<header class="border-b border-pigment/60">
+<header class="border-b border-rand/60">
   <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
     <a
       href="/"
-      class="inline-flex min-h-11 items-center font-mono text-lg font-semibold text-linnen hover:text-oker"
+      class="inline-flex min-h-11 items-center font-mono text-lg font-semibold text-tekst hover:text-accent"
       aria-current={pad === "/" ? "page" : undefined}
     >
       jeau.st
@@ -29,14 +30,15 @@ const actief = (href: string) => pad === href || pad === `${href}/`;
             href={link.href}
             aria-current={actief(link.href) ? "page" : undefined}
             class:list={[
-              "inline-flex min-h-11 items-center text-sm hover:text-oker",
-              actief(link.href) ? "text-oker" : "text-muted",
+              "inline-flex min-h-11 items-center text-sm hover:text-accent",
+              actief(link.href) ? "text-accent" : "text-zacht",
             ]}
           >
             {link.tekst}
           </a>
         ))
       }
+      <ThemaKnop />
       {
         /* Zonder planner-URL staat de TODO in de hero; in het menu zou hij
            de balk uit elkaar trekken. */

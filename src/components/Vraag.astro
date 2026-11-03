@@ -9,14 +9,14 @@ interface Props {
 const { item } = Astro.props;
 ---
 
-<details class="group border-b border-pigment/60 py-5">
+<details class="group border-b border-rand/60 py-5">
   <summary
-    class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-lg font-semibold text-linnen hover:text-oker"
+    class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-lg font-semibold text-tekst hover:text-accent"
   >
     {item.vraag}
     <span
       aria-hidden="true"
-      class="shrink-0 text-oker transition-transform duration-150 group-open:rotate-45"
+      class="shrink-0 text-accent transition-transform duration-150 group-open:rotate-45"
     >
       +
     </span>
@@ -25,7 +25,7 @@ const { item } = Astro.props;
     item.todo ? (
       <Todo wat={item.antwoord.replace(/^TODO:\s*/, "")} />
     ) : (
-      <p class="mt-3 max-w-2xl text-muted">{item.antwoord}</p>
+      <p class="mt-3 max-w-2xl text-zacht">{item.antwoord}</p>
     )
   }
 </details>
