@@ -29,6 +29,7 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 
 - `src/data/site.ts`: alle herhaalde inhoud en de TODO-placeholders
 - `OPLEVERING.md`: wat Joost nog moet invullen voor livegang
+- `SCHRIJFWIJZER.md`: stem, verboden woorden en werkwijze voor alle tekst op de site
 - `src/pages`: routes, een bestand per pagina
 - `src/components`: Sectie, Knop, Kop, Voet, Todo en de inhoudsblokken
 - `src/layouts`: layouts, `Basis.astro` verzorgt head, taal en canonical
@@ -38,7 +39,7 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 
 ## Regels
 
-- Nederlands. Geen em dash.
+- Nederlands, je-vorm, geen em dash. Voor alle tekst geldt `SCHRIJFWIJZER.md`.
 - Geen verzonnen cijfers, testimonials of klantcases.
 - Kleuren en fonts alleen via tokens uit `src/styles/global.css`. Gebruik de roltokens (`bg`, `vlak`, `rand`, `tekst`, `zacht`, `accent`), nooit de vaste merkkleuren: die wisselen niet mee met het thema.
 - Licht is de standaard, donker via `data-thema="donker"` op `<html>`. De systeemvoorkeur schakelt niet automatisch om.
