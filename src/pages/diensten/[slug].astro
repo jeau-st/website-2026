@@ -12,9 +12,9 @@ import { bedrijf, diensten } from "../../data/site";
  * één ding gaat. Elke pagina heeft dus een eigen title, beschrijving en
  * Service-schema.
  *
- * De inhoud komt nu nog uit de lijst op de homepage. Dat is te weinig
- * tekst om op te ranken, dus elke pagina draagt een TODO tot Joost er
- * een voorbeeld bij schrijft. Zie OPLEVERING.md.
+ * Een dienst zonder verhaalblok heeft alleen de regel en de bullets uit
+ * de lijst op de homepage. Dat is te weinig om op te ranken, dus die
+ * pagina draagt een TODO tot Joost het aanvult. Zie OPLEVERING.md.
  */
 export function getStaticPaths() {
   return diensten.map((dienst) => ({
@@ -50,6 +50,11 @@ const schema = {
       <p class="font-mono text-sm text-zacht">Dienst</p>
       <h1 class="mt-2 max-w-3xl text-4xl sm:text-5xl">{dienst.kop}</h1>
       <p class="mt-6 max-w-2xl text-lg text-zacht">{dienst.tekst}</p>
+      {
+        dienst.voorWie && (
+          <p class="mt-4 max-w-2xl text-zacht">{dienst.voorWie}</p>
+        )
+      }
     </div>
   </section>
 
@@ -67,14 +72,30 @@ const schema = {
       }
     </ul>
 
-    <div class="mt-10 max-w-2xl">
-      <Todo
-        wat={`schrijf hier een voorbeeld uit de praktijk van ${dienst.titel.toLowerCase()}: wat je tegenkwam, wat je deed en wat het opleverde. Zonder dat is deze pagina te dun om op te ranken.`}
-      />
-    </div>
+    {
+      !dienst.verhaal && (
+        <div class="mt-10 max-w-2xl">
+          <Todo
+            wat={`vertel hier hoe ${dienst.titel.toLowerCase()} in de praktijk gaat: wat je tegenkomt, welke keuze jij maakt die een ander niet maakt, en wat mensen verkeerd verwachten. Zonder dat is deze pagina te dun om op te ranken.`}
+          />
+        </div>
+      )
+    }
   </Sectie>
 
-  <Sectie id="verder" kop="De andere drie">
+  {
+    dienst.verhaal && (
+      <Sectie id="hoe" kop={dienst.verhaal.kop}>
+        <div class="mt-8 max-w-2xl space-y-4 text-zacht">
+          {dienst.verhaal.alineas.map((alinea) => (
+            <p>{alinea}</p>
+          ))}
+        </div>
+      </Sectie>
+    )
+  }
+
+  <Sectie id="verder" vlak={!!dienst.verhaal} kop="De andere drie">
     <ul class="mt-8 max-w-2xl space-y-3">
       {
         anderen.map((item) => (
@@ -99,7 +120,7 @@ const schema = {
     </p>
   </Sectie>
 
-  <Sectie id="plannen" vlak>
+  <Sectie id="plannen" vlak={!dienst.verhaal}>
     <div class="max-w-2xl">
       <h2 class="text-3xl sm:text-4xl">Is dit wat je zoekt?</h2>
       <p class="mt-4 text-lg text-zacht">

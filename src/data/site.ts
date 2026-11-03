@@ -102,6 +102,10 @@ export type Dienst = {
   kop: string;
   /** Meta description van die pagina. Eén zin, met het zoekwoord erin. */
   meta: string;
+  /** Voor wie deze dienst is. Staat onder de kop op de eigen pagina. */
+  voorWie?: string;
+  /** Het inhoudelijke stuk. Zonder dit blok is de pagina te dun. */
+  verhaal?: { kop: string; alineas: string[] };
 };
 
 export const diensten: Dienst[] = [
@@ -110,6 +114,16 @@ export const diensten: Dienst[] = [
     titel: "CRM-inrichting",
     kop: "Pipedrive inrichten op jouw verkoopproces",
     meta: "Pipedrive ingericht op hoe jij verkoopt, inclusief migratie uit Excel of een oud systeem. Door een Pipedrive-consultant uit 's-Hertogenbosch.",
+    voorWie:
+      "Voor bedrijven die nog met Excel-bestanden werken, of met een CRM dat niemand echt gebruikt. Dat systeem is dan slecht ingericht, het hangt nergens aan vast, of allebei. Een nieuw systeem kiezen is zo gebeurd. De vraag is wat er met je bestaande gegevens gebeurt.",
+    verhaal: {
+      kop: "De migratie is het eigenlijke werk",
+      alineas: [
+        "Gegevens overzetten klinkt als kopiëren. Dat is het niet. In een oude database of een Excel staat elke kolom er met een reden, en die reden staat nergens opgeschreven. Een veld dat status heet, betekent bij verkoop iets anders dan bij de administratie. Voordat er iets overgaat, zoek ik uit hoe die gegevens tot stand zijn gekomen.",
+        "Daarna gaan ze het nieuwe proces in, en dat is één manier van werken voor iedereen. Soms betekent dat samenvoegen, soms weggooien, en soms blijkt dat twee afdelingen hetzelfde woord voor iets anders gebruiken. Die gesprekken horen bij de inrichting.",
+        "Je kunt ook fris beginnen. Dat is sneller en het gebeurt vaker dan je zou denken. Toch neem ik de historie graag mee, want een klant van vier jaar geleden kan morgen bellen. Op dat moment wil je zien wat je destijds hebt afgesproken.",
+      ],
+    },
     tekst:
       "Pipedrive ingericht op hoe jij verkoopt, inclusief de stappen die alleen bij jou zo gaan.",
     punten: [
