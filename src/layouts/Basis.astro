@@ -9,16 +9,23 @@ import "../styles/global.css";
 interface Props {
   titel: string;
   beschrijving: string;
+  /** Extra schema.org-blok voor deze pagina, bijvoorbeeld een FAQPage. */
+  extraSchema?: Record<string, unknown>;
 }
 
-const { titel, beschrijving } = Astro.props;
+const { titel, beschrijving, extraSchema } = Astro.props;
 
 const canoniek = new URL(Astro.url.pathname, Astro.site);
 const ogAfbeelding = new URL("/og.png", Astro.site);
 
-const schema = {
-  "@context": "https://schema.org",
+/**
+ * ProfessionalService is een soort LocalBusiness, dus adres en plaats
+ * tellen mee voor zoekopdrachten met een stad erin. De @id maakt het op
+ * elke pagina hetzelfde bedrijf en niet elke keer een nieuw.
+ */
+const bedrijfSchema = {
   "@type": "ProfessionalService",
+  "@id": `${Astro.site}#bedrijf`,
   name: bedrijf.naam,
   description: beschrijving,
   url: Astro.site?.toString(),
@@ -30,9 +37,25 @@ const schema = {
     addressLocality: bedrijf.plaats,
     addressCountry: "NL",
   },
-  areaServed: { "@type": "Country", name: "Nederland" },
+  areaServed: [
+    { "@type": "City", name: bedrijf.plaats },
+    { "@type": "Country", name: "Nederland" },
+  ],
+  knowsAbout: [
+    "Pipedrive",
+    "CRM-implementatie",
+    "n8n",
+    "procesautomatisering",
+    "systeemkoppelingen",
+  ],
   sameAs: [bedrijf.linkedin],
   identifier: { "@type": "PropertyValue", name: "KvK", value: bedrijf.kvk },
+};
+
+/* Eén graph, zodat een pagina haar eigen blok naast het bedrijf zet. */
+const schema = {
+  "@context": "https://schema.org",
+  "@graph": extraSchema ? [bedrijfSchema, extraSchema] : [bedrijfSchema],
 };
 ---
 

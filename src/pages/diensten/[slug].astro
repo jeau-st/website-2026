@@ -1,0 +1,114 @@
+---
+import Basis from "../../layouts/Basis.astro";
+import Sectie from "../../components/Sectie.astro";
+import Knop from "../../components/Knop.astro";
+import Todo from "../../components/Todo.astro";
+import { bedrijf, diensten } from "../../data/site";
+
+/**
+ * Een eigen pagina per dienst. Dat is geen opmaakkeuze maar een
+ * vindbaarheidskeuze: een zoekopdracht gaat over één onderwerp, en een
+ * pagina die over vier dingen gaat verliest het van een pagina die over
+ * één ding gaat. Elke pagina heeft dus een eigen title, beschrijving en
+ * Service-schema.
+ *
+ * De inhoud komt nu nog uit de lijst op de homepage. Dat is te weinig
+ * tekst om op te ranken, dus elke pagina draagt een TODO tot Joost er
+ * een voorbeeld bij schrijft. Zie OPLEVERING.md.
+ */
+export function getStaticPaths() {
+  return diensten.map((dienst) => ({
+    params: { slug: dienst.slug },
+    props: { dienst },
+  }));
+}
+
+const { dienst } = Astro.props;
+
+const anderen = diensten.filter((item) => item.slug !== dienst.slug);
+
+const schema = {
+  "@type": "Service",
+  name: dienst.titel,
+  description: dienst.meta,
+  serviceType: dienst.titel,
+  provider: { "@id": `${Astro.site}#bedrijf` },
+  areaServed: [
+    { "@type": "City", name: bedrijf.plaats },
+    { "@type": "Country", name: "Nederland" },
+  ],
+};
+---
+
+<Basis
+  titel={`${dienst.kop} | Jeau.st`}
+  beschrijving={dienst.meta}
+  extraSchema={schema}
+>
+  <section class="px-4 py-20 sm:px-6 sm:py-24">
+    <div class="mx-auto max-w-5xl">
+      <p class="font-mono text-sm text-zacht">Dienst</p>
+      <h1 class="mt-2 max-w-3xl text-4xl sm:text-5xl">{dienst.kop}</h1>
+      <p class="mt-6 max-w-2xl text-lg text-zacht">{dienst.tekst}</p>
+    </div>
+  </section>
+
+  <Sectie id="watkrijgje" vlak kop="Wat dat concreet is">
+    <ul class="mt-10 max-w-2xl divide-y divide-rand/60 border-y border-rand/60">
+      {
+        dienst.punten.map((punt) => (
+          <li class="flex items-baseline gap-3 py-3 text-tekst">
+            <span aria-hidden="true" class="font-mono text-sm text-zacht">
+              &#8594;
+            </span>
+            <span class="min-w-0">{punt}</span>
+          </li>
+        ))
+      }
+    </ul>
+
+    <div class="mt-10 max-w-2xl">
+      <Todo
+        wat={`schrijf hier een voorbeeld uit de praktijk van ${dienst.titel.toLowerCase()}: wat je tegenkwam, wat je deed en wat het opleverde. Zonder dat is deze pagina te dun om op te ranken.`}
+      />
+    </div>
+  </Sectie>
+
+  <Sectie id="verder" kop="De andere drie">
+    <ul class="mt-8 max-w-2xl space-y-3">
+      {
+        anderen.map((item) => (
+          <li>
+            <a
+              class="tekstlink inline-flex min-h-11 items-center text-tekst"
+              href={`/diensten/${item.slug}/`}
+            >
+              {item.titel}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="mt-8">
+      <a
+        class="tekstlink inline-flex min-h-11 items-center text-tekst"
+        href="/aanpak"
+      >
+        Lees hoe een traject verloopt
+      </a>
+    </p>
+  </Sectie>
+
+  <Sectie id="plannen" vlak>
+    <div class="max-w-2xl">
+      <h2 class="text-3xl sm:text-4xl">Is dit wat je zoekt?</h2>
+      <p class="mt-4 text-lg text-zacht">
+        Vertel in een half uur wat er vastloopt. Ik zeg eerlijk of ik de
+        juiste persoon ben.
+      </p>
+      <div class="mt-8">
+        <Knop toonToelichting />
+      </div>
+    </div>
+  </Sectie>
+</Basis>

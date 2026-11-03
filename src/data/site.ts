@@ -93,14 +93,23 @@ export const denkwijze: Denkstap[] = [
 ];
 
 export type Dienst = {
+  /** Wordt de URL: /diensten/<slug>. Niet wijzigen zonder redirect. */
+  slug: string;
   titel: string;
   tekst: string;
   punten: string[];
+  /** De h1 op de eigen pagina. Mag langer zijn dan de titel in de lijst. */
+  kop: string;
+  /** Meta description van die pagina. Eén zin, met het zoekwoord erin. */
+  meta: string;
 };
 
 export const diensten: Dienst[] = [
   {
+    slug: "crm-inrichting",
     titel: "CRM-inrichting",
+    kop: "Pipedrive inrichten op jouw verkoopproces",
+    meta: "Pipedrive ingericht op hoe jij verkoopt, inclusief migratie uit Excel of een oud systeem. Door een Pipedrive-consultant uit 's-Hertogenbosch.",
     tekst:
       "Pipedrive ingericht op hoe jij verkoopt, inclusief de stappen die alleen bij jou zo gaan.",
     punten: [
@@ -110,7 +119,10 @@ export const diensten: Dienst[] = [
     ],
   },
   {
+    slug: "koppelingen-en-automatisering",
     titel: "Koppelingen en automatisering",
+    kop: "Je systemen aan elkaar koppelen",
+    meta: "Koppelingen tussen CRM, administratie en mail, gebouwd met n8n, zodat niemand hetzelfde twee keer invoert.",
     tekst:
       "Systemen die elkaar iets doorgeven, zodat niemand hetzelfde twee keer invoert.",
     punten: [
@@ -119,7 +131,10 @@ export const diensten: Dienst[] = [
     ],
   },
   {
+    slug: "cijfers-en-ai",
     titel: "Cijfers waar je op kunt sturen",
+    kop: "Cijfers waar je op kunt sturen, en AI die je data kent",
+    meta: "Rapportage op wat je echt wilt weten, signalen als er iets misgaat, en AI die met je eigen cijfers werkt via Claude en MCP.",
     tekst:
       "Een paar getallen die kloppen zijn meer waard dan een dashboard waar niemand naar kijkt.",
     punten: [
@@ -130,7 +145,10 @@ export const diensten: Dienst[] = [
     ],
   },
   {
+    slug: "ondersteuning-en-training",
     titel: "Ondersteuning en training",
+    kop: "Training en onderhoud na de oplevering",
+    meta: "Training op je eigen werkwijze en een onderhoudsabonnement, zodat het systeem ook een half jaar later nog gebruikt wordt.",
     tekst:
       "Een systeem werkt pas als het team het gebruikt, ook een half jaar later nog.",
     punten: [

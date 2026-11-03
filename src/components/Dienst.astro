@@ -21,7 +21,11 @@ const { dienst, nummer } = Astro.props;
     </p>
 
     <div class="min-w-0">
-      <h3 class="text-xl">{dienst.titel}</h3>
+      <h3 class="text-xl">
+        <a class="tekstlink" href={`/diensten/${dienst.slug}/`}>
+          {dienst.titel}
+        </a>
+      </h3>
       <p class="mt-2 text-zacht">{dienst.tekst}</p>
     </div>
 

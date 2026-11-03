@@ -24,6 +24,19 @@ import {
 
 /* Expres ongelijk van lengte en vorm. Vier punten met hetzelfde ritme
    lazen als een gegenereerd lijstje. Zie SCHRIJFWIJZER.md. */
+/* Alleen vrijgegeven vragen in het schema: een TODO als antwoord
+   aanbieden aan Google is erger dan de vraag weglaten. */
+const faqSchema = {
+  "@type": "FAQPage",
+  mainEntity: vragen
+    .filter((item) => !item.todo)
+    .map((item) => ({
+      "@type": "Question",
+      name: item.vraag,
+      acceptedAnswer: { "@type": "Answer", text: item.antwoord },
+    })),
+};
+
 const kernpunten = [
   "Je proces vastgelegd in Pipedrive, voor iedereen hetzelfde",
   "Eén bron van waarheid voor je hele team",
@@ -36,6 +49,7 @@ const kernpunten = [
 <Basis
   titel="Jeau.st: CRM, koppelingen en procesautomatisering"
   beschrijving="Joost Beers richt Pipedrive in, koppelt je systemen en automatiseert handwerk. Voor MKB en scale-ups die vastlopen in losse systemen en Excel."
+  extraSchema={faqSchema}
 >
   {/* Minder lucht boven de kop dan in de andere secties, zodat de kop, de
       zin eronder en de actie samen op 1280 bij 800 passen zonder scrollen. */}

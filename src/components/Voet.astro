@@ -1,17 +1,35 @@
 ---
 import Woordmerk from "./Woordmerk.astro";
-import { bedrijf } from "../data/site";
+import { bedrijf, diensten } from "../data/site";
 
 const jaar = new Date().getFullYear();
 ---
 
 <footer class="border-t border-rand/60 px-4 pb-28 pt-14 sm:px-6 sm:pb-14">
-  <div class="mx-auto grid max-w-5xl gap-10 sm:grid-cols-3">
+  <div class="mx-auto grid max-w-5xl gap-10 sm:grid-cols-2 lg:grid-cols-4">
     <div>
       <Woordmerk class="h-8 text-merk" />
       <p class="mt-3 text-sm text-zacht">
         CRM, koppelingen en procesautomatisering voor MKB en scale-ups.
       </p>
+    </div>
+
+    <div>
+      <h2 class="text-sm font-semibold">Diensten</h2>
+      <ul class="mt-2 space-y-1 text-sm text-zacht">
+        {
+          diensten.map((dienst) => (
+            <li>
+              <a
+                class="tekstlink inline-flex min-h-11 items-center hover:text-tekst"
+                href={`/diensten/${dienst.slug}/`}
+              >
+                {dienst.titel}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
     </div>
 
     <div>
