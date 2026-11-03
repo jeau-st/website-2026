@@ -1,0 +1,68 @@
+---
+import Basis from "../layouts/Basis.astro";
+import Sectie from "../components/Sectie.astro";
+import Todo from "../components/Todo.astro";
+import { bedrijf } from "../data/site";
+---
+
+<Basis
+  titel="Privacy | Jeau.st"
+  beschrijving="Hoe Jeau.st omgaat met je gegevens: geen cookies, geen tracking, alleen cookieloze bezoekstatistieken."
+>
+  <section class="px-4 py-20 sm:px-6 sm:py-24">
+    <div class="mx-auto max-w-5xl">
+      <h1 class="text-4xl font-semibold text-linnen sm:text-5xl">Privacy</h1>
+      <p class="mt-6 max-w-2xl text-lg text-muted">
+        Kort, omdat er weinig te melden valt. Deze site zet geen cookies en
+        volgt je niet.
+      </p>
+    </div>
+  </section>
+
+  <Sectie id="uitleg" vlak>
+    <div class="max-w-2xl space-y-8">
+      <div>
+        <h2 class="text-xl font-semibold text-linnen">Bezoekstatistieken</h2>
+        <p class="mt-2 text-muted">
+          Ik gebruik Cloudflare Web Analytics. Dat werkt zonder cookies en
+          zonder een profiel van je op te bouwen. Ik zie hoeveel mensen welke
+          pagina bekijken, niet wie je bent.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold text-linnen">Als je contact opneemt</h2>
+        <p class="mt-2 text-muted">
+          Mail je of bel je, dan bewaar ik wat je stuurt zolang dat nodig is
+          om je te kunnen helpen. Plan je een belafspraak, dan loopt dat via
+          de afsprakenplanner van Pipedrive en komen je naam, mailadres en
+          het gekozen tijdstip in mijn CRM te staan.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold text-linnen">Je rechten</h2>
+        <p class="mt-2 text-muted">
+          Je mag opvragen welke gegevens ik van je heb, ze laten corrigeren of
+          laten verwijderen. Een mail naar
+          <a class="text-oker hover:text-linnen" href={`mailto:${bedrijf.email}`}>
+            {bedrijf.email}
+          </a>
+          is genoeg.
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold text-linnen">Verwerkers</h2>
+        <Todo wat="noem de partijen waar gegevens terechtkomen (Pipedrive, Cloudflare, mailprovider) en laat deze tekst juridisch nalopen voor livegang." />
+      </div>
+
+      <div>
+        <h2 class="text-xl font-semibold text-linnen">Contact</h2>
+        <p class="mt-2 text-muted">
+          {bedrijf.naam}, {bedrijf.plaats}, KvK&nbsp;{bedrijf.kvk}.
+        </p>
+      </div>
+    </div>
+  </Sectie>
+</Basis>

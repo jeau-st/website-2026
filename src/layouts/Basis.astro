@@ -2,7 +2,7 @@
 import { Font } from "astro:assets";
 import Kop from "../components/Kop.astro";
 import Voet from "../components/Voet.astro";
-import { bedrijf } from "../data/site";
+import { analyticsToken, bedrijf } from "../data/site";
 import "../styles/global.css";
 
 interface Props {
@@ -76,5 +76,17 @@ const schema = {
       <slot />
     </main>
     <Voet />
+
+    {
+      /* Cookieloos, dus geen melding nodig. Laadt alleen met een token. */
+      analyticsToken && (
+        <script
+          is:inline
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={`{"token": "${analyticsToken}"}`}
+        />
+      )
+    }
   </body>
 </html>

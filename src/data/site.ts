@@ -23,6 +23,13 @@ export const cta = {
   url: "",
 } as const;
 
+/**
+ * Cloudflare Web Analytics: cookieloos, dus geen cookiemelding nodig.
+ * TODO: vul het token uit het Cloudflare-dashboard in. Leeg betekent
+ * dat de beacon niet geladen wordt.
+ */
+export const analyticsToken = "";
+
 export type Pijnpunt = {
   citaat: string;
   uitleg: string;

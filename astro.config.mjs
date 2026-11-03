@@ -1,12 +1,14 @@
 // @ts-check
 import { defineConfig, fontProviders } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
+import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://jeau.st',
   adapter: cloudflare(),
+  integrations: [sitemap()],
   // Fonts worden bij de build opgehaald en vanaf ons eigen domein geserveerd,
   // dus geen verzoek naar Google vanuit de browser van de bezoeker.
   fonts: [

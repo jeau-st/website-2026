@@ -1,0 +1,54 @@
+---
+import Basis from "../layouts/Basis.astro";
+import Sectie from "../components/Sectie.astro";
+import Knop from "../components/Knop.astro";
+import Case from "../components/Case.astro";
+import Todo from "../components/Todo.astro";
+import { cases } from "../data/site";
+
+const vrijgegeven = cases.filter((item) => !item.todo);
+---
+
+<Basis
+  titel="Werk: voorbeelden uit de praktijk | Jeau.st"
+  beschrijving="Geanonimiseerde voorbeelden van CRM-implementaties, koppelingen en automatiseringen, opgebouwd als situatie, aanpak en resultaat."
+>
+  <section class="px-4 py-20 sm:px-6 sm:py-24">
+    <div class="mx-auto max-w-5xl">
+      <h1 class="max-w-3xl text-4xl font-semibold text-linnen sm:text-5xl">
+        Voorbeelden van werk
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-muted">
+        Geanonimiseerd, omdat het over de systemen en cijfers van klanten
+        gaat. Opgebouwd als situatie, aanpak en resultaat, zodat je kunt zien
+        of het op jouw situatie lijkt.
+      </p>
+    </div>
+  </section>
+
+  <Sectie id="cases" vlak>
+    {
+      vrijgegeven.length === 0 && (
+        <Todo wat="deze pagina staat nog volledig op placeholders. Vul de cases in src/data/site.ts in, of haal Werk uit het menu tot er inhoud is." />
+      )
+    }
+    <div class="mt-8 grid gap-6 sm:grid-cols-2">
+      {cases.map((item) => <Case item={item} />)}
+    </div>
+  </Sectie>
+
+  <Sectie id="plannen">
+    <div class="max-w-2xl">
+      <h2 class="text-3xl font-semibold text-linnen sm:text-4xl">
+        Lijkt dit op wat jij nodig hebt?
+      </h2>
+      <p class="mt-4 text-lg text-muted">
+        In een gesprek van 30 minuten hoor je of jouw situatie hierop lijkt
+        en wat er voor nodig is.
+      </p>
+      <div class="mt-8">
+        <Knop toonToelichting />
+      </div>
+    </div>
+  </Sectie>
+</Basis>

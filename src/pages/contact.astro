@@ -1,0 +1,67 @@
+---
+import Basis from "../layouts/Basis.astro";
+import Sectie from "../components/Sectie.astro";
+import Knop from "../components/Knop.astro";
+import { bedrijf } from "../data/site";
+
+const gegevens = [
+  { kop: "Mail", tekst: bedrijf.email, href: `mailto:${bedrijf.email}` },
+  { kop: "Telefoon", tekst: bedrijf.telefoon, href: bedrijf.telefoonLink },
+  { kop: "LinkedIn", tekst: "jfbeers", href: bedrijf.linkedin, extern: true },
+];
+---
+
+<Basis
+  titel="Contact | Jeau.st"
+  beschrijving="Plan een belafspraak van 30 minuten met Joost Beers, of neem contact op via mail of telefoon."
+>
+  <section class="px-4 py-20 sm:px-6 sm:py-24">
+    <div class="mx-auto max-w-5xl">
+      <h1 class="max-w-3xl text-4xl font-semibold text-linnen sm:text-5xl">
+        Plan een belafspraak
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-muted">
+        Dertig minuten, via Teams. Je vertelt wat er vastloopt, ik vraag door
+        en zeg eerlijk of ik de juiste persoon ben. Daar zit geen
+        verplichting aan vast.
+      </p>
+      <div class="mt-10">
+        <Knop toonToelichting />
+      </div>
+    </div>
+  </section>
+
+  <Sectie
+    id="gegevens"
+    vlak
+    kop="Liever direct contact"
+    intro="Een gesprek plannen werkt het snelst, maar mailen of bellen kan ook."
+  >
+    <dl class="mt-10 grid gap-8 sm:grid-cols-3">
+      {
+        gegevens.map((item) => (
+          <div>
+            <dt class="text-sm font-semibold text-muted">{item.kop}</dt>
+            <dd class="mt-1 min-w-0 break-words text-lg">
+              <a
+                class="text-linnen hover:text-oker"
+                href={item.href}
+                target={item.extern ? "_blank" : undefined}
+                rel={item.extern ? "noopener" : undefined}
+              >
+                {item.tekst}
+              </a>
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <div class="mt-12 border-t border-pigment/60 pt-8 text-muted">
+      <p>
+        {bedrijf.naam}, {bedrijf.plaats}
+      </p>
+      <p class="mt-1">KvK&nbsp;{bedrijf.kvk}</p>
+    </div>
+  </Sectie>
+</Basis>
