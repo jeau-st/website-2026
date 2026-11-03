@@ -1,0 +1,90 @@
+---
+import { denkwijze } from "../data/site";
+
+/**
+ * De denkwijze als tekening. Opgebouwd uit randen en tekst, net als Schema,
+ * dus hij schaalt mee, kleurt mee met het thema en laadt geen bestand.
+ *
+ * Drie stations en een terugloop. De vierde stap uit `denkwijze` is geen
+ * station maar de pijl terug: dat is precies wat die stap zegt. Daarom
+ * staat 04 als label op de terugloop en niet in de rij.
+ */
+const stations = denkwijze.slice(0, 3);
+const terug = denkwijze[3];
+
+const kort: Record<string, string> = {
+  "01": "proces",
+  "02": "automatiseren",
+  "03": "meten",
+};
+---
+
+<figure class="mt-10">
+  <div aria-hidden="true">
+    {/* Mobiel: onder elkaar. De terugloop is een spoor langs de hele
+        linkerkant, want hij gaat terug naar 01 en niet naar de laatste. */}
+    <div class="relative pl-6 sm:hidden">
+      <ol>
+        {
+          stations.map((stap, i) => (
+            <li>
+              {i > 0 && <span class="mx-auto block h-6 w-px bg-rand" />}
+              <div class="border border-rand px-4 py-3">
+                <p class="font-mono text-xs text-zacht">{stap.nummer}</p>
+                <p class="mt-1 text-sm text-tekst">{kort[stap.nummer]}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+      <div class="h-12"></div>
+      <span class="absolute bottom-0 left-0 top-0 w-px bg-rand"></span>
+      <span class="absolute inset-x-0 bottom-0 h-px bg-rand"></span>
+      <span class="absolute bottom-0 right-0 h-12 w-px bg-rand"></span>
+      <span class="absolute -top-1 left-0 -ml-[0.3rem] font-mono text-xs text-rand">
+        &#9650;
+      </span>
+      <p
+        class="absolute bottom-1.5 left-1/2 -translate-x-1/2 font-mono text-xs text-zacht"
+      >
+        {terug.nummer} opnieuw
+      </p>
+    </div>
+
+    {/* Vanaf sm: de rij met de terugloop eronder */}
+    <div class="hidden sm:block">
+      <ol class="flex items-stretch">
+        {
+          stations.map((stap, i) => (
+            <>
+              {i > 0 && <span class="w-8 shrink-0 self-center h-px bg-rand" />}
+              <li class="flex-1 border border-rand px-4 py-3">
+                <p class="font-mono text-xs text-zacht">{stap.nummer}</p>
+                <p class="mt-1 text-tekst">{kort[stap.nummer]}</p>
+              </li>
+            </>
+          ))
+        }
+      </ol>
+      <div class="relative h-16">
+        <span class="absolute inset-x-0 bottom-0 h-px bg-rand"></span>
+        <span class="absolute bottom-0 left-0 top-0 w-px bg-rand"></span>
+        <span class="absolute bottom-0 right-0 top-0 w-px bg-rand"></span>
+        {/* De punt zit op de linkerlijn, want daar gaat hij terug naar 01 */}
+        <span class="absolute -top-1 left-0 -ml-[0.3rem] font-mono text-xs text-rand">
+          &#9650;
+        </span>
+        <p
+          class="absolute bottom-1.5 left-1/2 -translate-x-1/2 font-mono text-sm text-zacht"
+        >
+          {terug.nummer} opnieuw
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <figcaption class="sr-only">
+    De vier stappen vormen een rondje: eerst het proces, dan automatiseren,
+    dan meetbaar maken, en dan weer van voren af aan.
+  </figcaption>
+</figure>

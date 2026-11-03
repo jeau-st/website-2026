@@ -3,6 +3,7 @@ import Basis from "../layouts/Basis.astro";
 import Sectie from "../components/Sectie.astro";
 import Knop from "../components/Knop.astro";
 import Denkstap from "../components/Denkstap.astro";
+import Cyclus from "../components/Cyclus.astro";
 import Niveau from "../components/Niveau.astro";
 import Processtap from "../components/Processtap.astro";
 import { denkwijze, niveaus, processtappen } from "../data/site";
@@ -29,12 +30,7 @@ import { denkwijze, niveaus, processtappen } from "../data/site";
     <ol>
       {denkwijze.map((stap) => <Denkstap stap={stap} />)}
     </ol>
-    <p class="flex max-w-2xl items-baseline gap-3 border-t border-rand/60 pt-8 text-zacht">
-      <span aria-hidden="true" class="font-mono text-sm">&#8593;</span>
-      <span class="min-w-0">
-        En dan weer naar 01, want je bedrijf staat niet stil.
-      </span>
-    </p>
+    <Cyclus />
   </Sectie>
 
   <Sectie

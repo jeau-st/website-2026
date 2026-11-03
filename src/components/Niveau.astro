@@ -2,22 +2,36 @@
 import type { Niveau } from "../data/site";
 
 /**
- * Een niveau om jezelf in te herkennen. De herkenning staat groot, want
- * daar leest iemand zichzelf in; waar je begint staat eronder in de mono,
- * zodat het als aantekening leest en niet als tweede alinea.
+ * Een niveau om jezelf in te herkennen. De meter links zegt zonder woorden
+ * hoe ver dit niveau is: vier segmenten waarvan de eerste N gevuld zijn.
+ * Dat scheelt een zin per niveau en maakt de lijst scanbaar.
  */
 interface Props {
   niveau: Niveau;
 }
 
 const { niveau } = Astro.props;
+const trap = Number(niveau.nummer);
+const segmenten = [1, 2, 3, 4];
 ---
 
 <li class="border-t border-rand/60 py-8">
-  <div class="grid gap-x-6 gap-y-2 sm:grid-cols-[4rem_1fr]">
-    <p class="font-mono text-sm text-zacht" aria-hidden="true">
-      {niveau.nummer}
-    </p>
+  <div class="grid gap-x-6 gap-y-3 sm:grid-cols-[5rem_1fr]">
+    <div aria-hidden="true">
+      <p class="font-mono text-sm text-zacht">{niveau.nummer}</p>
+      <div class="mt-2 flex gap-1">
+        {
+          segmenten.map((s) => (
+            <span
+              class:list={[
+                "h-1.5 w-4",
+                s <= trap ? "bg-zacht" : "border border-rand",
+              ]}
+            />
+          ))
+        }
+      </div>
+    </div>
     <div class="min-w-0 max-w-2xl">
       <h3 class="text-xl text-tekst">{niveau.titel}</h3>
       <p class="mt-2 text-zacht">{niveau.herkenning}</p>

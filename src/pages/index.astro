@@ -6,9 +6,11 @@ import Pijnpunt from "../components/Pijnpunt.astro";
 import Schema from "../components/Schema.astro";
 import Dienst from "../components/Dienst.astro";
 import Denkstap from "../components/Denkstap.astro";
+import Cyclus from "../components/Cyclus.astro";
+import Stappenbalk from "../components/Stappenbalk.astro";
 import Nastap from "../components/Nastap.astro";
-import Processtap from "../components/Processtap.astro";
 import Case from "../components/Case.astro";
+import Todo from "../components/Todo.astro";
 import Vraag from "../components/Vraag.astro";
 import {
   bedrijf,
@@ -17,9 +19,10 @@ import {
   diensten,
   nabouw,
   pijnpunten,
-  processtappen,
   vragen,
 } from "../data/site";
+
+const vrijgegevenCases = cases.filter((item) => !item.todo);
 
 /* Expres ongelijk van lengte en vorm. Vier punten met hetzelfde ritme
    lazen als een gegenereerd lijstje. Zie SCHRIJFWIJZER.md. */
@@ -95,14 +98,11 @@ const kernpunten = [
       {denkwijze.map((stap) => <Denkstap stap={stap} />)}
     </ol>
     {/* De cyclus moet je kunnen zien, anders leest het als vier losse
-        stappen met een einde. Het pijltje is versiering, de tekst zegt
-        hetzelfde. */}
-    <p class="flex max-w-2xl items-baseline gap-3 border-t border-rand/60 pt-8 text-zacht">
-      <span aria-hidden="true" class="font-mono text-sm">&#8593;</span>
-      <span class="min-w-0">
-        En dan weer naar 01. Elk rondje is kleiner dan het vorige, want er is
-        steeds minder te standaardiseren.
-      </span>
+        stappen met een einde. */}
+    <Cyclus />
+    <p class="mt-6 max-w-2xl text-zacht">
+      Elk rondje is kleiner dan het vorige, want er is steeds minder te
+      standaardiseren.
     </p>
   </Sectie>
 
@@ -124,18 +124,12 @@ const kernpunten = [
   <Sectie
     id="proces"
     kop="Hoe een traject loopt"
-    intro="De volgorde hierboven is de denkwijze. Dit is hoe een opdracht in de praktijk verloopt, met per stap wat ik doe, wat jij doet en wat er aan het eind ligt."
+    intro="De volgorde hierboven is de denkwijze. Zo ziet een opdracht er in de praktijk uit."
   >
-    <ol class="mt-12">
-      {
-        processtappen.map((stap, i) => (
-          <Processtap stap={stap} laatste={i === processtappen.length - 1} />
-        ))
-      }
-    </ol>
-    <p class="text-zacht">
+    <Stappenbalk />
+    <p class="mt-10 text-zacht">
       <a class="tekstlink inline-flex min-h-11 items-center text-tekst" href="/aanpak">
-        Lees de aanpak per stap
+        Lees wat er per stap gebeurt
       </a>
     </p>
   </Sectie>
@@ -156,13 +150,22 @@ const kernpunten = [
     kop="Voorbeelden van werk"
     intro="Geanonimiseerd, omdat het over de systemen van klanten gaat."
   >
-    <ol class="mt-12">
+    {/* Twee lege cases naast elkaar vullen een heel scherm met niets.
+        Zolang er geen enkele is vrijgegeven staat hier alleen de melding;
+        de placeholders zelf staan op /werk en in OPLEVERING.md. */}
+    <div class="mt-10 max-w-2xl">
       {
-        cases.map((item, i) => (
-          <Case item={item} nummer={String(i + 1).padStart(2, "0")} />
-        ))
+        vrijgegevenCases.length === 0 ? (
+          <Todo wat="er is nog geen case vrijgegeven. Vul ze in src/data/site.ts in, of haal deze sectie en Werk uit het menu." />
+        ) : (
+          <ol>
+            {vrijgegevenCases.map((item, i) => (
+              <Case item={item} nummer={String(i + 1).padStart(2, "0")} />
+            ))}
+          </ol>
+        )
       }
-    </ol>
+    </div>
   </Sectie>
 
   <Sectie id="over" vlak kop="Over mij">
