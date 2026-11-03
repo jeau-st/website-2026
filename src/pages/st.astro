@@ -1,0 +1,156 @@
+---
+import Basis from "../layouts/Basis.astro";
+import Sectie from "../components/Sectie.astro";
+
+/**
+ * Uitleg bij het domein. Staat los van de dienstenpagina's: wie hier komt
+ * is nieuwsgierig, niet op zoek naar een offerte. Daarom geen knop naar de
+ * planner onderaan, wel twee links naar partijen die er reizen heen maken.
+ */
+const reizen = [
+  {
+    href: "https://saoferias.st/",
+    tekst: "saoferias.st",
+    uitleg: "voor een reis die je zelf invult",
+  },
+  {
+    href: "https://www.djoser.nl/rondreis-sao-tome-en-principe/",
+    tekst: "Djoser",
+    uitleg: "voor een groepsrondreis",
+  },
+];
+---
+
+<Basis
+  titel="Waarom .st? | Jeau.st"
+  beschrijving="Het domein van Jeau.st eindigt op .st, het landendomein van São Tomé en Príncipe. Over de geschiedenis van die eilanden, ook de Nederlandse, en waarom je er heen zou gaan."
+>
+  <section class="px-4 py-20 sm:px-6 sm:py-24">
+    <div class="mx-auto max-w-5xl">
+      <h1 class="max-w-3xl text-4xl sm:text-5xl">.st?!</h1>
+      <p class="mt-6 max-w-2xl text-lg text-zacht">
+        Jeau.st eindigt op .st omdat mijn naam daar toevallig in past. Dat is
+        het landendomein van São Tomé en Príncipe. Toen ik eenmaal wist waar
+        die eilanden lagen, bleef ik lezen. Dit is wat ik vond.
+      </p>
+    </div>
+  </section>
+
+  <Sectie id="eilanden" vlak kop="Twee eilanden op de evenaar">
+    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
+      <p>
+        São Tomé en Príncipe ligt in de Golf van Guinee, een paar honderd
+        kilometer voor de kust van Gabon. Twee vulkanische eilanden met
+        regenwoud tot aan het water, een paar kleine eilandjes eromheen, en
+        de evenaar die er dwars doorheen loopt. Er wonen ruim
+        tweehonderdduizend mensen, de taal is Portugees.
+      </p>
+      <p>
+        Op de Seychellen na is het het kleinste land van Afrika. De hoofdstad
+        heet ook São Tomé en je loopt er op een ochtend doorheen.
+      </p>
+    </div>
+  </Sectie>
+
+  <Sectie id="geschiedenis" kop="Suiker, cacao en slavernij">
+    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
+      <p>
+        Toen Portugese zeevaarders rond 1470 aankwamen, woonde er niemand.
+        Dat maakte de eilanden bruikbaar voor wat erna kwam. Er werd
+        suikerriet geplant en het werk werd gedaan door mensen die van het
+        vasteland werden weggehaald en tot slaaf gemaakt. São Tomé groeide uit
+        tot een doorvoerhaven in de trans-Atlantische slavenhandel, met
+        Brazilië als bestemming.
+      </p>
+      <p>
+        In de negentiende eeuw kwamen cacao en koffie, verbouwd op grote
+        plantages die roças heten. Begin twintigste eeuw was dit land een van
+        de grootste cacao-exporteurs ter wereld. De slavernij was toen
+        officieel afgeschaft, het werk op de roças bleef dwangarbeid onder een
+        andere naam. In 1975 werd het land onafhankelijk van Portugal.
+      </p>
+    </div>
+  </Sectie>
+
+  <Sectie id="nederlands" vlak kop="De Nederlandse jaren">
+    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
+      <p>
+        In 1641 voer een vloot van de West-Indische Compagnie onder Cornelis
+        Jol, bijgenaamd Houtebeen, de haven van São Tomé binnen en nam het
+        eiland in. Datzelfde jaar viel Luanda. Dat was geen toeval: de WIC
+        had Nederlands-Brazilië in handen en wilde ook de aanvoer van tot
+        slaaf gemaakte mensen die de suikerplantages daar draaiende hield.
+      </p>
+      <p>
+        Lang duurde het niet. Het klimaat sloopte de bezetting en in 1648
+        stuurde Salvador Correia de Sá, gouverneur van Rio de Janeiro, een
+        vloot om het gebied terug te halen. Luanda viel als eerste, kort
+        daarna gaven de Nederlanders ook São Tomé op. Zeven jaar Nederlands
+        bestuur, en het ging van begin tot eind over slavenhandel. Je vindt
+        het nauwelijks terug in de Nederlandse geschiedenisles.
+      </p>
+    </div>
+  </Sectie>
+
+  <Sectie id="nu" kop="Hoe het er nu voor staat">
+    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
+      <p>
+        Het land is arm en kwetsbaar. Vrijwel alles komt per schip binnen,
+        inclusief de brandstof voor de elektriciteitscentrales, dus een
+        prijsstijging op de wereldmarkt komt hier hard aan. Stroomuitval is
+        gewoon. De cacao is nog steeds de belangrijkste export, tegenwoordig
+        vaak biologisch en met een keurmerk voor de Europese markt.
+      </p>
+      <p>
+        Werk is schaars, dus jonge mensen vertrekken naar Portugal. Er is
+        jaren gehoopt op olie voor de kust, die hoop heeft tot nu toe niets
+        opgeleverd. Toerisme groeit langzaam en is een van de weinige manieren
+        waarop geld in het land zelf terechtkomt.
+      </p>
+    </div>
+  </Sectie>
+
+  <Sectie id="heen" vlak kop="Waarom je er heen zou gaan">
+    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
+      <p>
+        Het is er veilig. Criminaliteit tegen bezoekers is zeldzaam en de
+        sfeer is rustig en vriendelijk, iets wat vrijwel iedereen die er
+        geweest is als eerste noemt. En het is er prachtig: regenwoud dat tot
+        aan zee doorloopt, lege zwarte en gele stranden, en de Pico Cão
+        Grande, een rotspijp van ruim driehonderd meter die uit het groen
+        omhoog steekt.
+      </p>
+      <p>
+        Je kunt er slapen op een oude roça, cacao volgen van boon tot reep,
+        zeeschildpadden zien die eieren leggen en tussen juli en oktober
+        bultruggen voor de kust. Er komen weinig toeristen, dus je staat
+        nergens in de rij.
+      </p>
+    </div>
+  </Sectie>
+
+  <Sectie id="boeken" kop="Zelf gaan">
+    <div class="mt-8 max-w-2xl">
+      <p class="text-zacht">
+        Er zijn twee makkelijke manieren om er te komen.
+      </p>
+      <ul class="mt-6 space-y-3">
+        {
+          reizen.map((reis) => (
+            <li>
+              <a
+                class="tekstlink inline-flex min-h-11 items-center text-tekst"
+                href={reis.href}
+                target="_blank"
+                rel="noopener"
+              >
+                {reis.tekst}
+              </a>
+              <span class="text-zacht">, {reis.uitleg}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </Sectie>
+</Basis>

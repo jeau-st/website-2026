@@ -9,7 +9,6 @@ het er staat, kan de site niet live.
 | --- | --- | --- |
 | URL afspraakplanner | `src/data/site.ts`, `cta.url` | De primaire actie op elke pagina. Zolang dit leeg is, rendert de knop een TODO in plaats van een dode link. |
 | Verwerkerslijst privacy | `src/pages/privacy.astro` | Noem Pipedrive, Cloudflare en je mailprovider, en laat de tekst juridisch nalezen. |
-| Foto van jezelf | `src/pages/index.astro`, sectie Over mij | Zet het bestand in `public/` en vervang het placeholderblok. |
 | Open Graph-afbeelding | `public/og.png` | De layout verwijst ernaar, het bestand bestaat nog niet. 1200 bij 630 px. |
 
 ## Inhoud die nu op placeholders staat

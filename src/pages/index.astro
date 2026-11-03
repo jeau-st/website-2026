@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+import foto from "../assets/joost.webp";
 import Basis from "../layouts/Basis.astro";
 import Sectie from "../components/Sectie.astro";
 import Knop from "../components/Knop.astro";
@@ -183,11 +185,16 @@ const kernpunten = [
   <Sectie id="over" vlak kop="Over mij">
     <div class="mt-10 grid gap-10 sm:grid-cols-[200px_1fr]">
       <div>
-        <div
-          class="flex aspect-square w-full max-w-[200px] items-center justify-center border border-dashed border-accent/70 bg-accent/10 p-4 text-center font-mono text-sm text-accent"
-        >
-          TODO: foto
-        </div>
+        {/* De bron is al vierkant bijgesneden, want bij een liggend bestand
+            levert Astro 400 bij 200 en wordt de hoogte op een scherm met
+            hoge dichtheid te krap. 400 px is het dubbele van de weergave. */}
+        <Image
+          src={foto}
+          alt={`${bedrijf.persoon}, achter zijn bureau`}
+          width={400}
+          height={400}
+          class="aspect-square w-full max-w-[200px] border border-rand/60 object-cover"
+        />
       </div>
 
       <div class="max-w-2xl">
