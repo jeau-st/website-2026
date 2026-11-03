@@ -48,7 +48,7 @@ const kernpunten = [
 
 <Basis
   titel="Jeau.st: CRM, koppelingen en procesautomatisering"
-  beschrijving="Joost Beers richt Pipedrive in, koppelt je systemen en automatiseert handwerk. Voor MKB en scale-ups die vastlopen in losse systemen en Excel."
+  beschrijving="Joost Beers richt Pipedrive in, koppelt je systemen en automatiseert handwerk. Voor mkb en scale-ups met lange projecten, die vastlopen in losse systemen en Excel."
   extraSchema={faqSchema}
 >
   {/* Minder lucht boven de kop dan in de andere secties, zodat de kop, de
@@ -110,9 +110,25 @@ const kernpunten = [
     </div>
   </Sectie>
 
+  <Sectie id="voorwie" vlak kop="Waar dit het beste werkt">
+    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
+      <p>
+        Bij bedrijven met weinig projecten die lang duren. Bouw en
+        architectuur zijn het duidelijkste voorbeeld. Een traject loopt
+        maanden, er gaat veel informatie in om, afspraken moeten vastliggen,
+        en je wilt zien wat er loopt, wat eraan komt en wat wanneer actie
+        nodig heeft.
+      </p>
+      <p>
+        De winst zit daar in de lengte van het proces en niet in de
+        aantallen. Hoe langer een traject loopt, hoe meer momenten er zijn
+        waarop iets blijft liggen omdat niemand het zag.
+      </p>
+    </div>
+  </Sectie>
+
   <Sectie
     id="volgorde"
-    vlak
     kop="De volgorde is het werk"
     intro="In welke volgorde je dingen aanpakt, bepaalt of het werkt."
   >
@@ -145,6 +161,7 @@ const kernpunten = [
 
   <Sectie
     id="diensten"
+    vlak
     kop="Wat ik doe"
     intro="Dezelfde vier stappen, nu in wat er concreet gebouwd wordt."
   >
@@ -159,7 +176,6 @@ const kernpunten = [
 
   <Sectie
     id="proces"
-    vlak
     kop="Hoe een traject loopt"
     intro="De volgorde hierboven is de denkwijze. Zo ziet een opdracht er in de praktijk uit."
   >
@@ -173,6 +189,7 @@ const kernpunten = [
 
   <Sectie
     id="daarna"
+    vlak
     kop="En dan gaat het pas werken"
     intro="De oplevering is het begin. Dit is het ritme daarna."
   >
@@ -183,7 +200,6 @@ const kernpunten = [
 
   <Sectie
     id="werk"
-    vlak
     kop="Voorbeelden van werk"
     intro="Vier opdrachten, samengevat. Dit is wat er steeds terugkomt."
   >
@@ -217,7 +233,7 @@ const kernpunten = [
     </p>
   </Sectie>
 
-  <Sectie id="over" kop="Over mij">
+  <Sectie id="over" vlak kop="Over mij">
     <div class="mt-10">
       {/* Het hele kader, dus geen kolom ernaast: liggend naast tekst wordt
           de foto zo laag dat er een streepje van overblijft. Hij staat
@@ -251,6 +267,13 @@ const kernpunten = [
           inmiddels hoort daar ook AI bij. Bij een klein bedrijf zie ik
           bovendien meteen wat mijn werk oplevert.
         </p>
+        <p class="mt-4 text-zacht">
+          De kleuren van deze site komen uit een schilderij: het zelfportret
+          met grijze vilthoed van Van Gogh. Ik heb ze uit een scan van het
+          doek gemeten, tot en met hoe vaak elke kleur erin voorkomt. Bij een
+          project kiezen we soms samen een nieuw schilderij, als je dat leuk
+          lijkt.
+        </p>
         <p class="mt-6">
           <a
             class="tekstlink inline-flex min-h-11 items-center text-tekst"
@@ -265,13 +288,13 @@ const kernpunten = [
     </div>
   </Sectie>
 
-  <Sectie id="vragen" vlak kop="Veelgestelde vragen">
+  <Sectie id="vragen" kop="Veelgestelde vragen">
     <div class="mt-10 max-w-3xl">
       {vragen.map((item) => <Vraag item={item} />)}
     </div>
   </Sectie>
 
-  <Sectie id="plannen">
+  <Sectie id="plannen" vlak>
     <div class="max-w-2xl">
       <h2 class="text-3xl sm:text-4xl">
         Vertel eerst eens wat er vastloopt

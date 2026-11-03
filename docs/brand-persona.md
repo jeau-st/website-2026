@@ -27,7 +27,18 @@ Vier eigenschappen. Elke tekst laat er minstens twee zien.
 
 ## Ideale klant
 
-Een gespecialiseerd mkb-bedrijf met veel offertes en projecten van gemiddelde waarde, bijvoorbeeld in bouw of architectuur.
+Een gespecialiseerd mkb-bedrijf of een scale-up, met projecten die lang
+duren. Bouw en architectuur zijn het duidelijkste voorbeeld. De winst zit in
+de lengte en de duur van het proces, niet in de aantallen: een traject loopt
+maanden, er gaat veel informatie in om, afspraken moeten vastliggen, en je
+wilt zien wat er loopt, wat eraan komt en wat wanneer actie nodig heeft. Hoe
+langer een traject duurt, hoe meer momenten er zijn waarop iets blijft liggen
+omdat niemand het zag.
+
+Daarbuiten valt de winst weg. Een bureau met een handvol grote klanten en
+weinig losse projecten heeft het overzicht al in een hoofd. Een webshop met
+heel veel orders van lage waarde heeft wel volume, maar per order te weinig
+om vast te leggen. Bouw en architectuur zitten daar precies tussenin.
 
 - **Situatie:** alles liep altijd prima met Excel en e-mail. Er was altijd wel iemand die het overzicht had.
 - **Trigger:** AI komt eraan en ze zien dat gestructureerde data onmisbaar is. Ze hebben er zelf al ideeën over.
