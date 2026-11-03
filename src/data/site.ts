@@ -49,7 +49,7 @@ export const pijnpunten: Pijnpunt[] = [
   {
     citaat: "Automatiseren wil ik wel, maar waar begin ik",
     uitleg:
-      "Je ziet dat het handwerk tijd kost, maar niet welke stap je als eerste moet pakken. Dus blijft het bij een voornemen en typt iedereen door. Dat is precies waar de volgorde hieronder voor is.",
+      "Je ziet dat het handwerk tijd kost, maar niet welke stap je als eerste moet pakken. Dus blijft het bij een voornemen en typt iedereen door.",
   },
 ];
 
