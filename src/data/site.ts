@@ -39,7 +39,7 @@ export const pijnpunten: Pijnpunt[] = [
   {
     citaat: "Data staat in vijf systemen",
     uitleg:
-      "Een klant staat in de mailbox, in een Excel, in de boekhouding en in het CRM. Welke klopt, weet niemand. Elke vraag over omzet of pipeline begint dus met uitzoeken in plaats van kijken.",
+      "Een klant staat in de mailbox, in een Excel, in de boekhouding en in het CRM. Elke vraag over omzet begint dus met uitzoeken in plaats van kijken.",
   },
   {
     citaat: "Iedereen doet het op zijn eigen manier",
@@ -102,7 +102,7 @@ export const diensten: Dienst[] = [
   {
     titel: "CRM-inrichting",
     tekst:
-      "Pipedrive ingericht op hoe jij verkoopt, niet op hoe de standaardinstelling het bedoelt. Inclusief migratie van wat er nu staat.",
+      "Pipedrive ingericht op hoe jij verkoopt, niet op hoe de standaardinstelling het bedoelt.",
     punten: [
       "Pipelines en fases die je proces volgen",
       "Migratie uit Excel, mailbox of een oud systeem",
@@ -112,7 +112,7 @@ export const diensten: Dienst[] = [
   {
     titel: "Koppelingen en automatisering",
     tekst:
-      "Systemen die elkaar iets doorgeven, zodat niemand hetzelfde twee keer invoert. Gebouwd met n8n, Airtable en de API's die er al zijn.",
+      "Systemen die elkaar iets doorgeven, zodat niemand hetzelfde twee keer invoert.",
     punten: [
       "Koppelingen tussen CRM, administratie en mail",
       "Terugkerend handwerk weg",
@@ -121,7 +121,7 @@ export const diensten: Dienst[] = [
   {
     titel: "Cijfers waar je op kunt sturen",
     tekst:
-      "Als het proces staat en het handwerk weg is, kun je zien hoe het loopt. Een paar getallen die kloppen zijn meer waard dan een dashboard waar niemand naar kijkt.",
+      "Een paar getallen die kloppen zijn meer waard dan een dashboard waar niemand naar kijkt.",
     punten: [
       "Rapportage op wat je wilt weten",
       "Signalen als er iets misgaat",
@@ -132,7 +132,7 @@ export const diensten: Dienst[] = [
   {
     titel: "Ondersteuning en training",
     tekst:
-      "Een systeem werkt pas als het team het gebruikt. Daarom hoort uitleg en meekijken erbij, ook na de livegang.",
+      "Een systeem werkt pas als het team het gebruikt, ook een half jaar later nog.",
     punten: [
       "Training op de eigen werkwijze",
       "Een onderhoudsabonnement als je me vast bij de hand wilt",

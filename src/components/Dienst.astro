@@ -14,9 +14,11 @@ interface Props {
 const { dienst, nummer } = Astro.props;
 ---
 
-<li class="border-t border-rand/60 py-8 first:border-t-0 first:pt-0">
+<li class="border-t border-rand/60 py-6 first:border-t-0 first:pt-0">
   <div class="grid gap-x-8 gap-y-4 sm:grid-cols-[3rem_minmax(0,32rem)_1fr]">
-    <p class="font-mono text-sm text-zacht" aria-hidden="true">{nummer}</p>
+    <p class="hidden font-mono text-sm text-zacht sm:block" aria-hidden="true">
+      {nummer}
+    </p>
 
     <div class="min-w-0">
       <h3 class="text-xl text-tekst">{dienst.titel}</h3>
