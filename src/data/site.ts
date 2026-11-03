@@ -226,6 +226,38 @@ export const diensten: Dienst[] = [
     titel: "Ondersteuning en training",
     kop: "Training en onderhoud na de oplevering",
     meta: "Training op je eigen werkwijze en een onderhoudsabonnement, zodat het systeem ook een half jaar later nog gebruikt wordt.",
+    voorWie:
+      "Een systeem inrichten op hoe de wereld er vandaag uitziet is één ding. Zorgen dat het over een half jaar nog klopt en nog gebruikt wordt, is een tweede.",
+    verhaal: [
+      {
+        kop: "Wat een onderhoudsabonnement is",
+        alineas: [
+          "Dat ik de telefoon opneem. Ik reserveer een aantal uur per maand voor je, zodat kleine wijzigingen snel doorgevoerd worden en je niet achteraan een wachtrij staat. En elke twee weken spreek ik één of twee van je superusers over hoe het loopt en wat er op dat moment speelt.",
+        ],
+      },
+      {
+        kop: "Training stopt niet bij de oplevering",
+        alineas: [
+          "Je traint de mensen die er op dat moment mee moeten werken. Maar een team wisselt van samenstelling, en de collega die over een jaar begint was er niet bij. Daarom hoort er naslagwerk te liggen waarin staat hoe het proces is ingericht en waar je wat vindt.",
+          "Dit is waar CRM-trajecten vaak stuklopen. Er komt iemand langs die vertelt hoe het moet werken, wijst waar alles staat, en vertrekt weer. Een half jaar later werkt de helft van het team er weer omheen.",
+        ],
+      },
+      {
+        kop: "Superusers als borging",
+        alineas: [
+          "Daarom dring ik erop aan dat er binnen je bedrijf één of meer superusers zijn. Zij zijn intern het eerste aanspreekpunt, ze verzamelen de wensen die er leven en toetsen die aan hoe het systeem bedoeld is. Technisch groeien ze mee, zodat ze richting mij als opdrachtgever kunnen optreden.",
+          "Het doel is dat je mij niet meer nodig hebt. Als je intern de mensen hebt die het snappen, help ik ze daar graag naartoe.",
+        ],
+      },
+      {
+        kop: "En een stuk cultuur",
+        alineas: [
+          "Kwam iedereen uit een situatie waarin je je eigen maniertjes had, dan is standaardiseren ook een gewoonte afleren. Er moet minder ruimte komen voor een eigen Excel naast het systeem, en daar stuur je op. Wil iemand iets anders, dan stemt die dat af met een superuser, zodat de nieuwe manier meteen voor het hele team geldt.",
+          "Verbeterideeën zijn daarbij welkom. Er zijn altijd mensen die een betere manier zien, en daar hoort iets mee te gebeuren. Werk je zo, dan wordt je systeem over een half jaar nog gebruikt en klopt het nog.",
+          "Af komt het trouwens nooit. Standaardiseren, automatiseren en meten brengen je vanzelf bij het volgende dat beter kan. Dat is een prettige cyclus om samen in te zitten.",
+        ],
+      },
+    ],
     tekst:
       "Een systeem werkt pas als het team het gebruikt, ook een half jaar later nog.",
     punten: [

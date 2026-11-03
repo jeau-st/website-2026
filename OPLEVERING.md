@@ -14,7 +14,7 @@ het er staat, kan de site niet live.
 
 | Wat | Waar | Toelichting |
 | --- | --- | --- |
-| Voorbeeld per dienst | `src/pages/diensten/[slug].astro` | De vier dienstpagina's hebben nu alleen de tekst uit de lijst op de homepage. Dat is te weinig om op te ranken. Schrijf per dienst een voorbeeld: wat je tegenkwam, wat je deed, wat het opleverde. |
+| Voorbeeld per dienst | `src/data/site.ts`, `diensten` | De vier dienstpagina's hebben nu uitleg maar nog geen voorbeeld uit de praktijk. Eén per pagina, met wat je tegenkwam en wat het opleverde, maakt ze een stuk overtuigender. |
 | Toestemming van de architect | `src/data/site.ts`, `cases` | Case 03 is herkenbaar voor wie in die hoek zit, terwijl erboven staat dat de cases geanonimiseerd zijn. Vraag toestemming, en dan mag zijn naam er ook bij, of maak de omschrijving vager. |
 | Antwoord op "Hoe lang duurt een traject?" | `src/data/site.ts`, `vragen` | Een realistische bandbreedte, bijvoorbeeld apart voor een kleine inrichting en voor een migratie met koppelingen. |
 
