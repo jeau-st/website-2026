@@ -1,5 +1,6 @@
 ---
 import Knop from "./Knop.astro";
+import Woordmerk from "./Woordmerk.astro";
 import ThemaKnop from "./ThemaKnop.astro";
 import { cta } from "../data/site";
 
@@ -17,10 +18,10 @@ const actief = (href: string) => pad === href || pad === `${href}/`;
   <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
     <a
       href="/"
-      class="inline-flex min-h-11 items-center font-logo text-3xl text-tekst"
+      class="inline-flex min-h-11 items-center text-merk"
       aria-current={pad === "/" ? "page" : undefined}
     >
-      jeau.st
+      <Woordmerk class="h-9" />
     </a>
 
     <nav aria-label="Hoofdmenu" class="flex items-center gap-5 sm:gap-7">

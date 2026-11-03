@@ -30,22 +30,6 @@ export default defineConfig({
       styles: ['normal'],
       subsets: ['latin', 'latin-ext'],
     },
-    {
-      // Het woordmerk, en verder niets. Zelf gesubset uit LLPIXEL3.ttf in
-      // de huisstijlmap: 203 kB ttf werd 13 kB woff2 met de Latijnse basis.
-      provider: fontProviders.local(),
-      name: 'LLPixel',
-      cssVariable: '--font-llpixel',
-      options: {
-        variants: [
-          {
-            weight: 400,
-            style: 'normal',
-            src: ['./src/assets/fonts/llpixel.woff2'],
-          },
-        ],
-      },
-    },
   ],
   vite: {
     plugins: [tailwindcss()],

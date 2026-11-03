@@ -11,7 +11,8 @@
   Licht is de standaard. Donker komt pas als de bezoeker erom vraagt via de
   schakelaar, niet vanzelf via de systeemvoorkeur.
 
-  Contrast licht: veen op krijt 14.2:1, wilg 8.5:1 (ook de koppen), accent 5.3:1.
+  Contrast licht: veen op krijt 14.2:1, wilg 8.5:1 (ook de koppen), accent 5.3:1
+  (ook het woordmerk).
   Contrast donker: krijt op veen 14.2:1, hooi 7.2:1, accent 5.2:1.
   Het accent verschilt per thema. Gebrand #90542c is in donker te donker voor
   tekst op de knop, gloed #cf7f2e is in licht te licht. Beide halen 5.2:1 of
@@ -33,6 +34,7 @@
   --c-kop: #374941;
   --c-accent: #90542c;
   --c-op-accent: #ebf3ea;
+  --c-merk: #90542c;
 }
 
 :root[data-thema="donker"] {
@@ -47,6 +49,7 @@
   --c-kop: #ebf3ea;
   --c-accent: #cf7f2e;
   --c-op-accent: #182322;
+  --c-merk: #cf7f2e;
 }
 
 @theme {
@@ -54,11 +57,6 @@
      in astro.config.mjs en worden door de Font-component op de pagina gezet. */
   --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-ibm-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
-  /* Alleen het woordmerk. Een pixelletter is onleesbaar in lopende tekst,
-     en onder de 30px wordt het raster modderig: op 30px valt een
-     ontwerppixel precies op drie schermpixels. Vandaar text-3xl in Kop
-     en Voet, en nergens anders. */
-  --font-logo: var(--font-llpixel), var(--font-ibm-plex-mono), monospace;
 
   /* Rolgebaseerd: deze gebruik je in componenten */
   --color-bg: var(--c-bg);
@@ -69,6 +67,9 @@
   --color-kop: var(--c-kop);
   --color-accent: var(--c-accent);
   --color-op-accent: var(--c-op-accent);
+  /* Alleen het woordmerk. Zelfde waarde als het accent, apart benoemd
+     zodat je de een kunt verzetten zonder de ander. */
+  --color-merk: var(--c-merk);
 
   /* Vaste merkkleuren, alleen waar een kleur per se niet mag wisselen */
   --color-veen: #182322; /* donkerste partij in de jas en de hoeken */

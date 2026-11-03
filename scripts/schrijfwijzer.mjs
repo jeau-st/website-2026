@@ -68,6 +68,10 @@ function tekstUit(bron) {
       const ruw = m[1];
       // Klassen, paden en losse code eruit
       if (/^[a-z-]+:|^\/|^#|\bpx-\d|\btext-\w|\bgrid\b|\bflex\b|\bmt-\d|https?:|=>|\bclass\b/.test(ruw)) continue;
+      // Coordinaten van een tekening en andere data: in lopende tekst is
+      // ruim negen van de tien tekens een letter of een spatie.
+      const letters = (ruw.match(/[a-zà-ÿ ]/gi) || []).length;
+      if (letters / ruw.length < 0.6) continue;
       const regel = schoon.slice(0, m.index).split("\n").length;
       stukken.push({ regel, tekst: ruw.replace(/\s+/g, " ").trim() });
     }

@@ -4,6 +4,7 @@ import foto from "../assets/joost.webp";
 import Basis from "../layouts/Basis.astro";
 import Sectie from "../components/Sectie.astro";
 import Knop from "../components/Knop.astro";
+import AiStap from "../components/AiStap.astro";
 import Pijnpunt from "../components/Pijnpunt.astro";
 import Schema from "../components/Schema.astro";
 import Dienst from "../components/Dienst.astro";
@@ -14,6 +15,7 @@ import Case from "../components/Case.astro";
 import Todo from "../components/Todo.astro";
 import Vraag from "../components/Vraag.astro";
 import {
+  aiStappen,
   bedrijf,
   cases,
   diensten,
@@ -27,11 +29,11 @@ const vrijgegevenCases = cases.filter((item) => !item.todo);
 /* Expres ongelijk van lengte en vorm. Vier punten met hetzelfde ritme
    lazen als een gegenereerd lijstje. Zie SCHRIJFWIJZER.md. */
 const kernpunten = [
-  "Je verkoopproces vastgelegd in Pipedrive",
-  "Nieuwe collega's die zien hoe het hoort",
-  "Koppelingen met n8n, zodat niemand overtikt",
-  "AI die je eigen cijfers kent",
-  "Techniek, proces en begeleiding bij één persoon",
+  "Je proces vastgelegd in Pipedrive, voor iedereen hetzelfde",
+  "Eén bron van waarheid voor je hele team",
+  "Koppelingen met de systemen die je al gebruikt",
+  "Een basis die strak genoeg is voor AI",
+  "Iemand die betrokken blijft na livegang",
 ];
 ---
 
@@ -78,8 +80,18 @@ const kernpunten = [
   </section>
 
   <Sectie
-    id="herkenning"
+    id="ai"
     vlak
+    kop="Eerst de basis, dan AI"
+    intro="AI is zo goed als de gegevens eronder. Staat je proces in een systeem en klopt wat erin staat, dan kun je er wat mee."
+  >
+    <div class="mt-12 grid gap-10 md:grid-cols-3">
+      {aiStappen.map((stap) => <AiStap stap={stap} />)}
+    </div>
+  </Sectie>
+
+  <Sectie
+    id="herkenning"
     kop="Komt dit bekend voor?"
     intro="Drie dingen die ik bijna elk gesprek hoor."
   >
@@ -90,6 +102,7 @@ const kernpunten = [
 
   <Sectie
     id="volgorde"
+    vlak
     kop="De volgorde is het werk"
     intro="In welke volgorde je dingen aanpakt, bepaalt of het werkt."
   >
@@ -122,7 +135,6 @@ const kernpunten = [
 
   <Sectie
     id="diensten"
-    vlak
     kop="Wat ik doe"
     intro="Dezelfde vier stappen, nu in wat er concreet gebouwd wordt."
   >
@@ -137,6 +149,7 @@ const kernpunten = [
 
   <Sectie
     id="proces"
+    vlak
     kop="Hoe een traject loopt"
     intro="De volgorde hierboven is de denkwijze. Zo ziet een opdracht er in de praktijk uit."
   >
@@ -150,7 +163,6 @@ const kernpunten = [
 
   <Sectie
     id="daarna"
-    vlak
     kop="En dan gaat het pas werken"
     intro="De oplevering is het begin. Dit is het ritme daarna."
   >
@@ -161,6 +173,7 @@ const kernpunten = [
 
   <Sectie
     id="werk"
+    vlak
     kop="Voorbeelden van werk"
     intro="Geanonimiseerd, omdat het over de systemen van klanten gaat."
   >
@@ -182,7 +195,7 @@ const kernpunten = [
     </div>
   </Sectie>
 
-  <Sectie id="over" vlak kop="Over mij">
+  <Sectie id="over" kop="Over mij">
     <div class="mt-10">
       {/* Het hele kader, dus geen kolom ernaast: liggend naast tekst wordt
           de foto zo laag dat er een streepje van overblijft. Hij staat
@@ -214,6 +227,12 @@ const kernpunten = [
           proces klopt en dat een scherm te begrijpen is. Een systeem dat
           ingewikkeld is, wordt gewoon niet gebruikt.
         </p>
+        <p class="mt-4 text-zacht">
+          Waar ik het voor doe: een klein bedrijf verdient net zo'n strak
+          proces en net zulke goede systemen als een groot bedrijf, en
+          inmiddels hoort daar ook AI bij. Bij een klein bedrijf zie ik
+          bovendien meteen wat mijn werk oplevert.
+        </p>
         <p class="mt-6">
           <a
             class="tekstlink inline-flex min-h-11 items-center text-tekst"
@@ -228,13 +247,13 @@ const kernpunten = [
     </div>
   </Sectie>
 
-  <Sectie id="vragen" kop="Veelgestelde vragen">
+  <Sectie id="vragen" vlak kop="Veelgestelde vragen">
     <div class="mt-10 max-w-3xl">
       {vragen.map((item) => <Vraag item={item} />)}
     </div>
   </Sectie>
 
-  <Sectie id="plannen" vlak>
+  <Sectie id="plannen">
     <div class="max-w-2xl">
       <h2 class="text-3xl sm:text-4xl">
         Vertel eerst eens wat er vastloopt

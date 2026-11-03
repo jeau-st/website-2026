@@ -213,6 +213,34 @@ export const nabouw: Nastap[] = [
   },
 ];
 
+export type AiStap = { nummer: string; titel: string; tekst: string };
+
+/**
+ * Drie manieren waarop AI op je eigen gegevens werkt. Bewust zonder
+ * productnamen waar het kan: wat de knoppen heten verandert sneller dan
+ * wat ze doen.
+ */
+export const aiStappen: AiStap[] = [
+  {
+    nummer: "01",
+    titel: "AI in je CRM",
+    tekst:
+      "Pipedrive heeft AI aan boord. Het bereidt een gesprek voor, maakt notities van wat er is besproken en zet de vervolgstap klaar. Jij kijkt het na en keurt goed.",
+  },
+  {
+    nummer: "02",
+    titel: "Je eigen AI aan je gegevens",
+    tekst:
+      "Via de koppeling van Pipedrive praat Claude of ChatGPT rechtstreeks met je eigen cijfers. Je vraagt in gewone taal welke offertes te lang openstaan, en je laat deals bijwerken terwijl jij meekijkt.",
+  },
+  {
+    nummer: "03",
+    titel: "Alles praat met elkaar",
+    tekst:
+      "Met n8n hangt je CRM aan je boekhouding, mail, agenda en planning. Offerte akkoord, factuur klaar, project aangemaakt, team op de hoogte. Niemand tikt iets over.",
+  },
+];
+
 export type Processtap = {
   nummer: string;
   titel: string;
