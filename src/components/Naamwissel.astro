@@ -2,9 +2,10 @@
 import { personen } from "../data/namen";
 
 /**
- * Wisselt de naam in de kop bij elk bezoek. De pagina is statisch, dus de
- * naam die de build kiest zou maanden blijven staan; dit script kiest er
- * bij het laden een nieuwe, inclusief het bijbehorende haar of zijn.
+ * Wisselt de naam in de kop. De pagina is statisch, dus de naam die de
+ * build kiest zou maanden blijven staan; dit script kiest er bij het laden
+ * een nieuwe, inclusief het bijbehorende haar of zijn. Een klik op de naam
+ * kiest er weer een.
  *
  * Het staat direct achter de tekst die het aanpast en niet onderaan de
  * pagina, want dan zie je de naam nog even verspringen. Zonder JavaScript
@@ -13,12 +14,24 @@ import { personen } from "../data/namen";
 ---
 
 <script is:inline define:vars={{ personen }}>
-  const gekozen = personen[Math.floor(Math.random() * personen.length)];
+  const namen = document.querySelectorAll("[data-naam]");
+  const woorden = document.querySelectorAll("[data-bezittelijk]");
 
-  for (const el of document.querySelectorAll("[data-naam]")) {
-    el.textContent = gekozen.naam;
+  function kies() {
+    let gekozen;
+    /* Twee keer dezelfde naam laat een klik aanvoelen als een kapotte
+       knop, dus doorgaan tot er echt een andere uit komt. */
+    do {
+      gekozen = personen[Math.floor(Math.random() * personen.length)];
+    } while (gekozen.naam === namen[0].textContent);
+
+    for (const el of namen) el.textContent = gekozen.naam;
+    for (const el of woorden) el.textContent = gekozen.bezittelijk;
   }
-  for (const el of document.querySelectorAll("[data-bezittelijk]")) {
-    el.textContent = gekozen.bezittelijk;
+
+  kies();
+
+  for (const knop of document.querySelectorAll("[data-wisselknop]")) {
+    knop.addEventListener("click", kies);
   }
 </script>
