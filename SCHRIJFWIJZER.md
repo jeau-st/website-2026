@@ -2,6 +2,8 @@
 
 Elke tekst op deze site klinkt alsof Joost hem zelf zegt tegen een ondernemer aan tafel.
 
+Wie er spreekt, voor wie en met welk karakter staat in [`docs/brand-persona.md`](docs/brand-persona.md). Lees die eerst. Deze wijzer gaat over hoe je schrijft en wint bij twijfel.
+
 ## Stem
 
 - Nederlands, je-vorm, spreektaal maar verzorgd.

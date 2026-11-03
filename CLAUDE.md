@@ -31,6 +31,7 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 - `src/data/site.ts`: alle herhaalde inhoud en de TODO-placeholders
 - `OPLEVERING.md`: wat Joost nog moet invullen voor livegang
 - `SCHRIJFWIJZER.md`: stem, verboden woorden en werkwijze voor alle tekst op de site
+- `docs/brand-persona.md`: wie er spreekt, de ideale klant, karakter en toon. Lees die voor je tekst schrijft
 - `docs/palet.html`: het palet met stalen, gemeten aandelen en contrastcijfers. Staat buiten `src/pages` en `public`, dus de build neemt hem niet mee. Open hem vanaf schijf
 - `scripts/schrijfwijzer.mjs`: controleert de zichtbare tekst tegen die wijzer, draait met `npm run schrijfwijzer`
 - `src/pages`: routes, een bestand per pagina
