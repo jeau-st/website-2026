@@ -347,33 +347,32 @@ export const cases: Case[] = [
   {
     titel: "Maatschappelijke organisatie die gezinnen en oppassen koppelt",
     situatie:
-      "Aanmeldingen, matches, uren en subsidies liepen door losse systemen. Dezelfde gegevens moesten op meerdere plekken kloppen, dus dat kostte elke week tijd. Google Ads zag de formulieren wel, maar wist niet welke klikken tot een match leidden.",
+      "Het werk liep door losse systemen en een rij Excel-bestanden. Dezelfde gegevens moesten overal kloppen, dus er ging veel tijd in overtypen zitten. Aanmeldingen kwamen ongestructureerd binnen, dus elke aanmelding begon met uitzoeken.",
     aanpak:
-      "Pipedrive leidend gemaakt voor contacten en matches, Airtable voor uren en vergoedingen. De twee praten via n8n met elkaar: elke nacht een sync, en een melding in Teams zodra er iets misgaat. Intakes en gewonnen deals gaan dezelfde weg terug naar Google Ads.",
+      "Pipedrive leidend gemaakt voor contacten en matches, met een database erachter voor de urenadministratie. Die twee zijn aan elkaar geknoopt met n8n, net als de documentflow voor de verslaglegging naar partners. Intakes en gewonnen deals gaan ook terug naar Google Ads.",
     resultaat:
-      "Eén beeld per match, van aanmelding tot uren. Gaat er iets mis, dan zie je het dezelfde dag en niet pas bij de controle. Google Ads stuurt nu op intakes en gewonnen deals.",
+      "Een stuk minder handwerk, en rapportages waar je op kunt bouwen. Na elke stap staat er een opvolgtaak klaar en de incasso- en excassobatches worden vanzelf aangemaakt. Een aanmelding komt binnen in een vorm waar je meteen mee verder kunt.",
     todo: false,
   },
   {
     titel:
-      "Landelijke vrijwilligersorganisatie die mensen werft via events",
+      "Organisatie die zich inzet voor welzijn in wijken en daar mensen voor werft",
     situatie:
-      "Aanmeldingen kwamen binnen via websiteformulieren, profielformulieren en een ticketsysteem. Wie zich vaker aanmeldde, kreeg een tweede contact en een tweede deal. Profielgegevens kwamen niet altijd door en de opvolging liep achter.",
+      "De systemen waren versnipperd. De communicatie met mensen werd ergens anders bijgehouden dan hun voortgang, dus wie in welke fase zat moest je bij elkaar zoeken. Dat bijhouden was handwerk.",
     aanpak:
-      "Pipedrive werd de plek waar elke aanmelding landt. Formulieren, tickets en check-ins hangen er met n8n aan. Een bestaand contact wordt herkend en aangevuld, dus wat er al stond blijft staan. De gegevens die in oude inzendingen ontbraken heb ik nagevuld, eerst op een proef en daarna gecontroleerd.",
+      "Pipedrive centraal gezet, met daarin de contactpersonen, de organisaties en de voortgang van iedereen. De rest hangt er met n8n aan. Dubbele records zijn opgeruimd. Voor de events staat er nu een ticketsysteem aan het CRM, zodat je per event ziet wie is uitgenodigd, wie zich aanmeldde, wie er was en wat de opvolging is.",
     resultaat:
-      "Aanmeldingen, tickets, check-ins en downloads lopen nu vanzelf door. Download iemand de brochure, dan staat er een contact in Pipedrive en een week later een opvolgtaak. De onvolledige contacten zijn bijgewerkt. Loopt een run vast, dan krijg ik een melding.",
+      "Alles op één plek, en de processen eromheen lopen strakker. Er wordt een stuk minder overgetypt en de aanmeldflow is aangescherpt. Daarmee ligt er ook een basis die strak genoeg is om AI op in te zetten.",
     todo: false,
   },
   {
-    titel:
-      "Zelfstandig architect, gespecialiseerd in verbouwing van bestaande woningen",
+    titel: "Architectenbureau, nieuwbouw en bestaande woningen",
     situatie:
-      "Twee websites op Squarespace, allebei met teruglopend bezoek. Mail, domeinen en hosting lagen bij drie partijen. Contactgegevens zaten in mailboxen en werden met de hand overgezet. En hij wilde zijn eigen teksten kunnen aanpassen.",
+      "Verschillende websites, allemaal verouderd. Mail, domeinen en hosting lagen bij verschillende aanbieders. Er was geen plek waar aanvragen samenkwamen, dus overzicht krijgen was elke keer uitzoekwerk.",
     aanpak:
-      "Eerst een SEO-audit, daarna de twee sites samengevoegd onder één domein met redirects. Alleen de artikelen die iets deden zijn mee. De nieuwe site draait op Astro en Cloudflare, Nederlands en Engels, met Keystatic om zelf te schrijven. Mail, domeinen en DNS staan nu op zijn eigen accounts.",
+      "Eerst een SEO-audit, daarna alles samengevoegd tot één site, met redirects vanaf de oude adressen. Die draait op Astro en Cloudflare, Nederlands en Engels, met Keystatic om zelf te schrijven. Er staat een vragenformulier op dat doorloopt naar Pipedrive. Mail, domeinen en DNS staan nu op eigen accounts.",
     resultaat:
-      "Eén snelle site die hij zelf beheert, en één aanspreekpunt voor alles eromheen. Aanmeldingen komen binnen in Pipedrive en de mails die hij vaak stuurt staan klaar als sjabloon. Wat het doet voor bezoek en vindbaarheid is over een paar maanden pas te zeggen.",
+      "Eén snelle site die het bureau zelf beheert, en de randzaken eromheen bij elkaar in één systeem. Via het formulier komen gekwalificeerde aanvragen binnen die meteen een afspraak kunnen inplannen. En je ziet per klant waar die in het proces zit.",
     todo: false,
   },
 ];
