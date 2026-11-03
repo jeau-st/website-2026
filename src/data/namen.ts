@@ -1,6 +1,7 @@
 /**
- * De tweehonderd meest voorkomende voornamen in de huidige Nederlandse
- * beroepsbevolking. De kop op de homepage draait om één naam, en die naam
+ * De meest voorkomende voornamen in de huidige Nederlandse
+ * beroepsbevolking. Het waren er tweehonderd; Andreas is eruit omdat
+ * André er al in stond. De kop op de homepage draait om één naam, en die naam
  * hoort niet altijd dezelfde te zijn: de persoon die het proces in haar of
  * zijn hoofd heeft zitten kan iedereen zijn.
  *
@@ -114,7 +115,6 @@ export const namen = {
     "Roland",
     "Simon",
     "Sven",
-    "Andreas",
     "Roel",
     "Arno",
     "Lucas",

@@ -29,7 +29,7 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 ## Waar staat wat
 
 - `src/data/site.ts`: alle herhaalde inhoud en de TODO-placeholders
-- `src/data/namen.ts`: de tweehonderd namen waaruit de kop op de homepage kiest, en de functie die er een uitzoekt
+- `src/data/namen.ts`: de namen waaruit de kop op de homepage kiest, en de functie die er een uitzoekt
 - `OPLEVERING.md`: wat Joost nog moet invullen voor livegang
 - `SCHRIJFWIJZER.md`: stem, verboden woorden en werkwijze voor alle tekst op de site
 - `docs/brand-persona.md`: wie er spreekt, de ideale klant, karakter en toon. Lees die voor je tekst schrijft
@@ -52,6 +52,6 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 - Licht is de standaard, donker via `data-thema="donker"` op `<html>`. De systeemvoorkeur schakelt niet automatisch om.
 - Het palet is gemeten uit de museumscan van Van Gogh, Zelfportret met grijze vilthoed (s0016V1962), met k-means in Lab en een telling per kleurfamilie. Het doek is voor 49,6% blauw en voor 3,3% groen, dus het palet is blauw. De twee grootste clusters zijn staal `#41515C` en lei `#56646D`, samen 43% van het doek. Warm is oker `#816447` en vlam `#8D531F`, de oranje stippen. Alle rollen erven tint 204 (blauw) of tint 28 (oranje) en verschillen alleen in lichtheid.
 - Het accent verschilt per thema, want één oranje haalt niet in allebei de contrastnorm voor tekst op de knop. Licht gebruikt `#9E5514`, donker `#E1791C`. Allebei 4,6:1 op de vlakke baan, de krapste van de twee.
-- Het accent is de enige warme kleur in de interface en staat alleen op de primaire knop, de focusring en het woordmerk (via `merk`, dezelfde waarde). Niet op links, lijsten of pijltjes.
+- Het accent is de enige warme kleur in de interface en staat alleen op de primaire knop, de focusring, het woordmerk (via `merk`, dezelfde waarde) en de naamknop in de kop op de homepage. Niet op links, lijsten of pijltjes.
 - Ontbrekende inhoud wordt een zichtbare TODO, nooit een verzonnen tekst.
 - Secrets alleen via `npx wrangler secret put` of `.env.local`, nooit in de repo.
