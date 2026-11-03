@@ -1,11 +1,11 @@
 ---
 import Basis from "../layouts/Basis.astro";
-import Beeld from "../components/Beeld.astro";
-import Todo from "../components/Todo.astro";
+import Galerij from "../components/Galerij.astro";
+import Kaart from "../components/Kaart.astro";
 import kerk from "../assets/st/kerk.webp";
-import kaart from "../assets/st/kaart.webp";
 import muur from "../assets/st/muur.webp";
 import kinderen from "../assets/st/kinderen.webp";
+import pico from "../assets/st/pico.webp";
 
 /**
  * Uitleg bij het domein. Een doorlopend verhaal, geen secties: wie hier
@@ -13,6 +13,25 @@ import kinderen from "../assets/st/kinderen.webp";
  * wat tussenkoppen anders zouden doen en geven de tekst zijn adem.
  * Geen knop naar de planner onderaan, wel twee links naar reizen.
  */
+const fotos = [
+  {
+    src: kerk,
+    alt: "Een wit kerkje op de rotsen waar een rivier in zee uitkomt, met een rode houten brug ernaartoe en mensen onder de luifel.",
+  },
+  {
+    src: pico,
+    alt: "De Pico Cao Grande, een smalle rotspijp die uit het beboste heuvelland omhoog steekt, met wolkenflarden eromheen.",
+  },
+  {
+    src: muur,
+    alt: "Een verweerde muur met een verbleekte verkiezingsmuurschildering: een gezicht dat grotendeels is weggesleten, met de woorden Vota, Vida en Amor ernaast.",
+  },
+  {
+    src: kinderen,
+    alt: "Een groep kinderen en een jongeman op een grasveld, poserend voor de camera met een bal bij hun voeten.",
+  },
+];
+
 const reizen = [
   {
     href: "https://saoferias.st/",
@@ -36,9 +55,9 @@ const reizen = [
       <h1 class="max-w-3xl text-4xl sm:text-5xl">.st?!</h1>
       <p class="mt-6 max-w-2xl text-lg text-zacht">
         Jeau.st eindigt op .st omdat mijn naam daar toevallig in past. Dat is
-        het landendomein van São Tomé en Príncipe. Ik ben er twee keer
-        geweest, en sindsdien vertel ik graag waar die twee letters vandaan
-        komen.
+        het landendomein van <strong class="font-semibold text-tekst">São
+        Tomé en Príncipe</strong>. Ik ben er twee keer geweest, en sindsdien
+        vertel ik graag waar die twee letters vandaan komen.
       </p>
     </div>
   </section>
@@ -56,10 +75,8 @@ const reizen = [
         </p>
       </div>
 
-      <Beeld
-        src={kerk}
-        alt="Een wit kerkje op de rotsen waar een rivier in zee uitkomt, met een rode houten brug ernaartoe en mensen onder de luifel."
-      />
+      <Kaart />
+
 
       <div class="max-w-2xl space-y-4 text-zacht">
         <p>
@@ -77,15 +94,6 @@ const reizen = [
           officieel afgeschaft, het werk op de roças bleef dwangarbeid onder
           een andere naam. In 1975 werd het land onafhankelijk van Portugal.
         </p>
-      </div>
-
-      <Beeld
-        src={kaart}
-        alt="Een met de hand getekende zeventiende-eeuwse kaart met het opschrift Het Eylandt Sant Thome, met bergen, rivieren en de evenaar als rode lijn."
-        staand
-      />
-
-      <div class="max-w-2xl space-y-4 text-zacht">
         <p>
           In 1641 voer een vloot van de West-Indische Compagnie onder Cornelis
           Jol, bijgenaamd Houtebeen, de haven van São Tomé binnen en nam het
@@ -101,14 +109,6 @@ const reizen = [
           bestuur, en het ging van begin tot eind over slavenhandel. Je vindt
           het nauwelijks terug in de Nederlandse geschiedenisles.
         </p>
-      </div>
-
-      <Beeld
-        src={muur}
-        alt="Een verweerde muur met een verbleekte verkiezingsmuurschildering: een gezicht dat grotendeels is weggesleten, met de woorden Vota, Vida en Amor ernaast."
-      />
-
-      <div class="max-w-2xl space-y-4 text-zacht">
         <p>
           Het land is arm en kwetsbaar. Vrijwel alles komt per schip binnen,
           inclusief de brandstof voor de elektriciteitscentrales, dus een
@@ -122,14 +122,6 @@ const reizen = [
           opgeleverd. Toerisme groeit langzaam en is een van de weinige
           manieren waarop geld in het land zelf terechtkomt.
         </p>
-      </div>
-
-      <Beeld
-        src={kinderen}
-        alt="Een groep kinderen en een jongeman op een grasveld, poserend voor de camera met een bal bij hun voeten."
-      />
-
-      <div class="max-w-2xl space-y-4 text-zacht">
         <p>
           En toch: het is er veilig. Criminaliteit tegen bezoekers is zeldzaam
           en de sfeer is rustig en vriendelijk, iets wat vrijwel iedereen die
@@ -143,10 +135,13 @@ const reizen = [
           bultruggen voor de kust. Er komen weinig toeristen, dus je staat
           nergens in de rij.
         </p>
-        <p>
-          Ga je zelf? Er zijn twee makkelijke manieren om er te komen.
-        </p>
       </div>
+
+      <Galerij fotos={fotos} />
+
+      <p class="mt-10 max-w-2xl text-zacht">
+        Ga je zelf? Er zijn twee makkelijke manieren om er te komen.
+      </p>
 
       <ul class="mt-6 max-w-2xl space-y-3">
         {
@@ -165,10 +160,6 @@ const reizen = [
           ))
         }
       </ul>
-
-      <div class="mt-12 max-w-2xl">
-        <Todo wat="zoek de herkomst van de oude kaart op en zet de bronvermelding hier neer. De drie andere foto's zijn van jezelf, die kaart niet." />
-      </div>
     </div>
   </section>
 </Basis>
