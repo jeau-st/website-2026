@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+/* Tokens overgenomen uit de vorige site, zodat de huisstijl herkenbaar blijft.
+   Pas deze aan als het ontwerp van 2026 een ander palet krijgt. */
+@theme {
+  /* De variabelen --font-inter en --font-ibm-plex-mono komen uit de fonts-config
+     in astro.config.mjs en worden door de Font-component op de pagina gezet. */
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --color-ink: #14202a;
+  --color-slate: #1e323b;
+  --color-pigment: #274f5b;
+  --color-oker: #d08a45;
+  --color-linnen: #e8e1cc;
+  --color-muted: #a8a48e;
+  --color-teal: #6fa0ac;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-oker);
+    outline-offset: 3px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

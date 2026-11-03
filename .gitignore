@@ -1,0 +1,23 @@
+# build output
+dist/
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+pnpm-debug.log*
+
+# Claude Code, persoonlijke instellingen
+.claude/settings.local.json
+
+# secrets en lokale omgeving
+.env*
+.dev.vars*
+.wrangler/
+
+# editor en os
+.DS_Store
+.idea/

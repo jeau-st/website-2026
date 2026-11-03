@@ -1,0 +1,33 @@
+{
+  "name": "website-2026",
+  "type": "module",
+  "version": "0.1.0",
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro build && wrangler dev -c dist/client/wrangler.json",
+    "deploy": "astro build && wrangler deploy -c dist/client/wrangler.json",
+    "typecheck": "astro check",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^14.4.4",
+    "astro": "^7.4.5"
+  },
+  "private": true,
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@tailwindcss/vite": "^4.3.4",
+    "tailwindcss": "^4.3.4",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.156.2"
+  },
+  "allowScripts": {
+    "workerd@1.20261101.1": true,
+    "workerd@1.20261102.1": true,
+    "esbuild@0.28.2": true
+  }
+}
