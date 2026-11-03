@@ -23,6 +23,7 @@ const kernpunten = [
   "Je verkoopproces vastgelegd in Pipedrive",
   "Nieuwe collega's die zien hoe het hoort",
   "Koppelingen met n8n, zodat niemand overtikt",
+  "AI die je eigen cijfers kent",
   "Techniek, proces en begeleiding bij één persoon",
 ];
 ---
@@ -33,7 +34,7 @@ const kernpunten = [
 >
   {/* Minder lucht boven de kop dan in de andere secties, zodat de kop, de
       zin eronder en de actie samen op 1280 bij 800 passen zonder scrollen. */}
-  <section class="px-4 py-20 sm:px-6 sm:py-28 lg:pt-12">
+  <section class="px-4 py-20 sm:px-6 sm:py-28 lg:pt-10">
     <div class="mx-auto max-w-5xl">
       <h1 class="max-w-3xl text-4xl text-tekst sm:text-5xl lg:text-6xl">
         Dat doet Petra altijd
@@ -49,10 +50,17 @@ const kernpunten = [
 
       <Schema />
 
-      <ul class="mt-10 max-w-2xl divide-y divide-rand/60 border-y border-rand/60">
+      <ul class="mt-8 max-w-2xl divide-y divide-rand/60 border-y border-rand/60">
         {
           kernpunten.map((punt) => (
-            <li class="py-2.5 text-tekst">{punt}</li>
+            /* Het pijltje is versiering, niet de opsommingsmarkering: de ul
+               geeft screenreaders die al. Daarom aria-hidden. */
+            <li class="flex items-baseline gap-3 py-2 text-tekst">
+              <span aria-hidden="true" class="font-mono text-sm text-zacht">
+                &#8594;
+              </span>
+              <span class="min-w-0">{punt}</span>
+            </li>
           ))
         }
       </ul>
