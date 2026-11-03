@@ -1,0 +1,49 @@
+---
+import Knop from "./Knop.astro";
+import { cta } from "../data/site";
+
+const pad = Astro.url.pathname;
+const links = [
+  { href: "/aanpak", tekst: "Aanpak" },
+  { href: "/werk", tekst: "Werk" },
+  { href: "/contact", tekst: "Contact" },
+];
+
+const actief = (href: string) => pad === href || pad === `${href}/`;
+---
+
+<header class="border-b border-pigment/60">
+  <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
+    <a
+      href="/"
+      class="font-mono text-lg font-semibold text-linnen hover:text-oker"
+      aria-current={pad === "/" ? "page" : undefined}
+    >
+      jeau.st
+    </a>
+
+    <nav aria-label="Hoofdmenu" class="flex items-center gap-5 sm:gap-7">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            aria-current={actief(link.href) ? "page" : undefined}
+            class:list={[
+              "text-sm hover:text-oker",
+              actief(link.href) ? "text-oker" : "text-muted",
+            ]}
+          >
+            {link.tekst}
+          </a>
+        ))
+      }
+      {
+        /* Zonder planner-URL staat de TODO in de hero; in het menu zou hij
+           de balk uit elkaar trekken. */
+        cta.url && (
+          <Knop variant="lijn" class="hidden px-4 py-2 text-sm sm:inline-flex" />
+        )
+      }
+    </nav>
+  </div>
+</header>

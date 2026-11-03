@@ -1,0 +1,18 @@
+---
+import type { Pijnpunt } from "../data/site";
+
+interface Props {
+  punt: Pijnpunt;
+}
+
+const { punt } = Astro.props;
+---
+
+<figure class="border-l-2 border-oker pl-5">
+  <blockquote>
+    <p class="text-xl font-semibold text-linnen">
+      &ldquo;{punt.citaat}&rdquo;
+    </p>
+  </blockquote>
+  <figcaption class="mt-3 text-muted">{punt.uitleg}</figcaption>
+</figure>

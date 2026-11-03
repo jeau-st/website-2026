@@ -1,14 +1,171 @@
 ---
 import Basis from "../layouts/Basis.astro";
+import Sectie from "../components/Sectie.astro";
+import Knop from "../components/Knop.astro";
+import Pijnpunt from "../components/Pijnpunt.astro";
+import Dienst from "../components/Dienst.astro";
+import Processtap from "../components/Processtap.astro";
+import Case from "../components/Case.astro";
+import Vraag from "../components/Vraag.astro";
+import {
+  bedrijf,
+  cases,
+  diensten,
+  pijnpunten,
+  processtappen,
+  vragen,
+} from "../data/site";
+
+const kernpunten = [
+  "Pipedrive ingericht op jouw proces, niet op de standaardinstelling",
+  "Systemen gekoppeld, zodat niemand hetzelfde twee keer invoert",
+  "AI die je eigen data kent in plaats van algemene antwoorden geeft",
+  "Techniek, proces en begeleiding bij één persoon",
+];
 ---
 
-<Basis titel="Jeau.st" beschrijving="Nieuwe website voor Jeau.st, in opbouw.">
-  <main class="mx-auto flex min-h-dvh max-w-2xl flex-col justify-center px-4 py-16">
-    <h1 class="text-4xl font-semibold text-slate sm:text-5xl">
-      Nieuwe site, in opbouw
-    </h1>
-    <p class="mt-6 text-lg text-pigment">
-      De techniek staat klaar. De inhoud volgt.
+<Basis
+  titel="Jeau.st: CRM, koppelingen en procesautomatisering"
+  beschrijving="Joost Beers richt Pipedrive in, koppelt je systemen en automatiseert handwerk. Voor MKB en scale-ups die vastlopen in losse systemen en Excel."
+>
+  <section class="px-4 py-20 sm:px-6 sm:py-28">
+    <div class="mx-auto max-w-5xl">
+      <h1 class="max-w-3xl text-4xl font-semibold text-linnen sm:text-5xl lg:text-6xl">
+        Je werkt in vijf systemen en weet van geen enkele zeker of het klopt
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-muted">
+        Ik breng je CRM, je koppelingen en je processen terug tot iets dat
+        klopt en dat je team ook echt gebruikt. Techniek, proces en
+        begeleiding bij één persoon.
+      </p>
+
+      <ul class="mt-8 max-w-2xl space-y-3">
+        {
+          kernpunten.map((punt) => (
+            <li class="flex gap-3 text-linnen">
+              <span aria-hidden="true" class="mt-2.5 size-1.5 shrink-0 bg-oker" />
+              <span class="min-w-0">{punt}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      <div class="mt-10">
+        <Knop toonToelichting />
+      </div>
+    </div>
+  </section>
+
+  <Sectie
+    id="herkenning"
+    vlak
+    kop="Komt dit bekend voor?"
+    intro="Drie dingen die ik bijna elk gesprek hoor."
+  >
+    <div class="mt-12 grid gap-10 sm:grid-cols-3">
+      {pijnpunten.map((punt) => <Pijnpunt punt={punt} />)}
+    </div>
+  </Sectie>
+
+  <Sectie
+    id="diensten"
+    kop="Wat ik doe"
+    intro="Vier dingen, die in de praktijk vaak in elkaar overlopen."
+  >
+    <div class="mt-12 grid gap-6 sm:grid-cols-2">
+      {diensten.map((dienst) => <Dienst dienst={dienst} />)}
+    </div>
+  </Sectie>
+
+  <Sectie
+    id="proces"
+    vlak
+    kop="Hoe een traject loopt"
+    intro="Zes stappen. Per stap zie je wat ik doe, wat jij doet en wat er aan het eind ligt."
+  >
+    <ol class="mt-12">
+      {
+        processtappen.map((stap, i) => (
+          <Processtap stap={stap} laatste={i === processtappen.length - 1} />
+        ))
+      }
+    </ol>
+    <p class="text-muted">
+      <a class="font-semibold text-oker hover:text-linnen" href="/aanpak">
+        Lees de aanpak per stap
+      </a>
     </p>
-  </main>
+  </Sectie>
+
+  <Sectie
+    id="werk"
+    kop="Voorbeelden van werk"
+    intro="Geanonimiseerd, omdat het over de systemen van klanten gaat."
+  >
+    <div class="mt-12 grid gap-6 sm:grid-cols-2">
+      {cases.map((item) => <Case item={item} />)}
+    </div>
+  </Sectie>
+
+  <Sectie id="over" vlak kop="Over mij">
+    <div class="mt-10 grid gap-10 sm:grid-cols-[200px_1fr]">
+      <div>
+        <div
+          class="flex aspect-square w-full max-w-[200px] items-center justify-center border border-dashed border-oker/70 bg-oker/10 p-4 text-center font-mono text-sm text-oker"
+        >
+          TODO: foto
+        </div>
+      </div>
+
+      <div class="max-w-2xl">
+        <p class="text-lg text-linnen">
+          Ik ben {bedrijf.persoon}, koppelkoning en procesnerd uit {bedrijf.plaats}.
+          Ik houd van systemen die met elkaar praten en van processen die
+          kloppen omdat ze doordacht zijn, niet omdat ze altijd zo gingen.
+        </p>
+        <p class="mt-4 text-muted">
+          De afgelopen drie jaar deed ik drie volledige Pipedrive-implementaties,
+          inclusief migraties en maatwerk. Daarvoor werkte ik zeven jaar als
+          Business Consultant IT bij een energieleverancier, waar ik aan drie
+          systeemimplementaties meewerkte. Die combinatie is wat ik meeneem:
+          ik bouw het niet alleen, ik weet ook wat er daarna in een organisatie
+          gebeurt.
+        </p>
+        <p class="mt-4 text-muted">
+          Jeau.st is Pipedrive-partner via FortCRM.
+        </p>
+        <p class="mt-6">
+          <a
+            class="font-semibold text-oker hover:text-linnen"
+            href={bedrijf.linkedin}
+            target="_blank"
+            rel="noopener"
+          >
+            Bekijk mijn LinkedIn
+          </a>
+        </p>
+      </div>
+    </div>
+  </Sectie>
+
+  <Sectie id="vragen" kop="Veelgestelde vragen">
+    <div class="mt-10 max-w-3xl">
+      {vragen.map((item) => <Vraag item={item} />)}
+    </div>
+  </Sectie>
+
+  <Sectie id="plannen" vlak>
+    <div class="max-w-2xl">
+      <h2 class="text-3xl font-semibold text-linnen sm:text-4xl">
+        Benieuwd of ik je verder kan helpen?
+      </h2>
+      <p class="mt-4 text-lg text-muted">
+        Plan een belafspraak van 30 minuten. Je vertelt wat er vastloopt, ik
+        vraag door en zeg eerlijk of ik de juiste persoon ben.
+      </p>
+      <div class="mt-8">
+        <Knop toonToelichting />
+      </div>
+    </div>
+  </Sectie>
 </Basis>

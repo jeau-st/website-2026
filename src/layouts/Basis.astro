@@ -1,13 +1,38 @@
 ---
 import { Font } from "astro:assets";
+import Kop from "../components/Kop.astro";
+import Voet from "../components/Voet.astro";
+import { bedrijf } from "../data/site";
 import "../styles/global.css";
 
 interface Props {
   titel: string;
-  beschrijving?: string;
+  beschrijving: string;
 }
 
 const { titel, beschrijving } = Astro.props;
+
+const canoniek = new URL(Astro.url.pathname, Astro.site);
+const ogAfbeelding = new URL("/og.png", Astro.site);
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: bedrijf.naam,
+  description: beschrijving,
+  url: Astro.site?.toString(),
+  email: bedrijf.email,
+  telephone: bedrijf.telefoon,
+  founder: { "@type": "Person", name: bedrijf.persoon },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: bedrijf.plaats,
+    addressCountry: "NL",
+  },
+  areaServed: { "@type": "Country", name: "Nederland" },
+  sameAs: [bedrijf.linkedin],
+  identifier: { "@type": "PropertyValue", name: "KvK", value: bedrijf.kvk },
+};
 ---
 
 <!doctype html>
@@ -15,15 +40,41 @@ const { titel, beschrijving } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#e8e1cc" />
+    <meta name="theme-color" content="#14202a" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <Font cssVariable="--font-inter" preload />
     <Font cssVariable="--font-ibm-plex-mono" />
+
     <title>{titel}</title>
-    {beschrijving && <meta name="description" content={beschrijving} />}
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <meta name="description" content={beschrijving} />
+    <link rel="canonical" href={canoniek} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="nl_NL" />
+    <meta property="og:site_name" content={bedrijf.naam} />
+    <meta property="og:title" content={titel} />
+    <meta property="og:description" content={beschrijving} />
+    <meta property="og:url" content={canoniek} />
+    <meta property="og:image" content={ogAfbeelding} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify(schema)}
+      is:inline
+    />
   </head>
-  <body class="bg-linnen font-body text-ink antialiased">
-    <slot />
+  <body class="bg-ink font-body text-linnen antialiased">
+    <a
+      href="#inhoud"
+      class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-10 focus:bg-oker focus:px-4 focus:py-2 focus:font-semibold focus:text-ink"
+    >
+      Naar de inhoud
+    </a>
+    <Kop />
+    <main id="inhoud">
+      <slot />
+    </main>
+    <Voet />
   </body>
 </html>

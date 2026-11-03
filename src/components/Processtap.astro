@@ -1,0 +1,54 @@
+---
+import type { Processtap } from "../data/site";
+
+interface Props {
+  stap: Processtap;
+  laatste?: boolean;
+}
+
+const { stap, laatste = false } = Astro.props;
+
+const rollen = [
+  { rol: "Ik doe", tekst: stap.ik },
+  { rol: "Jij doet", tekst: stap.jij },
+];
+---
+
+<li class="relative pl-10 sm:pl-14">
+  {/* De lijn loopt door tot de volgende stap, maar niet voorbij de laatste */}
+  {
+    !laatste && (
+      <span
+        aria-hidden="true"
+        class="absolute left-[7px] top-6 h-full w-px bg-pigment sm:left-[11px]"
+      />
+    )
+  }
+  <span
+    aria-hidden="true"
+    class="absolute left-0 top-[7px] size-4 border-2 border-oker bg-ink sm:size-6"
+  ></span>
+
+  <div class="pb-12">
+    <p class="font-mono text-sm text-oker">{stap.nummer}</p>
+    <h3 class="mt-1 text-xl font-semibold text-linnen sm:text-2xl">
+      {stap.titel}
+    </h3>
+
+    <dl class="mt-4 grid gap-4 sm:grid-cols-2">
+      {
+        rollen.map((item) => (
+          <div>
+            <dt class="text-sm font-semibold text-muted">{item.rol}</dt>
+            <dd class="mt-1 text-linnen">{item.tekst}</dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    <p class="mt-4 border-l-2 border-pigment pl-4 text-muted">
+      <span class="font-semibold text-linnen">Aan het eind: </span>
+      {stap.resultaat}
+    </p>
+  </div>
+</li>

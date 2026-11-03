@@ -1,0 +1,42 @@
+---
+/**
+ * Vaste breedte en ritme voor elke sectie op de site.
+ * Bewust geen labeltje boven de kop: dat leest als sjabloon.
+ */
+interface Props {
+  id?: string;
+  kop?: string;
+  intro?: string;
+  vlak?: boolean;
+  class?: string;
+}
+
+const { id, kop, intro, vlak = false, class: extra = "" } = Astro.props;
+const kopId = id ? `${id}-kop` : undefined;
+---
+
+<section
+  id={id}
+  aria-labelledby={kop ? kopId : undefined}
+  class:list={[
+    "border-t border-pigment/60 px-4 py-20 sm:px-6 sm:py-28",
+    vlak && "bg-slate",
+    extra,
+  ]}
+>
+  <div class="mx-auto max-w-5xl">
+    {
+      (kop || intro) && (
+        <header class="max-w-2xl">
+          {kop && (
+            <h2 id={kopId} class="text-3xl font-semibold text-linnen sm:text-4xl">
+              {kop}
+            </h2>
+          )}
+          {intro && <p class="mt-4 text-lg text-muted">{intro}</p>}
+        </header>
+      )
+    }
+    <slot />
+  </div>
+</section>

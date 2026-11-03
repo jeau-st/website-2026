@@ -1,0 +1,41 @@
+---
+import Todo from "./Todo.astro";
+import type { Case } from "../data/site";
+
+interface Props {
+  item: Case;
+}
+
+const { item } = Astro.props;
+
+const delen = [
+  { kop: "Situatie", tekst: item.situatie },
+  { kop: "Aanpak", tekst: item.aanpak },
+  { kop: "Resultaat", tekst: item.resultaat },
+];
+
+const schoon = (tekst: string) => tekst.replace(/^TODO:\s*/, "");
+---
+
+<article class="border border-pigment/60 p-6 sm:p-8">
+  {
+    item.todo ? (
+      <Todo wat={schoon(item.titel)} />
+    ) : (
+      <h3 class="text-xl font-semibold text-linnen">{item.titel}</h3>
+    )
+  }
+
+  <dl class="mt-4 space-y-4">
+    {
+      delen.map((deel) => (
+        <div>
+          <dt class="text-sm font-semibold text-muted">{deel.kop}</dt>
+          <dd class="mt-1 min-w-0 text-linnen">
+            {item.todo ? <Todo wat={schoon(deel.tekst)} /> : deel.tekst}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+</article>

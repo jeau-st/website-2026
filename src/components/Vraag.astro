@@ -1,0 +1,31 @@
+---
+import Todo from "./Todo.astro";
+import type { Vraag } from "../data/site";
+
+interface Props {
+  item: Vraag;
+}
+
+const { item } = Astro.props;
+---
+
+<details class="group border-b border-pigment/60 py-5">
+  <summary
+    class="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-semibold text-linnen hover:text-oker"
+  >
+    {item.vraag}
+    <span
+      aria-hidden="true"
+      class="shrink-0 text-oker transition-transform duration-150 group-open:rotate-45"
+    >
+      +
+    </span>
+  </summary>
+  {
+    item.todo ? (
+      <Todo wat={item.antwoord.replace(/^TODO:\s*/, "")} />
+    ) : (
+      <p class="mt-3 max-w-2xl text-muted">{item.antwoord}</p>
+    )
+  }
+</details>
