@@ -5,7 +5,7 @@ Nieuwe website voor jeau.st, de eigen site van Jeau.st. Eigenaar: Jeau.st | Klan
 ## Stack
 
 - Astro 7, Tailwind v4 via `@tailwindcss/vite`, hosting Cloudflare Workers via `@astrojs/cloudflare`
-- Fonts: Inter en IBM Plex Mono via de Astro fonts-API met de Fontsource-provider, zelf gehost, geen verzoek naar Google
+- Fonts: Inter en IBM Plex Mono via de Astro fonts-API met de Fontsource-provider, en LLPixel als lokaal bestand. Alles zelf gehost, geen verzoek naar Google
 - Primaire actie: Pipedrive-afspraakplanner. Geen contactformulier
 
 Output is statisch. De adapter staat er zodat losse endpoints of server islands later kunnen, zonder herinrichting. De vorige site staat in `C:\Users\joost\dev\Website Jeau.st\jeau-st-site` (statische HTML, Tailwind v4, GitHub Pages) en dient als referentie voor content en huisstijl.
@@ -41,6 +41,7 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 
 - Nederlands, je-vorm, geen em dash. Voor alle tekst geldt `SCHRIJFWIJZER.md`.
 - Geen verzonnen cijfers, testimonials of klantcases.
+- Koppen staan in Inter, kleine labels en de tekeningen in IBM Plex Mono. LLPixel is alleen het woordmerk in Kop en Voet, op `text-3xl`: onder de 30 px wordt het pixelraster modderig.
 - Kleuren en fonts alleen via tokens uit `src/styles/global.css`. Gebruik de roltokens (`bg`, `vlak`, `rand`, `tekst`, `zacht`, `accent`), nooit de vaste merkkleuren: die wisselen niet mee met het thema.
 - Licht is de standaard, donker via `data-thema="donker"` op `<html>`. De systeemvoorkeur schakelt niet automatisch om.
 - Het palet is gemeten uit de scan van Van Gogh, Zelfportret met grijze vilthoed. De koele kant is groen: veen `#182322`, mos `#20332C`, wilg `#374941`. De warme kant: olijf `#8F925E`, hooi `#ADB084`, krijt `#EBF3EA`.

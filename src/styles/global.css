@@ -46,6 +46,11 @@
      in astro.config.mjs en worden door de Font-component op de pagina gezet. */
   --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-ibm-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+  /* Alleen het woordmerk. Een pixelletter is onleesbaar in lopende tekst,
+     en onder de 30px wordt het raster modderig: op 30px valt een
+     ontwerppixel precies op drie schermpixels. Vandaar text-3xl in Kop
+     en Voet, en nergens anders. */
+  --font-logo: var(--font-llpixel), var(--font-ibm-plex-mono), monospace;
 
   /* Rolgebaseerd: deze gebruik je in componenten */
   --color-bg: var(--c-bg);
@@ -78,15 +83,16 @@
     outline-offset: 3px;
     border-radius: 2px;
   }
-  /* Koppen in de mono die het woordmerk ook is. Op dit formaat heeft die
-     letter karakter; Inter zou hier elke willekeurige site kunnen zijn.
-     Mono loopt breed, dus de tracking gaat strakker naarmate de kop groter is. */
+  /* Koppen in Inter. Het karakter van de site zit in het woordmerk en in
+     de kantlijnlabels in de mono, niet meer in de koppen zelf.
+     Inter loopt smaller dan de mono, dus de tracking mag ruimer: -0.02em
+     in plaats van -0.03em, anders plakken de letters op grote maten. */
   h1,
   h2,
   h3 {
-    font-family: var(--font-mono);
+    font-family: var(--font-body);
     font-weight: 600;
-    letter-spacing: -0.03em;
+    letter-spacing: -0.02em;
     text-wrap: balance;
   }
   p {
