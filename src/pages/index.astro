@@ -17,10 +17,12 @@ import {
   vragen,
 } from "../data/site";
 
+/* Expres ongelijk van lengte en vorm. Vier punten met hetzelfde ritme
+   lazen als een gegenereerd lijstje. Zie SCHRIJFWIJZER.md. */
 const kernpunten = [
-  "Pipedrive ingericht op jouw proces, niet op de standaardinstelling",
-  "Systemen gekoppeld, zodat niemand hetzelfde twee keer invoert",
-  "AI die je eigen data kent in plaats van algemene antwoorden geeft",
+  "Je verkoopproces vastgelegd in Pipedrive",
+  "Nieuwe collega's die zien hoe het hoort",
+  "Koppelingen met n8n, zodat niemand overtikt",
   "Techniek, proces en begeleiding bij één persoon",
 ];
 ---
@@ -29,27 +31,33 @@ const kernpunten = [
   titel="Jeau.st: CRM, koppelingen en procesautomatisering"
   beschrijving="Joost Beers richt Pipedrive in, koppelt je systemen en automatiseert handwerk. Voor MKB en scale-ups die vastlopen in losse systemen en Excel."
 >
-  <section class="px-4 py-20 sm:px-6 sm:py-28">
+  {/* Minder lucht boven de kop dan in de andere secties, zodat de kop, de
+      zin eronder en de actie samen op 1280 bij 800 passen zonder scrollen. */}
+  <section class="px-4 py-20 sm:px-6 sm:py-28 lg:pt-12">
     <div class="mx-auto max-w-5xl">
       <h1 class="max-w-3xl text-4xl text-tekst sm:text-5xl lg:text-6xl">
-        Je werkt in vijf systemen en weet van geen enkele zeker of het klopt
+        Dat doet Petra altijd
       </h1>
+      {/* De kop zegt niet wat Jeau.st doet, dus de derde zin hieronder moet
+          dat wel doen. Titel en meta description blijven expliciet, want
+          daarop landt iemand vanuit Google. */}
       <p class="mt-6 max-w-2xl text-lg text-zacht">
-        Ik breng je CRM, je koppelingen en je processen terug tot iets dat
-        klopt en dat je team ook echt gebruikt.
+        Tot Petra op vakantie is. Dan blijkt het proces in haar hoofd te
+        zitten en nergens anders. Ik zet het in een systeem waar je team
+        mee werkt.
       </p>
 
       <Schema />
 
-      <ul class="mt-12 max-w-2xl divide-y divide-rand/60 border-y border-rand/60">
+      <ul class="mt-10 max-w-2xl divide-y divide-rand/60 border-y border-rand/60">
         {
           kernpunten.map((punt) => (
-            <li class="py-3 text-tekst">{punt}</li>
+            <li class="py-2.5 text-tekst">{punt}</li>
           ))
         }
       </ul>
 
-      <div class="mt-10">
+      <div class="mt-8">
         <Knop toonToelichting />
       </div>
     </div>
