@@ -8,6 +8,7 @@ import Kaart from "../components/Kaart.astro";
 import Knop from "../components/Knop.astro";
 import Pijnpunt from "../components/Pijnpunt.astro";
 import Schema from "../components/Schema.astro";
+import Icoon from "../components/Icoon.astro";
 import Dienst from "../components/Dienst.astro";
 import Cyclus from "../components/Cyclus.astro";
 import { kiesPersoon } from "../data/namen";
@@ -40,69 +41,73 @@ const kernpunten = [
   titel="Jeau.st: CRM, koppelingen en procesautomatisering"
   beschrijving="Joost Beers richt Pipedrive in, koppelt je systemen en automatiseert handwerk. Voor mkb en scale-ups met lange projecten, die vastlopen in losse systemen en Excel."
 >
-  {/* Minder lucht boven de kop dan in de andere secties, zodat de kop, de
-      zin eronder en de actie samen op 1280 bij 800 passen zonder scrollen. */}
-  <section class="px-4 py-16 sm:px-6 sm:py-20 lg:pb-10 lg:pt-8">
-    <div class="mx-auto max-w-5xl">
-      {/* De naam draagt het accent, want hij is een actie: klikken geeft
-          een andere naam. Dat is de enige plek buiten de primaire knop,
-          de focusring en het woordmerk waar die kleur mag staan, en
-          CLAUDE.md zegt dat ook zo. Een knop en geen span, zodat je er
-          met het toetsenbord bij komt. */}
-      <h1 class="max-w-3xl text-4xl sm:text-5xl lg:text-6xl">
-        Dat doet <button
-          type="button"
-          data-wisselknop
-          title="Kies een andere naam"
-          class="cursor-pointer text-accent underline decoration-transparent decoration-1 underline-offset-4 hover:decoration-current"
-        ><span data-naam>{persoon.naam}</span></button> altijd
-      </h1>
-      {/* De kop zegt niet wat Jeau.st doet, dus de derde zin hieronder moet
-          dat wel doen. Titel en meta description blijven expliciet, want
-          daarop landt iemand vanuit Google. */}
-      <p class="mt-5 max-w-2xl text-lg text-zacht">
-        Tot <span data-naam>{persoon.naam}</span> op vakantie is. Dan blijkt
-        dat het proces alleen in{" "}
-        <span data-bezittelijk>{persoon.bezittelijk}</span> hoofd zat. Ik zet
-        het in een systeem waar je team mee werkt.
-      </p>
+  {/* De hero staat in twee kolommen: links het verhaal en de vijf
+      punten, rechts de tekening. Die stond eerst onder de tekst, in een
+      kader, en dan is het een plaatje bij een stuk tekst. Ernaast en
+      zonder kader is het de helft van de pagina, en dat is wat het moet
+      zijn. Onder lg vallen ze terug op elkaar.
 
-      <Naamwissel />
+      Minder lucht boven de kop dan in de andere secties, zodat alles
+      samen op 1280 bij 800 past zonder scrollen. */}
+  <section class="px-4 py-14 sm:px-6 sm:py-16 lg:pb-14 lg:pt-10">
+    <div
+      class="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14"
+    >
+      <div>
+        {/* De naam draagt het accent, want hij is een actie: klikken geeft
+            een andere naam. Een knop en geen span, zodat je er met het
+            toetsenbord bij komt. */}
+        <h1 class="text-4xl sm:text-5xl">
+          Dat doet <button
+            type="button"
+            data-wisselknop
+            title="Kies een andere naam"
+            class="cursor-pointer text-accent underline decoration-transparent decoration-1 underline-offset-4 hover:decoration-current"
+          ><span data-naam>{persoon.naam}</span></button> altijd
+        </h1>
+        {/* De kop zegt niet wat Jeau.st doet, dus de zin daaronder moet
+            dat wel doen. Titel en meta description blijven expliciet,
+            want daarop landt iemand vanuit Google. */}
+        <p class="mt-5 text-lg text-zacht">
+          Tot <span data-naam>{persoon.naam}</span> op vakantie is. Dan blijkt
+          dat het proces alleen in{" "}
+          <span data-bezittelijk>{persoon.bezittelijk}</span> hoofd zat.
+        </p>
+        <p class="mt-3 text-lg text-tekst">
+          Ik zorg voor een systeem dat werkt voor je hele team en klaar is
+          voor het AI-tijdperk.
+        </p>
+
+        <Naamwissel />
+
+        {/* Geen kader en geen pijltjes: een vinkje in de accentkleur. Dat
+            is de vierde plek waar het accent mag staan, naast de knop, de
+            focusring en de naam hierboven, en CLAUDE.md zegt dat ook zo.
+            Het vinkje is versiering, de ul geeft screenreaders de
+            opsomming al, dus aria-hidden. */}
+        <ul class="mt-8 space-y-2.5">
+          {
+            kernpunten.map((punt) => (
+              <li class="flex items-start gap-3 text-tekst">
+                <svg
+                  class="mt-1 size-4 shrink-0 text-accent"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <Icoon naam="check" maat={24} dikte={2.5} />
+                </svg>
+                <span class="min-w-0">{punt}</span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="mt-8">
+          <Knop toonToelichting />
+        </div>
+      </div>
 
       <Schema />
-
-      {/* Een haarlijnraster, geen opsomming met pijltjes. Dat pijltje in
-          een omlijnde kaart was het meest herkenbare element van de hele
-          site: zo ziet een chatantwoord eruit.
-
-          De lijnen komen uit de achtergrond: de wikkel is gevuld met de
-          zachte randkleur, de cellen liggen erop met de kaartkleur, en de
-          gap van 1 px laat de wikkel ertussen zien. Zo staat er nooit een
-          dubbele rand waar twee cellen elkaar raken.
-
-          Twee kolommen vanaf sm, de laatste over de volle breedte. Dat
-          leest als een paneel in plaats van een lijstje, en het scheelt
-          hoogte: de hero moet op 1280 bij 800 passen zonder scrollen. */}
-      <ul
-        class="mt-5 grid max-w-2xl gap-px overflow-hidden rounded-kaart border border-rand bg-rand-zacht sm:grid-cols-2"
-      >
-        {
-          kernpunten.map((punt, i) => (
-            <li
-              class:list={[
-                "bg-kaart px-4 py-3 text-tekst",
-                i === kernpunten.length - 1 && "sm:col-span-2",
-              ]}
-            >
-              {punt}
-            </li>
-          ))
-        }
-      </ul>
-
-      <div class="mt-6">
-        <Knop toonToelichting />
-      </div>
     </div>
   </section>
 

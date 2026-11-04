@@ -232,3 +232,43 @@ duidelijk, maar het is het bekijken waard.
 
 Nog steeds open uit de vorige ronde: een `prefers-contrast: more` die de
 randen versterkt, en het kruimelpad op `/st` en `/privacy`.
+
+## De ronde erna
+
+Na de eerste bouw is er een tweede ronde overheen gegaan, op aanwijzing
+van Joost.
+
+- **Inter is terug voor de lopende tekst, Manrope blijft op de koppen.**
+  Manrope viel op waar je naar kijkt, maar over een alinea van tien
+  regels leest Inter rustiger. Manrope laadt nu alleen gewicht 600
+- **De hero staat in twee kolommen.** Links de kop, twee zinnen, de vijf
+  kernpunten met een vinkje in de accentkleur, en de knop. Rechts de
+  tekening, zonder kader. Het haarlijnraster om de kernpunten is daarmee
+  weg: naast een tekening is een omlijnd paneel te veel
+- **Een regel erbij in de hero:** "Ik zorg voor een systeem dat werkt
+  voor je hele team en klaar is voor het AI-tijdperk", op een eigen regel
+  in de volle tekstkleur
+- **De tekeningen zijn echte schema's geworden**, met iconen uit Lucide.
+  `Schema` is één ring met twaalf punten erop, zonder tekst in het
+  midden: wat je nu al hebt staat links en bovenaan, wat het oplevert
+  rechts. `Cyclus` is drie stations met pijlen en een terugloop
+- **De uitklapper onder Diensten gaat open bij hover** en is één
+  trefvlak geworden: de tekst en het pijltje lichtten apart op, en dan
+  lijkt het of er twee dingen naast elkaar staan. De regels in de
+  uitklapper en in het mobiele menu hebben nu een icoon
+
+Twee dingen waarop de regels in `CLAUDE.md` zijn aangepast:
+
+- Het accent mocht alleen op de knop, de focusring en de naamknop. De
+  vinkjes bij de kernpunten komen erbij. Dat is de vierde plek, en het
+  blijft een korte lijst
+- Lucide stond in de analyse hierboven nog op de lijst met kenmerken
+  waaraan je een gegenereerde site herkent. De set is alleen
+  herkenbaar als je hem ongewijzigd naast de andere kenmerken gebruikt,
+  en herkenbaarheid is precies wat een schema nodig heeft. De iconen
+  staan als los bestand in `src/icons`, zodat te zien is welke de site
+  gebruikt
+
+Wat op een telefoon anders is: de ring heeft daar kortere labels, want
+"slimme workflows" past niet naast een cirkel die groot genoeg blijft om
+nog iets voor te stellen.

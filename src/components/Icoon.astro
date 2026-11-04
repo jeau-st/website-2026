@@ -1,0 +1,62 @@
+---
+/**
+ * Een Lucide-icoon, bedoeld om binnen een svg te staan. Hij tekent op een
+ * raster van 24 bij 24 vanuit de oorsprong, dus zet hem zelf op zijn plek
+ * met een `transform` op de g eromheen.
+ *
+ * De bestanden staan in `src/icons` en zijn gekopieerd uit
+ * `lucide-static` (ISC). Gekopieerd en niet rechtstreeks uit
+ * node_modules gelezen, zodat in de repo te zien is welke iconen de site
+ * gebruikt en een update van het pakket niet stilletjes een tekening
+ * verandert. Ze worden bij de build ingelezen, dus de bezoeker haalt geen
+ * los bestand op.
+ *
+ * Alleen de inhoud van de svg wordt overgenomen, niet de buitenste tag:
+ * de maatvoering en de kleur komen van hier. Geen eigen kleur dus, alles
+ * staat op `currentColor`, en de g eromheen bepaalt of het icoon de
+ * zachte of de volle tekstkleur krijgt.
+ */
+const bestanden = import.meta.glob<string>("../icons/*.svg", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+});
+
+const iconen = Object.fromEntries(
+  Object.entries(bestanden).map(([pad, inhoud]) => [
+    pad.split("/").pop()!.replace(".svg", ""),
+    /* Alles tussen de buitenste svg-tags. De licentiecomment en de
+       attributen van die tag hebben we hier niet nodig. */
+    inhoud.replace(/^[\s\S]*?<svg[^>]*>/, "").replace(/<\/svg>\s*$/, ""),
+  ]),
+);
+
+interface Props {
+  naam: string;
+  /** 24 is de natuurlijke maat. Kleiner schaalt het hele raster mee. */
+  maat?: number;
+  /** Lucide tekent op 2. Dunner staat rustiger in een tekening. */
+  dikte?: number;
+}
+
+const { naam, maat = 24, dikte = 1.75 } = Astro.props;
+
+const inhoud = iconen[naam];
+if (!inhoud) {
+  throw new Error(
+    `Icoon "${naam}" staat niet in src/icons. Kopieer hem uit node_modules/lucide-static/icons.`,
+  );
+}
+
+const schaal = maat / 24;
+---
+
+<g
+  transform={schaal === 1 ? undefined : `scale(${schaal})`}
+  fill="none"
+  stroke="currentColor"
+  stroke-width={dikte / schaal}
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  set:html={inhoud}
+/>

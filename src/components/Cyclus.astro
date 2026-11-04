@@ -1,92 +1,241 @@
 ---
+import Icoon from "./Icoon.astro";
 import { denkwijze } from "../data/site";
 
 /**
- * De denkwijze als tekening. Opgebouwd uit randen en tekst, net als Schema,
- * dus hij schaalt mee, kleurt mee met het thema en laadt geen bestand.
+ * De denkwijze als tekening: drie stations en een terugloop. De vierde
+ * stap uit `denkwijze` is geen station maar de pijl terug, want dat is
+ * precies wat die stap zegt. Daarom staat 04 op de terugloop en niet in
+ * de rij.
  *
- * Drie stations en een terugloop. De vierde stap uit `denkwijze` is geen
- * station maar de pijl terug: dat is precies wat die stap zegt. Daarom
- * staat 04 als label op de terugloop en niet in de rij.
+ * Een echte schematische tekening in svg, met iconen uit Lucide. Hij
+ * schaalt mee, kleurt mee met het thema en laadt geen bestand. De
+ * stations dragen een kort woord en niet de volle titel: die staat in de
+ * kaarten eronder, en twee keer dezelfde zin naast elkaar leest als een
+ * fout.
+ *
+ * Twee opmaken: vanaf sm naast elkaar met de terugloop eronderdoor,
+ * daaronder onder elkaar met de terugloop langs de linkerkant.
  */
-const stations = denkwijze.slice(0, 3);
+const stations = denkwijze.slice(0, 3).map((stap, i) => ({
+  nummer: stap.nummer,
+  kort: ["proces", "automatiseren", "meten"][i],
+  icoon: ["workflow", "zap", "chart-column"][i],
+}));
 const terug = denkwijze[3];
-
-const kort: Record<string, string> = {
-  "01": "proces",
-  "02": "automatiseren",
-  "03": "meten",
-};
 ---
 
-{/* Zelfde gedachte als bij Schema: de tekening krijgt een eigen vlak,
-     zodat hij als afbeelding leest en niet als losse lijnen. */}
-<figure class="mt-10 max-w-3xl rounded-groot border border-rand bg-kaart px-5 py-8 sm:px-10 sm:py-10">
-  <div aria-hidden="true">
-    {/* Mobiel: onder elkaar. De terugloop is een spoor langs de hele
-        linkerkant, want hij gaat terug naar 01 en niet naar de laatste. */}
-    <div class="relative pl-6 sm:hidden">
-      <ol>
-        {
-          stations.map((stap, i) => (
-            <li>
-              {i > 0 && <span class="mx-auto block h-6 w-px bg-rand" />}
-              <div class="border border-rand px-4 py-3">
-                <p class="font-mono text-xs text-zacht">{stap.nummer}</p>
-                <p class="mt-1 text-sm text-tekst">{kort[stap.nummer]}</p>
-              </div>
-            </li>
-          ))
-        }
-      </ol>
-      <div class="h-12"></div>
-      <span class="absolute bottom-0 left-0 top-0 w-px bg-rand"></span>
-      <span class="absolute inset-x-0 bottom-0 h-px bg-rand"></span>
-      <span class="absolute bottom-0 right-0 h-12 w-px bg-rand"></span>
-      <span class="absolute -top-1 left-0 -ml-[0.3rem] font-mono text-xs text-rand">
-        &#9650;
-      </span>
-      <p
-        class="absolute bottom-1.5 left-1/2 -translate-x-1/2 font-mono text-xs text-zacht"
-      >
-        {terug.nummer} opnieuw
-      </p>
-    </div>
+<figure class="mt-10">
+  {/* Vanaf sm: naast elkaar */}
+  <svg
+    class="hidden h-auto w-full max-w-3xl sm:block"
+    viewBox="0 0 680 200"
+    role="presentation"
+    aria-hidden="true"
+    font-family="var(--font-mono)"
+  >
+    {
+      stations.map((station, i) => {
+        const x = i * 252;
+        return (
+          <>
+            <rect
+              x={x}
+              y="16"
+              width="176"
+              height="80"
+              rx="12"
+              fill="var(--color-kaart)"
+              stroke="var(--color-rand)"
+              stroke-width="1.5"
+            />
+            <g
+              transform={`translate(${x + 20} 34)`}
+              style="color: var(--color-tekst)"
+            >
+              <Icoon naam={station.icoon} maat={20} />
+            </g>
+            <text
+              x={x + 50}
+              y="44"
+              dominant-baseline="middle"
+              font-size="12"
+              letter-spacing="1"
+              fill="var(--color-zacht)"
+            >
+              {station.nummer}
+            </text>
+            <text
+              x={x + 20}
+              y="76"
+              dominant-baseline="middle"
+              font-size="15"
+              fill="var(--color-tekst)"
+            >
+              {station.kort}
+            </text>
 
-    {/* Vanaf sm: de rij met de terugloop eronder */}
-    <div class="hidden sm:block">
-      <ol class="flex items-stretch">
-        {
-          stations.map((stap, i) => (
-            <>
-              {i > 0 && <span class="w-8 shrink-0 self-center h-px bg-rand" />}
-              <li class="flex-1 border border-rand px-4 py-3">
-                <p class="font-mono text-xs text-zacht">{stap.nummer}</p>
-                <p class="mt-1 text-tekst">{kort[stap.nummer]}</p>
-              </li>
-            </>
-          ))
-        }
-      </ol>
-      <div class="relative h-16">
-        <span class="absolute inset-x-0 bottom-0 h-px bg-rand"></span>
-        <span class="absolute bottom-0 left-0 top-0 w-px bg-rand"></span>
-        <span class="absolute bottom-0 right-0 top-0 w-px bg-rand"></span>
-        {/* De punt zit op de linkerlijn, want daar gaat hij terug naar 01 */}
-        <span class="absolute -top-1 left-0 -ml-[0.3rem] font-mono text-xs text-rand">
-          &#9650;
-        </span>
-        <p
-          class="absolute bottom-1.5 left-1/2 -translate-x-1/2 font-mono text-sm text-zacht"
-        >
-          {terug.nummer} opnieuw
-        </p>
-      </div>
-    </div>
-  </div>
+            {/* De pijl naar het volgende station */}
+            {i < 2 && (
+              <>
+                <path
+                  d={`M${x + 188} 56H${x + 242}`}
+                  stroke="var(--color-rand)"
+                  stroke-width="1.5"
+                />
+                <path
+                  d={`M${x + 236} 51l6 5-6 5`}
+                  fill="none"
+                  stroke="var(--color-rand)"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </>
+            )}
+          </>
+        );
+      })
+    }
+
+    {/* De terugloop: van het laatste station onderlangs terug naar het
+        eerste. De pijl wijst omhoog, de doos in. */}
+    <path
+      d="M592 96V166H88V110"
+      fill="none"
+      stroke="var(--color-rand)"
+      stroke-width="1.5"
+    />
+    <path
+      d="M83 116l5-6 5 6"
+      fill="none"
+      stroke="var(--color-rand)"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    {/* Het label staat op de lijn, met de achtergrondkleur erachter zodat
+        de lijn er netjes voor onderbreekt. */}
+    <rect x="283" y="152" width="114" height="28" fill="var(--color-bg)" />
+    <g transform="translate(287 157)" style="color: var(--color-zacht)">
+      <Icoon naam="refresh-cw" maat={16} />
+    </g>
+    <text
+      x="311"
+      y="166"
+      dominant-baseline="middle"
+      font-size="13"
+      fill="var(--color-zacht)"
+    >
+      {terug.nummer} opnieuw
+    </text>
+  </svg>
+
+  {/* Tot sm: onder elkaar, de terugloop langs de linkerkant */}
+  <svg
+    class="h-auto w-full sm:hidden"
+    viewBox="0 0 340 342"
+    role="presentation"
+    aria-hidden="true"
+    font-family="var(--font-mono)"
+  >
+    {
+      stations.map((station, i) => {
+        const y = i * 104;
+        return (
+          <>
+            <rect
+              x="52"
+              y={y}
+              width="276"
+              height="72"
+              rx="12"
+              fill="var(--color-kaart)"
+              stroke="var(--color-rand)"
+              stroke-width="1.5"
+            />
+            <g
+              transform={`translate(72 ${y + 16})`}
+              style="color: var(--color-tekst)"
+            >
+              <Icoon naam={station.icoon} maat={18} />
+            </g>
+            <text
+              x="100"
+              y={y + 25}
+              dominant-baseline="middle"
+              font-size="11"
+              letter-spacing="1"
+              fill="var(--color-zacht)"
+            >
+              {station.nummer}
+            </text>
+            <text
+              x="72"
+              y={y + 54}
+              dominant-baseline="middle"
+              font-size="14"
+              fill="var(--color-tekst)"
+            >
+              {station.kort}
+            </text>
+
+            {i < 2 && (
+              <>
+                <path
+                  d={`M190 ${y + 72}V${y + 104}`}
+                  stroke="var(--color-rand)"
+                  stroke-width="1.5"
+                />
+                <path
+                  d={`M185 ${y + 98}l5 6 5-6`}
+                  fill="none"
+                  stroke="var(--color-rand)"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </>
+            )}
+          </>
+        );
+      })
+    }
+
+    <path
+      d="M190 280V314H22V36H46"
+      fill="none"
+      stroke="var(--color-rand)"
+      stroke-width="1.5"
+    />
+    <path
+      d="M40 31l6 5-6 5"
+      fill="none"
+      stroke="var(--color-rand)"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+
+    <rect x="66" y="300" width="112" height="28" fill="var(--color-bg)" />
+    <g transform="translate(70 306)" style="color: var(--color-zacht)">
+      <Icoon naam="refresh-cw" maat={15} />
+    </g>
+    <text
+      x="92"
+      y="314"
+      dominant-baseline="middle"
+      font-size="12"
+      fill="var(--color-zacht)"
+    >
+      {terug.nummer} opnieuw
+    </text>
+  </svg>
 
   <figcaption class="sr-only">
-    De vier stappen vormen een rondje: eerst het proces, dan automatiseren,
-    dan meetbaar maken, en dan weer van voren af aan.
+    Drie stappen achter elkaar: eerst het proces, dan automatiseren, dan
+    meetbaar maken. Van de derde loopt een pijl terug naar de eerste, want
+    stap vier is opnieuw beginnen.
   </figcaption>
 </figure>

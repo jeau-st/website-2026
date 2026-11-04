@@ -2,6 +2,7 @@
 import Knop from "./Knop.astro";
 import Woordmerk from "./Woordmerk.astro";
 import ThemaKnop from "./ThemaKnop.astro";
+import Icoon from "./Icoon.astro";
 import { cta, diensten } from "../data/site";
 
 /**
@@ -9,10 +10,15 @@ import { cta, diensten } from "../data/site";
  * woordmerk wordt kleiner en de balk wordt lager. Zo heb je het menu
  * altijd bij de hand zonder dat het de halve pagina opeet.
  *
- * Diensten heeft een gesplitste trigger: de tekst blijft een gewone link
- * naar de hub, en het pijltje ernaast is een aparte knop die de lijst
- * uitklapt. Zo blijft de hub bereikbaar voor wie klikt en voor wie
- * crawlt, en opent de lijst alleen als je erom vraagt.
+ * Diensten is een link naar de hub met een pijltje ernaast dat de lijst
+ * uitklapt. Twee elementen, maar een trefvlak: de `group` op de wikkel
+ * laat ze samen oplichten, want apart oplichtende helften lezen als twee
+ * dingen naast elkaar in plaats van een menu-item met een pijltje. Zo
+ * blijft de hub bereikbaar voor wie klikt en voor wie crawlt.
+ *
+ * Het paneel gaat open zodra je er met de muis op komt, en het pijltje
+ * blijft een knop voor wie klikt of tabt. Op een aanraakscherm doet de
+ * hover niets: daar volgt een tik gewoon de link.
  *
  * Vijf links passen niet naast het woordmerk, de themaknop en de knop.
  * Daarom staat het menu tot lg in een uitklapper. Dat is een details en
@@ -46,6 +52,18 @@ const naastDiensten = {
   uitleg: "De functies waar je team mee werkt, en wat AI met je eigen gegevens doet.",
 };
 
+/* Een icoon per bestemming, zodat je in het uitklapmenu op vorm kunt
+   zoeken in plaats van elke regel te moeten lezen. Op de href en niet op
+   de volgorde, zodat een nieuwe dienst hier niet stil de verkeerde krijgt. */
+const iconen: Record<string, string> = {
+  "/diensten/crm-inrichting/": "settings-2",
+  "/diensten/koppelingen-en-automatisering/": "workflow",
+  "/diensten/cijfers-en-ai/": "chart-column",
+  "/diensten/ondersteuning-en-training/": "graduation-cap",
+  "/diensten/website-en-mail/": "globe",
+  "/pipedrive": "target",
+};
+
 /* Een dienstpagina laat Diensten oplichten, want die hangt eronder. */
 const actief = (href: string) =>
   pad === href || pad === `${href}/` || pad.startsWith(`${href}/`);
@@ -71,12 +89,12 @@ const actief = (href: string) =>
         {
           links.map((link) =>
             link.href === "/diensten" ? (
-              <div class="relative flex items-center" data-uitklap>
+              <div class="group relative flex items-center" data-uitklap>
                 <a
                   href={link.href}
                   aria-current={actief(link.href) ? "page" : undefined}
                   class:list={[
-                    "inline-flex min-h-11 items-center text-sm hover:text-tekst",
+                    "inline-flex min-h-11 items-center text-sm group-hover:text-tekst",
                     actief(link.href)
                       ? "text-tekst underline underline-offset-8 decoration-rand"
                       : "text-zacht",
@@ -90,7 +108,7 @@ const actief = (href: string) =>
                   aria-expanded="false"
                   aria-controls="menu-diensten"
                   aria-label="Alle diensten tonen"
-                  class="drukbaar ml-1 inline-flex min-h-11 w-6 cursor-pointer items-center justify-center text-zacht hover:text-tekst"
+                  class="drukbaar ml-1 inline-flex min-h-11 w-6 cursor-pointer items-center justify-center text-zacht group-hover:text-tekst"
                 >
                   <svg
                     aria-hidden="true"
@@ -110,7 +128,7 @@ const actief = (href: string) =>
                 <div
                   id="menu-diensten"
                   data-uitklap-paneel
-                  class="absolute left-0 top-full z-40 mt-2 w-[32rem] rounded-kaart border border-rand bg-kaart p-2 shadow-xl"
+                  class="absolute left-0 top-full z-40 mt-2 w-[32rem] rounded-kaart border border-rand bg-kaart p-2 shadow-xl before:absolute before:inset-x-0 before:-top-2 before:h-2 before:content-['']"
                 >
                   <p class="px-3 pb-1 pt-2 label">
                     Vijf soorten werk
@@ -122,15 +140,24 @@ const actief = (href: string) =>
                           href={item.href}
                           aria-current={actief(item.href) ? "page" : undefined}
                           class:list={[
-                            "block rounded-klein px-3 py-2 hover:bg-bg active:bg-bg",
+                            "flex gap-3 rounded-klein px-3 py-2 hover:bg-bg active:bg-bg",
                             actief(item.href) ? "bg-bg" : "",
                           ]}
                         >
-                          <span class="block text-sm text-tekst">
-                            {item.tekst}
-                          </span>
-                          <span class="mt-0.5 line-clamp-2 block text-xs text-zacht">
-                            {item.uitleg}
+                          <svg
+                            viewBox="0 0 24 24"
+                            aria-hidden="true"
+                            class="mt-0.5 size-4 shrink-0 text-zacht"
+                          >
+                            <Icoon naam={iconen[item.href]} maat={24} />
+                          </svg>
+                          <span class="min-w-0">
+                            <span class="block text-sm text-tekst">
+                              {item.tekst}
+                            </span>
+                            <span class="mt-0.5 line-clamp-2 block text-xs text-zacht">
+                              {item.uitleg}
+                            </span>
                           </span>
                         </a>
                       </li>
@@ -142,15 +169,24 @@ const actief = (href: string) =>
                       actief(naastDiensten.href) ? "page" : undefined
                     }
                     class:list={[
-                      "mt-2 block rounded-klein border-t border-rand/60 px-3 pb-2 pt-3 hover:bg-bg active:bg-bg",
+                      "mt-2 flex gap-3 rounded-klein border-t border-rand/60 px-3 pb-2 pt-3 hover:bg-bg active:bg-bg",
                       actief(naastDiensten.href) ? "bg-bg" : "",
                     ]}
                   >
-                    <span class="block text-sm text-tekst">
-                      {naastDiensten.tekst}
-                    </span>
-                    <span class="mt-0.5 block text-xs text-zacht">
-                      {naastDiensten.uitleg}
+                    <svg
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                      class="mt-0.5 size-4 shrink-0 text-zacht"
+                    >
+                      <Icoon naam={iconen[naastDiensten.href]} maat={24} />
+                    </svg>
+                    <span class="min-w-0">
+                      <span class="block text-sm text-tekst">
+                        {naastDiensten.tekst}
+                      </span>
+                      <span class="mt-0.5 block text-xs text-zacht">
+                        {naastDiensten.uitleg}
+                      </span>
                     </span>
                   </a>
                 </div>
@@ -237,13 +273,20 @@ const actief = (href: string) =>
                               actief(item.href) ? "page" : undefined
                             }
                             class:list={[
-                              "flex min-h-11 items-center rounded-klein px-3 text-sm hover:bg-bg hover:text-tekst active:bg-bg",
+                              "flex min-h-11 items-center gap-2.5 rounded-klein px-3 text-sm hover:bg-bg hover:text-tekst active:bg-bg",
                               actief(item.href)
                                 ? "bg-bg text-tekst"
                                 : "text-zacht",
                             ]}
                           >
-                            {item.tekst}
+                            <svg
+                              viewBox="0 0 24 24"
+                              aria-hidden="true"
+                              class="size-4 shrink-0"
+                            >
+                              <Icoon naam={iconen[item.href]} maat={24} />
+                            </svg>
+                            <span class="min-w-0">{item.tekst}</span>
                           </a>
                         </li>
                       ))}
@@ -399,7 +442,39 @@ const actief = (href: string) =>
       const open = () => paneel.hasAttribute("data-open");
 
       knop.addEventListener("click", () => {
+        /* Een klik wint altijd van de hover eronder: anders kun je hem
+           met de muis erop niet dichtklikken. */
+        clearTimeout(sluitTimer);
         zetten(!open());
+      });
+
+      /* Opengaan bij hover. Alleen met een muis: op een aanraakscherm
+         vuurt pointerenter bij de tik waarmee je ook de link volgt, en
+         dan klapt er iets open dat je meteen weer verlaat.
+
+         Dichtgaan met een kleine vertraging, want tussen de knop en het
+         paneel zit lucht. Het paneel heeft daar een onzichtbare brug
+         over, dus de vertraging is alleen de marge voor een muis die de
+         bocht iets te ruim neemt. */
+      let sluitTimer;
+      const metMuis = (e) => e.pointerType === "mouse" || e.pointerType === "";
+
+      uitklap.addEventListener("pointerenter", (e) => {
+        if (!metMuis(e)) return;
+        clearTimeout(sluitTimer);
+        zetten(true);
+      });
+
+      uitklap.addEventListener("pointerleave", (e) => {
+        if (!metMuis(e)) return;
+        clearTimeout(sluitTimer);
+        sluitTimer = setTimeout(() => zetten(false), 180);
+      });
+
+      /* Met de tab-toets erheen doet hetzelfde als met de muis erheen. */
+      uitklap.addEventListener("focusin", () => {
+        clearTimeout(sluitTimer);
+        zetten(true);
       });
 
       document.addEventListener("click", (e) => {
@@ -408,6 +483,7 @@ const actief = (href: string) =>
 
       document.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && open()) {
+          clearTimeout(sluitTimer);
           zetten(false);
           knop.focus();
         }
@@ -415,7 +491,10 @@ const actief = (href: string) =>
 
       /* Weg met de tab-toets betekent ook dicht. */
       uitklap.addEventListener("focusout", (e) => {
-        if (open() && !uitklap.contains(e.relatedTarget)) zetten(false);
+        if (open() && !uitklap.contains(e.relatedTarget)) {
+          clearTimeout(sluitTimer);
+          zetten(false);
+        }
       });
     }
 

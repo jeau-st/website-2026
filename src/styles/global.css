@@ -69,10 +69,16 @@
 }
 
 @theme {
-  /* De variabelen --font-manrope en --font-ibm-plex-mono komen uit de
-     fonts-config in astro.config.mjs en worden door de Font-component op
-     de pagina gezet. */
-  --font-body: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+  /* De variabelen --font-inter, --font-manrope en --font-ibm-plex-mono
+     komen uit de fonts-config in astro.config.mjs en worden door de
+     Font-component op de pagina gezet.
+
+     Twee schreefloze fonts, en dat is met opzet. Manrope valt op waar je
+     naar kijkt en past bij het pixelwoordmerk, maar over een alinea van
+     tien regels is Inter rustiger. Dus Manrope op de koppen, Inter op de
+     rest. */
+  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-titel: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-ibm-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
 
   /* Een schaal in plaats van een waarde. Er stond overal dezelfde 2 px,
@@ -127,11 +133,12 @@
        hij omsluit in plaats van er een hoek naast te zitten. */
     border-radius: var(--radius-klein);
   }
-  /* Koppen in Manrope semibold. Hier hebben eerst Redaction 35 en daarna
-     Inter gestaan. Redaction maakte van elke h2 een gebeurtenis, Inter
-     las neutraal langs het merk heen. Manrope heeft platte, licht
-     vierkante rondingen die aansluiten op het pixelwoordmerk, dus het
-     font doet mee zonder de kop zelf tot onderwerp te maken.
+  /* Koppen in Manrope semibold, de rest in Inter. Hier hebben eerst
+     Redaction 35 en daarna Inter voor alles gestaan. Redaction maakte van
+     elke h2 een gebeurtenis, Inter voor alles las neutraal langs het merk
+     heen. Manrope heeft platte, licht vierkante rondingen die aansluiten
+     op het pixelwoordmerk, dus de koppen doen mee met het merk terwijl de
+     lopende tekst rustig blijft.
 
      Tracking per maat en niet een waarde voor alles: letters die op
      48 px prettig dicht op elkaar staan, plakken op 20 px aan elkaar.
@@ -139,7 +146,7 @@
   h1,
   h2,
   h3 {
-    font-family: var(--font-body);
+    font-family: var(--font-titel);
     font-weight: 600;
     text-wrap: balance;
     /* Kleur hier en niet als utility in de opmaak, anders moet je hem op
