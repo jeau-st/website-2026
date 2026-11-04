@@ -28,7 +28,7 @@ const { items } = Astro.props;
         data-opgave
         class="hidden lg:sticky lg:top-24 lg:block lg:self-start lg:py-24"
       >
-        <p id="opgave-kop" class="font-mono text-sm text-zacht">
+        <p id="opgave-kop" class="label">
           Op deze pagina
         </p>
         <ol class="mt-4 space-y-1 border-l border-rand">
@@ -50,8 +50,8 @@ const { items } = Astro.props;
       </nav>
 
       {/* Tot lg: dicht, want op een telefoon wil je eerst de kop zien. */}
-      <details class="mt-8 rounded-sm border border-rand bg-kaart lg:hidden">
-        <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 px-4 font-mono text-sm text-zacht">
+      <details class="mt-8 rounded-kaart border border-rand bg-kaart lg:hidden">
+        <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 px-4 label">
           Op deze pagina
           <span aria-hidden="true" class="text-zacht">
             +

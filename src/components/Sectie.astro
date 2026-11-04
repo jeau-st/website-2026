@@ -1,16 +1,31 @@
 ---
 /**
  * Vaste breedte en ritme voor elke sectie op de site.
- * Bewust geen labeltje boven de kop: dat leest als sjabloon.
  *
- * Geen afwisselende banen en geen scheidingslijn meer: de hele pagina
- * staat op een achtergrond, en wat bij elkaar hoort staat in een Kaart.
- * Het ritme komt dus van de lucht tussen de secties.
+ * Geen afwisselende banen en geen scheidingslijn: de hele pagina staat
+ * op een achtergrond, en wat bij elkaar hoort staat in een Kaart. Het
+ * ritme komt dus van de lucht tussen de secties.
+ *
+ * Hier stond eerst dat een labeltje boven de kop als sjabloon leest. Dat
+ * klopt voor een los woord in een pilletje, maar niet voor een nummer:
+ * op een pagina met zeven secties onder elkaar is `03` de enige
+ * aanwijzing waar je bent zonder de inhoudsopgave erbij te pakken. Het
+ * staat links en niet gecentreerd, want de pagina leest van links. Het
+ * is aria-hidden: de nummering is houvast voor het oog, en een
+ * screenreader heeft de koppenstructuur al.
+ *
+ * Het ritme is niet overal gelijk. `aansluitend` zet de bovenruimte
+ * terug voor een sectie die bij de vorige hoort: dan ademt de pagina in
+ * groepen in plaats van overal even hard te tikken.
  */
 interface Props {
   id?: string;
   kop?: string;
   intro?: string;
+  /** Het nummer in de kantlijn, bijvoorbeeld 3 wordt `03`. */
+  nummer?: number;
+  /** Krap tegen de vorige sectie aan, omdat ze bij elkaar horen. */
+  aansluitend?: boolean;
   /**
    * Zonder eigen kantlijn en breedte, voor een sectie die al in een
    * kolom staat. Dat is zo op de pagina's met een inhoudsopgave: daar
@@ -20,19 +35,40 @@ interface Props {
   class?: string;
 }
 
-const { id, kop, intro, vol = false, class: extra = "" } = Astro.props;
+const {
+  id,
+  kop,
+  intro,
+  nummer,
+  aansluitend = false,
+  vol = false,
+  class: extra = "",
+} = Astro.props;
 const kopId = id ? `${id}-kop` : undefined;
+
+const ruimte = vol
+  ? aansluitend
+    ? "pb-12 pt-2 sm:pb-16 sm:pt-4"
+    : "py-12 sm:py-16"
+  : aansluitend
+    ? "px-4 pb-16 pt-4 sm:px-6 sm:pb-24 sm:pt-6"
+    : "px-4 py-16 sm:px-6 sm:py-24";
 ---
 
 <section
   id={id}
   aria-labelledby={kop ? kopId : undefined}
-  class:list={[vol ? "py-12 sm:py-16" : "px-4 py-16 sm:px-6 sm:py-24", extra]}
+  class:list={[ruimte, extra]}
 >
   <div class:list={[vol ? "min-w-0" : "mx-auto max-w-5xl"]}>
     {
       (kop || intro) && (
         <header class="max-w-2xl">
+          {nummer !== undefined && (
+            <p class="label mb-3" aria-hidden="true">
+              {String(nummer).padStart(2, "0")}
+            </p>
+          )}
           {kop && (
             <h2 id={kopId} class="text-3xl sm:text-4xl">
               {kop}

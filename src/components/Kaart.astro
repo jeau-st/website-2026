@@ -1,13 +1,22 @@
 ---
 /**
- * Een omlijnd vlak om inhoud die bij elkaar hoort. Dit verving de
- * afwisselende banen: alle secties staan nu op dezelfde achtergrond en
- * het groeperen gebeurt hier.
+ * Een vlak om inhoud die bij elkaar hoort. Dit verving de afwisselende
+ * banen: alle secties staan op dezelfde achtergrond en het groeperen
+ * gebeurt hier.
+ *
+ * Drie gewichten in plaats van een. Eerst had elke kaart dezelfde rand,
+ * dezelfde vulling en dezelfde binnenruimte, en dan krijgt het oog
+ * nergens een rangorde aangeboden: alles is even belangrijk, dus niets
+ * is het. Nu:
+ *
+ *   stil    geen rand en geen vulling, alleen ruimte. Voor wat bij
+ *           elkaar hoort maar geen omlijning nodig heeft
+ *   kaart   het standaardvlak. Rand, vulling, ronding van 10 px
+ *   groot   het dragende blok op een pagina. Ronding van 16 px en meer
+ *           binnenruimte, zodat er per pagina een vlak is dat voorgaat
  *
  * De vulling is maar 1,1:1 lichter dan de achtergrond, dus de rand doet
- * het werk en de vulling geeft alleen diepte. De ronding is dezelfde 2 px
- * als de focusring, zodat een kaart met focus niet plotseling een andere
- * vorm heeft.
+ * het werk en de vulling geeft alleen diepte.
  *
  * `als` bestaat omdat een kaart soms een li in een lijst is en soms een
  * los blok. De opmaak blijft hetzelfde.
@@ -15,6 +24,8 @@
 interface Props {
   als?: "div" | "li" | "article" | "figure" | "details";
   id?: string;
+  /** Zie hierboven. Standaard het gewone vlak. */
+  gewicht?: "stil" | "kaart" | "groot";
   /** Krapper, voor een kaart in een raster van drie of meer. */
   krap?: boolean;
   class?: string;
@@ -23,18 +34,27 @@ interface Props {
 const {
   als: Tag = "div",
   id,
+  gewicht = "kaart",
   krap = false,
   class: extra = "",
 } = Astro.props;
+
+const vlak = {
+  stil: "",
+  kaart: "rounded-kaart border border-rand bg-kaart",
+  groot: "rounded-groot border border-rand bg-kaart",
+}[gewicht];
+
+/* Een stil vlak krijgt geen binnenruimte: er is geen rand om afstand
+   van te houden, en padding zonder rand zet de tekst alleen maar scheef
+   ten opzichte van de rest van de kolom. */
+const ruimte = {
+  stil: "",
+  kaart: krap ? "p-5 sm:p-6" : "p-6 sm:p-8",
+  groot: krap ? "p-6 sm:p-8" : "p-8 sm:p-10",
+}[gewicht];
 ---
 
-<Tag
-  id={id}
-  class:list={[
-    "rounded-sm border border-rand bg-kaart",
-    krap ? "p-5 sm:p-6" : "p-6 sm:p-8",
-    extra,
-  ]}
->
+<Tag id={id} class:list={[vlak, ruimte, extra]}>
   <slot />
 </Tag>

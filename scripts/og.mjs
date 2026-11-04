@@ -4,7 +4,7 @@
  * staat in de repo zodat een build hem niet nodig heeft.
  *
  * Het woordmerk komt uit hetzelfde pad als op de site, en de teksten staan
- * in Inter en IBM Plex Mono uit de fontcache van Astro. Draai `npm run build`
+ * in Manrope en IBM Plex Mono uit de fontcache van Astro. Draai `npm run build`
  * als die cache leeg is, anders staan de woff2-bestanden er nog niet.
  *
  * Die cache bevat woff2, en de tekenaar in sharp wil een ttf. Daarom zet
@@ -35,8 +35,17 @@ const werkmap = "./node_modules/.cache/og-fonts";
 
 /** Het nieuwste bestand dat bij deze naam hoort; de hash wisselt per ophaal. */
 function fontpad(voorvoegsel) {
+  /* `latin-ext` begint met hetzelfde voorvoegsel als `latin`, dus die
+     moet er expliciet uit. Eerder stond de eerste letter van de hash in
+     het voorvoegsel om ze uit elkaar te houden, en dat brak zodra de
+     hash wisselde. */
   const treffer = readdirSync(fontmap)
-    .filter((naam) => naam.startsWith(voorvoegsel) && naam.endsWith(".woff2"))
+    .filter(
+      (naam) =>
+        naam.startsWith(voorvoegsel) &&
+        naam.endsWith(".woff2") &&
+        !naam.startsWith(`${voorvoegsel}ext-`),
+    )
     .sort();
   if (treffer.length === 0) {
     throw new Error(`Geen font gevonden voor ${voorvoegsel}. Draai eerst npm run build.`);
@@ -57,7 +66,7 @@ function naarTtf(voorvoegsel, naam) {
   return ttf;
 }
 
-const inter = naarTtf("font-inter-600-normal-latin-c", "inter");
+const titelfont = naarTtf("font-manrope-600-normal-latin-", "manrope");
 const mono = naarTtf("font-ibm-plex-mono-400-normal-latin-", "mono");
 
 /** Het woordmerkpad uit de component, zodat er één bron van waarheid is. */
@@ -97,7 +106,7 @@ const belofte = await tekst(
     tekst: "CRM, koppelingen en\nprocesautomatisering",
     kleur: kleur.kop,
   },
-  { font: "Inter SemiBold 34", fontfile: inter, breedte: BREEDTE - KANTLIJN * 2 },
+  { font: "Manrope SemiBold 34", fontfile: titelfont, breedte: BREEDTE - KANTLIJN * 2 },
 );
 
 const onder = await tekst(

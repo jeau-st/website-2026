@@ -38,6 +38,10 @@ const delen = {
 
 const opgave = Object.entries(delen).map(([id, tekst]) => ({ id, tekst }));
 
+/* Hetzelfde nummer in de kantlijn als in de inhoudsopgave, afgeleid uit
+   dezelfde lijst, zodat de twee niet uit elkaar kunnen lopen. */
+const nr = Object.fromEntries(Object.keys(delen).map((id, i) => [id, i + 1]));
+
 const faqSchema = {
   "@type": "FAQPage",
   mainEntity: vragen
@@ -57,7 +61,7 @@ const faqSchema = {
 >
   <section class="px-4 py-20 sm:px-6 sm:py-24">
     <div class="mx-auto max-w-5xl">
-      <h1 class="max-w-3xl text-4xl sm:text-5xl">
+      <h1 class="max-w-3xl text-4xl sm:text-5xl lg:text-6xl">
         Eerst het proces, dan de techniek
       </h1>
       <p class="mt-6 max-w-2xl text-lg text-zacht">
@@ -69,7 +73,7 @@ const faqSchema = {
   </section>
 
   <MetOpgave items={opgave}>
-  <Sectie id="volgorde" vol kop={delen.volgorde}>
+  <Sectie id="volgorde" vol nummer={nr.volgorde} kop={delen.volgorde}>
     <ol class="space-y-4">
       {denkwijze.map((stap) => <Denkstap stap={stap} />)}
     </ol>
@@ -79,6 +83,7 @@ const faqSchema = {
   <Sectie
     id="niveaus"
     vol
+    nummer={nr.niveaus}
     kop={delen.niveaus}
     intro="Niet iedereen begint bij 01. Lees deze vier door en kijk welke het meest op jouw bedrijf lijkt."
   >
@@ -94,6 +99,7 @@ const faqSchema = {
   <Sectie
     id="stappen"
     vol
+    nummer={nr.stappen}
     kop={delen.stappen}
     intro="De vier stappen hierboven zijn de denkwijze. Hieronder staat hoe dat in de praktijk verloopt, met per stap wat ik doe, wat jij doet en wat er aan het eind ligt."
   >
@@ -103,6 +109,7 @@ const faqSchema = {
   <Sectie
     id="daarna"
     vol
+    nummer={nr.daarna}
     kop={delen.daarna}
     intro="De oplevering is het begin. Dit is het ritme daarna."
   >
@@ -122,7 +129,7 @@ const faqSchema = {
   {/* Dit stond als raster van vier gelijke blokjes. Zo gelijk van vorm en
       lengte leest het als een sjabloon, dus nu een lijst met blokken die
       net zo lang zijn als ze hoeven te zijn. */}
-  <Sectie id="werkwijze" vol kop={delen.werkwijze}>
+  <Sectie id="werkwijze" vol nummer={nr.werkwijze} kop={delen.werkwijze}>
     <div class="mt-12 max-w-2xl space-y-4">
       <Kaart>
         <h3 class="text-lg">
@@ -159,7 +166,7 @@ const faqSchema = {
     </div>
   </Sectie>
 
-  <Sectie id="vragen" vol kop={delen.vragen}>
+  <Sectie id="vragen" vol nummer={nr.vragen} kop={delen.vragen}>
     <div class="mt-10 max-w-3xl space-y-3">
       {vragen.map((item) => <Vraag item={item} />)}
     </div>

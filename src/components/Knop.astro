@@ -13,8 +13,13 @@ interface Props {
 
 const { variant = "gevuld", class: extra = "", toonToelichting = false } = Astro.props;
 
+/* Lichter dan hij was. Hij stond op 16 px semibold en dat schreeuwde:
+   een knop die harder roept dan de kop eronder leest als sjabloon.
+   Nu 14 px medium met positieve letterspatiering en meer horizontale
+   ruimte, zodat hij rustig is en toch opvalt door zijn kleur. De hoogte
+   komt op 49 px uit, dus ruim boven het tikdoel van 44. */
 const basis =
-  "drukbaar inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold transition-colors duration-150";
+  "drukbaar inline-flex items-center justify-center gap-2 rounded-klein px-7 py-3.5 text-sm font-medium tracking-[0.02em] transition-colors duration-150";
 const stijl =
   variant === "gevuld"
     ? "bg-accent text-op-accent hover:bg-tekst"

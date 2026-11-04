@@ -14,8 +14,12 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.fontsource(),
-      name: 'Inter',
-      cssVariable: '--font-inter',
+      // Manrope in plaats van Inter. Inter leest neutraal langs het merk
+      // heen; Manrope heeft platte, licht vierkante rondingen die
+      // aansluiten op het pixelwoordmerk. Geen cursief in dit font, en
+      // dat geeft niet: de site gebruikt nergens cursief.
+      name: 'Manrope',
+      cssVariable: '--font-manrope',
       weights: [400, 500, 600, 700],
       styles: ['normal'],
       subsets: ['latin', 'latin-ext'],
@@ -25,7 +29,7 @@ export default defineConfig({
       name: 'IBM Plex Mono',
       cssVariable: '--font-ibm-plex-mono',
       // Alleen nog voor kleine labels: nummers, de tekeningen, de kantlijn.
-      // De koppen staan in Inter, dus 600 is hier niet meer nodig.
+      // De koppen staan in Manrope, dus 600 is hier niet meer nodig.
       weights: [400, 500],
       styles: ['normal'],
       subsets: ['latin', 'latin-ext'],

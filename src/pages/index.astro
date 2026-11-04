@@ -71,24 +71,34 @@ const kernpunten = [
 
       <Schema />
 
-      {/* Krap, en met minder lucht erboven dan elders: anders past de
-          hero niet meer op 1280 bij 800 zonder scrollen. */}
-      <Kaart krap class="mt-5 max-w-2xl">
-      <ul class="divide-y divide-rand/60">
+      {/* Een haarlijnraster, geen opsomming met pijltjes. Dat pijltje in
+          een omlijnde kaart was het meest herkenbare element van de hele
+          site: zo ziet een chatantwoord eruit.
+
+          De lijnen komen uit de achtergrond: de wikkel is gevuld met de
+          zachte randkleur, de cellen liggen erop met de kaartkleur, en de
+          gap van 1 px laat de wikkel ertussen zien. Zo staat er nooit een
+          dubbele rand waar twee cellen elkaar raken.
+
+          Twee kolommen vanaf sm, de laatste over de volle breedte. Dat
+          leest als een paneel in plaats van een lijstje, en het scheelt
+          hoogte: de hero moet op 1280 bij 800 passen zonder scrollen. */}
+      <ul
+        class="mt-5 grid max-w-2xl gap-px overflow-hidden rounded-kaart border border-rand bg-rand-zacht sm:grid-cols-2"
+      >
         {
-          kernpunten.map((punt) => (
-            /* Het pijltje is versiering, niet de opsommingsmarkering: de ul
-               geeft screenreaders die al. Daarom aria-hidden. */
-            <li class="flex items-baseline gap-3 py-2 text-tekst">
-              <span aria-hidden="true" class="font-mono text-sm text-zacht">
-                &#8594;
-              </span>
-              <span class="min-w-0">{punt}</span>
+          kernpunten.map((punt, i) => (
+            <li
+              class:list={[
+                "bg-kaart px-4 py-3 text-tekst",
+                i === kernpunten.length - 1 && "sm:col-span-2",
+              ]}
+            >
+              {punt}
             </li>
           ))
         }
       </ul>
-      </Kaart>
 
       <div class="mt-6">
         <Knop toonToelichting />
@@ -214,7 +224,7 @@ const kernpunten = [
         alt={`${bedrijf.persoon}, achter zijn bureau`}
         width={896}
         height={448}
-        class="w-full max-w-md border border-rand/60"
+        class="w-full max-w-lg rounded-groot border border-rand/60"
       />
 
       <div class="mt-10 max-w-2xl">

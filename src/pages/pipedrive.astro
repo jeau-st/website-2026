@@ -26,6 +26,10 @@ const delen = {
 
 const opgave = Object.entries(delen).map(([id, tekst]) => ({ id, tekst }));
 
+/* Hetzelfde nummer in de kantlijn als in de inhoudsopgave, afgeleid uit
+   dezelfde lijst, zodat de twee niet uit elkaar kunnen lopen. */
+const nr = Object.fromEntries(Object.keys(delen).map((id, i) => [id, i + 1]));
+
 const schema = {
   "@type": "WebPage",
   name: "Wat Pipedrive voor je team doet",
@@ -45,7 +49,7 @@ const schema = {
   <section class="px-4 py-20 sm:px-6 sm:py-24">
     <div class="mx-auto max-w-5xl">
       <p class="font-mono text-sm text-zacht">Pipedrive</p>
-      <h1 class="mt-2 max-w-3xl text-4xl sm:text-5xl">
+      <h1 class="mt-2 max-w-3xl text-4xl sm:text-5xl lg:text-6xl">
         Wat Pipedrive voor je team doet
       </h1>
       <p class="mt-6 max-w-2xl text-lg text-zacht">
@@ -57,7 +61,7 @@ const schema = {
   </section>
 
   <MetOpgave items={opgave}>
-  <Sectie id="functies" vol kop={delen.functies}>
+  <Sectie id="functies" vol nummer={nr.functies} kop={delen.functies}>
     <dl class="mt-12 grid gap-4 md:grid-cols-2">
       {
         pipedriveFuncties.map((functie) => (
@@ -77,6 +81,7 @@ const schema = {
   <Sectie
     id="ai"
     vol
+    nummer={nr.ai}
     kop={delen.ai}
     intro="AI is zo goed als de gegevens eronder. Staat je proces in een systeem en klopt wat erin staat, dan kun je er wat mee."
   >
@@ -91,7 +96,7 @@ const schema = {
     </p>
   </Sectie>
 
-  <Sectie id="watikdoe" vol kop={delen.watikdoe}>
+  <Sectie id="watikdoe" vol nummer={nr.watikdoe} kop={delen.watikdoe}>
     <div class="mt-8 max-w-2xl space-y-4 text-zacht">
       <p>
         Een systeem aanzetten is zo gebeurd. Het werk zit in de vraag hoe

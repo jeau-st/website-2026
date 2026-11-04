@@ -110,9 +110,9 @@ const actief = (href: string) =>
                 <div
                   id="menu-diensten"
                   data-uitklap-paneel
-                  class="absolute left-0 top-full z-40 mt-2 w-[32rem] rounded-sm border border-rand bg-kaart p-2 shadow-xl"
+                  class="absolute left-0 top-full z-40 mt-2 w-[32rem] rounded-kaart border border-rand bg-kaart p-2 shadow-xl"
                 >
-                  <p class="px-3 pb-1 pt-2 font-mono text-xs text-zacht">
+                  <p class="px-3 pb-1 pt-2 label">
                     Vijf soorten werk
                   </p>
                   <ul class="grid grid-cols-2 gap-1">
@@ -122,7 +122,7 @@ const actief = (href: string) =>
                           href={item.href}
                           aria-current={actief(item.href) ? "page" : undefined}
                           class:list={[
-                            "block rounded-sm px-3 py-2 hover:bg-bg active:bg-bg",
+                            "block rounded-klein px-3 py-2 hover:bg-bg active:bg-bg",
                             actief(item.href) ? "bg-bg" : "",
                           ]}
                         >
@@ -142,7 +142,7 @@ const actief = (href: string) =>
                       actief(naastDiensten.href) ? "page" : undefined
                     }
                     class:list={[
-                      "mt-2 block rounded-sm border-t border-rand/60 px-3 pb-2 pt-3 hover:bg-bg active:bg-bg",
+                      "mt-2 block rounded-klein border-t border-rand/60 px-3 pb-2 pt-3 hover:bg-bg active:bg-bg",
                       actief(naastDiensten.href) ? "bg-bg" : "",
                     ]}
                   >
@@ -208,7 +208,7 @@ const actief = (href: string) =>
 
         <nav
           aria-label="Menu"
-          class="absolute right-0 top-full z-40 mt-3 w-64 rounded-sm border border-rand bg-kaart p-2 shadow-xl"
+          class="absolute right-0 top-full z-40 mt-3 w-64 rounded-kaart border border-rand bg-kaart p-2 shadow-xl"
         >
           <ul>
             {
@@ -218,7 +218,7 @@ const actief = (href: string) =>
                     href={link.href}
                     aria-current={actief(link.href) ? "page" : undefined}
                     class:list={[
-                      "flex min-h-11 items-center rounded-sm px-3 hover:bg-bg hover:text-tekst active:bg-bg",
+                      "flex min-h-11 items-center rounded-klein px-3 hover:bg-bg hover:text-tekst active:bg-bg",
                       actief(link.href) ? "bg-bg text-tekst" : "text-zacht",
                     ]}
                   >
@@ -237,7 +237,7 @@ const actief = (href: string) =>
                               actief(item.href) ? "page" : undefined
                             }
                             class:list={[
-                              "flex min-h-11 items-center rounded-sm px-3 text-sm hover:bg-bg hover:text-tekst active:bg-bg",
+                              "flex min-h-11 items-center rounded-klein px-3 text-sm hover:bg-bg hover:text-tekst active:bg-bg",
                               actief(item.href)
                                 ? "bg-bg text-tekst"
                                 : "text-zacht",

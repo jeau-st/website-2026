@@ -24,7 +24,7 @@ const schoon = (tekst: string) => tekst.replace(/^TODO:\s*/, "");
 
 <Kaart als="li" id={`case-${nummer}`}>
   <div class="grid gap-x-8 gap-y-4 sm:grid-cols-[3rem_1fr]">
-    <p class="font-mono text-sm text-zacht" aria-hidden="true">{nummer}</p>
+    <p class="label" aria-hidden="true">{nummer}</p>
 
     <div class="min-w-0">
       {
@@ -39,7 +39,7 @@ const schoon = (tekst: string) => tekst.replace(/^TODO:\s*/, "");
         {
           delen.map((deel) => (
             <div class="min-w-0">
-              <dt class="font-mono text-sm text-zacht">{deel.kop}</dt>
+              <dt class="label">{deel.kop}</dt>
               <dd class="mt-1 min-w-0 text-tekst">
                 {item.todo ? <Todo wat={schoon(deel.tekst)} /> : deel.tekst}
               </dd>

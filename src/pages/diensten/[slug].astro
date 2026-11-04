@@ -3,7 +3,6 @@ import Basis from "../../layouts/Basis.astro";
 import Sectie from "../../components/Sectie.astro";
 import Knop from "../../components/Knop.astro";
 import Todo from "../../components/Todo.astro";
-import Kaart from "../../components/Kaart.astro";
 import MetOpgave from "../../components/MetOpgave.astro";
 import Kruimels, { kruimelSchema } from "../../components/Kruimels.astro";
 import { bedrijf, diensten } from "../../data/site";
@@ -51,6 +50,10 @@ const opgave = [
   { id: "verder", tekst: "De andere diensten" },
 ];
 
+/* Hetzelfde nummer in de kantlijn als in de inhoudsopgave, afgeleid uit
+   dezelfde lijst, zodat de twee niet uit elkaar kunnen lopen. */
+const nr = Object.fromEntries(opgave.map((deel, i) => [deel.id, i + 1]));
+
 const schema = {
   "@type": "Service",
   name: dienst.titel,
@@ -72,7 +75,7 @@ const schema = {
   <section class="px-4 py-20 sm:px-6 sm:py-24">
     <div class="mx-auto max-w-5xl">
       <Kruimels kruimels={kruimels} />
-      <h1 class="mt-3 max-w-3xl text-4xl sm:text-5xl">{dienst.kop}</h1>
+      <h1 class="mt-3 max-w-3xl text-4xl sm:text-5xl lg:text-6xl">{dienst.kop}</h1>
       <p class="mt-6 max-w-2xl text-lg text-zacht">{dienst.tekst}</p>
       {
         dienst.voorWie && (
@@ -83,21 +86,21 @@ const schema = {
   </section>
 
   <MetOpgave items={opgave}>
-  <Sectie id="watkrijgje" vol kop="Wat dat concreet is">
-    <Kaart class="mt-10 max-w-2xl">
-    <ul class="divide-y divide-rand/60">
+  <Sectie id="watkrijgje" vol nummer={nr.watkrijgje} kop="Wat dat concreet is">
+    {/* Een haarlijnraster in plaats van pijltjes in een kaart. De lijnen
+        komen uit de achtergrond van de wikkel, die door de gap van 1 px
+        tussen de cellen heen schijnt. Een kolom en niet twee: het aantal
+        punten verschilt per dienst, en bij een oneven aantal blijft er
+        in twee kolommen een lege cel over. */}
+    <ul
+      class="mt-10 grid max-w-2xl gap-px overflow-hidden rounded-kaart border border-rand bg-rand-zacht"
+    >
       {
         dienst.punten.map((punt) => (
-          <li class="flex items-baseline gap-3 py-3 text-tekst">
-            <span aria-hidden="true" class="font-mono text-sm text-zacht">
-              &#8594;
-            </span>
-            <span class="min-w-0">{punt}</span>
-          </li>
+          <li class="min-w-0 bg-kaart px-4 py-3 text-tekst">{punt}</li>
         ))
       }
     </ul>
-    </Kaart>
 
     {
       !dienst.verhaal && (
@@ -112,7 +115,7 @@ const schema = {
 
   {
     dienst.verhaal?.map((blok, i) => (
-      <Sectie id={`hoe-${i + 1}`} vol kop={blok.kop}>
+      <Sectie id={`hoe-${i + 1}`} vol nummer={nr[`hoe-${i + 1}`]} kop={blok.kop}>
         <div class="mt-8 max-w-2xl space-y-4 text-zacht">
           {blok.alineas.map((alinea) => (
             <p>{alinea}</p>
@@ -122,7 +125,7 @@ const schema = {
     ))
   }
 
-  <Sectie id="verder" vol kop="De andere diensten">
+  <Sectie id="verder" vol nummer={nr.verder} kop="De andere diensten">
     <ul class="mt-8 max-w-2xl space-y-3">
       {
         anderen.map((item) => (

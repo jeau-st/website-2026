@@ -17,7 +17,7 @@ const { dienst, nummer } = Astro.props;
 
 <Kaart als="li" class="relative">
   <div class="grid gap-x-8 gap-y-4 sm:grid-cols-[3rem_minmax(0,32rem)_1fr]">
-    <p class="hidden font-mono text-sm text-zacht sm:block" aria-hidden="true">
+    <p class="hidden label sm:block" aria-hidden="true">
       {nummer}
     </p>
 
@@ -27,7 +27,7 @@ const { dienst, nummer } = Astro.props;
           Alleen de titel is de link; de rest blijft selecteerbaar. */}
       <h3 class="text-xl">
         <a
-          class="tekstlink after:absolute after:inset-0 after:rounded-sm"
+          class="tekstlink after:absolute after:inset-0 after:rounded-kaart"
           href={`/diensten/${dienst.slug}/`}
         >
           {dienst.titel}

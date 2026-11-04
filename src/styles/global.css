@@ -40,6 +40,10 @@
   --c-bg: #090e11;
   --c-kaart: #131b20;
   --c-rand: #2d3a43;
+  /* Alleen voor scheidslijnen binnen een raster, waar de volle rand te
+     veel lawaai geeft omdat de lijnen dicht op elkaar staan. Nooit als
+     buitenrand: daar moet de rand het contrast halen. */
+  --c-rand-zacht: #212c33;
   --c-tekst: #f4f6f7;
   --c-zacht: #6d8595;
   /* Donkerder dan de tekst, lichter dan de bijtekst: een kop die rustig
@@ -55,6 +59,7 @@
   --c-bg: #f8fafc;
   --c-kaart: #ebf1f4;
   --c-rand: #bfcfd9;
+  --c-rand-zacht: #d6e1e8;
   --c-tekst: #101519;
   --c-zacht: #577182;
   --c-kop: #28353e;
@@ -64,15 +69,29 @@
 }
 
 @theme {
-  /* De variabelen --font-inter en --font-ibm-plex-mono komen uit de fonts-config
-     in astro.config.mjs en worden door de Font-component op de pagina gezet. */
-  --font-body: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  /* De variabelen --font-manrope en --font-ibm-plex-mono komen uit de
+     fonts-config in astro.config.mjs en worden door de Font-component op
+     de pagina gezet. */
+  --font-body: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-ibm-plex-mono), ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* Een schaal in plaats van een waarde. Er stond overal dezelfde 2 px,
+     en een waarde die nergens varieert leest als een waarde die niemand
+     heeft gekozen. Drie trappen, naar de rol van het vlak:
+       klein  knoppen, labels, kleine vlakken binnen een kaart
+       kaart  het standaardvlak
+       groot  de dragende blokken, zoals de hero en de tekeningen
+     Geen volledig ronde pillen: het woordmerk is een pixelvorm en die
+     gaat daarmee vechten. */
+  --radius-klein: 6px;
+  --radius-kaart: 10px;
+  --radius-groot: 16px;
 
   /* Rolgebaseerd: deze gebruik je in componenten */
   --color-bg: var(--c-bg);
   --color-kaart: var(--c-kaart);
   --color-rand: var(--c-rand);
+  --color-rand-zacht: var(--c-rand-zacht);
   --color-tekst: var(--c-tekst);
   --color-zacht: var(--c-zacht);
   --color-kop: var(--c-kop);
@@ -104,29 +123,52 @@
   :focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 3px;
-    border-radius: 2px;
+    /* Dezelfde trap als de knoppen, zodat de ring de vorm volgt van wat
+       hij omsluit in plaats van er een hoek naast te zitten. */
+    border-radius: var(--radius-klein);
   }
-  /* Koppen in Inter semibold. Een afwijkend titelfont heeft hier gestaan
-     (Redaction 35, een serif met korrel), en dat werkte op een enkele kop
-     mooi, maar op een lange pagina werd elke h2 een gebeurtenis. Het
-     karakter van de site zit in het woordmerk en in de kantlijnlabels in
-     de mono, niet in de koppen zelf.
+  /* Koppen in Manrope semibold. Hier hebben eerst Redaction 35 en daarna
+     Inter gestaan. Redaction maakte van elke h2 een gebeurtenis, Inter
+     las neutraal langs het merk heen. Manrope heeft platte, licht
+     vierkante rondingen die aansluiten op het pixelwoordmerk, dus het
+     font doet mee zonder de kop zelf tot onderwerp te maken.
 
-     Inter loopt smaller dan de mono, dus de tracking mag ruimer: -0.02em
-     in plaats van -0.03em, anders plakken de letters op grote maten. */
+     Tracking per maat en niet een waarde voor alles: letters die op
+     48 px prettig dicht op elkaar staan, plakken op 20 px aan elkaar.
+     Hoe groter de kop, hoe strakker. */
   h1,
   h2,
   h3 {
     font-family: var(--font-body);
     font-weight: 600;
-    letter-spacing: -0.02em;
     text-wrap: balance;
     /* Kleur hier en niet als utility in de opmaak, anders moet je hem op
        26 plekken zetten. */
     color: var(--color-kop);
   }
+  h1 {
+    letter-spacing: -0.03em;
+  }
+  h2 {
+    letter-spacing: -0.02em;
+  }
+  h3 {
+    letter-spacing: -0.01em;
+  }
   p {
     text-wrap: pretty;
+  }
+
+  /* Het kleine mono-labeltje: boven een sectiekop, in de kantlijn, bij
+     een nummer. Klein zetten vraagt om positieve letterspatiering, want
+     mono op 12 px loopt anders dicht. Eén klasse, zodat de maat en de
+     spatiering niet op twintig plekken los staan. */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    line-height: 1.4;
+    letter-spacing: 0.08em;
+    color: var(--color-zacht);
   }
 
   /* Indrukken moet je zien, ook zonder muis: op een telefoon bestaat
