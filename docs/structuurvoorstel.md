@@ -108,7 +108,7 @@ Wat erbij hoort te komen:
 | De volgorde is het werk (`Cyclus`) | Tekening blijft op de homepage, de twee alinea's eronder vervallen. Die staan al op `/aanpak` |
 | Wat ik doe (`diensten`) | Blijft als korte kaarten, met een link naar `/diensten` en naar elke dienst |
 | Hoe een traject loopt (`Stappenbalk`) | Van de homepage af. Staat als `Stappentabel` al voluit op `/aanpak` |
-| En dan gaat het pas werken (`nabouw`) | Naar `/aanpak`, onder de processtappen. Ook naar `/diensten/ondersteuning-en-training` |
+| Betrokkenheid na livegang (`nabouw`) | Naar `/aanpak`, onder de processtappen. Ook naar `/diensten/ondersteuning-en-training` |
 | Voorbeelden van werk (`werkKort`) | Blijft, drie kolommen, met de link naar `/werk` |
 | Over mij | Naar `/over`. Op de homepage de foto, twee regels en een link |
 | Veelgestelde vragen | Naar `/aanpak` |
@@ -224,3 +224,16 @@ Dat zijn de vijf W's en de H in zes regels, voor wie niet verder leest.
 plaats van een samenvatting in situatie, aanpak en resultaat. Elke regel
 komt uit het `resultaat` van een van de vier cases. `Wie dit doet` heet
 `Over mij`.
+
+De opdrachten op `/werk` staan niet meer in een kaart en niet meer in
+alinea's. Elke opdracht is een rij met haarlijnen ertussen, en situatie,
+aanpak en resultaat staan puntsgewijs. Onder de titel staat een rijtje
+iconen: de onderdelen uit de ring in de hero die in die opdracht zijn
+aangepakt. Die ring en die rijtjes komen uit dezelfde lijst `bouwstenen`
+in `src/data/site.ts`, dus wat je op de homepage op de cirkel ziet staan,
+herken je bij een opdracht aan hetzelfde icoon terug.
+
+`Resultaten` op de homepage laat daarom nu drie opdrachten zien in plaats
+van zes losse regels: hetzelfde labeltje, dezelfde iconen en de eerste
+drie punten uit het resultaat. Het eigen lijstje dat daar stond is weg,
+dus de homepage kan niets beloven wat op `/werk` niet uitgewerkt staat.

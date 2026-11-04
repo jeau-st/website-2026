@@ -46,7 +46,7 @@ const opgave = cases
         <Todo wat="deze pagina staat nog volledig op placeholders. Vul de cases in src/data/site.ts in, of haal Werk uit het menu tot er inhoud is." />
       )
     }
-    <ol class="mt-8 space-y-4">
+    <ol class="mt-8 grid gap-px bg-rand-zacht">
       {
         cases.map((item, i) => (
           <Case item={item} nummer={String(i + 1).padStart(2, "0")} />

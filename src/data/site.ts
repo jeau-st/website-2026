@@ -391,8 +391,10 @@ export type Nastap = {
 /**
  * Het ritme na de oplevering. Dit is zelf een verkoopargument, dus het
  * staat als eigen sectie op de pagina en niet als voetnoot bij support.
- * Het abonnement krijgt wel een vorm en geen prijs: prijzen staan niet
- * op deze site.
+ * Het onderhoudsabonnement stond hier als derde. Die titel past niet op
+ * één regel in het raster, en wat het is staat al op de pagina van
+ * ondersteuning en training. Twee blokken die passen zeggen het beter
+ * dan drie waarvan er één omvalt.
  */
 export const nabouw: Nastap[] = [
   {
@@ -404,11 +406,6 @@ export const nabouw: Nastap[] = [
     titel: "Elke twee weken overleg",
     tekst:
       "Met die mensen loop ik langs wat er af is, wat er nog loopt en wat er nieuw bij komt. Nieuwe wensen maken we scherp en zetten we op volgorde, zodat we aan het juiste werken.",
-  },
-  {
-    titel: "Een onderhoudsabonnement",
-    tekst:
-      "Wil je me vast bij de hand hebben, dan kan dat met een onderhoudsabonnement. Je krijgt het tweewekelijks overleg, een vraagbaak voor je superusers en de kleine aanpassingen die onderweg nodig zijn.",
   },
 ];
 
@@ -459,7 +456,7 @@ export type Functie = {
  */
 export const pipedriveFuncties: Functie[] = [
   {
-    titel: "E-mailsynchronisatie",
+    titel: "Mailsynchronisatie",
     icoon: "mail",
     tekst: "Elke mail bij de juiste klant en de juiste deal, ook die van je collega.",
   },
@@ -604,90 +601,167 @@ export const vragen: Vraag[] = [
 ];
 
 /**
- * Concrete resultaten voor de homepage, met per regel bij wat voor
- * opdracht het hoort. Hier stond eerst een samenvatting in drie kolommen
- * (situatie, aanpak, resultaat). Dat was de vorm van een case en niet het
- * resultaat: je las wat er gebeurd was en niet wat eruit kwam.
+ * De onderdelen die bij een bedrijf horen: de ring in de hero, en de
+ * bouwstenen die per opdracht genoemd worden. Eén lijst, want het is
+ * hetzelfde rijtje. Zag je iets op de homepage op de ring staan, dan wil
+ * je het bij een opdracht aan hetzelfde icoon herkennen.
  *
- * Elke regel komt uit het `resultaat` van een van de cases hieronder.
- * Dus niets wat niet is gebeurd, en de uitwerking staat op /werk.
+ * De volgorde is de volgorde op de ring, met de klok mee vanaf boven.
+ * Schema.astro rekent daar de hoek uit, dus een onderdeel verplaatsen
+ * betekent hier verplaatsen. `kort` is voor de telefoon, waar het volle
+ * label niet naast de cirkel past.
  */
-export const resultaten = [
-  {
-    bij: "Maatschappelijke organisatie",
-    wat: "De incasso- en excassobatches worden vanzelf aangemaakt, en na elke stap staat er een opvolgtaak klaar.",
-  },
-  {
-    bij: "Welzijnsorganisatie",
-    wat: "Per event zie je wie is uitgenodigd, wie zich aanmeldde, wie er was en wat de opvolging is.",
-  },
-  {
-    bij: "Welzijnsorganisatie",
-    wat: "De dubbele records zijn opgeruimd, dus er is één plek waar je kijkt.",
-  },
-  {
-    bij: "Architectenbureau",
-    wat: "De verouderde sites zijn samengevoegd tot één site die het bureau zelf beheert.",
-  },
-  {
-    bij: "Architectenbureau",
-    wat: "Via het formulier komen aanvragen binnen die meteen een afspraak kunnen inplannen.",
-  },
-  {
-    bij: "Webshop in lampen",
-    wat: "Mail vanaf het eigen domein komt aan in plaats van in de spam, en de verkoop trok aan.",
-  },
+export type Bouwsteen = { icoon: string; label: string; kort?: string };
+
+export const bouwstenen: Bouwsteen[] = [
+  { icoon: "mail", label: "mailbox" },
+  { icoon: "folder-kanban", label: "projecten" },
+  { icoon: "chart-column", label: "rapportages" },
+  { icoon: "workflow", label: "slimme workflows", kort: "workflows" },
+  { icoon: "sparkles", label: "AI" },
+  { icoon: "database", label: "databases" },
+  { icoon: "calculator", label: "boekhouding" },
+  { icoon: "file-text", label: "offertes" },
+  { icoon: "message-square", label: "WhatsApp" },
+  { icoon: "phone", label: "telefoon" },
+  { icoon: "globe", label: "website" },
+  { icoon: "calendar", label: "agenda" },
 ];
+
+/** Opzoeken op icoonnaam, voor de opdrachten en de homepage. */
+export const bouwsteen = (icoon: string) => {
+  const gevonden = bouwstenen.find((b) => b.icoon === icoon);
+  if (!gevonden) {
+    throw new Error(`Bouwsteen "${icoon}" staat niet in de lijst.`);
+  }
+  return gevonden;
+};
 
 export type Case = {
   titel: string;
-  situatie: string;
-  aanpak: string;
-  resultaat: string;
+  /** Een paar woorden, voor het labeltje op de homepage. */
+  kort: string;
+  /**
+   * Wat er in deze opdracht is aangepakt, als icoonnaam uit `bouwstenen`.
+   * Zag je ze op de ring in de hero, dan herken je ze hier terug. Alleen
+   * wat hieronder ook echt genoemd wordt: het is een samenvatting van de
+   * tekst en geen etalage.
+   */
+  bouwstenen: string[];
+  /**
+   * Puntsgewijs. Een opdracht is een opsomming van wat er stond, wat er is
+   * gedaan en wat het werd. Als alinea wordt daar een verhaal van dat
+   * langer leest dan het is, en dan slaat iedereen het over.
+   */
+  situatie: string[];
+  aanpak: string[];
+  resultaat: string[];
   todo: boolean;
 };
 
-/** Geanonimiseerd. Zie OPLEVERING.md voor wat er nog bij moet. */
+/**
+ * Geanonimiseerd: de namen zijn niet vrijgegeven, en het type organisatie
+ * zegt genoeg om je erin te herkennen. Zie OPLEVERING.md.
+ *
+ * De eerste drie staan ook op de homepage, bij Resultaten. Daar stond
+ * eerst een eigen lijstje met dezelfde regels erin. Nu is dit de enige
+ * bron, dus de homepage kan niets beloven wat hier niet staat.
+ */
 export const cases: Case[] = [
   {
     titel: "Maatschappelijke organisatie die gezinnen en oppassen koppelt",
-    situatie:
-      "Het werk liep door losse systemen en een rij Excel-bestanden. Dezelfde gegevens moesten overal kloppen, dus er ging veel tijd in overtypen zitten. Aanmeldingen kwamen ongestructureerd binnen, dus elke aanmelding begon met uitzoeken.",
-    aanpak:
-      "Pipedrive leidend gemaakt voor contacten en matches, met een database erachter voor de urenadministratie. Die twee zijn aan elkaar geknoopt met n8n, net als de documentflow voor de verslaglegging naar partners. Intakes en gewonnen deals gaan ook terug naar Google Ads.",
-    resultaat:
-      "Een stuk minder handwerk, en rapportages waar je op kunt bouwen. Na elke stap staat er een opvolgtaak klaar en de incasso- en excassobatches worden vanzelf aangemaakt. Een aanmelding komt binnen in een vorm waar je meteen mee verder kunt.",
+    kort: "Maatschappelijke organisatie",
+    bouwstenen: [
+      "database",
+      "workflow",
+      "file-text",
+      "calculator",
+      "chart-column",
+    ],
+    situatie: [
+      "Het werk liep door losse systemen en een rij Excel-bestanden.",
+      "Dezelfde gegevens moesten overal kloppen, dus er ging veel tijd in overtypen zitten.",
+      "Aanmeldingen kwamen ongestructureerd binnen, dus elke aanmelding begon met uitzoeken.",
+    ],
+    aanpak: [
+      "Pipedrive leidend gemaakt voor de contacten en de matches.",
+      "Een database erachter voor de urenadministratie, met n8n aan Pipedrive geknoopt.",
+      "De documentflow voor de verslaglegging naar partners eraan vast.",
+      "Intakes en gewonnen deals gaan terug naar Google Ads.",
+    ],
+    resultaat: [
+      "De incasso- en excassobatches worden vanzelf aangemaakt.",
+      "Na elke stap staat er een opvolgtaak klaar.",
+      "Een aanmelding komt binnen in een vorm waar je meteen mee verder kunt.",
+      "Een stuk minder handwerk, en rapportages waar je op kunt bouwen.",
+    ],
     todo: false,
   },
   {
-    titel:
-      "Organisatie die zich inzet voor welzijn in wijken en daar mensen voor werft",
-    situatie:
-      "De systemen waren versnipperd. De communicatie met mensen werd ergens anders bijgehouden dan hun voortgang, dus wie in welke fase zat moest je bij elkaar zoeken. Dat bijhouden was handwerk.",
-    aanpak:
-      "Pipedrive centraal gezet, met daarin de contactpersonen, de organisaties en de voortgang van iedereen. De rest hangt er met n8n aan. Dubbele records zijn opgeruimd. Voor de events staat er nu een ticketsysteem aan het CRM, zodat je per event ziet wie is uitgenodigd, wie zich aanmeldde, wie er was en wat de opvolging is.",
-    resultaat:
-      "Alles op één plek, en de processen eromheen lopen strakker. Er wordt een stuk minder overgetypt en de aanmeldflow is aangescherpt. Daarmee ligt er ook een basis die strak genoeg is om AI op in te zetten.",
+    titel: "Organisatie die zich inzet voor welzijn in wijken",
+    kort: "Welzijnsorganisatie",
+    bouwstenen: ["calendar", "mail", "workflow", "globe", "sparkles"],
+    situatie: [
+      "De systemen waren versnipperd.",
+      "De communicatie met mensen werd ergens anders bijgehouden dan hun voortgang, dus wie in welke fase zat moest je bij elkaar zoeken.",
+      "Dat bijhouden was handwerk.",
+    ],
+    aanpak: [
+      "Pipedrive centraal gezet, met de contactpersonen, de organisaties en de voortgang van iedereen erin.",
+      "De rest hangt er met n8n aan.",
+      "De dubbele records opgeruimd.",
+      "Een ticketsysteem aan het CRM voor de events.",
+    ],
+    resultaat: [
+      "Per event zie je wie is uitgenodigd, wie zich aanmeldde, wie er was en wat de opvolging is.",
+      "Eén plek waar je kijkt, in plaats van twee lijsten naast elkaar.",
+      "Er wordt een stuk minder overgetypt en de aanmeldflow is aangescherpt.",
+      "Een basis die strak genoeg is om AI op in te zetten.",
+    ],
     todo: false,
   },
   {
-    titel: "Architectenbureau, nieuwbouw en bestaande woningen",
-    situatie:
-      "Verschillende websites, allemaal verouderd. Mail, domeinen en hosting lagen bij verschillende aanbieders. Er was geen plek waar aanvragen samenkwamen, dus overzicht krijgen was elke keer uitzoekwerk.",
-    aanpak:
-      "Eerst een SEO-audit, daarna alles samengevoegd tot één site, met redirects vanaf de oude adressen. Die draait op Astro en Cloudflare, Nederlands en Engels, met Keystatic om zelf te schrijven. Er staat een vragenformulier op dat doorloopt naar Pipedrive. Mail, domeinen en DNS staan nu op eigen accounts.",
-    resultaat:
-      "Eén snelle site die het bureau zelf beheert, en de randzaken eromheen bij elkaar in één systeem. Via het formulier komen gekwalificeerde aanvragen binnen die meteen een afspraak kunnen inplannen. En je ziet per klant waar die in het proces zit.",
+    titel: "Architectenbureau",
+    kort: "Architectenbureau",
+    bouwstenen: ["globe", "mail", "calendar", "workflow"],
+    situatie: [
+      "Verschillende websites, allemaal verouderd.",
+      "Mail, domeinen en hosting lagen bij verschillende aanbieders.",
+      "Er was geen plek waar aanvragen samenkwamen, dus overzicht krijgen was elke keer uitzoekwerk.",
+    ],
+    aanpak: [
+      "Eerst een SEO-audit.",
+      "Alles samengevoegd tot één site op Astro en Cloudflare, met redirects vanaf de oude adressen.",
+      "Nederlands en Engels, met Keystatic om zelf te schrijven.",
+      "Een vragenformulier dat doorloopt naar Pipedrive.",
+      "Mail, domeinen en DNS op eigen accounts.",
+    ],
+    resultaat: [
+      "Eén snelle site die het bureau zelf beheert.",
+      "Via het formulier komen aanvragen binnen die meteen een afspraak kunnen inplannen.",
+      "Je ziet per klant waar die in het proces zit.",
+      "De randzaken eromheen bij elkaar in één systeem.",
+    ],
     todo: false,
   },
   {
     titel: "Webshop in antieke en designlampen",
-    situatie:
-      "De webshop was sterk verouderd. En de mail kwam bij klanten in de spam terecht, dus een bestelling of een vraag bleef soms onbeantwoord zonder dat iemand het doorhad.",
-    aanpak:
-      "De webshop vernieuwd. Daarna de mailinstellingen en de bijbehorende DNS-records op orde gebracht, zodat berichten vanaf het eigen domein ook echt aankomen.",
-    resultaat:
-      "Klanten vinden de winkel weer en kunnen hem bereiken. De verkoop trok aan.",
+    kort: "Webshop in lampen",
+    bouwstenen: ["globe", "mail"],
+    situatie: [
+      "De webshop was sterk verouderd.",
+      "Mail kwam bij klanten in de spam terecht, dus een bestelling of een vraag bleef soms onbeantwoord zonder dat iemand het doorhad.",
+    ],
+    aanpak: [
+      "De webshop vernieuwd.",
+      "De mailinstellingen en de bijbehorende DNS-records op orde gebracht.",
+      "Nagelopen of mail vanaf het eigen domein aankomt.",
+    ],
+    resultaat: [
+      "Mail vanaf het eigen domein komt aan in plaats van in de spam.",
+      "Klanten vinden de winkel weer en kunnen hem bereiken.",
+      "De verkoop trok aan.",
+    ],
     todo: false,
   },
 ];

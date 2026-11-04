@@ -40,7 +40,7 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 - `scripts/og.mjs`: maakt `public/og.png` uit het woordmerk en de huisstijlkleuren, draait met `npm run og`
 - `scripts/schrijfwijzer.mjs`: controleert de zichtbare tekst tegen die wijzer, draait met `npm run schrijfwijzer`
 - `src/pages`: routes, een bestand per pagina
-- `src/components`: Sectie, Kaart, Knop, Doorlink, Kop, Voet, Todo, Inhoudsopgave, MetOpgave en de inhoudsblokken. `Sectie` met `vol` laat de breedte over aan het raster eromheen, wat de pagina's met een inhoudsopgave doen
+- `src/components`: Sectie, Kaart, Knop, Doorlink, Bouwstenen, Kop, Voet, Todo, Inhoudsopgave, MetOpgave en de inhoudsblokken. `Sectie` met `vol` laat de breedte over aan het raster eromheen, wat de pagina's met een inhoudsopgave doen
 - `src/layouts`: layouts, `Basis.astro` verzorgt head, taal en canonical
 - `src/styles/global.css`: Tailwind-import en alle kleur- en fonttokens
 - `public`: bestanden die ongewijzigd worden geserveerd
@@ -64,6 +64,8 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 - Een link naar een andere pagina van de site gaat via `Doorlink`: de tekst met een Lucide-pijltje erachter dat bij hover drie pixels opschuift. Alleen voor pagina's, niet voor contactgegevens of links naar buiten: daar belooft een pijltje iets wat er niet is.
 - Een sectie op een lange pagina krijgt een genummerd mono-labeltje boven de kop, links en niet gecentreerd, en `aria-hidden`. Het nummer komt uit dezelfde lijst als de inhoudsopgave, zodat de twee niet uit elkaar kunnen lopen.
 - De tekeningen (`Schema`, `Cyclus`) zijn echte schema's in svg, met iconen, en staan zonder kader. Dit is wat de site aan beeld heeft, dus ze mogen de ruimte van een afbeelding krijgen: `Schema` vult de rechterhelft van de hero. Elke tekening heeft twee opmaken, een liggende vanaf `sm` en een staande daaronder, want een schema schaalt niet mee naar een telefoon.
+- De onderdelen op de ring in de hero en de bouwstenen bij een opdracht komen uit dezelfde lijst `bouwstenen` in `src/data/site.ts`, en staan via `Bouwstenen.astro` als rijtje iconen onder de titel van een opdracht. Dat is de brug tussen de homepage en /werk: je herkent aan het icoon welk stuk van de ring is aangepakt. Een opdracht noemt alleen wat in zijn eigen tekst ook staat.
+- Een opdracht op /werk staat puntsgewijs, niet in alinea's: het is een opsomming van wat er stond, wat er is gedaan en wat het werd.
 - Iconen komen uit Lucide. De gebruikte bestanden staan als los svg in `src/icons`, gekopieerd uit `lucide-static` (ISC), zodat in de repo te zien is welke de site gebruikt en een update van het pakket geen tekening stil verandert. Gebruik ze via `Icoon.astro`: binnen een svg rechtstreeks, in html met een `<svg viewBox="0 0 24 24">` eromheen.
 - Het palet is gemeten uit de museumscan van Van Gogh, Zelfportret met grijze vilthoed (s0016V1962), met k-means in Lab en een telling per kleurfamilie. Het doek is voor 49,6% blauw en voor 3,3% groen, dus het palet is blauw. De twee grootste clusters zijn staal `#41515C` en lei `#56646D`, samen 43% van het doek. Warm is oker `#816447` en vlam `#8D531F`, de oranje stippen. Alle rollen erven tint 204 (blauw) of tint 28 (oranje) en verschillen alleen in lichtheid.
 - Het accent verschilt per thema, want één oranje haalt niet in allebei de contrastnorm voor tekst op de knop. Donker gebruikt `#C76A19`, licht `#A75915`. Op een kaart, de krapste ondergrond, haalt allebei 4,5:1.

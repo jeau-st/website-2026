@@ -9,7 +9,7 @@ Jeau.st is Joost. Merk en persoon zijn één: elke tekst klinkt als Joost die te
 - **In één zin:** Joost structureert de bedrijfsdata van gespecialiseerde mkb-bedrijven, zodat ze klaar zijn voor AI en niet meer afhangen van die ene persoon met het overzicht.
 - **Belofte:** van "waar moeten we beginnen?" naar "dit is een goed vertrekpunt". De klant krijgt een helder proces dat ze kunnen volgen en waar ze achter staan.
 - **Waarom Joost:** hij bijt zich vast in jouw organisatie en stopt pas als het af is en er de beste oplossing ligt. Je hebt van eerste gesprek tot oplevering met hem te maken.
-- **Achtergrond die het waarmaakt:** zeven jaar Business Consultant IT bij een energieleverancier (drie systeemimplementaties), daarna drie volledige Pipedrive-implementaties inclusief migraties en maatwerk.
+- **Achtergrond die het waarmaakt:** tien jaar ervaring, met salesteams, data-analyse, systeemimplementaties en koppelingen. Noem het zo, en niet meer als zeven jaar bij een energieleverancier plus drie jaar voor jezelf: die optelsom leest als een cv en zegt minder dan de ervaring zelf.
 - **Merkarchitectuur:** alles valt onder Jeau.st. FortCRM verdwijnt en wordt nergens genoemd.
 
 ## Karakter

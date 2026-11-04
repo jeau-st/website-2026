@@ -1,5 +1,6 @@
 ---
 import Icoon from "./Icoon.astro";
+import { bouwstenen } from "../data/site";
 
 /**
  * Het beeld waar de pagina om onthouden moet worden: alles wat bij een
@@ -30,24 +31,17 @@ import Icoon from "./Icoon.astro";
  */
 
 /**
- * De hoek is in graden, 0 is rechts en min 90 is boven. De zeven bronnen
- * staan van onder linksom naar boven, de vijf dingen die het oplevert
- * staan op de rechterkant.
+ * De punten op de ring, uit dezelfde lijst als de bouwstenen bij de
+ * opdrachten op /werk. De hoek is in graden, 0 is rechts en min 90 is
+ * boven: twaalf onderdelen op stappen van dertig graden, met de klok mee
+ * vanaf boven. De verdeling is niet willekeurig, dus de volgorde van de
+ * lijst in site.ts is de volgorde op de ring: wat je nu al hebt staat op
+ * de linkerkant en bovenaan, wat het je oplevert op de rechterkant.
  */
-const punten = [
-  { naam: "mail", label: "mailbox", hoek: -90 },
-  { naam: "folder-kanban", label: "projecten", hoek: -60 },
-  { naam: "chart-column", label: "rapportages", hoek: -30 },
-  { naam: "workflow", label: "slimme workflows", kort: "workflows", hoek: 0 },
-  { naam: "sparkles", label: "AI", hoek: 30 },
-  { naam: "database", label: "databases", hoek: 60 },
-  { naam: "calculator", label: "boekhouding", hoek: 90 },
-  { naam: "file-text", label: "offertes", hoek: 120 },
-  { naam: "message-square", label: "WhatsApp", hoek: 150 },
-  { naam: "phone", label: "telefoon", hoek: 180 },
-  { naam: "globe", label: "website", hoek: 210 },
-  { naam: "calendar", label: "agenda", hoek: 240 },
-];
+const punten = bouwstenen.map((steen, i) => ({
+  ...steen,
+  hoek: -90 + i * 30,
+}));
 
 /** Een punt op de ring. */
 function opRing(hoek: number, cx: number, cy: number, r: number) {
@@ -111,7 +105,7 @@ function labelPlek(
               transform={`translate(${p.x - 9} ${p.y - 9})`}
               style="color: var(--color-tekst)"
             >
-              <Icoon naam={punt.naam} maat={18} />
+              <Icoon naam={punt.icoon} maat={18} />
             </g>
             <text
               x={l.x}
@@ -163,7 +157,7 @@ function labelPlek(
               transform={`translate(${p.x - 7} ${p.y - 7})`}
               style="color: var(--color-tekst)"
             >
-              <Icoon naam={punt.naam} maat={14} />
+              <Icoon naam={punt.icoon} maat={14} />
             </g>
             <text
               x={l.x}

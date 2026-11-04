@@ -30,7 +30,7 @@ const delen = {
   volgorde: "De vier stappen",
   niveaus: "Waar sta jij?",
   stappen: "Zo loopt een opdracht",
-  daarna: "En dan gaat het pas werken",
+  daarna: "Betrokkenheid na livegang",
   werkwijze: "Hoe ik werk",
   vragen: "Veelgestelde vragen",
 };
@@ -137,9 +137,9 @@ const faqSchema = {
     kop={delen.daarna}
     intro="De oplevering is het begin. Dit is het ritme daarna."
   >
-    {/* Drie korte alinea's naast elkaar. Ze stonden in een kader van
+    {/* Twee korte alinea's naast elkaar. Ze stonden in een kader van
         max-w-xl, en dan is het kader breder dan wat erin staat. */}
-    <div class="mt-10 grid gap-px bg-rand-zacht md:grid-cols-3">
+    <div class="mt-10 grid gap-px bg-rand-zacht md:grid-cols-2">
       {
         nabouw.map((stap) => (
           <div class="bg-bg py-6 md:px-6 md:py-0 md:first:pl-0">

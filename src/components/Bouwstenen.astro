@@ -1,0 +1,62 @@
+---
+import Icoon from "./Icoon.astro";
+import { bouwsteen } from "../data/site";
+
+/**
+ * De onderdelen die in een opdracht zijn aangepakt, als rijtje iconen
+ * achter elkaar. Dezelfde iconen als op de ring in de hero, uit dezelfde
+ * lijst in site.ts, want dat is het hele idee: je ziet op de homepage wat
+ * er allemaal op die ring staat, en bij een opdracht zie je zonder lezen
+ * welke stukken ervan zijn aangepakt.
+ *
+ * Een hokje met een haarlijn eromheen en niets erin behalve het icoon.
+ * Geen kaart, geen accent: het is een aanduiding en geen knop, en het
+ * accent is alleen voor de primaire actie.
+ *
+ * Bij hover komt de naam erboven. Dat was eerst het `title`-attribuut,
+ * maar daar wacht de browser een seconde op en hij kleurt niet mee met
+ * het thema. Nu is het een eigen labeltje: het zweeft los van de rij, dus
+ * het mag een schaduw hebben, net als de uitklapper in de kop. Het
+ * beweegt alleen in opacity en transform, 150 ms.
+ *
+ * Het labeltje staat gewoon in de html en is niet verborgen voor
+ * hulpsoftware: een icoon zonder naam is voor wie het niet herkent
+ * helemaal niets. Op een telefoon bestaat hover niet, dus daar is dit het
+ * enige wat de naam draagt, en daarom staat er geen `aria-hidden` op.
+ */
+interface Props {
+  /** Icoonnamen uit `bouwstenen` in site.ts. */
+  namen: string[];
+  /** 9 is de maat op /werk, 8 in een smalle kolom op de homepage. */
+  maat?: 8 | 9;
+  class?: string;
+}
+
+const { namen, maat = 9, class: extra = "" } = Astro.props;
+const stenen = namen.map(bouwsteen);
+
+const hok = maat === 9 ? "size-9" : "size-8";
+const teken = maat === 9 ? "size-[18px]" : "size-4";
+---
+
+{
+  stenen.length > 0 && (
+    <ul class:list={["flex flex-wrap items-center gap-2", extra]}>
+      {stenen.map((steen) => (
+        <li
+          class:list={[
+            hok,
+            "group relative flex items-center justify-center rounded-klein border border-rand-zacht text-zacht",
+          ]}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" class={teken}>
+            <Icoon naam={steen.icoon} maat={24} />
+          </svg>
+          <span class="pointer-events-none absolute bottom-full left-1/2 z-10 mb-1.5 origin-bottom -translate-x-1/2 scale-95 whitespace-nowrap rounded-klein border border-rand bg-kaart px-2 py-1 font-mono text-[11px] leading-none text-tekst opacity-0 shadow-lg transition duration-150 group-hover:scale-100 group-hover:opacity-100 motion-reduce:transition-none">
+            {steen.label}
+          </span>
+        </li>
+      ))}
+    </ul>
+  )
+}

@@ -62,7 +62,7 @@ Daar mogen ze op een rij staan.
 
 - Verzin geen klanten, cijfers, resultaten of testimonials. Ontbreekt iets, dan komt er een zichtbare TODO.
 - Geen prijzen op de site.
-- Achtergrond: drie volledige Pipedrive-implementaties in drie jaar, daarvoor zeven jaar Business Consultant IT met drie systeemimplementaties. Koppelkoning, procesnerd. Werkt met Pipedrive, n8n, Airtable en AI via MCP.
+- Achtergrond: tien jaar ervaring, met salesteams, data-analyse, systeemimplementaties en koppelingen. Niet uitsplitsen in jaren per werkgever. Koppelkoning, procesnerd. Werkt met Pipedrive, n8n, Airtable en AI via MCP.
 
 ## Werkwijze bij een nieuwe tekst
 

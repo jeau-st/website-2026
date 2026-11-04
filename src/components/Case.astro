@@ -1,10 +1,22 @@
 ---
-import Kaart from "./Kaart.astro";
+import Bouwstenen from "./Bouwstenen.astro";
 import Todo from "./Todo.astro";
 import type { Case } from "../data/site";
 
 /**
- * Zelfde opbouw als de dienstenlijst: een kaart met het nummer ernaast.
+ * Een opdracht als rij, niet als kaart. Een kaart is voor iets dat je
+ * aanwijst of indrukt, en dit is een stuk tekst dat je leest: de
+ * haarlijnen tussen de opdrachten houden ze net zo goed bij elkaar.
+ *
+ * Onder de titel staan de onderdelen die zijn aangepakt, als de iconen van
+ * de ring in de hero. Dat is de brug tussen de homepage en deze pagina:
+ * je ziet in één oogopslag of er in jouw hoek van de ring gewerkt is,
+ * voor je een woord hebt gelezen. Achter elkaar op één regel, want het is
+ * een rijtje en geen raster.
+ *
+ * De drie kolommen staan puntsgewijs. Het is een opsomming van wat er
+ * stond, wat er is gedaan en wat het werd, en in alinea's leest dat
+ * langer dan het is.
  */
 interface Props {
   item: Case;
@@ -14,15 +26,15 @@ interface Props {
 const { item, nummer } = Astro.props;
 
 const delen = [
-  { kop: "Situatie", tekst: item.situatie },
-  { kop: "Aanpak", tekst: item.aanpak },
-  { kop: "Resultaat", tekst: item.resultaat },
+  { kop: "Situatie", punten: item.situatie },
+  { kop: "Aanpak", punten: item.aanpak },
+  { kop: "Resultaat", punten: item.resultaat },
 ];
 
 const schoon = (tekst: string) => tekst.replace(/^TODO:\s*/, "");
 ---
 
-<Kaart als="li" id={`case-${nummer}`}>
+<li id={`case-${nummer}`} class="bg-bg py-8 first:pt-0 last:pb-0">
   <div class="grid gap-x-8 gap-y-4 sm:grid-cols-[3rem_1fr]">
     <p class="label" aria-hidden="true">{nummer}</p>
 
@@ -35,13 +47,23 @@ const schoon = (tekst: string) => tekst.replace(/^TODO:\s*/, "");
         )
       }
 
-      <dl class="mt-4 grid gap-4 sm:grid-cols-3">
+      <Bouwstenen namen={item.bouwstenen} class="mt-4" />
+
+      <dl class="mt-6 grid gap-6 sm:grid-cols-3">
         {
           delen.map((deel) => (
             <div class="min-w-0">
               <dt class="label">{deel.kop}</dt>
-              <dd class="mt-1 min-w-0 text-tekst">
-                {item.todo ? <Todo wat={schoon(deel.tekst)} /> : deel.tekst}
+              <dd class="mt-2 min-w-0">
+                {item.todo ? (
+                  <Todo wat={schoon(deel.punten[0] ?? "")} />
+                ) : (
+                  <ul class="list-outside list-disc space-y-1.5 pl-4 text-tekst marker:text-rand">
+                    {deel.punten.map((punt) => (
+                      <li class="min-w-0">{punt}</li>
+                    ))}
+                  </ul>
+                )}
               </dd>
             </div>
           ))
@@ -49,4 +71,4 @@ const schoon = (tekst: string) => tekst.replace(/^TODO:\s*/, "");
       </dl>
     </div>
   </div>
-</Kaart>
+</li>

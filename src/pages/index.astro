@@ -9,7 +9,8 @@ import Schema from "../components/Schema.astro";
 import Icoon from "../components/Icoon.astro";
 import Cyclus from "../components/Cyclus.astro";
 import { kiesPersoon } from "../data/namen";
-import { bedrijf, diensten, pijnpunten, resultaten } from "../data/site";
+import Bouwstenen from "../components/Bouwstenen.astro";
+import { bedrijf, cases, diensten, pijnpunten } from "../data/site";
 import Doorlink from "../components/Doorlink.astro";
 
 /* De naam in de kop is niet vast: de build kiest er een, en Naamwissel
@@ -26,6 +27,12 @@ const kernpunten = [
   "Een basis die strak genoeg is voor AI",
 ];
 
+/* De opdrachten die bij Resultaten op de homepage staan. Drie, want
+   vier kolommen worden te smal voor een opsomming, en de rij moet op
+   een regel passen. Ze komen uit dezelfde lijst als /werk, dus de
+   homepage kan niets beloven wat daar niet uitgewerkt staat. */
+const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
+
 /**
  * De samenvatting onder de hero: de vijf W's en de H. Wie op de homepage
  * landt en niet doorleest, moet na dit blok weten wie dit is, wat het
@@ -35,31 +42,30 @@ const kernpunten = [
 const inHetKort = [
   {
     vraag: "Wie",
-    antwoord: `${bedrijf.persoon}, voor gespecialiseerd mkb en scale-ups met trajecten die maanden lopen. Bouw en architectuur zijn het duidelijkste voorbeeld.`,
+    antwoord: `${bedrijf.persoon}. Tien jaar ervaring met systeemimplementaties, salesteams en data-analyse bij mkb en scale-ups.`,
   },
   {
     vraag: "Wat",
     antwoord:
-      "Je verkoopproces in Pipedrive, je systemen aan elkaar, en het handwerk ertussenuit.",
+      "Je proces in één systeem, je systemen aan elkaar, het handwerk ertussenuit en een basis voor AI.",
   },
   {
     vraag: "Waar",
-    antwoord: `Vanuit ${bedrijf.plaats}. Overleg gaat via Teams, en op locatie als dat sneller werkt.`,
+    antwoord: `Vanuit ${bedrijf.plaats}. Overleg gaat online, en op locatie als dat beter werkt, bijvoorbeeld voor de trainingen.`,
   },
   {
     vraag: "Wanneer",
     antwoord:
-      "Zodra je ziet dat AI gestructureerde gegevens vraagt en die van jou er nog niet strak genoeg voor staan.",
+      "Zodra je gegevens tussen twee systemen zit over te typen, er handgeschreven notities verspreid op je bureau liggen en een simpel overzichtje een uur kost.",
   },
   {
     vraag: "Waarom",
-    antwoord:
-      "Omdat een proces dat in één hoofd zit, stilvalt op het moment dat die persoon er niet is.",
+    antwoord: "Omdat je werk sneller, beter en leuker wordt.",
   },
   {
     vraag: "Hoe",
     antwoord:
-      "Eerst vastleggen hoe het nu echt gaat, dan één werkwijze kiezen. Automatiseren daarna, meten als laatste.",
+      "Het beste systeem en proces voor jou, automatiseren waar het loont, overzicht en inzicht maken, en blijven verbeteren.",
   },
 ];
 
@@ -276,22 +282,29 @@ const inHetKort = [
   <Sectie
     id="werk"
     kop="Resultaten"
-    intro="Wat er na de oplevering anders is. Elk van deze regels komt uit een van de vier opdrachten."
+    intro="Drie opdrachten, en wat er na de oplevering anders is. De iconen zijn de onderdelen uit de ring hierboven die zijn aangepakt."
   >
-    <ul
-      class="mt-10 grid gap-px overflow-hidden rounded-kaart border border-rand bg-rand-zacht md:grid-cols-2"
-    >
+    {/* Geen kaarten: drie kolommen met een haarlijn ertussen. Wat hier
+        staat lees je, dus het hoeft geen vlak om zich heen. Elke regel
+        komt uit het resultaat van die opdracht op /werk, dus er staat
+        hier niets wat daar niet uitgewerkt is. */}
+    <ul class="mt-10 grid gap-px bg-rand-zacht md:grid-cols-3">
       {
-        resultaten.map((regel) => (
-          <li class="min-w-0 bg-kaart p-5 sm:p-6">
-            <p class="label">{regel.bij}</p>
-            <p class="mt-2 min-w-0 text-tekst">{regel.wat}</p>
+        opHomepage.map((opdracht) => (
+          <li class="min-w-0 bg-bg py-6 md:px-6 md:py-0 md:first:pl-0">
+            <p class="label">{opdracht.kort}</p>
+            <Bouwstenen namen={opdracht.bouwstenen} maat={8} class="mt-3" />
+            <ul class="mt-4 list-outside list-disc space-y-1.5 pl-4 text-tekst marker:text-rand">
+              {opdracht.resultaat.slice(0, 3).map((punt) => (
+                <li class="min-w-0">{punt}</li>
+              ))}
+            </ul>
           </li>
         ))
       }
     </ul>
     <p class="mt-10">
-      <Doorlink href="/werk">Lees de vier cases uitgewerkt</Doorlink>
+      <Doorlink href="/werk">Lees de opdrachten uitgewerkt</Doorlink>
     </p>
   </Sectie>
 
@@ -312,8 +325,8 @@ const inHetKort = [
       <div class="mt-10 max-w-2xl">
         <p class="text-lg text-tekst">
           Ik ben {bedrijf.persoon}, koppelkoning en procesnerd uit {bedrijf.plaats}.
-          Drie jaar Pipedrive-implementaties, daarvoor zeven jaar Business
-          Consultant IT bij een energieleverancier.
+          Tien jaar ervaring met salesteams, data-analyse,
+          systeemimplementaties en koppelingen.
         </p>
         <p class="mt-6">
           <Doorlink href="/over">Lees waar ik het heb geleerd</Doorlink>
