@@ -1,11 +1,14 @@
 ---
-import Kaart from "./Kaart.astro";
 import type { Denkstap } from "../data/site";
 
 /**
  * Eén stap uit de denkwijze. Bewust anders opgemaakt dan Processtap: die
  * is een tijdlijn met bolletjes en een begin en een eind, dit is een rondje.
  * Daarom het nummer groot in de kantlijn en geen verbindingslijn.
+ *
+ * Geen kaart eromheen. Het grote nummer in de kantlijn markeert de stap
+ * al, en een rand daarbovenop maakt van vier stappen vier losse dingen
+ * terwijl het één rondje is. De lijst eromheen zet de haarlijn ertussen.
  */
 interface Props {
   stap: Denkstap;
@@ -14,10 +17,10 @@ interface Props {
 const { stap } = Astro.props;
 ---
 
-<Kaart als="li" class="grid gap-x-6 gap-y-2 sm:grid-cols-[4rem_1fr]">
+<li class="grid gap-x-6 gap-y-2 bg-bg py-6 first:pt-0 last:pb-0 sm:grid-cols-[4rem_1fr]">
   <p class="font-mono text-2xl text-zacht" aria-hidden="true">{stap.nummer}</p>
   <div class="min-w-0 max-w-2xl">
     <h3 class="text-xl sm:text-2xl">{stap.titel}</h3>
     <p class="mt-2 text-zacht">{stap.tekst}</p>
   </div>
-</Kaart>
+</li>

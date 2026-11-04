@@ -1,10 +1,13 @@
 ---
-import Kaart from "./Kaart.astro";
 import type { AiStap } from "../data/site";
 
 /**
  * Een van de drie manieren waarop AI op je eigen gegevens werkt.
- * Een kaart, net als de andere rijtjes van drie op de site.
+ *
+ * Geen kaart meer. Deze drie staan op de dienstpagina pal onder "Wat er
+ * in Pipedrive zit", en dat is een haarlijnraster: twee rijtjes in twee
+ * vormen op één pagina leest als twee soorten inhoud. Het raster
+ * eromheen zet de lijnen.
  */
 interface Props {
   stap: AiStap;
@@ -13,8 +16,8 @@ interface Props {
 const { stap } = Astro.props;
 ---
 
-<Kaart krap>
+<div class="min-w-0 bg-bg py-6 md:px-6 md:py-0 md:first:pl-0">
   <p class="label" aria-hidden="true">{stap.nummer}</p>
   <h3 class="mt-3 text-lg">{stap.titel}</h3>
   <p class="mt-2 text-zacht">{stap.tekst}</p>
-</Kaart>
+</div>

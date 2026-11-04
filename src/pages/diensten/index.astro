@@ -48,7 +48,7 @@ const schema = {
   </section>
 
   <Sectie id="diensten">
-    <ol class="space-y-4">
+    <ol class="grid gap-px bg-rand-zacht">
       {
         diensten.map((dienst, i) => (
           <Dienst dienst={dienst} nummer={String(i + 1).padStart(2, "0")} />

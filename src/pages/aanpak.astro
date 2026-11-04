@@ -2,13 +2,11 @@
 import Basis from "../layouts/Basis.astro";
 import Sectie from "../components/Sectie.astro";
 import MetOpgave from "../components/MetOpgave.astro";
-import Kaart from "../components/Kaart.astro";
 import Knop from "../components/Knop.astro";
 import Denkstap from "../components/Denkstap.astro";
 import Cyclus from "../components/Cyclus.astro";
 import Niveau from "../components/Niveau.astro";
 import Stappentabel from "../components/Stappentabel.astro";
-import Nastap from "../components/Nastap.astro";
 import Vraag from "../components/Vraag.astro";
 import { denkwijze, nabouw, niveaus, vragen } from "../data/site";
 import Doorlink from "../components/Doorlink.astro";
@@ -36,6 +34,31 @@ const delen = {
   werkwijze: "Hoe ik werk",
   vragen: "Veelgestelde vragen",
 };
+
+/* De vier stellingen onder "Hoe ik werk". Ze staan hier en niet in
+   site.ts, want ze komen nergens anders terug. Expres ongelijk van
+   lengte: de laatste is één zin, en dat mag. */
+const werkwijzePunten = [
+  {
+    kop: "Als niemand behalve ik het begrijpt, is het te slim gebouwd",
+    tekst:
+      "De simpelste versie die werkt, wint. Slim bouwen mag, maar alleen waar het echt iets scheelt. Want een constructie die alleen ik kan onderhouden, maakt je afhankelijk van mij. Dat wil je niet en ik ook niet.",
+  },
+  {
+    kop: "Je praat met de persoon die het bouwt",
+    tekst:
+      "Dezelfde persoon zit aan tafel bij het eerste gesprek en bij de oplevering.",
+  },
+  {
+    kop: "Het team beslist of het werkt",
+    tekst:
+      "Een systeem dat niemand gebruikt, is weggegooid geld. Daarom spreek ik de mensen die ermee gaan werken al tijdens de analyse, en hoort training bij het werk in plaats van erna.",
+  },
+  {
+    kop: "Liever volgende maand iets dat werkt",
+    tekst: "Dan een plan dat over een jaar af is.",
+  },
+];
 
 const opgave = Object.entries(delen).map(([id, tekst]) => ({ id, tekst }));
 
@@ -75,7 +98,7 @@ const faqSchema = {
 
   <MetOpgave items={opgave}>
   <Sectie id="volgorde" vol nummer={nr.volgorde} kop={delen.volgorde}>
-    <ol class="space-y-4">
+    <ol class="mt-10 grid gap-px bg-rand-zacht">
       {denkwijze.map((stap) => <Denkstap stap={stap} />)}
     </ol>
     <Cyclus />
@@ -114,51 +137,38 @@ const faqSchema = {
     kop={delen.daarna}
     intro="De oplevering is het begin. Dit is het ritme daarna."
   >
-    <div class="mt-12 grid gap-6 md:grid-cols-3">
-      {nabouw.map((stap) => <Nastap stap={stap} />)}
+    {/* Drie korte alinea's naast elkaar. Ze stonden in een kader van
+        max-w-xl, en dan is het kader breder dan wat erin staat. */}
+    <div class="mt-10 grid gap-px bg-rand-zacht md:grid-cols-3">
+      {
+        nabouw.map((stap) => (
+          <div class="bg-bg py-6 md:px-6 md:py-0 md:first:pl-0">
+            <h3 class="text-lg">{stap.titel}</h3>
+            <p class="mt-2 text-zacht">{stap.tekst}</p>
+          </div>
+        ))
+      }
     </div>
     <p class="mt-10">
       <Doorlink href="/diensten/ondersteuning-en-training/">Lees wat ondersteuning en training inhoudt</Doorlink>
     </p>
   </Sectie>
 
-  {/* Dit stond als raster van vier gelijke blokjes. Zo gelijk van vorm en
-      lengte leest het als een sjabloon, dus nu een lijst met blokken die
-      net zo lang zijn als ze hoeven te zijn. */}
+  {/* Dit stond eerst als raster van vier gelijke blokjes, daarna als
+      vier kaarten onder elkaar. Allebei fout: dit zijn stellingen en geen
+      objecten. Je kiest er niets uit, je leest ze achter elkaar. Dus
+      alleen een haarlijn tussen de een en de ander, en de lengte die ze
+      nodig hebben. */}
   <Sectie id="werkwijze" vol nummer={nr.werkwijze} kop={delen.werkwijze}>
-    <div class="mt-12 max-w-2xl space-y-4">
-      <Kaart>
-        <h3 class="text-lg">
-          Als niemand behalve ik het begrijpt, is het te slim gebouwd
-        </h3>
-        <p class="mt-2 text-zacht">
-          De simpelste versie die werkt, wint. Slim bouwen mag, maar alleen
-          waar het echt iets scheelt. Want een constructie die alleen ik kan
-          onderhouden, maakt je afhankelijk van mij. Dat wil je niet en ik ook
-          niet.
-        </p>
-      </Kaart>
-      <Kaart>
-        <h3 class="text-lg">Je praat met de persoon die het bouwt</h3>
-        <p class="mt-2 text-zacht">
-          Dezelfde persoon zit aan tafel bij het eerste gesprek en bij de
-          oplevering.
-        </p>
-      </Kaart>
-      <Kaart>
-        <h3 class="text-lg">Het team beslist of het werkt</h3>
-        <p class="mt-2 text-zacht">
-          Een systeem dat niemand gebruikt, is weggegooid geld. Daarom spreek
-          ik de mensen die ermee gaan werken al tijdens de analyse, en hoort
-          training bij het werk in plaats van erna.
-        </p>
-      </Kaart>
-      <Kaart>
-        <h3 class="text-lg">Liever volgende maand iets dat werkt</h3>
-        <p class="mt-2 text-zacht">
-          Dan een plan dat over een jaar af is.
-        </p>
-      </Kaart>
+    <div class="mt-10 grid max-w-2xl gap-px bg-rand-zacht">
+      {
+        werkwijzePunten.map((punt) => (
+          <div class="bg-bg py-6 first:pt-0 last:pb-0">
+            <h3 class="text-lg">{punt.kop}</h3>
+            <p class="mt-2 text-zacht">{punt.tekst}</p>
+          </div>
+        ))
+      }
     </div>
   </Sectie>
 

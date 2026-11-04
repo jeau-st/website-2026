@@ -1,7 +1,6 @@
 ---
 import Basis from "../layouts/Basis.astro";
 import Sectie from "../components/Sectie.astro";
-import Kaart from "../components/Kaart.astro";
 import { bedrijf } from "../data/site";
 
 /**
@@ -100,8 +99,9 @@ const verwerkers = [
           Dit zijn de partijen waar gegevens terechtkomen als je deze site
           bezoekt of contact opneemt.
         </p>
-        <Kaart class="mt-4">
-        <dl class="divide-y divide-rand/60">
+        {/* Geen kader eromheen: de dl heeft al een scheidslijn per rij,
+            en een rand daaromheen is dezelfde streep twee keer. */}
+        <dl class="mt-4 divide-y divide-rand/60">
           {
             verwerkers.map((partij) => (
               <div class="py-3">
@@ -111,7 +111,6 @@ const verwerkers = [
             ))
           }
         </dl>
-        </Kaart>
       </div>
 
       <div>
