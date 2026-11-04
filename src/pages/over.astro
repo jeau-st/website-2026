@@ -5,6 +5,7 @@ import Basis from "../layouts/Basis.astro";
 import Sectie from "../components/Sectie.astro";
 import Knop from "../components/Knop.astro";
 import { bedrijf } from "../data/site";
+import Doorlink from "../components/Doorlink.astro";
 
 /**
  * Over mij stond als sectie op de homepage. Eén pagina over één persoon is
@@ -84,12 +85,7 @@ const schema = {
       </p>
     </div>
     <p class="mt-8">
-      <a
-        class="tekstlink inline-flex min-h-11 items-center text-tekst"
-        href="/aanpak#werkwijze"
-      >
-        Lees hoe ik werk
-      </a>
+      <Doorlink href="/aanpak#werkwijze">Lees hoe ik werk</Doorlink>
     </p>
   </Sectie>
 
@@ -119,12 +115,7 @@ const schema = {
         </a>
       </li>
       <li>
-        <a
-          class="tekstlink inline-flex min-h-11 items-center text-tekst"
-          href="/st"
-        >
-          Waarom het domein op .st eindigt
-        </a>
+        <Doorlink href="/st">Waarom het domein op .st eindigt</Doorlink>
       </li>
     </ul>
   </Sectie>

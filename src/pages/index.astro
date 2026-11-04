@@ -4,15 +4,13 @@ import foto from "../assets/joost.webp";
 import Basis from "../layouts/Basis.astro";
 import Naamwissel from "../components/Naamwissel.astro";
 import Sectie from "../components/Sectie.astro";
-import Kaart from "../components/Kaart.astro";
 import Knop from "../components/Knop.astro";
-import Pijnpunt from "../components/Pijnpunt.astro";
 import Schema from "../components/Schema.astro";
 import Icoon from "../components/Icoon.astro";
-import Dienst from "../components/Dienst.astro";
 import Cyclus from "../components/Cyclus.astro";
 import { kiesPersoon } from "../data/namen";
-import { bedrijf, diensten, pijnpunten, werkKort } from "../data/site";
+import { bedrijf, diensten, pijnpunten, resultaten } from "../data/site";
+import Doorlink from "../components/Doorlink.astro";
 
 /* De naam in de kop is niet vast: de build kiest er een, en Naamwissel
    kiest bij elk bezoek opnieuw. Zie src/data/namen.ts. */
@@ -26,6 +24,43 @@ const kernpunten = [
   "Koppelingen met de systemen die je al gebruikt",
   "Rapportages waar je op kunt sturen",
   "Een basis die strak genoeg is voor AI",
+];
+
+/**
+ * De samenvatting onder de hero: de vijf W's en de H. Wie op de homepage
+ * landt en niet doorleest, moet na dit blok weten wie dit is, wat het
+ * oplevert en wat de eerste stap is. Elk antwoord staat op één regel,
+ * want zodra het een alinea wordt is het geen samenvatting meer.
+ */
+const inHetKort = [
+  {
+    vraag: "Wie",
+    antwoord: `${bedrijf.persoon}, voor gespecialiseerd mkb en scale-ups met trajecten die maanden lopen. Bouw en architectuur zijn het duidelijkste voorbeeld.`,
+  },
+  {
+    vraag: "Wat",
+    antwoord:
+      "Je verkoopproces in Pipedrive, je systemen aan elkaar, en het handwerk ertussenuit.",
+  },
+  {
+    vraag: "Waar",
+    antwoord: `Vanuit ${bedrijf.plaats}. Overleg gaat via Teams, en op locatie als dat sneller werkt.`,
+  },
+  {
+    vraag: "Wanneer",
+    antwoord:
+      "Zodra je ziet dat AI gestructureerde gegevens vraagt en die van jou er nog niet strak genoeg voor staan.",
+  },
+  {
+    vraag: "Waarom",
+    antwoord:
+      "Omdat een proces dat in één hoofd zit, stilvalt op het moment dat die persoon er niet is.",
+  },
+  {
+    vraag: "Hoe",
+    antwoord:
+      "Eerst vastleggen hoe het nu echt gaat, dan één werkwijze kiezen. Automatiseren daarna, meten als laatste.",
+  },
 ];
 
 /**
@@ -111,6 +146,25 @@ const kernpunten = [
     </div>
   </section>
 
+  {/* De samenvatting staat tegen de hero aan en niet verderop: dit is de
+      regel die de rest van de pagina uitlegt. Een haarlijnraster en geen
+      zes kaarten, want zes losse vlakken naast elkaar wegen alle zes
+      hetzelfde en dan is het een blokkenschema. */}
+  <Sectie id="kort" kop="In het kort" aansluitend>
+    <dl
+      class="mt-10 grid gap-px overflow-hidden rounded-kaart border border-rand bg-rand-zacht sm:grid-cols-2 lg:grid-cols-3"
+    >
+      {
+        inHetKort.map((regel) => (
+          <div class="min-w-0 bg-kaart p-5 sm:p-6">
+            <dt class="label">{regel.vraag}</dt>
+            <dd class="mt-2 min-w-0 text-tekst">{regel.antwoord}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </Sectie>
+
   <Sectie
     id="ai"
     kop="Eerst de basis, dan AI"
@@ -124,27 +178,36 @@ const kernpunten = [
       </p>
     </div>
     <p class="mt-8">
-      <a
-        class="tekstlink inline-flex min-h-11 items-center text-tekst"
-        href="/pipedrive#ai"
-      >
-        Lees wat AI met je eigen gegevens doet
-      </a>
+      <Doorlink href="/diensten/crm-inrichting/#ai">Lees wat AI met je eigen gegevens doet</Doorlink>
     </p>
   </Sectie>
 
-  <Sectie
-    id="herkenning"
-    kop="Komt dit bekend voor?"
-    intro="Drie dingen die ik bijna elk gesprek hoor."
-  >
-    <div class="mt-12 space-y-8">
-      {pijnpunten.map((punt) => <Pijnpunt punt={punt} />)}
+  <Sectie id="herkenning" kop="Komt dit bekend voor?">
+    {/* De intro staat in de eerste kolom en niet boven de kop, zodat de
+        vier kolommen op één regel beginnen: eerst wat je gaat lezen, dan
+        de drie citaten. Geen kaarten eromheen, alleen de haarlijn
+        ertussen. Daarom staan de cellen op de achtergrondkleur en niet op
+        de kaartkleur: met een vlak eronder wordt het alsnog een blok. */}
+    <div class="mt-10 grid gap-px bg-rand-zacht md:grid-cols-4">
+      <p class="bg-bg pb-6 text-zacht md:pb-0 md:pr-6">
+        Drie dingen die ik bijna elk gesprek hoor.
+      </p>
+      {
+        pijnpunten.map((punt) => (
+          <figure class="min-w-0 bg-bg py-6 md:px-6 md:py-0">
+            <blockquote>
+              <p class="text-lg text-tekst">&ldquo;{punt.citaat}&rdquo;</p>
+            </blockquote>
+            <figcaption class="mt-3 text-sm text-zacht">{punt.uitleg}</figcaption>
+          </figure>
+        ))
+      }
     </div>
   </Sectie>
 
   <Sectie
     id="volgorde"
+    gecentreerd
     kop="De volgorde is het werk"
     intro="Eerst vastleggen hoe het nu echt gaat, dan één manier van werken kiezen. Automatiseren komt daarna, en meten als laatste."
   >
@@ -152,12 +215,7 @@ const kernpunten = [
         hier staan ze niet ook nog eens voluit. */}
     <Cyclus />
     <p class="mt-10">
-      <a
-        class="tekstlink inline-flex min-h-11 items-center text-tekst"
-        href="/aanpak#volgorde"
-      >
-        Lees waarom de volgorde zo is
-      </a>
+      <Doorlink href="/aanpak#volgorde">Lees waarom de volgorde zo is</Doorlink>
     </p>
   </Sectie>
 
@@ -166,59 +224,71 @@ const kernpunten = [
     kop="Wat ik doe"
     intro="Vijf soorten werk. De eerste vier volgen de volgorde waarin ik ze aanpak."
   >
-    <ol class="mt-12 space-y-4">
+    {/* Eén band en geen vijf kaarten onder elkaar: de vijf soorten werk
+        horen bij elkaar, en vijf losse blokken maakten er vijf keuzes
+        van. De volle uitleg staat op de dienstpagina, hier staat per
+        soort één regel. De band is het haarlijnraster uit CLAUDE.md: de
+        lijnen komen uit de achtergrond, dus er staat nergens een dubbele
+        rand. */}
+    <ol
+      class="mt-10 grid gap-px overflow-hidden rounded-kaart border border-rand bg-rand-zacht sm:grid-cols-2 lg:grid-cols-5"
+    >
       {
         diensten.map((dienst, i) => (
-          <Dienst dienst={dienst} nummer={String(i + 1).padStart(2, "0")} />
+          <li class="relative min-w-0 bg-kaart p-5">
+            <p class="label" aria-hidden="true">
+              {String(i + 1).padStart(2, "0")}
+            </p>
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              class="mt-4 size-5 text-zacht"
+            >
+              <Icoon naam={dienst.icoon} maat={24} />
+            </svg>
+            {/* De link rekt zich over de hele cel uit, want als los stukje
+                tekst is hij op een telefoon te klein om te raken. */}
+            <h3 class="mt-3 text-base">
+              <a
+                class="tekstlink after:absolute after:inset-0"
+                href={`/diensten/${dienst.slug}/`}
+              >
+                {dienst.titel}
+              </a>
+            </h3>
+            <p class="mt-1.5 text-sm text-zacht">{dienst.kort}</p>
+          </li>
         ))
       }
     </ol>
     <p class="mt-10">
-      <a
-        class="tekstlink inline-flex min-h-11 items-center text-tekst"
-        href="/diensten"
-      >
-        Bekijk alle diensten
-      </a>
+      <Doorlink href="/diensten">Bekijk alle diensten</Doorlink>
     </p>
   </Sectie>
 
   <Sectie
     id="werk"
-    kop="Voorbeelden van werk"
-    intro="Vier opdrachten, samengevat. Dit is wat er steeds terugkomt."
+    kop="Resultaten"
+    intro="Wat er na de oplevering anders is. Elk van deze regels komt uit een van de vier opdrachten."
   >
-    {/* De cases zelf staan op /werk. Ze hier ook voluit zetten maakte de
-        homepage twee keer zo lang met dezelfde tekst. */}
-    <dl class="mt-12 grid gap-6 md:grid-cols-3">
+    <ul
+      class="mt-10 grid gap-px overflow-hidden rounded-kaart border border-rand bg-rand-zacht md:grid-cols-2"
+    >
       {
-        werkKort.map((deel) => (
-          <Kaart krap class="min-w-0">
-            <dt class="font-mono text-sm text-zacht">{deel.kop}</dt>
-            <dd class="mt-3 min-w-0">
-              <ul class="space-y-2">
-                {deel.punten.map((punt) => (
-                  <li class="flex items-baseline gap-3 text-tekst">
-                    <span aria-hidden="true" class="font-mono text-sm text-zacht">
-                      &#8594;
-                    </span>
-                    <span class="min-w-0">{punt}</span>
-                  </li>
-                ))}
-              </ul>
-            </dd>
-          </Kaart>
+        resultaten.map((regel) => (
+          <li class="min-w-0 bg-kaart p-5 sm:p-6">
+            <p class="label">{regel.bij}</p>
+            <p class="mt-2 min-w-0 text-tekst">{regel.wat}</p>
+          </li>
         ))
       }
-    </dl>
+    </ul>
     <p class="mt-10">
-      <a class="tekstlink inline-flex min-h-11 items-center text-tekst" href="/werk">
-        Lees de vier cases uitgewerkt
-      </a>
+      <Doorlink href="/werk">Lees de vier cases uitgewerkt</Doorlink>
     </p>
   </Sectie>
 
-  <Sectie id="over" kop="Wie dit doet">
+  <Sectie id="over" kop="Over mij">
     <div class="mt-10">
       {/* Het hele kader, dus geen kolom ernaast: liggend naast tekst wordt
           de foto zo laag dat er een streepje van overblijft. Hij staat
@@ -239,12 +309,7 @@ const kernpunten = [
           Consultant IT bij een energieleverancier.
         </p>
         <p class="mt-6">
-          <a
-            class="tekstlink inline-flex min-h-11 items-center text-tekst"
-            href="/over"
-          >
-            Lees waar ik het heb geleerd
-          </a>
+          <Doorlink href="/over">Lees waar ik het heb geleerd</Doorlink>
         </p>
       </div>
     </div>

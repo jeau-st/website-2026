@@ -27,6 +27,12 @@ interface Props {
   /** Krap tegen de vorige sectie aan, omdat ze bij elkaar horen. */
   aansluitend?: boolean;
   /**
+   * Kop, intro en inhoud in het midden. Voor een sectie die om een
+   * tekening heen staat: dan hoort de tekst bij het midden en niet bij
+   * de linkerkantlijn.
+   */
+  gecentreerd?: boolean;
+  /**
    * Zonder eigen kantlijn en breedte, voor een sectie die al in een
    * kolom staat. Dat is zo op de pagina's met een inhoudsopgave: daar
    * bepaalt het raster eromheen de breedte.
@@ -41,6 +47,7 @@ const {
   intro,
   nummer,
   aansluitend = false,
+  gecentreerd = false,
   vol = false,
   class: extra = "",
 } = Astro.props;
@@ -60,10 +67,15 @@ const ruimte = vol
   aria-labelledby={kop ? kopId : undefined}
   class:list={[ruimte, extra]}
 >
-  <div class:list={[vol ? "min-w-0" : "mx-auto max-w-5xl"]}>
+  <div
+    class:list={[
+      vol ? "min-w-0" : "mx-auto max-w-5xl",
+      gecentreerd && "text-center",
+    ]}
+  >
     {
       (kop || intro) && (
-        <header class="max-w-2xl">
+        <header class:list={["max-w-2xl", gecentreerd && "mx-auto text-center"]}>
           {nummer !== undefined && (
             <p class="label mb-3" aria-hidden="true">
               {String(nummer).padStart(2, "0")}

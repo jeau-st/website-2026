@@ -1,0 +1,60 @@
+---
+import Icoon from "./Icoon.astro";
+
+/**
+ * De link onderaan een blok die doorwijst naar de pagina waar het
+ * verhaal staat. Eén component, want deze stond op achtentwintig plekken
+ * met dezelfde klassenrij erachteraan, en dan loopt er vroeg of laat een
+ * uit de pas.
+ *
+ * Het pijltje schuift een paar pixels mee bij hover. Alleen transform,
+ * dus het kost geen herberekening van de opmaak, en bij
+ * `prefers-reduced-motion` staat de overgang uit en springt hij gewoon.
+ */
+interface Props {
+  href: string;
+  class?: string;
+}
+
+const { href, class: extra = "" } = Astro.props;
+---
+
+<a
+  class:list={[
+    "doorlink tekstlink group inline-flex min-h-11 items-center gap-2 text-tekst",
+    extra,
+  ]}
+  href={href}
+>
+  <span><slot /></span>
+  <svg
+    viewBox="0 0 24 24"
+    aria-hidden="true"
+    class="doorlink-pijl size-4 shrink-0"
+  >
+    <Icoon naam="arrow-right" maat={24} dikte={2} />
+  </svg>
+</a>
+
+<style>
+  .doorlink-pijl {
+    transition: transform 150ms ease;
+  }
+  .doorlink:hover .doorlink-pijl {
+    transform: translateX(3px);
+  }
+  /* De onderstreping hoort bij de tekst, niet bij het pijltje. */
+  .doorlink {
+    text-decoration: none;
+  }
+  .doorlink > span {
+    text-decoration: underline;
+    text-decoration-color: var(--color-rand);
+    text-underline-offset: 0.25em;
+    text-decoration-thickness: 1px;
+  }
+  .doorlink:hover > span {
+    text-decoration-color: currentColor;
+    text-decoration-thickness: 2px;
+  }
+</style>

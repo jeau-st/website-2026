@@ -36,33 +36,20 @@ const links = [
   { href: "/contact", tekst: "Contact" },
 ];
 
-/* Wat er onder Diensten hangt: de vijf pagina's en de uitleg over
-   Pipedrive, die er inhoudelijk bij hoort maar geen dienst is. */
+/* Wat er onder Diensten hangt. De korte regel en het icoon staan bij de
+   dienst zelf in site.ts, zodat het menu en de band op de homepage uit
+   dezelfde bron komen en niet uit elkaar kunnen lopen.
+
+   Wat Pipedrive kan stond hier als zesde regel onder een streepje. Dat
+   was een uitzondering in een rijtje van vijf, en inhoudelijk hoort het
+   bij de inrichting: daarom zit het nu in die eerste regel. De pagina
+   zelf blijft bereikbaar vanaf de hub, elke dienstpagina en de voet. */
 const onderDiensten = diensten.map((dienst) => ({
   href: `/diensten/${dienst.slug}/`,
   tekst: dienst.titel,
-  uitleg: dienst.tekst,
+  uitleg: dienst.kort,
+  icoon: dienst.icoon,
 }));
-
-/* Pipedrive hoort hier inhoudelijk bij maar is geen dienst, dus hij staat
-   onder een streepje en niet in het rijtje van vijf. */
-const naastDiensten = {
-  href: "/pipedrive",
-  tekst: "Wat Pipedrive kan",
-  uitleg: "De functies waar je team mee werkt, en wat AI met je eigen gegevens doet.",
-};
-
-/* Een icoon per bestemming, zodat je in het uitklapmenu op vorm kunt
-   zoeken in plaats van elke regel te moeten lezen. Op de href en niet op
-   de volgorde, zodat een nieuwe dienst hier niet stil de verkeerde krijgt. */
-const iconen: Record<string, string> = {
-  "/diensten/crm-inrichting/": "settings-2",
-  "/diensten/koppelingen-en-automatisering/": "workflow",
-  "/diensten/cijfers-en-ai/": "chart-column",
-  "/diensten/ondersteuning-en-training/": "graduation-cap",
-  "/diensten/website-en-mail/": "globe",
-  "/pipedrive": "target",
-};
 
 /* Een dienstpagina laat Diensten oplichten, want die hangt eronder. */
 const actief = (href: string) =>
@@ -128,12 +115,12 @@ const actief = (href: string) =>
                 <div
                   id="menu-diensten"
                   data-uitklap-paneel
-                  class="absolute left-0 top-full z-40 mt-2 w-[32rem] rounded-kaart border border-rand bg-kaart p-2 shadow-xl before:absolute before:inset-x-0 before:-top-2 before:h-2 before:content-['']"
+                  class="absolute left-0 top-full z-40 mt-2 w-[24rem] rounded-kaart border border-rand bg-kaart p-2 shadow-xl before:absolute before:inset-x-0 before:-top-2 before:h-2 before:content-['']"
                 >
                   <p class="px-3 pb-1 pt-2 label">
                     Vijf soorten werk
                   </p>
-                  <ul class="grid grid-cols-2 gap-1">
+                  <ul class="grid gap-0.5">
                     {onderDiensten.map((item) => (
                       <li>
                         <a
@@ -149,13 +136,13 @@ const actief = (href: string) =>
                             aria-hidden="true"
                             class="mt-0.5 size-4 shrink-0 text-zacht"
                           >
-                            <Icoon naam={iconen[item.href]} maat={24} />
+                            <Icoon naam={item.icoon} maat={24} />
                           </svg>
                           <span class="min-w-0">
                             <span class="block text-sm text-tekst">
                               {item.tekst}
                             </span>
-                            <span class="mt-0.5 line-clamp-2 block text-xs text-zacht">
+                            <span class="mt-0.5 block text-xs text-zacht">
                               {item.uitleg}
                             </span>
                           </span>
@@ -163,32 +150,6 @@ const actief = (href: string) =>
                       </li>
                     ))}
                   </ul>
-                  <a
-                    href={naastDiensten.href}
-                    aria-current={
-                      actief(naastDiensten.href) ? "page" : undefined
-                    }
-                    class:list={[
-                      "mt-2 flex gap-3 rounded-klein border-t border-rand/60 px-3 pb-2 pt-3 hover:bg-bg active:bg-bg",
-                      actief(naastDiensten.href) ? "bg-bg" : "",
-                    ]}
-                  >
-                    <svg
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
-                      class="mt-0.5 size-4 shrink-0 text-zacht"
-                    >
-                      <Icoon naam={iconen[naastDiensten.href]} maat={24} />
-                    </svg>
-                    <span class="min-w-0">
-                      <span class="block text-sm text-tekst">
-                        {naastDiensten.tekst}
-                      </span>
-                      <span class="mt-0.5 block text-xs text-zacht">
-                        {naastDiensten.uitleg}
-                      </span>
-                    </span>
-                  </a>
                 </div>
               </div>
             ) : (
@@ -265,7 +226,7 @@ const actief = (href: string) =>
                       uitklapper: dat is op een telefoon niet te raken. */}
                   {link.href === "/diensten" && (
                     <ul class="mb-1 ml-3 border-l border-rand/60 pl-2">
-                      {[...onderDiensten, naastDiensten].map((item) => (
+                      {onderDiensten.map((item) => (
                         <li>
                           <a
                             href={item.href}
@@ -284,7 +245,7 @@ const actief = (href: string) =>
                               aria-hidden="true"
                               class="size-4 shrink-0"
                             >
-                              <Icoon naam={iconen[item.href]} maat={24} />
+                              <Icoon naam={item.icoon} maat={24} />
                             </svg>
                             <span class="min-w-0">{item.tekst}</span>
                           </a>

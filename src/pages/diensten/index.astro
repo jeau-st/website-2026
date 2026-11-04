@@ -4,6 +4,7 @@ import Sectie from "../../components/Sectie.astro";
 import Knop from "../../components/Knop.astro";
 import Dienst from "../../components/Dienst.astro";
 import { diensten } from "../../data/site";
+import Doorlink from "../../components/Doorlink.astro";
 
 /**
  * De hub boven de dienstpagina's. Hij bestaat om twee redenen: het
@@ -76,20 +77,10 @@ const schema = {
     </div>
     <ul class="mt-10 max-w-2xl space-y-3">
       <li>
-        <a
-          class="tekstlink inline-flex min-h-11 items-center text-tekst"
-          href="/aanpak"
-        >
-          Lees hoe een traject verloopt
-        </a>
+        <Doorlink href="/aanpak">Lees hoe een traject verloopt</Doorlink>
       </li>
       <li>
-        <a
-          class="tekstlink inline-flex min-h-11 items-center text-tekst"
-          href="/pipedrive"
-        >
-          Bekijk wat Pipedrive voor je team doet
-        </a>
+        <Doorlink href="/diensten/crm-inrichting/#functies">Bekijk wat er in Pipedrive zit</Doorlink>
       </li>
     </ul>
   </Sectie>

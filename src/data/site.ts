@@ -97,6 +97,14 @@ export type Dienst = {
   slug: string;
   titel: string;
   tekst: string;
+  /**
+   * Een regel van een woord of vijf, voor het menu en de band op de
+   * homepage. `tekst` is de volle alinea van de pagina zelf: in een rijtje
+   * van vijf wordt dat vijf afgekapte halve zinnen.
+   */
+  kort: string;
+  /** Het Lucide-icoon uit `src/icons`, zonder .svg. Zie Icoon.astro. */
+  icoon: string;
   punten: string[];
   /** De h1 op de eigen pagina. Mag langer zijn dan de titel in de lijst. */
   kop: string;
@@ -106,14 +114,25 @@ export type Dienst = {
   voorWie?: string;
   /** Het inhoudelijke stuk. Zonder deze blokken is de pagina te dun. */
   verhaal?: { kop: string; alineas: string[] }[];
+  /**
+   * Blokken die niet uit `verhaal` komen maar uit een eigen lijst in dit
+   * bestand. Ze stonden op /pipedrive, een losse pagina naast /diensten.
+   * Die pagina ging over het product en niet over het werk, en wie hem
+   * las had daarna alsnog de inrichting nodig. Nu staan ze op de dienst
+   * waar ze bij horen. Zie `src/pages/diensten/[slug].astro`.
+   */
+  extra?: ("functies" | "ai")[];
 };
 
 export const diensten: Dienst[] = [
   {
     slug: "crm-inrichting",
+    extra: ["functies", "ai"],
+    kort: "Pipedrive op jouw verkoopproces, en wat het kan",
+    icoon: "settings-2",
     titel: "CRM-inrichting",
     kop: "Pipedrive inrichten op jouw verkoopproces",
-    meta: "Pipedrive ingericht op hoe jij verkoopt, inclusief migratie uit Excel of een oud systeem. Door een Pipedrive-consultant uit 's-Hertogenbosch.",
+    meta: "Pipedrive ingericht op hoe jij verkoopt, inclusief migratie uit Excel of een oud systeem, en wat er in Pipedrive zit. Door een Pipedrive-consultant uit 's-Hertogenbosch.",
     voorWie:
       "Voor bedrijven die nog met Excel-bestanden werken, of met een CRM dat niemand echt gebruikt. Dat systeem is dan slecht ingericht, het hangt nergens aan vast, of allebei. Een nieuw systeem kiezen is zo gebeurd. De vraag is wat er met je bestaande gegevens gebeurt.",
     verhaal: [
@@ -136,6 +155,8 @@ export const diensten: Dienst[] = [
   },
   {
     slug: "koppelingen-en-automatisering",
+    kort: "Systemen aan elkaar, niets twee keer invoeren",
+    icoon: "workflow",
     titel: "Koppelingen en automatisering",
     kop: "Je systemen aan elkaar koppelen",
     meta: "Koppelingen tussen CRM, administratie en mail, gebouwd met n8n, zodat niemand hetzelfde twee keer invoert.",
@@ -179,6 +200,8 @@ export const diensten: Dienst[] = [
   },
   {
     slug: "cijfers-en-ai",
+    kort: "Rapportage en AI op je eigen cijfers",
+    icoon: "chart-column",
     titel: "Cijfers waar je op kunt sturen",
     kop: "Cijfers waar je op kunt sturen, en AI die je data kent",
     meta: "Rapportage op wat je echt wilt weten, signalen als er iets misgaat, en AI die met je eigen cijfers werkt via Claude en MCP.",
@@ -223,6 +246,8 @@ export const diensten: Dienst[] = [
   },
   {
     slug: "ondersteuning-en-training",
+    kort: "Training en onderhoud na de oplevering",
+    icoon: "graduation-cap",
     titel: "Ondersteuning en training",
     kop: "Training en onderhoud na de oplevering",
     meta: "Training op je eigen werkwijze en een onderhoudsabonnement, zodat het systeem ook een half jaar later nog gebruikt wordt.",
@@ -268,6 +293,8 @@ export const diensten: Dienst[] = [
   },
   {
     slug: "website-en-mail",
+    kort: "Eén snelle site, en mail die aankomt",
+    icoon: "globe",
     titel: "Website en mail",
     kop: "Je website en je mail op orde, en vast aan je CRM",
     meta: "Eén snelle site die je zelf beheert, een formulier dat doorloopt naar Pipedrive, en mail die bij je klant aankomt.",
@@ -419,7 +446,7 @@ export type Functie = {
 };
 
 /**
- * Wat er in Pipedrive zit, voor /pipedrive. Bewust zonder abonnementen en
+ * Wat er in Pipedrive zit, voor de CRM-inrichting. Bewust zonder abonnementen en
  * zonder prijzen: wat er in welk pakket zit verandert sneller dan wat de
  * functie doet, en prijzen staan niet op deze site. Geen partnerschap
  * claimen: zie docs/brand-persona.md.
@@ -570,37 +597,38 @@ export const vragen: Vraag[] = [
 ];
 
 /**
- * De korte versie van de cases, voor op de homepage. Geen losse klanten,
- * maar wat er in de vier opdrachten steeds terugkomt. De uitwerking
- * staat op /werk.
+ * Concrete resultaten voor de homepage, met per regel bij wat voor
+ * opdracht het hoort. Hier stond eerst een samenvatting in drie kolommen
+ * (situatie, aanpak, resultaat). Dat was de vorm van een case en niet het
+ * resultaat: je las wat er gebeurd was en niet wat eruit kwam.
+ *
+ * Elke regel komt uit het `resultaat` van een van de cases hieronder.
+ * Dus niets wat niet is gebeurd, en de uitwerking staat op /werk.
  */
-export const werkKort = [
+export const resultaten = [
   {
-    kop: "Situatie",
-    punten: [
-      "Losse systemen met Excel ernaast",
-      "Dezelfde gegevens op meerdere plekken bijhouden",
-      "Aanmeldingen die ongestructureerd binnenkomen",
-      "Een verouderde site, en mail die in de spam belandt",
-    ],
+    bij: "Maatschappelijke organisatie",
+    wat: "De incasso- en excassobatches worden vanzelf aangemaakt, en na elke stap staat er een opvolgtaak klaar.",
   },
   {
-    kop: "Aanpak",
-    punten: [
-      "Pipedrive leidend voor contacten en voortgang",
-      "De systemen die je al hebt eraan koppelen, of er een database bij",
-      "Formulieren, tickets en documenten eraan vast, via n8n",
-      "Dubbele records opruimen en de website en mail op orde",
-    ],
+    bij: "Welzijnsorganisatie",
+    wat: "Per event zie je wie is uitgenodigd, wie zich aanmeldde, wie er was en wat de opvolging is.",
   },
   {
-    kop: "Resultaat",
-    punten: [
-      "Eén plek waar je ziet hoe iets ervoor staat",
-      "Minder overtypen en minder uitzoekwerk",
-      "Opvolgtaken en batches die vanzelf ontstaan",
-      "Aanvragen die bruikbaar binnenkomen",
-    ],
+    bij: "Welzijnsorganisatie",
+    wat: "De dubbele records zijn opgeruimd, dus er is één plek waar je kijkt.",
+  },
+  {
+    bij: "Architectenbureau",
+    wat: "De verouderde sites zijn samengevoegd tot één site die het bureau zelf beheert.",
+  },
+  {
+    bij: "Architectenbureau",
+    wat: "Via het formulier komen aanvragen binnen die meteen een afspraak kunnen inplannen.",
+  },
+  {
+    bij: "Webshop in lampen",
+    wat: "Mail vanaf het eigen domein komt aan in plaats van in de spam, en de verkoop trok aan.",
   },
 ];
 

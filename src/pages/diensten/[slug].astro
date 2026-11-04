@@ -5,7 +5,15 @@ import Knop from "../../components/Knop.astro";
 import Todo from "../../components/Todo.astro";
 import MetOpgave from "../../components/MetOpgave.astro";
 import Kruimels, { kruimelSchema } from "../../components/Kruimels.astro";
-import { bedrijf, diensten } from "../../data/site";
+import Kaart from "../../components/Kaart.astro";
+import AiStap from "../../components/AiStap.astro";
+import {
+  aiStappen,
+  bedrijf,
+  diensten,
+  pipedriveFuncties,
+} from "../../data/site";
+import Doorlink from "../../components/Doorlink.astro";
 
 /**
  * Een eigen pagina per dienst. Dat is geen opmaakkeuze maar een
@@ -17,6 +25,13 @@ import { bedrijf, diensten } from "../../data/site";
  * Een dienst zonder verhaalblok heeft alleen de regel en de bullets uit
  * de lijst op de homepage. Dat is te weinig om op te ranken, dus die
  * pagina draagt een TODO tot Joost het aanvult. Zie OPLEVERING.md.
+ *
+ * Een dienst kan daarnaast `extra` blokken hebben. Dat zijn de twee
+ * stukken van de oude pagina /pipedrive: wat er in Pipedrive zit en wat
+ * AI met je eigen gegevens doet. Die pagina ging over het product en
+ * niet over het werk, dus hij is opgegaan in de CRM-inrichting. Ze staan
+ * achter het verhaal en voor de verwijzingen, want ze zijn naslag en
+ * geen betoog.
  */
 export function getStaticPaths() {
   return diensten.map((dienst) => ({
@@ -41,12 +56,18 @@ const kruimels = [
    je krijgt, de verhaalblokken uit site.ts, en de verwijzing naar de rest.
    Een dienst zonder verhaal houdt er twee over, en dan laat de
    Inhoudsopgave zichzelf weg. */
+const extraDelen = {
+  functies: "Wat er in Pipedrive zit",
+  ai: "Eerst de basis, dan AI",
+} as const;
+
 const opgave = [
   { id: "watkrijgje", tekst: "Wat dat concreet is" },
   ...(dienst.verhaal ?? []).map((blok, i) => ({
     id: `hoe-${i + 1}`,
     tekst: blok.kop,
   })),
+  ...(dienst.extra ?? []).map((id) => ({ id, tekst: extraDelen[id] })),
   { id: "verder", tekst: "De andere diensten" },
 ];
 
@@ -125,37 +146,62 @@ const schema = {
     ))
   }
 
+  {
+    dienst.extra?.includes("functies") && (
+      <Sectie id="functies" vol nummer={nr.functies} kop={extraDelen.functies}>
+        <dl class="mt-10 grid gap-4 md:grid-cols-2">
+          {pipedriveFuncties.map((functie) => (
+            <Kaart krap class="min-w-0">
+              <dt class="text-lg text-kop">{functie.titel}</dt>
+              <dd class="mt-2 min-w-0 text-zacht">{functie.tekst}</dd>
+            </Kaart>
+          ))}
+        </dl>
+        <p class="mt-10 max-w-2xl text-zacht">
+          Dit hoeft niet allemaal aan. Welke hiervan je gebruikt, volgt uit
+          je proces, en dat is precies de volgorde waarin ik werk.
+        </p>
+      </Sectie>
+    )
+  }
+
+  {
+    dienst.extra?.includes("ai") && (
+      <Sectie
+        id="ai"
+        vol
+        nummer={nr.ai}
+        kop={extraDelen.ai}
+        intro="AI is zo goed als de gegevens eronder. Staat je proces in een systeem en klopt wat erin staat, dan kun je er wat mee."
+      >
+        <div class="mt-10 grid gap-6 md:grid-cols-3">
+          {aiStappen.map((stap) => (
+            <AiStap stap={stap} />
+          ))}
+        </div>
+        <p class="mt-10 max-w-2xl text-zacht">
+          Een AI die het verkeerde antwoord geeft omdat een veld leeg was,
+          is erger dan geen AI. Datakwaliteit hoort daarom in de inrichting
+          te zitten: velden die verplicht zijn waar het telt, en afgeschermd
+          waar niet iedereen ze hoort te wijzigen.
+        </p>
+      </Sectie>
+    )
+  }
+
   <Sectie id="verder" vol nummer={nr.verder} kop="De andere diensten">
     <ul class="mt-8 max-w-2xl space-y-3">
       {
         anderen.map((item) => (
           <li>
-            <a
-              class="tekstlink inline-flex min-h-11 items-center text-tekst"
-              href={`/diensten/${item.slug}/`}
-            >
-              {item.titel}
-            </a>
+            <Doorlink href={`/diensten/${item.slug}/`}>{item.titel}</Doorlink>
           </li>
         ))
       }
     </ul>
     <ul class="mt-8 max-w-2xl space-y-3 border-t border-rand/60 pt-6">
       <li>
-        <a
-          class="tekstlink inline-flex min-h-11 items-center text-tekst"
-          href="/aanpak"
-        >
-          Lees hoe een traject verloopt
-        </a>
-      </li>
-      <li>
-        <a
-          class="tekstlink inline-flex min-h-11 items-center text-tekst"
-          href="/pipedrive"
-        >
-          Bekijk wat Pipedrive voor je team doet
-        </a>
+        <Doorlink href="/aanpak">Lees hoe een traject verloopt</Doorlink>
       </li>
     </ul>
   </Sectie>

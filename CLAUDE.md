@@ -40,7 +40,7 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 - `scripts/og.mjs`: maakt `public/og.png` uit het woordmerk en de huisstijlkleuren, draait met `npm run og`
 - `scripts/schrijfwijzer.mjs`: controleert de zichtbare tekst tegen die wijzer, draait met `npm run schrijfwijzer`
 - `src/pages`: routes, een bestand per pagina
-- `src/components`: Sectie, Kaart, Knop, Kop, Voet, Todo, Inhoudsopgave, MetOpgave en de inhoudsblokken. `Sectie` met `vol` laat de breedte over aan het raster eromheen, wat de pagina's met een inhoudsopgave doen
+- `src/components`: Sectie, Kaart, Knop, Doorlink, Kop, Voet, Todo, Inhoudsopgave, MetOpgave en de inhoudsblokken. `Sectie` met `vol` laat de breedte over aan het raster eromheen, wat de pagina's met een inhoudsopgave doen
 - `src/layouts`: layouts, `Basis.astro` verzorgt head, taal en canonical
 - `src/styles/global.css`: Tailwind-import en alle kleur- en fonttokens
 - `public`: bestanden die ongewijzigd worden geserveerd
@@ -60,6 +60,7 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 - Geen afwisselende banen. De hele pagina staat op een achtergrond, en wat bij elkaar hoort staat in een `Kaart`. Een kaart is maar 1,1:1 lichter dan de achtergrond: de rand doet het werk.
 - `Kaart` heeft drie gewichten: `stil` (alleen ruimte), `kaart` (het standaardvlak) en `groot` (het dragende blok op een pagina). Niet alles op hetzelfde gewicht zetten: als elke kaart even zwaar is, krijgt het oog nergens een rangorde.
 - Geen opsommingen met een pijltje in een omlijnde kaart. Dat is precies hoe een chatantwoord eruitziet. Een rijtje korte stellingen wordt een haarlijnraster: een wikkel met `bg-rand-zacht`, cellen met `bg-kaart` en `gap-px` ertussen, zodat de lijnen uit de achtergrond komen en er nooit een dubbele rand staat.
+- Een link naar een andere pagina van de site gaat via `Doorlink`: de tekst met een Lucide-pijltje erachter dat bij hover drie pixels opschuift. Alleen voor pagina's, niet voor contactgegevens of links naar buiten: daar belooft een pijltje iets wat er niet is.
 - Een sectie op een lange pagina krijgt een genummerd mono-labeltje boven de kop, links en niet gecentreerd, en `aria-hidden`. Het nummer komt uit dezelfde lijst als de inhoudsopgave, zodat de twee niet uit elkaar kunnen lopen.
 - De tekeningen (`Schema`, `Cyclus`) zijn echte schema's in svg, met iconen, en staan zonder kader. Dit is wat de site aan beeld heeft, dus ze mogen de ruimte van een afbeelding krijgen: `Schema` vult de rechterhelft van de hero. Elke tekening heeft twee opmaken, een liggende vanaf `sm` en een staande daaronder, want een schema schaalt niet mee naar een telefoon.
 - Iconen komen uit Lucide. De gebruikte bestanden staan als los svg in `src/icons`, gekopieerd uit `lucide-static` (ISC), zodat in de repo te zien is welke de site gebruikt en een update van het pakket geen tekening stil verandert. Gebruik ze via `Icoon.astro`: binnen een svg rechtstreeks, in html met een `<svg viewBox="0 0 24 24">` eromheen.

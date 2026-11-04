@@ -22,12 +22,6 @@ const paginas = [
     regel: "Overzicht van de diensten, en waar deze aanpak het beste werkt.",
   },
   {
-    pad: "/pipedrive",
-    titel: "Wat Pipedrive voor je team doet",
-    regel:
-      "De functies van Pipedrive in gewone woorden, en de drie manieren waarop AI op je eigen gegevens werkt.",
-  },
-  {
     pad: "/aanpak",
     titel: "Aanpak",
     regel:

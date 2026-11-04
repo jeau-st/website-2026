@@ -206,3 +206,21 @@ Dit kan ik niet verzinnen, en een placeholder wordt een zichtbare TODO:
 6. Kruimelpad, `llms.txt` en de schema-aanvullingen.
 
 Stap 1 en 2 zijn samen de helft van de winst en raken geen enkele URL.
+
+
+## Wat er sinds dit voorstel is veranderd
+
+`/pipedrive` bestaat niet meer. Die pagina ging over het product en niet
+over het werk, en wie hem las had daarna alsnog de inrichting nodig. De
+twee inhoudelijke blokken, wat er in Pipedrive zit en wat AI met je eigen
+gegevens doet, staan nu op `/diensten/crm-inrichting` als sectie 03 en 04.
+De oude URL stuurt met een 301 door, zie `redirects` in `astro.config.mjs`.
+Daarmee is de menustructuur ook weer gewoon vijf diensten, zonder zesde
+regel onder een streepje.
+
+De homepage heeft er een blok bij: `In het kort`, direct onder de hero.
+Dat zijn de vijf W's en de H in zes regels, voor wie niet verder leest.
+`Voorbeelden van werk` heet `Resultaten` en noemt concrete uitkomsten in
+plaats van een samenvatting in situatie, aanpak en resultaat. Elke regel
+komt uit het `resultaat` van een van de vier cases. `Wie dit doet` heet
+`Over mij`.

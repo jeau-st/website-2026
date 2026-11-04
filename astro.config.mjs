@@ -9,6 +9,12 @@ export default defineConfig({
   site: 'https://jeau.st',
   adapter: cloudflare(),
   integrations: [sitemap()],
+  // /pipedrive is opgegaan in de dienstpagina. De oude URL blijft werken,
+  // want hij stond in de voet, in llms.txt en in de sitemap, en een
+  // verdwenen pagina is een 404 voor wie hem had opgeslagen.
+  redirects: {
+    '/pipedrive': '/diensten/crm-inrichting/',
+  },
   // Fonts worden bij de build opgehaald en vanaf ons eigen domein geserveerd,
   // dus geen verzoek naar Google vanuit de browser van de bezoeker.
   fonts: [

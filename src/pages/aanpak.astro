@@ -11,6 +11,7 @@ import Stappentabel from "../components/Stappentabel.astro";
 import Nastap from "../components/Nastap.astro";
 import Vraag from "../components/Vraag.astro";
 import { denkwijze, nabouw, niveaus, vragen } from "../data/site";
+import Doorlink from "../components/Doorlink.astro";
 
 /**
  * De vragen stonden op de homepage. Ze gaan bijna allemaal over hoe een
@@ -117,12 +118,7 @@ const faqSchema = {
       {nabouw.map((stap) => <Nastap stap={stap} />)}
     </div>
     <p class="mt-10">
-      <a
-        class="tekstlink inline-flex min-h-11 items-center text-tekst"
-        href="/diensten/ondersteuning-en-training/"
-      >
-        Lees wat ondersteuning en training inhoudt
-      </a>
+      <Doorlink href="/diensten/ondersteuning-en-training/">Lees wat ondersteuning en training inhoudt</Doorlink>
     </p>
   </Sectie>
 
