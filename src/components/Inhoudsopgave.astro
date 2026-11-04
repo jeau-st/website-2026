@@ -93,18 +93,12 @@ const { items } = Astro.props;
 
       const links = [...opgave.querySelectorAll("[data-opgave-link]")];
 
-      /* Waar een deel begint. De kop als die er is, anders de sectie
-         zelf: een sectie begint bij haar bovenruimte, en die is 6 rem,
-         dus daarmee zou een deel al actief worden terwijl de kop nog
-         ruim onder beeld staat. */
       const delen = links
-        .map((link) => {
-          const id = link.dataset.opgaveLink;
-          const sectie = document.getElementById(id);
-          if (!sectie) return null;
-          return { id, merk: document.getElementById(`${id}-kop`) ?? sectie };
-        })
-        .filter(Boolean);
+        .map((link) => ({
+          id: link.dataset.opgaveLink,
+          sectie: document.getElementById(link.dataset.opgaveLink),
+        }))
+        .filter((deel) => deel.sectie);
       if (delen.length === 0) return;
 
       let huidig = null;
@@ -129,12 +123,18 @@ const { items } = Astro.props;
          hoog is, en dan valt er niets in: de opgave bleef hangen op het
          vorige deel terwijl de volgende kop al bovenaan stond.
 
-         Nu is het een streep. Actief is het laatste deel waarvan de kop
-         die streep is gepasseerd, dus er is altijd precies één antwoord,
-         ook als er geen kop in beeld is. De streep staat onder de
-         vastgeplakte kop, zodat een deel omslaat op het moment dat je de
-         kop ervan onder de balk ziet verdwijnen. */
-      const streep = () => 160;
+         Nu is het een streep. Actief is het laatste deel dat die streep
+         is gepasseerd, dus er is altijd precies één antwoord, ook als er
+         geen kop in beeld is.
+
+         De streep ligt op de scroll-margin-top van 6 rem uit global.css,
+         met twee pixels speling voor het afronden. Dat is geen willekeurig
+         getal: daar zet de browser een sectie neer als je een ankerlink
+         volgt. Land je op #niveaus, dan staat niveaus precies op de
+         streep en is hij actief. Elke andere waarde laat de opgave en de
+         ankerlinks op het randje uit elkaar lopen. Daarom meet hij op de
+         sectie en niet op de kop: het anker wijst ook naar de sectie. */
+      const streep = 96 + 2;
 
       let bezig = false;
       const meten = () => {
@@ -148,10 +148,9 @@ const { items } = Astro.props;
           document.documentElement.scrollHeight - 2;
         if (onderaan) return aan(delen[delen.length - 1].id);
 
-        const lijn = streep();
         let gekozen = delen[0];
         for (const deel of delen) {
-          if (deel.merk.getBoundingClientRect().top <= lijn) gekozen = deel;
+          if (deel.sectie.getBoundingClientRect().top <= streep) gekozen = deel;
           else break;
         }
         aan(gekozen.id);
@@ -166,6 +165,26 @@ const { items } = Astro.props;
       meten();
       window.addEventListener("scroll", plannen, { passive: true });
       window.addEventListener("resize", plannen);
+
+      /* Nog drie keer opnieuw meten, want de eerste meting klopt vaak
+         nog niet.
+
+         Bij het laden van een adres met een anker erachter springt de
+         browser pas naar die sectie nadat dit script is gedraaid, en dat
+         springen levert niet altijd een scroll-gebeurtenis op. Dan stond
+         01 aan terwijl 02 bovenaan de pagina stond. hashchange vangt
+         hetzelfde als je later op een link in de opgave klikt.
+
+         En de koppen staan in Manrope: tot dat font er is, meet je de
+         hoogtes van het terugvalfont, en daarna staat alles ergens
+         anders. De waarnemer vangt wat daarna nog schuift, zoals een
+         afbeelding die binnenkomt. */
+      window.addEventListener("load", plannen);
+      window.addEventListener("hashchange", plannen);
+      document.fonts?.ready.then(plannen);
+      if ("ResizeObserver" in window) {
+        new ResizeObserver(plannen).observe(document.body);
+      }
     };
 
     if (document.readyState === "loading") {

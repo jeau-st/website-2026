@@ -15,6 +15,10 @@ import Icoon from "./Icoon.astro";
  * op de linkerkant en bovenaan, wat het je oplevert op de rechterkant.
  * Wie met de klok mee leest, leest dus van bronnen naar opbrengst.
  *
+ * De maat is gebonden aan de kolom waar hij in staat: de hero is
+ * max-w-5xl, dus een halve kolom is 484 px en de tekening 480. Groter
+ * en hij duwt de hero uit de kantlijn van de rest van de pagina.
+ *
  * Twee opmaken. Vanaf sm de volle ring met de labels naast de punten.
  * Daaronder dezelfde ring maar kleiner, en daar is `kort` nodig: op een
  * telefoon past "slimme workflows" niet naast de cirkel zonder dat de
@@ -73,7 +77,7 @@ function labelPlek(
 <figure class="mt-8 sm:mt-0">
   {/* Vanaf sm: de volle ring */}
   <svg
-    class="mx-auto hidden h-auto w-full max-w-[35rem] sm:block"
+    class="mx-auto hidden h-auto w-full max-w-[30rem] sm:block"
     viewBox="0 0 560 360"
     role="presentation"
     aria-hidden="true"

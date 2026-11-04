@@ -83,10 +83,15 @@ const inHetKort = [
       zijn. Onder lg vallen ze terug op elkaar.
 
       Minder lucht boven de kop dan in de andere secties, zodat alles
-      samen op 1280 bij 800 past zonder scrollen. */}
+      samen op 1280 bij 800 past zonder scrollen.
+
+      Dezelfde max-w-5xl als elke andere sectie. Hij stond op 6xl, en
+      daarmee begon de kop 64 px links van alles eronder: op een breed
+      scherm zag je de hero uit de kantlijn lopen. De ring is daarop
+      meegekrompen, zie Schema.astro. */}
   <section class="px-4 py-14 sm:px-6 sm:py-16 lg:pb-14 lg:pt-10">
     <div
-      class="mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14"
+      class="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14"
     >
       <div>
         {/* De naam draagt het accent, want hij is een actie: klikken geeft
