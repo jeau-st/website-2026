@@ -34,7 +34,6 @@ const bedrijfSchema = {
   description: beschrijving,
   url: Astro.site?.toString(),
   email: bedrijf.email,
-  telephone: bedrijf.telefoon,
   /* Dezelfde @id als het Person-blok op /over, zodat de oprichter en de
      persoon op die pagina één entiteit zijn en geen twee. */
   founder: {

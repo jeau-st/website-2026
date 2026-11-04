@@ -4,16 +4,16 @@ import Sectie from "../components/Sectie.astro";
 import Knop from "../components/Knop.astro";
 import { bedrijf } from "../data/site";
 
+/* Geen telefoonnummer. Zie de toelichting bij `bedrijf` in site.ts. */
 const gegevens = [
   { kop: "Mail", tekst: bedrijf.email, href: `mailto:${bedrijf.email}` },
-  { kop: "Telefoon", tekst: bedrijf.telefoon, href: bedrijf.telefoonLink },
   { kop: "LinkedIn", tekst: "jfbeers", href: bedrijf.linkedin, extern: true },
 ];
 ---
 
 <Basis
   titel="Contact | Jeau.st"
-  beschrijving="Plan een belafspraak van 30 minuten met Joost Beers, of neem contact op via mail of telefoon."
+  beschrijving="Plan een belafspraak van 30 minuten met Joost Beers, of neem contact op via mail of LinkedIn."
 >
   <section class="px-4 py-20 sm:px-6 sm:py-24">
     <div class="mx-auto max-w-5xl">
@@ -34,9 +34,9 @@ const gegevens = [
   <Sectie
     id="gegevens"
     kop="Liever direct contact"
-    intro="Een gesprek plannen werkt het snelst, maar mailen of bellen kan ook."
+    intro="Een gesprek plannen werkt het snelst, maar een mailtje kan ook."
   >
-    <dl class="mt-10 grid gap-8 sm:grid-cols-3">
+    <dl class="mt-10 grid gap-8 sm:grid-cols-2">
       {
         gegevens.map((item) => (
           <div>

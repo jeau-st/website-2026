@@ -76,7 +76,6 @@ export const GET: APIRoute = ({ site }) => {
     "## Contact",
     "",
     `- E-mail: ${bedrijf.email}`,
-    `- Telefoon: ${bedrijf.telefoon}`,
     `- LinkedIn: ${bedrijf.linkedin}`,
     `- KvK: ${bedrijf.kvk}`,
     "",

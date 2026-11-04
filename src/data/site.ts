@@ -10,10 +10,23 @@ export const bedrijf = {
   plaats: "'s-Hertogenbosch",
   kvk: "88930343",
   email: "joost@jeau.st",
-  telefoon: "+31 6 496 88 771",
-  telefoonLink: "tel:+31649688771",
   linkedin: "https://www.linkedin.com/in/jfbeers",
 } as const;
+
+/*
+ * Hier stond het mobiele nummer, en het stond daardoor in de voet van elke
+ * pagina, op /contact, in de JSON-LD en in llms.txt. Het is eraf gehaald en
+ * niet achter een knop gezet: een knop houdt alleen de scrapers tegen die
+ * de html lezen en niet die met een echte browser eronder, en in de
+ * gestructureerde data stond het er sowieso leesbaar naast.
+ *
+ * Een mobiel nummer is aan de persoon gekoppeld: het trekt acquisitie en
+ * scamrondes, het kan gespoofd worden richting klanten, en het is bij veel
+ * diensten de herstelroute van een account. Mail is wel verplicht als
+ * snelle en rechtstreekse contactmogelijkheid, een telefoonnummer niet.
+ *
+ * Bereikbaar blijven gaat via de afspraakplanner hieronder en via mail.
+ */
 
 /** De enige primaire actie op de site. */
 export const cta = {
