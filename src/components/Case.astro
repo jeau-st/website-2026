@@ -1,9 +1,10 @@
 ---
+import Kaart from "./Kaart.astro";
 import Todo from "./Todo.astro";
 import type { Case } from "../data/site";
 
 /**
- * Zelfde opbouw als de dienstenlijst: een regel met haarlijn, geen kaart.
+ * Zelfde opbouw als de dienstenlijst: een kaart met het nummer ernaast.
  */
 interface Props {
   item: Case;
@@ -21,7 +22,7 @@ const delen = [
 const schoon = (tekst: string) => tekst.replace(/^TODO:\s*/, "");
 ---
 
-<li class="border-t border-rand/60 py-8 first:border-t-0 first:pt-0">
+<Kaart als="li" id={`case-${nummer}`}>
   <div class="grid gap-x-8 gap-y-4 sm:grid-cols-[3rem_1fr]">
     <p class="font-mono text-sm text-zacht" aria-hidden="true">{nummer}</p>
 
@@ -48,4 +49,4 @@ const schoon = (tekst: string) => tekst.replace(/^TODO:\s*/, "");
       </dl>
     </div>
   </div>
-</li>
+</Kaart>

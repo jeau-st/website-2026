@@ -4,6 +4,7 @@ import foto from "../assets/joost.webp";
 import Basis from "../layouts/Basis.astro";
 import Naamwissel from "../components/Naamwissel.astro";
 import Sectie from "../components/Sectie.astro";
+import Kaart from "../components/Kaart.astro";
 import Knop from "../components/Knop.astro";
 import Pijnpunt from "../components/Pijnpunt.astro";
 import Schema from "../components/Schema.astro";
@@ -41,7 +42,7 @@ const kernpunten = [
 >
   {/* Minder lucht boven de kop dan in de andere secties, zodat de kop, de
       zin eronder en de actie samen op 1280 bij 800 passen zonder scrollen. */}
-  <section class="px-4 py-20 sm:px-6 sm:py-28 lg:pt-10">
+  <section class="px-4 py-16 sm:px-6 sm:py-20 lg:pb-10 lg:pt-8">
     <div class="mx-auto max-w-5xl">
       {/* De naam draagt het accent, want hij is een actie: klikken geeft
           een andere naam. Dat is de enige plek buiten de primaire knop,
@@ -59,7 +60,7 @@ const kernpunten = [
       {/* De kop zegt niet wat Jeau.st doet, dus de derde zin hieronder moet
           dat wel doen. Titel en meta description blijven expliciet, want
           daarop landt iemand vanuit Google. */}
-      <p class="mt-6 max-w-2xl text-lg text-zacht">
+      <p class="mt-5 max-w-2xl text-lg text-zacht">
         Tot <span data-naam>{persoon.naam}</span> op vakantie is. Dan blijkt
         dat het proces alleen in{" "}
         <span data-bezittelijk>{persoon.bezittelijk}</span> hoofd zat. Ik zet
@@ -70,7 +71,10 @@ const kernpunten = [
 
       <Schema />
 
-      <ul class="mt-8 max-w-2xl divide-y divide-rand/60 border-y border-rand/60">
+      {/* Krap, en met minder lucht erboven dan elders: anders past de
+          hero niet meer op 1280 bij 800 zonder scrollen. */}
+      <Kaart krap class="mt-5 max-w-2xl">
+      <ul class="divide-y divide-rand/60">
         {
           kernpunten.map((punt) => (
             /* Het pijltje is versiering, niet de opsommingsmarkering: de ul
@@ -84,8 +88,9 @@ const kernpunten = [
           ))
         }
       </ul>
+      </Kaart>
 
-      <div class="mt-8">
+      <div class="mt-6">
         <Knop toonToelichting />
       </div>
     </div>
@@ -93,7 +98,6 @@ const kernpunten = [
 
   <Sectie
     id="ai"
-    vlak
     kop="Eerst de basis, dan AI"
     intro="AI is zo goed als de gegevens eronder. Staat je proces in een systeem en klopt wat erin staat, dan kun je er wat mee."
   >
@@ -126,7 +130,6 @@ const kernpunten = [
 
   <Sectie
     id="volgorde"
-    vlak
     kop="De volgorde is het werk"
     intro="Eerst vastleggen hoe het nu echt gaat, dan één manier van werken kiezen. Automatiseren komt daarna, en meten als laatste."
   >
@@ -148,7 +151,7 @@ const kernpunten = [
     kop="Wat ik doe"
     intro="Vijf soorten werk. De eerste vier volgen de volgorde waarin ik ze aanpak."
   >
-    <ol class="mt-12">
+    <ol class="mt-12 space-y-4">
       {
         diensten.map((dienst, i) => (
           <Dienst dienst={dienst} nummer={String(i + 1).padStart(2, "0")} />
@@ -167,16 +170,15 @@ const kernpunten = [
 
   <Sectie
     id="werk"
-    vlak
     kop="Voorbeelden van werk"
     intro="Vier opdrachten, samengevat. Dit is wat er steeds terugkomt."
   >
     {/* De cases zelf staan op /werk. Ze hier ook voluit zetten maakte de
         homepage twee keer zo lang met dezelfde tekst. */}
-    <dl class="mt-12 grid gap-10 md:grid-cols-3">
+    <dl class="mt-12 grid gap-6 md:grid-cols-3">
       {
         werkKort.map((deel) => (
-          <div class="min-w-0 border-t border-rand/60 pt-5">
+          <Kaart krap class="min-w-0">
             <dt class="font-mono text-sm text-zacht">{deel.kop}</dt>
             <dd class="mt-3 min-w-0">
               <ul class="space-y-2">
@@ -190,7 +192,7 @@ const kernpunten = [
                 ))}
               </ul>
             </dd>
-          </div>
+          </Kaart>
         ))
       }
     </dl>
@@ -233,7 +235,7 @@ const kernpunten = [
     </div>
   </Sectie>
 
-  <Sectie id="plannen" vlak>
+  <Sectie id="plannen">
     <div class="max-w-2xl">
       <h2 class="text-3xl sm:text-4xl">
         Vertel eerst eens wat er vastloopt

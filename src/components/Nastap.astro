@@ -1,4 +1,5 @@
 ---
+import Kaart from "./Kaart.astro";
 import type { Nastap } from "../data/site";
 
 interface Props {
@@ -8,7 +9,7 @@ interface Props {
 const { stap } = Astro.props;
 ---
 
-<div class="max-w-xl">
+<Kaart krap class="max-w-xl">
   <h3 class="text-lg">{stap.titel}</h3>
   <p class="mt-2 text-zacht">{stap.tekst}</p>
-</div>
+</Kaart>

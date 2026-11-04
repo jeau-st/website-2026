@@ -1,6 +1,8 @@
 ---
 import Basis from "../layouts/Basis.astro";
 import Sectie from "../components/Sectie.astro";
+import MetOpgave from "../components/MetOpgave.astro";
+import Kaart from "../components/Kaart.astro";
 import Knop from "../components/Knop.astro";
 import Denkstap from "../components/Denkstap.astro";
 import Cyclus from "../components/Cyclus.astro";
@@ -19,6 +21,23 @@ import { denkwijze, nabouw, niveaus, vragen } from "../data/site";
  * Alleen vrijgegeven vragen in het schema: een TODO als antwoord aanbieden
  * aan Google is erger dan de vraag weglaten.
  */
+/**
+ * De secties van deze pagina, met de tekst die in de inhoudsopgave komt.
+ * Een lijst, gebruikt voor allebei: de kop van de sectie en de regel in
+ * de opgave. Zo kunnen ze niet uit elkaar lopen. De afspraak onderaan
+ * staat er niet in, want een inhoudsopgave wijst naar inhoud.
+ */
+const delen = {
+  volgorde: "De vier stappen",
+  niveaus: "Waar sta jij?",
+  stappen: "Zo loopt een opdracht",
+  daarna: "En dan gaat het pas werken",
+  werkwijze: "Hoe ik werk",
+  vragen: "Veelgestelde vragen",
+};
+
+const opgave = Object.entries(delen).map(([id, tekst]) => ({ id, tekst }));
+
 const faqSchema = {
   "@type": "FAQPage",
   mainEntity: vragen
@@ -49,8 +68,9 @@ const faqSchema = {
     </div>
   </section>
 
-  <Sectie id="volgorde" vlak>
-    <ol>
+  <MetOpgave items={opgave}>
+  <Sectie id="volgorde" vol kop={delen.volgorde}>
+    <ol class="space-y-4">
       {denkwijze.map((stap) => <Denkstap stap={stap} />)}
     </ol>
     <Cyclus />
@@ -58,10 +78,11 @@ const faqSchema = {
 
   <Sectie
     id="niveaus"
-    kop="Waar sta jij?"
+    vol
+    kop={delen.niveaus}
     intro="Niet iedereen begint bij 01. Lees deze vier door en kijk welke het meest op jouw bedrijf lijkt."
   >
-    <ol class="mt-12">
+    <ol class="mt-12 space-y-4">
       {niveaus.map((niveau) => <Niveau niveau={niveau} />)}
     </ol>
     <p class="max-w-2xl border-t border-rand/60 pt-8 text-zacht">
@@ -72,8 +93,8 @@ const faqSchema = {
 
   <Sectie
     id="stappen"
-    vlak
-    kop="Zo loopt een opdracht"
+    vol
+    kop={delen.stappen}
     intro="De vier stappen hierboven zijn de denkwijze. Hieronder staat hoe dat in de praktijk verloopt, met per stap wat ik doe, wat jij doet en wat er aan het eind ligt."
   >
     <Stappentabel />
@@ -81,10 +102,11 @@ const faqSchema = {
 
   <Sectie
     id="daarna"
-    kop="En dan gaat het pas werken"
+    vol
+    kop={delen.daarna}
     intro="De oplevering is het begin. Dit is het ritme daarna."
   >
-    <div class="mt-12 grid gap-10 md:grid-cols-3">
+    <div class="mt-12 grid gap-6 md:grid-cols-3">
       {nabouw.map((stap) => <Nastap stap={stap} />)}
     </div>
     <p class="mt-10">
@@ -100,9 +122,9 @@ const faqSchema = {
   {/* Dit stond als raster van vier gelijke blokjes. Zo gelijk van vorm en
       lengte leest het als een sjabloon, dus nu een lijst met blokken die
       net zo lang zijn als ze hoeven te zijn. */}
-  <Sectie id="werkwijze" vlak kop="Hoe ik werk">
-    <div class="mt-12 max-w-2xl space-y-10">
-      <div>
+  <Sectie id="werkwijze" vol kop={delen.werkwijze}>
+    <div class="mt-12 max-w-2xl space-y-4">
+      <Kaart>
         <h3 class="text-lg">
           Als niemand behalve ik het begrijpt, is het te slim gebouwd
         </h3>
@@ -112,38 +134,40 @@ const faqSchema = {
           onderhouden, maakt je afhankelijk van mij. Dat wil je niet en ik ook
           niet.
         </p>
-      </div>
-      <div>
+      </Kaart>
+      <Kaart>
         <h3 class="text-lg">Je praat met de persoon die het bouwt</h3>
         <p class="mt-2 text-zacht">
           Dezelfde persoon zit aan tafel bij het eerste gesprek en bij de
           oplevering.
         </p>
-      </div>
-      <div>
+      </Kaart>
+      <Kaart>
         <h3 class="text-lg">Het team beslist of het werkt</h3>
         <p class="mt-2 text-zacht">
           Een systeem dat niemand gebruikt, is weggegooid geld. Daarom spreek
           ik de mensen die ermee gaan werken al tijdens de analyse, en hoort
           training bij het werk in plaats van erna.
         </p>
-      </div>
-      <div>
+      </Kaart>
+      <Kaart>
         <h3 class="text-lg">Liever volgende maand iets dat werkt</h3>
         <p class="mt-2 text-zacht">
           Dan een plan dat over een jaar af is.
         </p>
-      </div>
+      </Kaart>
     </div>
   </Sectie>
 
-  <Sectie id="vragen" kop="Veelgestelde vragen">
-    <div class="mt-10 max-w-3xl">
+  <Sectie id="vragen" vol kop={delen.vragen}>
+    <div class="mt-10 max-w-3xl space-y-3">
       {vragen.map((item) => <Vraag item={item} />)}
     </div>
   </Sectie>
 
-  <Sectie id="plannen" vlak>
+  </MetOpgave>
+
+  <Sectie id="plannen">
     <div class="max-w-2xl">
       <h2 class="text-3xl sm:text-4xl">
         Waar jouw rondje begint, weet ik nog niet

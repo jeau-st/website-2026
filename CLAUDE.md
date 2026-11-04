@@ -33,13 +33,14 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 - `OPLEVERING.md`: wat Joost nog moet invullen voor livegang
 - `SCHRIJFWIJZER.md`: stem, verboden woorden en werkwijze voor alle tekst op de site
 - `docs/brand-persona.md`: wie er spreekt, de ideale klant, karakter en toon. Lees die voor je tekst schrijft
+- `docs/layoutvoorstel.md`: waarom de opmaak is zoals hij is, met de gemeten contrastcijfers
 - `docs/structuurvoorstel.md`: de paginastructuur, waarom elk blok staat waar het staat, en wat er nog bij komt
 - `docs/palet.html`: het palet met stalen, gemeten aandelen en contrastcijfers. Staat buiten `src/pages` en `public`, dus de build neemt hem niet mee. Open hem vanaf schijf
 - `src/pages/llms.txt.ts`: de inhoudsopgave voor taalmodellen, gegenereerd uit `site.ts`
 - `scripts/og.mjs`: maakt `public/og.png` uit het woordmerk en de huisstijlkleuren, draait met `npm run og`
 - `scripts/schrijfwijzer.mjs`: controleert de zichtbare tekst tegen die wijzer, draait met `npm run schrijfwijzer`
 - `src/pages`: routes, een bestand per pagina
-- `src/components`: Sectie, Knop, Kop, Voet, Todo en de inhoudsblokken
+- `src/components`: Sectie, Kaart, Knop, Kop, Voet, Todo, Inhoudsopgave, MetOpgave en de inhoudsblokken. `Sectie` met `vol` laat de breedte over aan het raster eromheen, wat de pagina's met een inhoudsopgave doen
 - `src/layouts`: layouts, `Basis.astro` verzorgt head, taal en canonical
 - `src/styles/global.css`: Tailwind-import en alle kleur- en fonttokens
 - `public`: bestanden die ongewijzigd worden geserveerd
@@ -51,11 +52,15 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 - Geen verzonnen cijfers, testimonials of klantcases.
 - Koppen krijgen hun kleur uit `--c-kop`, niet uit een utility in de opmaak: een donker blauwgrijs in licht, een licht blauwgrijs in donker. Beide staan los van de tekstkleur.
 - Koppen staan in Inter, kleine labels en de tekeningen in IBM Plex Mono. Het woordmerk is een svg: als pixelfont werd het vlekkerig door de rasterizer, als pad schaalt het schoon. Kop en Voet zetten alleen de hoogte.
-- Kleuren en fonts alleen via tokens uit `src/styles/global.css`. Gebruik de roltokens (`bg`, `vlak`, `rand`, `tekst`, `zacht`, `accent`), nooit de vaste merkkleuren: die wisselen niet mee met het thema.
-- Licht is de standaard, donker via `data-thema="donker"` op `<html>`. De systeemvoorkeur schakelt niet automatisch om.
+- Kleuren en fonts alleen via tokens uit `src/styles/global.css`. Gebruik de roltokens (`bg`, `kaart`, `rand`, `tekst`, `zacht`, `kop`, `accent`), nooit de vaste merkkleuren: die wisselen niet mee met het thema.
+- Donker is de standaard, licht via `data-thema="licht"` op `<html>`. De systeemvoorkeur schakelt niet automatisch om.
+- Geen afwisselende banen. De hele pagina staat op een achtergrond, en wat bij elkaar hoort staat in een `Kaart`. Een kaart is maar 1,1:1 lichter dan de achtergrond: de rand doet het werk.
 - Het palet is gemeten uit de museumscan van Van Gogh, Zelfportret met grijze vilthoed (s0016V1962), met k-means in Lab en een telling per kleurfamilie. Het doek is voor 49,6% blauw en voor 3,3% groen, dus het palet is blauw. De twee grootste clusters zijn staal `#41515C` en lei `#56646D`, samen 43% van het doek. Warm is oker `#816447` en vlam `#8D531F`, de oranje stippen. Alle rollen erven tint 204 (blauw) of tint 28 (oranje) en verschillen alleen in lichtheid.
-- Het accent verschilt per thema, want één oranje haalt niet in allebei de contrastnorm voor tekst op de knop. Licht gebruikt `#9E5514`, donker `#E1791C`. Allebei 4,6:1 op de vlakke baan, de krapste van de twee.
-- Het accent is de enige warme kleur in de interface en staat alleen op de primaire knop, de focusring en de naamknop in de kop op de homepage. Niet op links, lijsten of pijltjes.
+- Het accent verschilt per thema, want één oranje haalt niet in allebei de contrastnorm voor tekst op de knop. Donker gebruikt `#C76A19`, licht `#A75915`. Op een kaart, de krapste ondergrond, haalt allebei 4,5:1.
+- Het accent is de enige warme kleur in de interface en staat alleen op de primaire knop, de focusring en de naamknop in de kop op de homepage. Niet op links, lijsten, pijltjes, de uitklapper in de kop of de inhoudsopgave.
 - Het woordmerk draagt geen accent maar `merk`: zwart in licht, wit in donker, dezelfde waarde als de tekst.
+- Alles wat je kunt indrukken krijgt zichtbare feedback bij het aanraken, via de klasse `drukbaar` of een `active:`-variant. Op een telefoon bestaat hover niet, dus zonder dat gebeurt er tussen tikken en navigeren niets.
+- Beweging alleen met transform en opacity, 150 ms, en een menu komt uit zijn eigen knop vandaan via `transform-origin`. Geen bounce zonder gebaar.
+- De kop is doorschijnend met een blur. Kan de browser dat niet, of staat `prefers-reduced-transparency` aan, dan wordt hij dekkend. Allebei staan in `Kop.astro`.
 - Ontbrekende inhoud wordt een zichtbare TODO, nooit een verzonnen tekst.
 - Secrets alleen via `npx wrangler secret put` of `.env.local`, nooit in de repo.

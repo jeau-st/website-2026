@@ -2,29 +2,34 @@
 /**
  * Vaste breedte en ritme voor elke sectie op de site.
  * Bewust geen labeltje boven de kop: dat leest als sjabloon.
+ *
+ * Geen afwisselende banen en geen scheidingslijn meer: de hele pagina
+ * staat op een achtergrond, en wat bij elkaar hoort staat in een Kaart.
+ * Het ritme komt dus van de lucht tussen de secties.
  */
 interface Props {
   id?: string;
   kop?: string;
   intro?: string;
-  vlak?: boolean;
+  /**
+   * Zonder eigen kantlijn en breedte, voor een sectie die al in een
+   * kolom staat. Dat is zo op de pagina's met een inhoudsopgave: daar
+   * bepaalt het raster eromheen de breedte.
+   */
+  vol?: boolean;
   class?: string;
 }
 
-const { id, kop, intro, vlak = false, class: extra = "" } = Astro.props;
+const { id, kop, intro, vol = false, class: extra = "" } = Astro.props;
 const kopId = id ? `${id}-kop` : undefined;
 ---
 
 <section
   id={id}
   aria-labelledby={kop ? kopId : undefined}
-  class:list={[
-    "border-t border-rand/60 px-4 py-20 sm:px-6 sm:py-28",
-    vlak && "bg-vlak",
-    extra,
-  ]}
+  class:list={[vol ? "py-12 sm:py-16" : "px-4 py-16 sm:px-6 sm:py-24", extra]}
 >
-  <div class="mx-auto max-w-5xl">
+  <div class:list={[vol ? "min-w-0" : "mx-auto max-w-5xl"]}>
     {
       (kop || intro) && (
         <header class="max-w-2xl">

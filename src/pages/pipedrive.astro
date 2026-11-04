@@ -1,6 +1,8 @@
 ---
 import Basis from "../layouts/Basis.astro";
 import Sectie from "../components/Sectie.astro";
+import MetOpgave from "../components/MetOpgave.astro";
+import Kaart from "../components/Kaart.astro";
 import Knop from "../components/Knop.astro";
 import AiStap from "../components/AiStap.astro";
 import { aiStappen, pipedriveFuncties } from "../data/site";
@@ -14,6 +16,16 @@ import { aiStappen, pipedriveFuncties } from "../data/site";
  * Geen abonnementen, geen prijzen en geen partnerschap. Zie
  * docs/brand-persona.md en SCHRIJFWIJZER.md.
  */
+/* Een lijst voor de sectiekoppen en voor de inhoudsopgave tegelijk, zodat
+   ze niet uit elkaar kunnen lopen. De afspraak onderaan staat er niet in. */
+const delen = {
+  functies: "Wat erin zit",
+  ai: "Eerst de basis, dan AI",
+  watikdoe: "Wat ik ermee doe",
+};
+
+const opgave = Object.entries(delen).map(([id, tekst]) => ({ id, tekst }));
+
 const schema = {
   "@type": "WebPage",
   name: "Wat Pipedrive voor je team doet",
@@ -44,14 +56,15 @@ const schema = {
     </div>
   </section>
 
-  <Sectie id="functies" vlak kop="Wat erin zit">
-    <dl class="mt-12 grid gap-x-10 gap-y-8 md:grid-cols-2">
+  <MetOpgave items={opgave}>
+  <Sectie id="functies" vol kop={delen.functies}>
+    <dl class="mt-12 grid gap-4 md:grid-cols-2">
       {
         pipedriveFuncties.map((functie) => (
-          <div class="min-w-0 border-t border-rand/60 pt-5">
+          <Kaart krap class="min-w-0">
             <dt class="text-lg text-kop">{functie.titel}</dt>
             <dd class="mt-2 min-w-0 text-zacht">{functie.tekst}</dd>
-          </div>
+          </Kaart>
         ))
       }
     </dl>
@@ -63,10 +76,11 @@ const schema = {
 
   <Sectie
     id="ai"
-    kop="Eerst de basis, dan AI"
+    vol
+    kop={delen.ai}
     intro="AI is zo goed als de gegevens eronder. Staat je proces in een systeem en klopt wat erin staat, dan kun je er wat mee."
   >
-    <div class="mt-12 grid gap-10 md:grid-cols-3">
+    <div class="mt-12 grid gap-6 md:grid-cols-3">
       {aiStappen.map((stap) => <AiStap stap={stap} />)}
     </div>
     <p class="mt-12 max-w-2xl text-zacht">
@@ -77,7 +91,7 @@ const schema = {
     </p>
   </Sectie>
 
-  <Sectie id="watikdoe" vlak kop="Wat ik ermee doe">
+  <Sectie id="watikdoe" vol kop={delen.watikdoe}>
     <div class="mt-8 max-w-2xl space-y-4 text-zacht">
       <p>
         Een systeem aanzetten is zo gebeurd. Het werk zit in de vraag hoe
@@ -117,6 +131,8 @@ const schema = {
       </li>
     </ul>
   </Sectie>
+
+  </MetOpgave>
 
   <Sectie id="plannen">
     <div class="max-w-2xl">

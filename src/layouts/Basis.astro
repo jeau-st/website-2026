@@ -90,21 +90,21 @@ const schema = {
 ---
 
 <!doctype html>
-<html lang="nl" data-thema="licht">
+<html lang="nl" data-thema="donker">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#f1f4f7" id="thema-kleur" />
+    <meta name="theme-color" content="#090e11" id="thema-kleur" />
 
     <script is:inline>
-      /* Voor het schilderen, anders flitst de pagina licht op bij donker. */
+      /* Voor het schilderen, anders flitst de pagina donker op bij licht. */
       try {
-        if (localStorage.getItem("thema") === "donker") {
-          document.documentElement.dataset.thema = "donker";
-          document.getElementById("thema-kleur")?.setAttribute("content", "#182127");
+        if (localStorage.getItem("thema") === "licht") {
+          document.documentElement.dataset.thema = "licht";
+          document.getElementById("thema-kleur")?.setAttribute("content", "#f8fafc");
         }
       } catch (e) {
-        /* privemodus: dan gewoon licht */
+        /* privemodus: dan gewoon donker */
       }
     </script>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -133,7 +133,7 @@ const schema = {
   <body class="bg-bg font-body text-tekst antialiased">
     <a
       href="#inhoud"
-      class="fixed left-4 top-4 z-20 inline-flex min-h-11 -translate-y-24 items-center bg-accent px-4 py-2 font-semibold text-op-accent focus:translate-y-0"
+      class="fixed left-4 top-4 z-40 inline-flex min-h-11 -translate-y-24 items-center bg-accent px-4 py-2 font-semibold text-op-accent focus:translate-y-0"
     >
       Naar de inhoud
     </a>

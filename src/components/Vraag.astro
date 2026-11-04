@@ -1,4 +1,5 @@
 ---
+import Kaart from "./Kaart.astro";
 import Todo from "./Todo.astro";
 import type { Vraag } from "../data/site";
 
@@ -9,7 +10,7 @@ interface Props {
 const { item } = Astro.props;
 ---
 
-<details class="group border-b border-rand/60 py-5">
+<Kaart als="details" krap class="group">
   <summary
     class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 text-lg text-tekst hover:text-zacht"
   >
@@ -28,4 +29,4 @@ const { item } = Astro.props;
       <p class="mt-3 max-w-2xl text-zacht">{item.antwoord}</p>
     )
   }
-</details>
+</Kaart>

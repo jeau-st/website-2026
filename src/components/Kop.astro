@@ -2,15 +2,26 @@
 import Knop from "./Knop.astro";
 import Woordmerk from "./Woordmerk.astro";
 import ThemaKnop from "./ThemaKnop.astro";
-import { cta } from "../data/site";
+import { cta, diensten } from "../data/site";
 
 /**
- * Vijf links passen niet meer naast het woordmerk, de themaknop en de
- * knop. Daarom staat het menu tot lg in een uitklapper en vanaf lg weer
- * gewoon in de balk. Een details en geen eigen knop met JavaScript: zo
- * werkt het menu ook als het script niet draait.
+ * De kop blijft bovenaan staan en krimpt zodra je gaat scrollen: het
+ * woordmerk wordt kleiner en de balk wordt lager. Zo heb je het menu
+ * altijd bij de hand zonder dat het de halve pagina opeet.
+ *
+ * Diensten heeft een gesplitste trigger: de tekst blijft een gewone link
+ * naar de hub, en het pijltje ernaast is een aparte knop die de lijst
+ * uitklapt. Zo blijft de hub bereikbaar voor wie klikt en voor wie
+ * crawlt, en opent de lijst alleen als je erom vraagt.
+ *
+ * Vijf links passen niet naast het woordmerk, de themaknop en de knop.
+ * Daarom staat het menu tot lg in een uitklapper. Dat is een details en
+ * geen eigen knop met JavaScript: zo werkt het menu ook als het script
+ * niet draait. Het uitklappen van Diensten in de balk heeft wel een
+ * script nodig, en zonder dat script blijft de link het doen.
  */
 const pad = Astro.url.pathname;
+
 const links = [
   { href: "/diensten", tekst: "Diensten" },
   { href: "/aanpak", tekst: "Aanpak" },
@@ -19,38 +30,146 @@ const links = [
   { href: "/contact", tekst: "Contact" },
 ];
 
+/* Wat er onder Diensten hangt: de vijf pagina's en de uitleg over
+   Pipedrive, die er inhoudelijk bij hoort maar geen dienst is. */
+const onderDiensten = diensten.map((dienst) => ({
+  href: `/diensten/${dienst.slug}/`,
+  tekst: dienst.titel,
+  uitleg: dienst.tekst,
+}));
+
+/* Pipedrive hoort hier inhoudelijk bij maar is geen dienst, dus hij staat
+   onder een streepje en niet in het rijtje van vijf. */
+const naastDiensten = {
+  href: "/pipedrive",
+  tekst: "Wat Pipedrive kan",
+  uitleg: "De functies waar je team mee werkt, en wat AI met je eigen gegevens doet.",
+};
+
 /* Een dienstpagina laat Diensten oplichten, want die hangt eronder. */
 const actief = (href: string) =>
   pad === href || pad === `${href}/` || pad.startsWith(`${href}/`);
 ---
 
-<header class="border-b border-rand/60">
-  <div class="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
+<header
+  data-kop
+  class="sticky top-0 z-30 border-b border-rand/60 bg-bg/70 backdrop-blur-xl"
+>
+  <div
+    class="kop-balk mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 sm:px-6"
+  >
     <a
       href="/"
       class="inline-flex min-h-11 items-center text-merk"
       aria-current={pad === "/" ? "page" : undefined}
     >
-      <Woordmerk class="h-5 sm:h-6" />
+      <Woordmerk class="kop-merk" />
     </a>
 
     <div class="flex items-center gap-2 sm:gap-4">
       <nav aria-label="Hoofdmenu" class="hidden items-center gap-7 lg:flex">
         {
-          links.map((link) => (
-            <a
-              href={link.href}
-              aria-current={actief(link.href) ? "page" : undefined}
-              class:list={[
-                "inline-flex min-h-11 items-center text-sm hover:text-tekst",
-                actief(link.href)
-                  ? "text-tekst underline underline-offset-8 decoration-rand"
-                  : "text-zacht",
-              ]}
-            >
-              {link.tekst}
-            </a>
-          ))
+          links.map((link) =>
+            link.href === "/diensten" ? (
+              <div class="relative flex items-center" data-uitklap>
+                <a
+                  href={link.href}
+                  aria-current={actief(link.href) ? "page" : undefined}
+                  class:list={[
+                    "inline-flex min-h-11 items-center text-sm hover:text-tekst",
+                    actief(link.href)
+                      ? "text-tekst underline underline-offset-8 decoration-rand"
+                      : "text-zacht",
+                  ]}
+                >
+                  {link.tekst}
+                </a>
+                <button
+                  type="button"
+                  data-uitklap-knop
+                  aria-expanded="false"
+                  aria-controls="menu-diensten"
+                  aria-label="Alle diensten tonen"
+                  class="drukbaar ml-1 inline-flex min-h-11 w-6 cursor-pointer items-center justify-center text-zacht hover:text-tekst"
+                >
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    class="size-3.5 transition-transform duration-150"
+                    data-uitklap-pijl
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M5 9l7 7 7-7" />
+                  </svg>
+                </button>
+
+                <div
+                  id="menu-diensten"
+                  data-uitklap-paneel
+                  class="absolute left-0 top-full z-40 mt-2 w-[32rem] rounded-sm border border-rand bg-kaart p-2 shadow-xl"
+                >
+                  <p class="px-3 pb-1 pt-2 font-mono text-xs text-zacht">
+                    Vijf soorten werk
+                  </p>
+                  <ul class="grid grid-cols-2 gap-1">
+                    {onderDiensten.map((item) => (
+                      <li>
+                        <a
+                          href={item.href}
+                          aria-current={actief(item.href) ? "page" : undefined}
+                          class:list={[
+                            "block rounded-sm px-3 py-2 hover:bg-bg active:bg-bg",
+                            actief(item.href) ? "bg-bg" : "",
+                          ]}
+                        >
+                          <span class="block text-sm text-tekst">
+                            {item.tekst}
+                          </span>
+                          <span class="mt-0.5 line-clamp-2 block text-xs text-zacht">
+                            {item.uitleg}
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                  <a
+                    href={naastDiensten.href}
+                    aria-current={
+                      actief(naastDiensten.href) ? "page" : undefined
+                    }
+                    class:list={[
+                      "mt-2 block rounded-sm border-t border-rand/60 px-3 pb-2 pt-3 hover:bg-bg active:bg-bg",
+                      actief(naastDiensten.href) ? "bg-bg" : "",
+                    ]}
+                  >
+                    <span class="block text-sm text-tekst">
+                      {naastDiensten.tekst}
+                    </span>
+                    <span class="mt-0.5 block text-xs text-zacht">
+                      {naastDiensten.uitleg}
+                    </span>
+                  </a>
+                </div>
+              </div>
+            ) : (
+              <a
+                href={link.href}
+                aria-current={actief(link.href) ? "page" : undefined}
+                class:list={[
+                  "inline-flex min-h-11 items-center text-sm hover:text-tekst",
+                  actief(link.href)
+                    ? "text-tekst underline underline-offset-8 decoration-rand"
+                    : "text-zacht",
+                ]}
+              >
+                {link.tekst}
+              </a>
+            ),
+          )
         }
       </nav>
 
@@ -69,7 +188,7 @@ const actief = (href: string) =>
 
       <details class="relative lg:hidden" data-menu>
         <summary
-          class="inline-flex min-h-11 min-w-11 cursor-pointer list-none items-center justify-center text-zacht hover:text-tekst"
+          class="drukbaar inline-flex min-h-11 min-w-11 cursor-pointer list-none items-center justify-center text-zacht hover:text-tekst"
           aria-label="Menu"
         >
           <svg
@@ -89,7 +208,7 @@ const actief = (href: string) =>
 
         <nav
           aria-label="Menu"
-          class="absolute right-0 top-full z-40 mt-3 w-56 border border-rand bg-bg p-2 shadow-lg"
+          class="absolute right-0 top-full z-40 mt-3 w-64 rounded-sm border border-rand bg-kaart p-2 shadow-xl"
         >
           <ul>
             {
@@ -99,12 +218,37 @@ const actief = (href: string) =>
                     href={link.href}
                     aria-current={actief(link.href) ? "page" : undefined}
                     class:list={[
-                      "flex min-h-11 items-center px-3 hover:bg-vlak hover:text-tekst",
-                      actief(link.href) ? "bg-vlak text-tekst" : "text-zacht",
+                      "flex min-h-11 items-center rounded-sm px-3 hover:bg-bg hover:text-tekst active:bg-bg",
+                      actief(link.href) ? "bg-bg text-tekst" : "text-zacht",
                     ]}
                   >
                     {link.tekst}
                   </a>
+                  {/* De diensten hangen eronder, dus ze staan ingesprongen
+                      in dezelfde lijst. Geen tweede uitklapper in een
+                      uitklapper: dat is op een telefoon niet te raken. */}
+                  {link.href === "/diensten" && (
+                    <ul class="mb-1 ml-3 border-l border-rand/60 pl-2">
+                      {[...onderDiensten, naastDiensten].map((item) => (
+                        <li>
+                          <a
+                            href={item.href}
+                            aria-current={
+                              actief(item.href) ? "page" : undefined
+                            }
+                            class:list={[
+                              "flex min-h-11 items-center rounded-sm px-3 text-sm hover:bg-bg hover:text-tekst active:bg-bg",
+                              actief(item.href)
+                                ? "bg-bg text-tekst"
+                                : "text-zacht",
+                            ]}
+                          >
+                            {item.tekst}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
               ))
             }
@@ -115,7 +259,88 @@ const actief = (href: string) =>
   </div>
 </header>
 
-<style>
+<style is:global>
+  /* De hoogtes staan hier en niet als utility, want ze horen bij elkaar:
+     de balk en het woordmerk krimpen samen. */
+  .kop-balk {
+    padding-block: 1rem;
+    transition: padding-block 150ms ease;
+  }
+  .kop-merk {
+    display: block;
+    width: auto;
+    height: 1.5rem;
+    transition: height 150ms ease;
+  }
+  @media (min-width: 640px) {
+    .kop-merk {
+      height: 1.75rem;
+    }
+  }
+  [data-kop][data-compact] .kop-balk {
+    padding-block: 0.5rem;
+  }
+  [data-kop][data-compact] .kop-merk {
+    height: 1.125rem;
+  }
+  @media (min-width: 640px) {
+    [data-kop][data-compact] .kop-merk {
+      height: 1.25rem;
+    }
+  }
+
+  /* De kop is doorschijnend met een blur erachter. Dat werkt alleen als
+     de browser het kan en de bezoeker het wil; in allebei de andere
+     gevallen wordt hij gewoon dekkend. Zonder deze terugval leest de
+     tekst eronderdoor mee. */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    [data-kop] {
+      background-color: var(--color-bg);
+    }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    [data-kop] {
+      background-color: var(--color-bg);
+      backdrop-filter: none;
+    }
+  }
+
+  /* Punt 5: het paneel komt uit zijn eigen knop vandaan en gaat langs
+     dezelfde weg terug. visibility staat erbij zodat het paneel dicht
+     niet aan te tikken is en niet in de voorleesvolgorde staat.
+     Zonder JavaScript blijft het dicht, en dan is de link naar /diensten
+     het hele menu. */
+  [data-uitklap-paneel] {
+    visibility: hidden;
+    opacity: 0;
+    transform: scale(0.96);
+    transform-origin: top left;
+    transition:
+      opacity 150ms ease,
+      transform 150ms ease,
+      visibility 0s linear 150ms;
+  }
+  [data-uitklap-paneel][data-open] {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition-delay: 0s;
+  }
+
+  /* Het mobiele menu is een details, en display valt niet te animeren.
+     Daarom alleen bij het opengaan, vanuit de hoek waar de knop staat.
+     Dichtgaan is direct: dat is wat een details doet. */
+  details[data-menu][open] > nav {
+    transform-origin: top right;
+    animation: menu-open 150ms ease;
+  }
+  @keyframes menu-open {
+    from {
+      opacity: 0;
+      transform: scale(0.96);
+    }
+  }
+
   /* Safari zet standaard een driehoekje voor de summary. */
   summary::-webkit-details-marker {
     display: none;
@@ -126,24 +351,88 @@ const actief = (href: string) =>
   details[data-menu][open] .menu-kruis {
     display: inline;
   }
+  [data-uitklap-knop][aria-expanded="true"] [data-uitklap-pijl] {
+    transform: rotate(180deg);
+  }
 </style>
 
 <script is:inline>
-  /* De uitklapper werkt zonder dit script. Dit sluit hem alleen ook bij
-     Escape en bij een klik ernaast, want dat verwacht je van een menu. */
   (() => {
+    /* Krimpen bij scrollen. Pas na 40 px, anders flikkert de balk bij het
+       kleinste duwtje. */
+    const kop = document.querySelector("[data-kop]");
+    if (kop) {
+      let bezig = false;
+      const meten = () => {
+        bezig = false;
+        if (window.scrollY > 40) kop.setAttribute("data-compact", "");
+        else kop.removeAttribute("data-compact");
+      };
+      meten();
+      window.addEventListener(
+        "scroll",
+        () => {
+          if (bezig) return;
+          bezig = true;
+          requestAnimationFrame(meten);
+        },
+        { passive: true },
+      );
+    }
+
+    /* De uitklapper onder Diensten. Zonder dit script blijft de link naar
+       /diensten gewoon werken, en dat is ook het hele menu. */
+    const uitklap = document.querySelector("[data-uitklap]");
+    if (uitklap) {
+      const knop = uitklap.querySelector("[data-uitklap-knop]");
+      const paneel = uitklap.querySelector("[data-uitklap-paneel]");
+
+      const zetten = (open) => {
+        paneel.toggleAttribute("data-open", open);
+        knop.setAttribute("aria-expanded", String(open));
+        knop.setAttribute(
+          "aria-label",
+          open ? "Alle diensten verbergen" : "Alle diensten tonen",
+        );
+      };
+
+      const open = () => paneel.hasAttribute("data-open");
+
+      knop.addEventListener("click", () => {
+        zetten(!open());
+      });
+
+      document.addEventListener("click", (e) => {
+        if (open() && !uitklap.contains(e.target)) zetten(false);
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && open()) {
+          zetten(false);
+          knop.focus();
+        }
+      });
+
+      /* Weg met de tab-toets betekent ook dicht. */
+      uitklap.addEventListener("focusout", (e) => {
+        if (open() && !uitklap.contains(e.relatedTarget)) zetten(false);
+      });
+    }
+
+    /* De uitklapper op mobiel werkt zonder dit script. Dit sluit hem
+       alleen ook bij Escape en bij een klik ernaast. */
     const menu = document.querySelector("details[data-menu]");
-    if (!menu) return;
+    if (menu) {
+      document.addEventListener("click", (e) => {
+        if (menu.open && !menu.contains(e.target)) menu.open = false;
+      });
 
-    document.addEventListener("click", (e) => {
-      if (menu.open && !menu.contains(e.target)) menu.open = false;
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && menu.open) {
-        menu.open = false;
-        menu.querySelector("summary")?.focus();
-      }
-    });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && menu.open) {
+          menu.open = false;
+          menu.querySelector("summary")?.focus();
+        }
+      });
+    }
   })();
 </script>

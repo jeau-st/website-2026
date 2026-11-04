@@ -1,0 +1,27 @@
+---
+import Inhoudsopgave from "./Inhoudsopgave.astro";
+import type { Opgave } from "./Inhoudsopgave.astro";
+
+/**
+ * Het raster voor een lange pagina: de inhoudsopgave in een smalle kolom
+ * links, de secties ernaast. Tot lg is er geen kolom en staat de opgave
+ * als uitklapper boven de inhoud, wat Inhoudsopgave zelf regelt.
+ *
+ * De secties hierbinnen krijgen de vlag `vol`, want de breedte komt van
+ * dit raster en niet meer van de sectie zelf.
+ */
+interface Props {
+  items: Opgave[];
+}
+
+const { items } = Astro.props;
+---
+
+<div
+  class="mx-auto grid max-w-6xl gap-x-12 px-4 sm:px-6 lg:grid-cols-[13rem_minmax(0,1fr)]"
+>
+  <Inhoudsopgave items={items} />
+  <div class="min-w-0">
+    <slot />
+  </div>
+</div>

@@ -1,4 +1,5 @@
 ---
+import Kaart from "./Kaart.astro";
 import type { Pijnpunt } from "../data/site";
 
 interface Props {
@@ -8,13 +9,13 @@ interface Props {
 const { punt } = Astro.props;
 ---
 
-{/* Onder elkaar, dus de streep staat boven en niet links: drie smalle
-    kolommen braken de citaten over drie regels en lazen daardoor traag. */}
-<figure class="border-t border-rand pt-5">
+{/* Onder elkaar en niet in drie kolommen: smalle kolommen braken de
+    citaten over drie regels en lazen daardoor traag. */}
+<Kaart als="figure">
   <blockquote>
     <p class="text-xl text-tekst">
       &ldquo;{punt.citaat}&rdquo;
     </p>
   </blockquote>
   <figcaption class="mt-2 max-w-2xl text-zacht">{punt.uitleg}</figcaption>
-</figure>
+</Kaart>

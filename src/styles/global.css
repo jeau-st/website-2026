@@ -14,50 +14,53 @@
 
   De rollen erven tint en verzadiging van die dominante blauwen (tint 204)
   en van de oranje stippen (tint 28, verzadiging 78%). Alleen de lichtheid
-  is verschoven, en precies zo ver als het contrast vroeg. Het doek heeft
-  geen wit en geen zwart, dus de uiterste achtergronden zijn doorgetrokken
-  op diezelfde tint.
+  is verschoven, en precies zo ver als het contrast vroeg: elke
+  voorgrondkleur is de eerste lichtheid die het doel haalt tegen de
+  krapste van de twee ondergronden. Het doek heeft geen wit en geen zwart,
+  dus de uiterste achtergronden zijn doorgetrokken op diezelfde tint.
 
-  Contrast licht: tekst 13,0:1, kop 8,4:1, zacht 5,0:1, accent 4,6:1.
-  Contrast donker: tekst 13,0:1, kop 9,5:1, zacht 5,0:1, accent 4,6:1.
-  Die cijfers zijn tegen de vlakke baan gemeten, de krapste van de twee;
-  op de gewone achtergrond haalt alles meer.
+  Contrast donker: tekst 17,9:1, kop 12,3:1, zacht 5,0:1, accent 5,1:1.
+  Contrast licht: tekst 17,6:1, kop 12,0:1, zacht 4,9:1, accent 4,9:1.
+  Die cijfers zijn tegen de achtergrond gemeten. Op een kaart haalt alles
+  een fractie minder: tekst 16,1:1, kop 11,1:1, zacht en accent 4,5:1.
+  Dat is de krappe kant, en die haalt de norm nog.
   Het accent verschilt per thema: een oranje dat in licht 4,5:1 haalt is in
   donker te donker, en andersom.
 
-  Licht is de standaard. Donker komt pas als de bezoeker erom vraagt via de
+  Donker is de standaard. Licht komt pas als de bezoeker erom vraagt via de
   schakelaar, niet vanzelf via de systeemvoorkeur.
+
+  Een kaart is maar 1,1:1 lichter dan de achtergrond. Dat is met opzet: de
+  rand doet het werk en de vulling geeft alleen diepte. Vandaar dat er geen
+  afwisselende banen meer zijn.
 */
 :root,
-:root[data-thema="licht"] {
-  color-scheme: light;
-  --c-bg: #f1f4f7;
-  --c-vlak: #e5eaee;
-  --c-rand: #becad2;
-  --c-tekst: #222b32;
-  --c-zacht: #516573;
-  /* Lichter dan de tekst, donkerder dan de bijtekst: een kop die rustig
-     blijft en toch niet voor bijtekst wordt aangezien. */
-  --c-kop: #34434c;
-  --c-accent: #9e5514;
-  --c-op-accent: #f1f4f7;
-  --c-merk: #222b32;
-}
-
 :root[data-thema="donker"] {
   color-scheme: dark;
-  --c-bg: #182127;
-  --c-vlak: #232e35;
-  --c-rand: #374650;
-  --c-tekst: #e0e6ea;
-  --c-zacht: #899eac;
-  /* In donker kan de kop wel een eigen kleur hebben: een licht blauwgrijs
-     haalt 9,5:1 op vlak en staat los van het bijna witte tekstwit. Met het
-     oude groene palet kon dat niet. */
-  --c-kop: #cdd7dd;
-  --c-accent: #e1791c;
-  --c-op-accent: #182127;
-  --c-merk: #e0e6ea;
+  --c-bg: #090e11;
+  --c-kaart: #131b20;
+  --c-rand: #2d3a43;
+  --c-tekst: #f4f6f7;
+  --c-zacht: #6d8595;
+  /* Donkerder dan de tekst, lichter dan de bijtekst: een kop die rustig
+     blijft en toch niet voor bijtekst wordt aangezien. */
+  --c-kop: #c4d0d8;
+  --c-accent: #c76a19;
+  --c-op-accent: #090e11;
+  --c-merk: #f4f6f7;
+}
+
+:root[data-thema="licht"] {
+  color-scheme: light;
+  --c-bg: #f8fafc;
+  --c-kaart: #ebf1f4;
+  --c-rand: #bfcfd9;
+  --c-tekst: #101519;
+  --c-zacht: #577182;
+  --c-kop: #28353e;
+  --c-accent: #a75915;
+  --c-op-accent: #f8fafc;
+  --c-merk: #101519;
 }
 
 @theme {
@@ -68,7 +71,7 @@
 
   /* Rolgebaseerd: deze gebruik je in componenten */
   --color-bg: var(--c-bg);
-  --color-vlak: var(--c-vlak);
+  --color-kaart: var(--c-kaart);
   --color-rand: var(--c-rand);
   --color-tekst: var(--c-tekst);
   --color-zacht: var(--c-zacht);
@@ -103,8 +106,12 @@
     outline-offset: 3px;
     border-radius: 2px;
   }
-  /* Koppen in Inter. Het karakter van de site zit in het woordmerk en in
-     de kantlijnlabels in de mono, niet meer in de koppen zelf.
+  /* Koppen in Inter semibold. Een afwijkend titelfont heeft hier gestaan
+     (Redaction 35, een serif met korrel), en dat werkte op een enkele kop
+     mooi, maar op een lange pagina werd elke h2 een gebeurtenis. Het
+     karakter van de site zit in het woordmerk en in de kantlijnlabels in
+     de mono, niet in de koppen zelf.
+
      Inter loopt smaller dan de mono, dus de tracking mag ruimer: -0.02em
      in plaats van -0.03em, anders plakken de letters op grote maten. */
   h1,
@@ -115,11 +122,26 @@
     letter-spacing: -0.02em;
     text-wrap: balance;
     /* Kleur hier en niet als utility in de opmaak, anders moet je hem op
-       26 plekken zetten. Licht is mos, donker blijft krijt. */
+       26 plekken zetten. */
     color: var(--color-kop);
   }
   p {
     text-wrap: pretty;
+  }
+
+  /* Indrukken moet je zien, ook zonder muis: op een telefoon bestaat
+     hover niet, dus zonder dit gebeurt er tussen tikken en navigeren
+     niets. Kort en klein, en alleen transform en opacity, zodat het de
+     opmaak niet opnieuw laat berekenen. Reduced motion zet de duur uit,
+     de schaal zelf blijft dan staan als directe sprong. */
+  .drukbaar {
+    transition:
+      transform 100ms ease,
+      opacity 100ms ease;
+  }
+  .drukbaar:active {
+    transform: scale(0.98);
+    opacity: 0.9;
   }
 
   /* Links dragen geen accentkleur meer: oker is voor de actie en de focus.
@@ -141,9 +163,26 @@
   [role="button"] {
     touch-action: manipulation;
   }
-  /* Ankerlinks vanuit de navigatie niet onder de rand van het scherm */
+  /* Ankerlinks niet onder de kop, die blijft bovenaan staan. Ruim
+     genomen: de kop is 5 rem hoog en krimpt naar 3 rem. */
   [id] {
-    scroll-margin-top: 5rem;
+    scroll-margin-top: 6rem;
+  }
+}
+
+/* Punt 6: van donker naar licht was een harde sprong. De overgang staat
+   alleen aan tijdens het wisselen zelf, want een site waar elke kleur
+   altijd naloopt voelt stroperig. De knop zet het attribuut en haalt het
+   er na afloop weer af. */
+@media (prefers-reduced-motion: no-preference) {
+  :root[data-thema-wisselt] *,
+  :root[data-thema-wisselt] *::before,
+  :root[data-thema-wisselt] *::after {
+    transition:
+      background-color 200ms ease,
+      border-color 200ms ease,
+      color 200ms ease,
+      fill 200ms ease;
   }
 }
 

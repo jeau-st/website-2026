@@ -4,23 +4,82 @@ import { cta } from "../data/site";
 /**
  * De primaire actie op mobiel. In de balk bovenin paste hij niet: samen
  * met het woordmerk en drie links liep de koppenbalk over 375 px heen.
- * Daarom zweeft hij rechtsonder, waar je duim toch al zit.
+ * Daarom staat hij onderaan, waar je duim toch al zit.
  *
- * Vanaf sm staat hij weer gewoon in de balk, dus dan verdwijnt deze.
- * Zonder planner-URL rendert hij niets; de hero toont dan de TODO.
+ * Een balk over de hele breedte en geen zwevende pil. Die pil lag op de
+ * homepage midden op de kaart met de kernpunten, en dat las als een
+ * ongelukje. Een balk met een rand erboven is herkenbaar als vaste
+ * bediening, en de inhoud schuift eronder door in plaats van eronder weg
+ * te vallen.
+ *
+ * Hij gaat weg zodra de echte knop in beeld komt: twee keer dezelfde
+ * actie onder elkaar is er een te veel. Zonder JavaScript blijft hij
+ * staan, en dat is de veilige kant.
+ *
+ * Vanaf sm staat de knop weer gewoon in de koppenbalk, dus dan is deze
+ * er niet. Zonder planner-URL rendert hij niets; de hero toont dan de
+ * TODO.
  */
 ---
 
 {
   cta.url && (
-    <a
-      class="fixed bottom-4 right-4 z-30 inline-flex min-h-11 items-center bg-accent px-5 py-3 text-sm font-semibold text-op-accent shadow-lg sm:hidden"
-      style="margin-bottom: env(safe-area-inset-bottom, 0px)"
-      href={cta.url}
-      target="_blank"
-      rel="noopener"
+    <div
+      data-onderbalk
+      class="fixed inset-x-0 bottom-0 z-30 border-t border-rand bg-bg px-4 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] pt-3 sm:hidden"
     >
-      {cta.label}
-    </a>
+      <a
+        class="drukbaar flex min-h-11 w-full items-center justify-center bg-accent px-5 py-3 text-sm font-semibold text-op-accent"
+        href={cta.url}
+        target="_blank"
+        rel="noopener"
+      >
+        {cta.label}
+      </a>
+    </div>
   )
 }
+
+<style>
+  /* Alleen opacity en transform, en de balk is niet aan te tikken als
+     hij weg is. Even lang als de andere overgangen op de site. */
+  [data-onderbalk] {
+    transition:
+      opacity 150ms ease,
+      transform 150ms ease;
+  }
+  [data-onderbalk][data-weg] {
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(100%);
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const balk = document.querySelector("[data-onderbalk]");
+    if (!balk || !("IntersectionObserver" in window)) return;
+
+    const start = () => {
+      const echte = [...document.querySelectorAll("[data-cta]")];
+      if (echte.length === 0) return;
+
+      const inBeeld = new Set();
+      const waarnemer = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) inBeeld.add(entry.target);
+          else inBeeld.delete(entry.target);
+        }
+        balk.toggleAttribute("data-weg", inBeeld.size > 0);
+      });
+
+      for (const knop of echte) waarnemer.observe(knop);
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", start);
+    } else {
+      start();
+    }
+  })();
+</script>

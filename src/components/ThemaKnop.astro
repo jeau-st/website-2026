@@ -1,16 +1,16 @@
 ---
 /**
- * Wisselt tussen licht en donker en onthoudt de keuze.
- * Licht is de standaard, dus zonder keuze staat er niets in localStorage.
+ * Wisselt tussen donker en licht en onthoudt de keuze.
+ * Donker is de standaard, dus zonder keuze staat er niets in localStorage.
  */
 ---
 
 <button
   type="button"
   id="thema-knop"
-  class="inline-flex min-h-11 min-w-11 items-center justify-center text-zacht hover:text-tekst"
-  aria-pressed="false"
-  aria-label="Donkere modus aanzetten"
+  class="drukbaar inline-flex min-h-11 min-w-11 items-center justify-center text-zacht hover:text-tekst"
+  aria-pressed="true"
+  aria-label="Lichte modus aanzetten"
 >
   <svg
     aria-hidden="true"
@@ -58,13 +58,24 @@
 
     bijwerken(document.documentElement.dataset.thema);
 
+    let terugzetten;
+
     knop.addEventListener("click", () => {
       const nieuw =
         document.documentElement.dataset.thema === "donker" ? "licht" : "donker";
+
+      /* Zet de overgang aan, wissel, en haal hem er daarna weer af. Zie
+         de regel bij data-thema-wisselt in global.css. */
+      document.documentElement.dataset.themaWisselt = "";
+      clearTimeout(terugzetten);
+      terugzetten = setTimeout(() => {
+        delete document.documentElement.dataset.themaWisselt;
+      }, 250);
+
       document.documentElement.dataset.thema = nieuw;
       document
         .getElementById("thema-kleur")
-        ?.setAttribute("content", nieuw === "donker" ? "#182127" : "#f1f4f7");
+        ?.setAttribute("content", nieuw === "donker" ? "#090e11" : "#f8fafc");
       try {
         localStorage.setItem("thema", nieuw);
       } catch {

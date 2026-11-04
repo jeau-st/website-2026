@@ -1,0 +1,141 @@
+---
+/**
+ * De inhoudsopgave naast een lange pagina. Hij wordt gemaakt uit dezelfde
+ * lijst waarmee de pagina haar secties zet, dus er is geen tweede lijst
+ * die uit de pas kan lopen.
+ *
+ * Vanaf lg staat hij als vastgeplakte kolom naast de tekst. Daaronder
+ * past geen kolom, dus daar staat hij als uitklapper boven de inhoud.
+ * Het meelopen met wat je leest doet een IntersectionObserver; zonder
+ * script blijft het gewoon een rijtje links dat werkt.
+ */
+export type Opgave = { id: string; tekst: string };
+
+interface Props {
+  items: Opgave[];
+}
+
+const { items } = Astro.props;
+---
+
+{
+  items.length > 2 && (
+    <>
+      {/* Vanaf lg: de kolom. top-24 houdt hem onder de kop, die blijft
+          staan en 5 rem hoog is voor hij krimpt. */}
+      <nav
+        aria-labelledby="opgave-kop"
+        data-opgave
+        class="hidden lg:sticky lg:top-24 lg:block lg:self-start lg:py-24"
+      >
+        <p id="opgave-kop" class="font-mono text-sm text-zacht">
+          Op deze pagina
+        </p>
+        <ol class="mt-4 space-y-1 border-l border-rand">
+          {items.map((item, i) => (
+            <li>
+              <a
+                href={`#${item.id}`}
+                data-opgave-link={item.id}
+                class="-ml-px flex gap-2 border-l border-transparent py-1.5 pl-4 text-sm text-zacht hover:border-rand hover:text-tekst"
+              >
+                <span aria-hidden="true" class="font-mono text-xs opacity-70">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span class="min-w-0">{item.tekst}</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+
+      {/* Tot lg: dicht, want op een telefoon wil je eerst de kop zien. */}
+      <details class="mt-8 rounded-sm border border-rand bg-kaart lg:hidden">
+        <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 px-4 font-mono text-sm text-zacht">
+          Op deze pagina
+          <span aria-hidden="true" class="text-zacht">
+            +
+          </span>
+        </summary>
+        <ol class="border-t border-rand/60 px-4 py-2">
+          {items.map((item) => (
+            <li>
+              <a
+                href={`#${item.id}`}
+                class="flex min-h-11 items-center text-sm text-zacht hover:text-tekst"
+              >
+                {item.tekst}
+              </a>
+            </li>
+          ))}
+        </ol>
+      </details>
+    </>
+  )
+}
+
+<style>
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  details[open] > summary > span {
+    transform: rotate(45deg);
+  }
+</style>
+
+<script is:inline>
+  /* Wachten tot de pagina geparseerd is: de opgave staat boven de secties
+     waar hij naar wijst, dus die bestaan nog niet als dit script draait. */
+  (() => {
+    const start = () => {
+    const opgave = document.querySelector("[data-opgave]");
+    if (!opgave || !("IntersectionObserver" in window)) return;
+
+    const links = [...opgave.querySelectorAll("[data-opgave-link]")];
+    const delen = links
+      .map((link) => document.getElementById(link.dataset.opgaveLink))
+      .filter(Boolean);
+    if (delen.length === 0) return;
+
+    const aan = (id) => {
+      for (const link of links) {
+        const actief = link.dataset.opgaveLink === id;
+        /* Geen accent: dat is voor de knop en de focusring. De streep
+           links krijgt de tekstkleur, de rest houdt de rand. */
+        link.classList.toggle("border-tekst", actief);
+        link.classList.toggle("text-tekst", actief);
+        link.classList.toggle("text-zacht", !actief);
+        if (actief) link.setAttribute("aria-current", "location");
+        else link.removeAttribute("aria-current");
+      }
+    };
+
+    /* Het deel dat het hoogst in beeld staat wint. Een enkele
+       zichtbaarheidsvlag flikkert heen en weer zodra twee secties
+       tegelijk in beeld zijn. */
+    const zichtbaar = new Set();
+    const waarnemer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) zichtbaar.add(entry.target.id);
+          else zichtbaar.delete(entry.target.id);
+        }
+        const eerste = delen.find((deel) => zichtbaar.has(deel.id));
+        if (eerste) aan(eerste.id);
+      },
+      /* In pixels, want rem mag hier niet. 96 px is de hoogte van de kop
+         plus wat lucht, zodat een sectie pas meetelt als hij er echt
+         onderuit komt. */
+      { rootMargin: "-96px 0px -60% 0px" },
+    );
+
+    for (const deel of delen) waarnemer.observe(deel);
+    };
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", start);
+    } else {
+      start();
+    }
+  })();
+</script>

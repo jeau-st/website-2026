@@ -1,20 +1,40 @@
 ---
 /**
- * Waar de eilanden liggen, via de insluiting van Google Maps. Dit is het
- * enige onderdeel op de site dat iets bij een derde partij ophaalt, dus
- * het laadt pas als de bezoeker in de buurt scrollt.
+ * Een omlijnd vlak om inhoud die bij elkaar hoort. Dit verving de
+ * afwisselende banen: alle secties staan nu op dezelfde achtergrond en
+ * het groeperen gebeurt hier.
  *
- * Even breed als de foto's eromheen, zodat het verhaal zijn ritme houdt.
+ * De vulling is maar 1,1:1 lichter dan de achtergrond, dus de rand doet
+ * het werk en de vulling geeft alleen diepte. De ronding is dezelfde 2 px
+ * als de focusring, zodat een kaart met focus niet plotseling een andere
+ * vorm heeft.
+ *
+ * `als` bestaat omdat een kaart soms een li in een lijst is en soms een
+ * los blok. De opmaak blijft hetzelfde.
  */
-const bron =
-  "https://www.google.com/maps?q=S%C3%A3o+Tom%C3%A9+en+Pr%C3%ADncipe&z=7&output=embed";
+interface Props {
+  als?: "div" | "li" | "article" | "figure" | "details";
+  id?: string;
+  /** Krapper, voor een kaart in een raster van drie of meer. */
+  krap?: boolean;
+  class?: string;
+}
+
+const {
+  als: Tag = "div",
+  id,
+  krap = false,
+  class: extra = "",
+} = Astro.props;
 ---
 
-<div class="my-10 max-w-xl">
-  <iframe
-    src={bron}
-    title="Kaart van São Tomé en Príncipe in de Golf van Guinee"
-    class="aspect-4/3 w-full border border-rand/60"
-    loading="lazy"
-    referrerpolicy="no-referrer-when-downgrade"></iframe>
-</div>
+<Tag
+  id={id}
+  class:list={[
+    "rounded-sm border border-rand bg-kaart",
+    krap ? "p-5 sm:p-6" : "p-6 sm:p-8",
+    extra,
+  ]}
+>
+  <slot />
+</Tag>

@@ -1,4 +1,5 @@
 ---
+import Kaart from "./Kaart.astro";
 import type { Denkstap } from "../data/site";
 
 /**
@@ -13,10 +14,10 @@ interface Props {
 const { stap } = Astro.props;
 ---
 
-<li class="grid gap-x-6 gap-y-2 border-t border-rand/60 py-8 sm:grid-cols-[4rem_1fr]">
+<Kaart als="li" class="grid gap-x-6 gap-y-2 sm:grid-cols-[4rem_1fr]">
   <p class="font-mono text-2xl text-zacht" aria-hidden="true">{stap.nummer}</p>
   <div class="min-w-0 max-w-2xl">
     <h3 class="text-xl sm:text-2xl">{stap.titel}</h3>
     <p class="mt-2 text-zacht">{stap.tekst}</p>
   </div>
-</li>
+</Kaart>

@@ -14,7 +14,7 @@ interface Props {
 const { variant = "gevuld", class: extra = "", toonToelichting = false } = Astro.props;
 
 const basis =
-  "inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold transition-colors duration-150";
+  "drukbaar inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-semibold transition-colors duration-150";
 const stijl =
   variant === "gevuld"
     ? "bg-accent text-op-accent hover:bg-tekst"
@@ -24,6 +24,7 @@ const stijl =
 {
   cta.url ? (
     <a
+      data-cta
       class:list={[basis, stijl, extra]}
       href={cta.url}
       target="_blank"

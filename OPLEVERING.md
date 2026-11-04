@@ -18,9 +18,11 @@ hieronder staat, is werk dat nog moet gebeuren voordat de site live kan.
 
 ## Gecontroleerd en akkoord
 
-- Contrast licht, tegen de vlakke baan: tekst 13,0:1, kop 8,4:1, zacht 5,0:1, accent 4,6:1
-- Contrast donker, tegen de vlakke baan: tekst 13,0:1, kop 9,5:1, zacht 5,0:1, accent 4,6:1
-- Het woordmerk draagt de tekstkleur, dus dezelfde 13,0:1 in allebei de thema's
+- Contrast donker, tegen de achtergrond: tekst 17,9:1, kop 12,3:1, zacht 5,0:1, accent 5,1:1
+- Contrast licht, tegen de achtergrond: tekst 17,6:1, kop 12,0:1, zacht 4,9:1, accent 4,9:1
+- Op een kaart, de krapste ondergrond: tekst 16,1:1, kop 11,1:1, zacht en accent 4,5:1
+- Het woordmerk draagt de tekstkleur, dus hetzelfde cijfer in allebei de thema's
+- Donker is de standaard. Licht komt via de schakelaar in de kop
 - Geen horizontale scroll op 375 px, hero past op 1280 bij 800
 - Eén h1 per pagina, zichtbare focusring, skip-link naar de inhoud
 - FAQ werkt zonder JavaScript

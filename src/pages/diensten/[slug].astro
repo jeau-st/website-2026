@@ -3,6 +3,8 @@ import Basis from "../../layouts/Basis.astro";
 import Sectie from "../../components/Sectie.astro";
 import Knop from "../../components/Knop.astro";
 import Todo from "../../components/Todo.astro";
+import Kaart from "../../components/Kaart.astro";
+import MetOpgave from "../../components/MetOpgave.astro";
 import Kruimels, { kruimelSchema } from "../../components/Kruimels.astro";
 import { bedrijf, diensten } from "../../data/site";
 
@@ -36,6 +38,19 @@ const kruimels = [
   { tekst: dienst.titel },
 ];
 
+/* De inhoudsopgave volgt de secties van deze pagina: het lijstje met wat
+   je krijgt, de verhaalblokken uit site.ts, en de verwijzing naar de rest.
+   Een dienst zonder verhaal houdt er twee over, en dan laat de
+   Inhoudsopgave zichzelf weg. */
+const opgave = [
+  { id: "watkrijgje", tekst: "Wat dat concreet is" },
+  ...(dienst.verhaal ?? []).map((blok, i) => ({
+    id: `hoe-${i + 1}`,
+    tekst: blok.kop,
+  })),
+  { id: "verder", tekst: "De andere diensten" },
+];
+
 const schema = {
   "@type": "Service",
   name: dienst.titel,
@@ -67,8 +82,10 @@ const schema = {
     </div>
   </section>
 
-  <Sectie id="watkrijgje" vlak kop="Wat dat concreet is">
-    <ul class="mt-10 max-w-2xl divide-y divide-rand/60 border-y border-rand/60">
+  <MetOpgave items={opgave}>
+  <Sectie id="watkrijgje" vol kop="Wat dat concreet is">
+    <Kaart class="mt-10 max-w-2xl">
+    <ul class="divide-y divide-rand/60">
       {
         dienst.punten.map((punt) => (
           <li class="flex items-baseline gap-3 py-3 text-tekst">
@@ -80,6 +97,7 @@ const schema = {
         ))
       }
     </ul>
+    </Kaart>
 
     {
       !dienst.verhaal && (
@@ -94,7 +112,7 @@ const schema = {
 
   {
     dienst.verhaal?.map((blok, i) => (
-      <Sectie id={`hoe-${i + 1}`} vlak={i % 2 === 1} kop={blok.kop}>
+      <Sectie id={`hoe-${i + 1}`} vol kop={blok.kop}>
         <div class="mt-8 max-w-2xl space-y-4 text-zacht">
           {blok.alineas.map((alinea) => (
             <p>{alinea}</p>
@@ -104,7 +122,7 @@ const schema = {
     ))
   }
 
-  <Sectie id="verder" vlak={(dienst.verhaal?.length ?? 0) % 2 === 0} kop="De andere diensten">
+  <Sectie id="verder" vol kop="De andere diensten">
     <ul class="mt-8 max-w-2xl space-y-3">
       {
         anderen.map((item) => (
@@ -139,7 +157,9 @@ const schema = {
     </ul>
   </Sectie>
 
-  <Sectie id="plannen" vlak={(dienst.verhaal?.length ?? 0) % 2 === 1}>
+  </MetOpgave>
+
+  <Sectie id="plannen">
     <div class="max-w-2xl">
       <h2 class="text-3xl sm:text-4xl">Is dit wat je zoekt?</h2>
       <p class="mt-4 text-lg text-zacht">

@@ -20,13 +20,14 @@ const BREEDTE = 1200;
 const HOOGTE = 630;
 const KANTLIJN = 80;
 
-/* Dezelfde waarden als in src/styles/global.css, lichte thema. */
+/* Dezelfde waarden als in src/styles/global.css, donkere thema, want dat
+   is wat iemand ziet die de link opent. */
 const kleur = {
-  bg: "#f1f4f7",
-  rand: "#becad2",
-  tekst: "#222b32",
-  kop: "#34434c",
-  zacht: "#516573",
+  bg: "#090e11",
+  rand: "#2d3a43",
+  tekst: "#f4f6f7",
+  kop: "#c4d0d8",
+  zacht: "#6d8595",
 };
 
 const fontmap = "./.astro/fonts";

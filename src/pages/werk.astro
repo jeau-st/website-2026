@@ -1,12 +1,25 @@
 ---
 import Basis from "../layouts/Basis.astro";
 import Sectie from "../components/Sectie.astro";
+import MetOpgave from "../components/MetOpgave.astro";
 import Knop from "../components/Knop.astro";
 import Case from "../components/Case.astro";
 import Todo from "../components/Todo.astro";
 import { cases } from "../data/site";
 
 const vrijgegeven = cases.filter((item) => !item.todo);
+
+/* Deze pagina heeft maar een sectie, dus de inhoudsopgave wijst naar de
+   cases zelf. De nummers lopen gelijk met de nummers in de lijst. Een
+   case die nog een TODO is, krijgt geen regel in de opgave: daar valt
+   nog niets te lezen. */
+const opgave = cases
+  .map((item, i) => ({
+    id: `case-${String(i + 1).padStart(2, "0")}`,
+    tekst: item.titel,
+    todo: item.todo,
+  }))
+  .filter((item) => !item.todo);
 ---
 
 <Basis
@@ -26,13 +39,14 @@ const vrijgegeven = cases.filter((item) => !item.todo);
     </div>
   </section>
 
-  <Sectie id="cases" vlak>
+  <MetOpgave items={opgave}>
+  <Sectie id="cases" vol>
     {
       vrijgegeven.length === 0 && (
         <Todo wat="deze pagina staat nog volledig op placeholders. Vul de cases in src/data/site.ts in, of haal Werk uit het menu tot er inhoud is." />
       )
     }
-    <ol class="mt-8">
+    <ol class="mt-8 space-y-4">
       {
         cases.map((item, i) => (
           <Case item={item} nummer={String(i + 1).padStart(2, "0")} />
@@ -40,6 +54,8 @@ const vrijgegeven = cases.filter((item) => !item.todo);
       }
     </ol>
   </Sectie>
+
+  </MetOpgave>
 
   <Sectie id="plannen">
     <div class="max-w-2xl">

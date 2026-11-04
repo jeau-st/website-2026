@@ -1,6 +1,7 @@
 ---
 import Basis from "../layouts/Basis.astro";
 import Sectie from "../components/Sectie.astro";
+import Kaart from "../components/Kaart.astro";
 import { bedrijf } from "../data/site";
 
 /**
@@ -50,7 +51,7 @@ const verwerkers = [
     </div>
   </section>
 
-  <Sectie id="uitleg" vlak>
+  <Sectie id="uitleg">
     <div class="max-w-2xl space-y-8">
       <div>
         <h2 class="text-xl">Bezoekstatistieken</h2>
@@ -99,7 +100,8 @@ const verwerkers = [
           Dit zijn de partijen waar gegevens terechtkomen als je deze site
           bezoekt of contact opneemt.
         </p>
-        <dl class="mt-4 divide-y divide-rand/60 border-y border-rand/60">
+        <Kaart class="mt-4">
+        <dl class="divide-y divide-rand/60">
           {
             verwerkers.map((partij) => (
               <div class="py-3">
@@ -109,6 +111,7 @@ const verwerkers = [
             ))
           }
         </dl>
+        </Kaart>
       </div>
 
       <div>
