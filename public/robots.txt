@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://jeau.st/sitemap-index.xml
+
+# Inhoudsopgave voor taalmodellen: https://jeau.st/llms.txt

@@ -3,12 +3,13 @@ import Basis from "../../layouts/Basis.astro";
 import Sectie from "../../components/Sectie.astro";
 import Knop from "../../components/Knop.astro";
 import Todo from "../../components/Todo.astro";
+import Kruimels, { kruimelSchema } from "../../components/Kruimels.astro";
 import { bedrijf, diensten } from "../../data/site";
 
 /**
  * Een eigen pagina per dienst. Dat is geen opmaakkeuze maar een
  * vindbaarheidskeuze: een zoekopdracht gaat over één onderwerp, en een
- * pagina die over vier dingen gaat verliest het van een pagina die over
+ * pagina die over vijf dingen gaat verliest het van een pagina die over
  * één ding gaat. Elke pagina heeft dus een eigen title, beschrijving en
  * Service-schema.
  *
@@ -27,6 +28,14 @@ const { dienst } = Astro.props;
 
 const anderen = diensten.filter((item) => item.slug !== dienst.slug);
 
+/* Een dienstpagina hangt onder /diensten. Dat staat nu boven de kop en
+   in het schema, uit dezelfde lijst. */
+const kruimels = [
+  { tekst: "Jeau.st", href: "/" },
+  { tekst: "Diensten", href: "/diensten" },
+  { tekst: dienst.titel },
+];
+
 const schema = {
   "@type": "Service",
   name: dienst.titel,
@@ -43,12 +52,12 @@ const schema = {
 <Basis
   titel={`${dienst.kop} | Jeau.st`}
   beschrijving={dienst.meta}
-  extraSchema={schema}
+  extraSchema={[schema, kruimelSchema(kruimels, Astro.site)]}
 >
   <section class="px-4 py-20 sm:px-6 sm:py-24">
     <div class="mx-auto max-w-5xl">
-      <p class="font-mono text-sm text-zacht">Dienst</p>
-      <h1 class="mt-2 max-w-3xl text-4xl sm:text-5xl">{dienst.kop}</h1>
+      <Kruimels kruimels={kruimels} />
+      <h1 class="mt-3 max-w-3xl text-4xl sm:text-5xl">{dienst.kop}</h1>
       <p class="mt-6 max-w-2xl text-lg text-zacht">{dienst.tekst}</p>
       {
         dienst.voorWie && (
@@ -95,7 +104,7 @@ const schema = {
     ))
   }
 
-  <Sectie id="verder" vlak={(dienst.verhaal?.length ?? 0) % 2 === 0} kop="De andere drie">
+  <Sectie id="verder" vlak={(dienst.verhaal?.length ?? 0) % 2 === 0} kop="De andere diensten">
     <ul class="mt-8 max-w-2xl space-y-3">
       {
         anderen.map((item) => (

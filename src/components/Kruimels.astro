@@ -1,0 +1,48 @@
+---
+/**
+ * Het kruimelpad boven de kop op een pagina die onder een andere hangt.
+ * Het staat er voor de bezoeker en voor de crawler: het BreadcrumbList
+ * hoort erbij en wordt gemaakt met `kruimelSchema` hieronder, zodat de
+ * zichtbare tekst en het schema niet uit elkaar kunnen lopen.
+ *
+ * De laatste kruimel is de pagina zelf en is dus geen link.
+ */
+export type Kruimel = { tekst: string; href?: string };
+
+export function kruimelSchema(kruimels: Kruimel[], site: URL | undefined) {
+  return {
+    "@type": "BreadcrumbList",
+    itemListElement: kruimels.map((kruimel, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: kruimel.tekst,
+      ...(kruimel.href ? { item: new URL(kruimel.href, site).toString() } : {}),
+    })),
+  };
+}
+
+interface Props {
+  kruimels: Kruimel[];
+}
+
+const { kruimels } = Astro.props;
+---
+
+<nav aria-label="Kruimelpad">
+  <ol class="flex flex-wrap items-center gap-x-2 font-mono text-sm text-zacht">
+    {
+      kruimels.map((kruimel, i) => (
+        <li class="flex items-center gap-x-2">
+          {i > 0 && <span aria-hidden="true">/</span>}
+          {kruimel.href ? (
+            <a class="tekstlink hover:text-tekst" href={kruimel.href}>
+              {kruimel.tekst}
+            </a>
+          ) : (
+            <span aria-current="page">{kruimel.tekst}</span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>

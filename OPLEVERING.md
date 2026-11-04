@@ -1,22 +1,13 @@
 # Wat Joost nog moet invullen
 
-Alles hieronder staat als zichtbare TODO op de site of in de code. Zolang
-het er staat, kan de site niet live.
+Op de site staat geen zichtbare TODO meer. Alle tekst is ingevuld. Wat
+hieronder staat, is werk dat nog moet gebeuren voordat de site live kan.
 
 ## Blokkerend voor livegang
 
 | Wat | Waar | Toelichting |
 | --- | --- | --- |
-| Verwerkerslijst privacy | `src/pages/privacy.astro` | Noem Pipedrive, Cloudflare, Microsoft Bookings en je mailprovider, en laat de tekst juridisch nalezen. |
-| Open Graph-afbeelding | `public/og.png` | De layout verwijst ernaar, het bestand bestaat nog niet. 1200 bij 630 px. |
-
-## Inhoud die nu op placeholders staat
-
-| Wat | Waar | Toelichting |
-| --- | --- | --- |
-| Voorbeeld per dienst | `src/data/site.ts`, `diensten` | De vier dienstpagina's hebben nu uitleg maar nog geen voorbeeld uit de praktijk. Eén per pagina, met wat je tegenkwam en wat het opleverde, maakt ze een stuk overtuigender. |
-| Toestemming van de architect | `src/data/site.ts`, `cases` | Case 03 is herkenbaar voor wie in die hoek zit, terwijl erboven staat dat de cases geanonimiseerd zijn. Vraag toestemming, en dan mag zijn naam er ook bij, of maak de omschrijving vager. |
-| Antwoord op "Hoe lang duurt een traject?" | `src/data/site.ts`, `vragen` | Een realistische bandbreedte, bijvoorbeeld apart voor een kleine inrichting en voor een migratie met koppelingen. |
+| Privacytekst juridisch laten nalezen | `src/pages/privacy.astro` | De verwerkerslijst staat er nu: Cloudflare, Microsoft, Pipedrive en Google Maps. Laat het geheel nalezen door iemand die er verstand van heeft voordat de site live gaat. |
 
 ## Instellen voor of na livegang
 
@@ -27,9 +18,15 @@ het er staat, kan de site niet live.
 
 ## Gecontroleerd en akkoord
 
-- Contrast licht: veen op krijt 14.2:1, wilg 8.5:1, accent 5.3:1
-- Contrast donker: krijt op veen 14.2:1, hooi 7.2:1, accent 5.2:1
+- Contrast licht, tegen de vlakke baan: tekst 13,0:1, kop 8,4:1, zacht 5,0:1, accent 4,6:1
+- Contrast donker, tegen de vlakke baan: tekst 13,0:1, kop 9,5:1, zacht 5,0:1, accent 4,6:1
+- Het woordmerk draagt de tekstkleur, dus dezelfde 13,0:1 in allebei de thema's
 - Geen horizontale scroll op 375 px, hero past op 1280 bij 800
 - Eén h1 per pagina, zichtbare focusring, skip-link naar de inhoud
 - FAQ werkt zonder JavaScript
 - Geen verzonnen klantnamen, cijfers, testimonials of partnerlogo's
+- Case 03 blijft zoals hij is. Het architectenbureau is herkenbaar voor wie in die hoek zit, en dat is akkoord
+- Doorlooptijd op /aanpak: twee tot vier weken voor een kleine inrichting, twee tot vier maanden voor een migratie met koppelingen
+- Website en mail gaat over moderniseren. Moet het er totaal anders uitzien met veel nieuwe functionaliteit, dan verwijs je door naar een designbureau
+- Geen praktijkvoorbeelden op de dienstpagina's. De vier cases op /werk doen dat werk, en de dienstpagina's leggen uit hoe het werkt
+- Open Graph-afbeelding staat in `public/og.png`, 1200 bij 630. Opnieuw maken na een wijziging aan het woordmerk of de belofte: `npm run og`

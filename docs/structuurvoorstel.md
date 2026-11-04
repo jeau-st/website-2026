@@ -2,11 +2,11 @@
 
 Datum: 4 november 2026.
 
-Stand van zaken: stap 1 tot en met 4 staan. `/diensten`, `/over` en
-`/pipedrive` bestaan, het menu heeft vijf items met een uitklapper onder lg,
-en de homepage is terug naar acht korte blokken. Open: de vijfde dienst
-`/diensten/website-en-mail`, en daarna het kruimelpad, `llms.txt` en de
-resterende schema's.
+Stand van zaken: het hele voorstel is gebouwd. `/diensten`, `/over`,
+`/pipedrive` en de vijfde dienst `/diensten/website-en-mail` bestaan, het
+menu heeft vijf items met een uitklapper onder lg, de homepage is terug naar
+acht korte blokken, en het kruimelpad, `llms.txt` en de schema-aanvullingen
+staan er. Wat er nog aan tekst ontbreekt staat in `OPLEVERING.md`.
 
 Vier keuzes zijn gemaakt, ze staan verwerkt in dit document:
 

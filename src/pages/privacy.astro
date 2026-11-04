@@ -1,8 +1,38 @@
 ---
 import Basis from "../layouts/Basis.astro";
 import Sectie from "../components/Sectie.astro";
-import Todo from "../components/Todo.astro";
 import { bedrijf } from "../data/site";
+
+/**
+ * De partijen waar gegevens terechtkomen. Mail en agenda draaien op
+ * Microsoft 365, dus Microsoft staat er met drie petten op en toch als
+ * één regel. Pipedrive staat erbij omdat een geplande afspraak in het
+ * CRM belandt, wat hierboven ook al staat.
+ *
+ * Deze tekst is nog niet juridisch nagelezen. Zie OPLEVERING.md.
+ */
+const verwerkers = [
+  {
+    naam: "Cloudflare",
+    waarvoor:
+      "Hosting van deze site en de bezoekstatistieken. Je IP-adres passeert hun netwerk om de pagina bij je te krijgen.",
+  },
+  {
+    naam: "Microsoft",
+    waarvoor:
+      "Mijn mail en agenda draaien op Microsoft 365, en de afspraakplanner is Microsoft Bookings. Wat je daar invult en wat je mailt, staat dus bij Microsoft.",
+  },
+  {
+    naam: "Pipedrive",
+    waarvoor:
+      "Mijn CRM. Neem je contact op of plan je een afspraak, dan leg ik je naam, je bedrijf en waar we het over hadden daar vast.",
+  },
+  {
+    naam: "Google",
+    waarvoor:
+      "Alleen de kaart op de pagina over .st, en alleen als je daarheen scrollt.",
+  },
+];
 ---
 
 <Basis
@@ -46,11 +76,10 @@ import { bedrijf } from "../data/site";
         <h2 class="text-xl">Je rechten</h2>
         <p class="mt-2 text-zacht">
           Je mag opvragen welke gegevens ik van je heb, ze laten corrigeren of
-          laten verwijderen. Een mail naar
-          <a class="tekstlink text-tekst" href={`mailto:${bedrijf.email}`}>
-            {bedrijf.email}
-          </a>
-          is genoeg.
+          laten verwijderen. Een mail naar{" "}
+          <a class="tekstlink text-tekst" href={`mailto:${bedrijf.email}`}
+            >{bedrijf.email}</a
+          >{" "}is genoeg.
         </p>
       </div>
 
@@ -66,7 +95,20 @@ import { bedrijf } from "../data/site";
 
       <div>
         <h2 class="text-xl">Verwerkers</h2>
-        <Todo wat="noem de partijen waar gegevens terechtkomen (Pipedrive, Cloudflare, Microsoft Bookings, Google Maps, mailprovider) en laat deze tekst juridisch nalopen voor livegang." />
+        <p class="mt-2 text-zacht">
+          Dit zijn de partijen waar gegevens terechtkomen als je deze site
+          bezoekt of contact opneemt.
+        </p>
+        <dl class="mt-4 divide-y divide-rand/60 border-y border-rand/60">
+          {
+            verwerkers.map((partij) => (
+              <div class="py-3">
+                <dt class="text-tekst">{partij.naam}</dt>
+                <dd class="mt-1 text-zacht">{partij.waarvoor}</dd>
+              </div>
+            ))
+          }
+        </dl>
       </div>
 
       <div>

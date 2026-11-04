@@ -9,8 +9,12 @@ import "../styles/global.css";
 interface Props {
   titel: string;
   beschrijving: string;
-  /** Extra schema.org-blok voor deze pagina, bijvoorbeeld een FAQPage. */
-  extraSchema?: Record<string, unknown>;
+  /**
+   * Extra schema.org-blok voor deze pagina, bijvoorbeeld een FAQPage.
+   * Een pagina mag er meer dan één hebben: een dienstpagina heeft een
+   * Service en een BreadcrumbList.
+   */
+  extraSchema?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const { titel, beschrijving, extraSchema } = Astro.props;
@@ -58,10 +62,30 @@ const bedrijfSchema = {
   identifier: { "@type": "PropertyValue", name: "KvK", value: bedrijf.kvk },
 };
 
-/* Eén graph, zodat een pagina haar eigen blok naast het bedrijf zet. */
+/**
+ * De site zelf als entiteit, met het bedrijf als uitgever. Dat maakt van
+ * de losse pagina's één geheel voor een zoekmachine of een AI die de site
+ * naloopt.
+ */
+const siteSchema = {
+  "@type": "WebSite",
+  "@id": `${Astro.site}#site`,
+  name: bedrijf.naam,
+  url: Astro.site?.toString(),
+  inLanguage: "nl-NL",
+  publisher: { "@id": `${Astro.site}#bedrijf` },
+};
+
+/* Eén graph, zodat een pagina haar eigen blokken naast het bedrijf zet. */
+const eigen = extraSchema
+  ? Array.isArray(extraSchema)
+    ? extraSchema
+    : [extraSchema]
+  : [];
+
 const schema = {
   "@context": "https://schema.org",
-  "@graph": extraSchema ? [bedrijfSchema, extraSchema] : [bedrijfSchema],
+  "@graph": [bedrijfSchema, siteSchema, ...eigen],
 };
 ---
 

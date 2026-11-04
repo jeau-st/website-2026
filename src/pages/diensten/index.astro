@@ -6,8 +6,8 @@ import Dienst from "../../components/Dienst.astro";
 import { diensten } from "../../data/site";
 
 /**
- * De hub boven de vier dienstpagina's. Hij bestaat om twee redenen: het
- * menu-item moet ergens naartoe, en een crawler moet zien dat die vier
+ * De hub boven de dienstpagina's. Hij bestaat om twee redenen: het
+ * menu-item moet ergens naartoe, en een crawler moet zien dat die
  * pagina's bij elkaar horen en hieronder hangen. Daarom staat hier de
  * ItemList en niet alleen een rij links.
  *
@@ -38,9 +38,10 @@ const schema = {
         CRM, koppelingen en automatisering
       </h1>
       <p class="mt-6 max-w-2xl text-lg text-zacht">
-        Vier soorten werk. Ze volgen de volgorde waarin ik ze aanpak: eerst
-        je proces in Pipedrive, dan de koppelingen eraan, dan de cijfers
-        erover. Het vierde loopt door nadat de rest staat.
+        Vijf soorten werk. De eerste vier volgen de volgorde waarin ik ze
+        aanpak: eerst je proces in Pipedrive, dan de koppelingen eraan, dan
+        de cijfers erover, en daarna loopt de ondersteuning door. De vijfde
+        is de laag eronder, waar je aanvragen binnenkomen.
       </p>
     </div>
   </section>
@@ -95,7 +96,7 @@ const schema = {
 
   <Sectie id="plannen" vlak>
     <div class="max-w-2xl">
-      <h2 class="text-3xl sm:text-4xl">Welke van de vier je nodig hebt</h2>
+      <h2 class="text-3xl sm:text-4xl">Welke hiervan je nodig hebt</h2>
       <p class="mt-4 text-lg text-zacht">
         Dat hoor ik in een gesprek van 30 minuten. Soms is het er één, en
         vaker begint het bij het proces.

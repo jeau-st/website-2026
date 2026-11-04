@@ -41,7 +41,7 @@
   --c-kop: #34434c;
   --c-accent: #9e5514;
   --c-op-accent: #f1f4f7;
-  --c-merk: #9e5514;
+  --c-merk: #222b32;
 }
 
 :root[data-thema="donker"] {
@@ -57,7 +57,7 @@
   --c-kop: #cdd7dd;
   --c-accent: #e1791c;
   --c-op-accent: #182127;
-  --c-merk: #e1791c;
+  --c-merk: #e0e6ea;
 }
 
 @theme {
@@ -75,8 +75,9 @@
   --color-kop: var(--c-kop);
   --color-accent: var(--c-accent);
   --color-op-accent: var(--c-op-accent);
-  /* Alleen het woordmerk. Zelfde waarde als het accent, apart benoemd
-     zodat je de een kunt verzetten zonder de ander. */
+  /* Alleen het woordmerk. Zwart in licht en wit in donker, dezelfde
+     waarde als de tekst. Apart benoemd zodat je het woordmerk kunt
+     verzetten zonder de tekst, en andersom. */
   --color-merk: var(--c-merk);
 
   /* Vaste merkkleuren, alleen waar een kleur per se niet mag wisselen.

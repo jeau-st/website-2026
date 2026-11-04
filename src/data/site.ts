@@ -266,6 +266,51 @@ export const diensten: Dienst[] = [
       "Bijsturen als het proces verandert",
     ],
   },
+  {
+    slug: "website-en-mail",
+    titel: "Website en mail",
+    kop: "Je website en je mail op orde, en vast aan je CRM",
+    meta: "Eén snelle site die je zelf beheert, een formulier dat doorloopt naar Pipedrive, en mail die bij je klant aankomt.",
+    voorWie:
+      "Voor bedrijven met een site die is blijven staan, of met een paar sites uit verschillende jaren die naast elkaar leven. En voor wie merkt dat mail vanaf het eigen domein in de spam belandt. Dit is de laag onder je CRM: hier komen je aanvragen vandaan.",
+    verhaal: [
+      {
+        kop: "Waarom dit bij het CRM hoort",
+        alineas: [
+          "Een aanvraag via je site is de eerste stap van je verkoopproces. Komt die binnen als los mailtje, dan begint elke aanvraag met overtypen, en weet je een week later niet meer welke je al hebt opgepakt. Loopt het formulier door naar Pipedrive, dan staat de aanvraag er meteen in, met de velden die je nodig hebt om er iets mee te doen.",
+          "Bij een architectenbureau staat er zo'n vragenformulier op de site. Wat iemand invult komt in het CRM, en diegene kan aansluitend zelf een moment inplannen. Daardoor komen er aanvragen binnen waar je meteen mee verder kunt, en zie je per klant waar die in het proces zit.",
+        ],
+      },
+      {
+        kop: "Mail die aankomt",
+        alineas: [
+          "Mail vanaf je eigen domein moet langs drie controles: SPF, DKIM en DMARC. Staan die records niet goed, dan belandt je bericht bij de ontvanger in de spam, of komt het er helemaal niet. Je merkt dat laat, want aan jouw kant ziet het eruit alsof het verstuurd is.",
+          "Bij een webshop bleek dat de reden dat een bestelling of een vraag soms onbeantwoord bleef. De mailinstellingen en de bijbehorende records zijn rechtgezet, en daarna kwamen berichten weer aan.",
+        ],
+      },
+      {
+        kop: "Waarmee ik bouw",
+        alineas: [
+          "Een verbouwing begint met kijken wat er al werkt. Welke pagina's brengen bezoekers binnen en op welke zoekwoorden gebeurt dat? Dat is een SEO-audit, en die gaat voor op het ontwerp. Verdwijnen er oude adressen, dan zet ik redirects klaar, zodat je vindbaarheid niet weglekt.",
+          "Ik bouw met Astro en host op Cloudflare. Dat levert een site op die snel is en vrijwel niets kost om te draaien. Er kan een eenvoudige editor bij, zodat je zelf schrijft zonder mij. Mail, domeinen en DNS zet ik op accounts die van jou zijn, want anders ben je afhankelijk van degene die ze ooit heeft aangemaakt.",
+        ],
+      },
+      {
+        kop: "Waar dit ophoudt",
+        alineas: [
+          "Dit gaat over het moderniseren van wat er al staat. Een site die is blijven hangen, een paar oude sites die samen moeten, een formulier dat nergens heen gaat, mail die niet aankomt.",
+          "Moet het er totaal anders uit komen te zien, met veel nieuwe functionaliteit erbij, dan ben je bij een designbureau beter af. Dat zeg ik dan ook meteen in het eerste gesprek.",
+        ],
+      },
+    ],
+    tekst:
+      "De plek waar je aanvragen binnenkomen en je antwoorden aankomen, vast aan de rest.",
+    punten: [
+      "Eén site waar er nu meerdere zijn",
+      "Een formulier dat doorloopt naar je CRM",
+      "Mail, domeinen en DNS op eigen accounts",
+    ],
+  },
 ];
 
 export type Niveau = {
@@ -494,8 +539,8 @@ export type Vraag = {
 export const vragen: Vraag[] = [
   {
     vraag: "Hoe lang duurt een traject?",
-    antwoord: "TODO: noem een realistische bandbreedte, bijvoorbeeld voor een kleine inrichting en voor een migratie met koppelingen.",
-    todo: true,
+    antwoord:
+      "Een kleine inrichting staat in twee tot vier weken. Gaat er een migratie met koppelingen achteraan, reken dan op twee tot vier maanden. Wat het verschil maakt: hoeveel data er over moet, uit hoeveel systemen die komt, en hoe snel ik antwoord krijg op de vragen die onderweg opkomen.",
   },
   {
     vraag: "Met welke tools werk je?",
