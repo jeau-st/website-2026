@@ -33,6 +33,7 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 - `OPLEVERING.md`: wat Joost nog moet invullen voor livegang
 - `SCHRIJFWIJZER.md`: stem, verboden woorden en werkwijze voor alle tekst op de site
 - `docs/brand-persona.md`: wie er spreekt, de ideale klant, karakter en toon. Lees die voor je tekst schrijft
+- `docs/dns-verhuizing.md`: het draaiboek om jeau.st van Cloud86 naar Cloudflare te halen, met de DNS-inventaris en de volgorde waarin de mail heel blijft
 - `docs/layoutvoorstel.md`: waarom de opmaak is zoals hij is, met de gemeten contrastcijfers
 - `docs/structuurvoorstel.md`: de paginastructuur, waarom elk blok staat waar het staat, en wat er nog bij komt
 - `docs/palet.html`: het palet met stalen, gemeten aandelen en contrastcijfers. Staat buiten `src/pages` en `public`, dus de build neemt hem niet mee. Open hem vanaf schijf

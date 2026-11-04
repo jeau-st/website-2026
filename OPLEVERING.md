@@ -14,7 +14,7 @@ hieronder staat, is werk dat nog moet gebeuren voordat de site live kan.
 | Wat | Waar | Toelichting |
 | --- | --- | --- |
 | Cloudflare Web Analytics | `src/data/site.ts`, `analyticsToken` | Cookieloos, dus geen cookiemelding nodig. De beacon laadt alleen met een token. |
-| Domein jeau.st koppelen | Cloudflare-dashboard | De site deployt met `npm run deploy`. |
+| Domein jeau.st koppelen | Cloudflare-dashboard | De zone staat bij Cloud86 en moet naar Cloudflare voordat dit kan. Draaiboek in `docs/dns-verhuizing.md`. De site staat intussen live op https://website-2026.joostbeers.workers.dev. |
 
 ## Gecontroleerd en akkoord
 
