@@ -1,0 +1,108 @@
+---
+import Basis from "../../layouts/Basis.astro";
+import Sectie from "../../components/Sectie.astro";
+import Knop from "../../components/Knop.astro";
+import Dienst from "../../components/Dienst.astro";
+import { diensten } from "../../data/site";
+
+/**
+ * De hub boven de vier dienstpagina's. Hij bestaat om twee redenen: het
+ * menu-item moet ergens naartoe, en een crawler moet zien dat die vier
+ * pagina's bij elkaar horen en hieronder hangen. Daarom staat hier de
+ * ItemList en niet alleen een rij links.
+ *
+ * Het blok "waar dit het beste werkt" stond op de homepage. Daar hoorde het
+ * niet: het antwoordt op de vraag of je bij mij aan het juiste adres bent,
+ * en die vraag stel je als je de diensten voor je ziet.
+ */
+const schema = {
+  "@type": "ItemList",
+  name: "Diensten van Jeau.st",
+  itemListElement: diensten.map((dienst, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: dienst.titel,
+    url: `${Astro.site}diensten/${dienst.slug}/`,
+  })),
+};
+---
+
+<Basis
+  titel="Diensten: CRM, koppelingen en automatisering | Jeau.st"
+  beschrijving="Pipedrive inrichten, je systemen koppelen, cijfers waar je op kunt sturen, en ondersteuning na de oplevering. Door Joost Beers uit 's-Hertogenbosch."
+  extraSchema={schema}
+>
+  <section class="px-4 py-20 sm:px-6 sm:py-24">
+    <div class="mx-auto max-w-5xl">
+      <h1 class="max-w-3xl text-4xl sm:text-5xl">
+        CRM, koppelingen en automatisering
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-zacht">
+        Vier soorten werk. Ze volgen de volgorde waarin ik ze aanpak: eerst
+        je proces in Pipedrive, dan de koppelingen eraan, dan de cijfers
+        erover. Het vierde loopt door nadat de rest staat.
+      </p>
+    </div>
+  </section>
+
+  <Sectie id="diensten" vlak>
+    <ol>
+      {
+        diensten.map((dienst, i) => (
+          <Dienst dienst={dienst} nummer={String(i + 1).padStart(2, "0")} />
+        ))
+      }
+    </ol>
+  </Sectie>
+
+  <Sectie
+    id="voorwie"
+    kop="Waar dit het beste werkt"
+    intro="Bij bedrijven met weinig projecten die lang duren."
+  >
+    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
+      <p>
+        Bouw en architectuur zijn het duidelijkste voorbeeld. Een traject
+        loopt maanden, er gaat veel informatie in om, afspraken moeten
+        vastliggen, en je wilt zien wat er loopt, wat eraan komt en wat
+        wanneer actie nodig heeft.
+      </p>
+      <p>
+        De winst zit daar in de lengte van het proces en niet in de
+        aantallen. Hoe langer een traject loopt, hoe meer momenten er zijn
+        waarop iets blijft liggen omdat niemand het zag.
+      </p>
+    </div>
+    <ul class="mt-10 max-w-2xl space-y-3">
+      <li>
+        <a
+          class="tekstlink inline-flex min-h-11 items-center text-tekst"
+          href="/aanpak"
+        >
+          Lees hoe een traject verloopt
+        </a>
+      </li>
+      <li>
+        <a
+          class="tekstlink inline-flex min-h-11 items-center text-tekst"
+          href="/pipedrive"
+        >
+          Bekijk wat Pipedrive voor je team doet
+        </a>
+      </li>
+    </ul>
+  </Sectie>
+
+  <Sectie id="plannen" vlak>
+    <div class="max-w-2xl">
+      <h2 class="text-3xl sm:text-4xl">Welke van de vier je nodig hebt</h2>
+      <p class="mt-4 text-lg text-zacht">
+        Dat hoor ik in een gesprek van 30 minuten. Soms is het er één, en
+        vaker begint het bij het proces.
+      </p>
+      <div class="mt-8">
+        <Knop toonToelichting />
+      </div>
+    </div>
+  </Sectie>
+</Basis>

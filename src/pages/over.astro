@@ -1,0 +1,144 @@
+---
+import { Image } from "astro:assets";
+import foto from "../assets/joost.webp";
+import Basis from "../layouts/Basis.astro";
+import Sectie from "../components/Sectie.astro";
+import Knop from "../components/Knop.astro";
+import { bedrijf } from "../data/site";
+
+/**
+ * Over mij stond als sectie op de homepage. Eén pagina over één persoon is
+ * wat een zoekmachine en een AI-assistent nodig hebben bij "wie is Joost
+ * Beers": een plek met het Person-schema, de achtergrond en de link naar
+ * LinkedIn. Op de homepage blijft de foto met twee regels staan.
+ */
+const schema = {
+  "@type": "Person",
+  "@id": `${Astro.site}over/#joost`,
+  name: bedrijf.persoon,
+  jobTitle: "CRM-consultant en procesautomatiseerder",
+  email: bedrijf.email,
+  telephone: bedrijf.telefoon,
+  worksFor: { "@id": `${Astro.site}#bedrijf` },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: bedrijf.plaats,
+    addressCountry: "NL",
+  },
+  knowsAbout: [
+    "Pipedrive",
+    "CRM-implementatie",
+    "datamigratie",
+    "n8n",
+    "procesautomatisering",
+  ],
+  sameAs: [bedrijf.linkedin],
+};
+---
+
+<Basis
+  titel="Over Joost Beers, CRM-consultant in 's-Hertogenbosch | Jeau.st"
+  beschrijving="Joost Beers doet Pipedrive-implementaties, koppelingen en procesautomatisering. Drie jaar Pipedrive, daarvoor zeven jaar Business Consultant IT."
+  extraSchema={schema}
+>
+  <section class="px-4 py-20 sm:px-6 sm:py-24">
+    <div class="mx-auto max-w-5xl">
+      <p class="font-mono text-sm text-zacht">Over</p>
+      <h1 class="mt-2 max-w-3xl text-4xl sm:text-5xl">
+        Joost Beers, koppelkoning en procesnerd
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-zacht">
+        Ik houd van systemen die met elkaar praten en van processen die
+        kloppen omdat ze doordacht zijn, niet omdat ze altijd zo gingen.
+      </p>
+
+      <div class="mt-10">
+        <Image
+          src={foto}
+          alt={`${bedrijf.persoon}, achter zijn bureau`}
+          width={896}
+          height={448}
+          class="w-full max-w-md border border-rand/60"
+        />
+      </div>
+    </div>
+  </section>
+
+  <Sectie id="achtergrond" vlak kop="Waar ik het heb geleerd">
+    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
+      <p>
+        De afgelopen drie jaar deed ik drie volledige
+        Pipedrive-implementaties, inclusief migraties en maatwerk. Daarvoor
+        werkte ik zeven jaar bij een energieleverancier, in drie functies:
+        Business Consultant IT, teamleider sales en data-analist. In die
+        eerste rol zat ik aan drie systeemimplementaties.
+      </p>
+      <p>
+        Hetzelfde systeem dus vanuit de bouw, het gebruik en de cijfers. En
+        overal zag ik hetzelfde: wat ingewikkeld is, wordt niet gebruikt.
+        Iemand verzint er een omweg voor, en die omweg wordt het proces.
+      </p>
+      <p>
+        Daar komt mijn belangrijkste regel vandaan. Als niemand behalve ik
+        het begrijpt, is het te slim gebouwd.
+      </p>
+    </div>
+    <p class="mt-8">
+      <a
+        class="tekstlink inline-flex min-h-11 items-center text-tekst"
+        href="/aanpak#werkwijze"
+      >
+        Lees hoe ik werk
+      </a>
+    </p>
+  </Sectie>
+
+  <Sectie id="waarom" kop="Waar ik het voor doe">
+    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
+      <p>
+        Een klein bedrijf verdient net zo'n strak proces en net zulke goede
+        systemen als een groot bedrijf, en inmiddels hoort daar ook AI bij.
+        Bij een klein bedrijf zie ik bovendien meteen wat mijn werk oplevert.
+      </p>
+      <p>
+        Jeau.st is één persoon. Dezelfde persoon zit aan tafel bij het eerste
+        gesprek en bij de oplevering, en die bouwt het ook. Dat is de reden
+        dat ik geen opdrachten aanneem waarvan ik denk dat iemand anders ze
+        beter kan.
+      </p>
+    </div>
+    <ul class="mt-10 max-w-2xl space-y-3">
+      <li>
+        <a
+          class="tekstlink inline-flex min-h-11 items-center text-tekst"
+          href={bedrijf.linkedin}
+          target="_blank"
+          rel="noopener"
+        >
+          Laten we connecten op LinkedIn
+        </a>
+      </li>
+      <li>
+        <a
+          class="tekstlink inline-flex min-h-11 items-center text-tekst"
+          href="/st"
+        >
+          Waarom het domein op .st eindigt
+        </a>
+      </li>
+    </ul>
+  </Sectie>
+
+  <Sectie id="plannen" vlak>
+    <div class="max-w-2xl">
+      <h2 class="text-3xl sm:text-4xl">Dan weet ik nu graag wie jij bent</h2>
+      <p class="mt-4 text-lg text-zacht">
+        Dertig minuten, via Teams. Je vertelt wat er vastloopt en ik vraag
+        door.
+      </p>
+      <div class="mt-8">
+        <Knop toonToelichting />
+      </div>
+    </div>
+  </Sectie>
+</Basis>

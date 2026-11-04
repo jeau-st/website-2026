@@ -31,7 +31,13 @@ const bedrijfSchema = {
   url: Astro.site?.toString(),
   email: bedrijf.email,
   telephone: bedrijf.telefoon,
-  founder: { "@type": "Person", name: bedrijf.persoon },
+  /* Dezelfde @id als het Person-blok op /over, zodat de oprichter en de
+     persoon op die pagina één entiteit zijn en geen twee. */
+  founder: {
+    "@type": "Person",
+    "@id": `${Astro.site}over/#joost`,
+    name: bedrijf.persoon,
+  },
   address: {
     "@type": "PostalAddress",
     addressLocality: bedrijf.plaats,

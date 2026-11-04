@@ -6,12 +6,35 @@ import Denkstap from "../components/Denkstap.astro";
 import Cyclus from "../components/Cyclus.astro";
 import Niveau from "../components/Niveau.astro";
 import Stappentabel from "../components/Stappentabel.astro";
-import { denkwijze, niveaus } from "../data/site";
+import Nastap from "../components/Nastap.astro";
+import Vraag from "../components/Vraag.astro";
+import { denkwijze, nabouw, niveaus, vragen } from "../data/site";
+
+/**
+ * De vragen stonden op de homepage. Ze gaan bijna allemaal over hoe een
+ * traject loopt, dus ze horen hier, bij de stappen en bij het ritme na de
+ * oplevering. Het FAQPage-schema verhuist mee: dat hoort op de pagina waar
+ * het antwoord staat.
+ *
+ * Alleen vrijgegeven vragen in het schema: een TODO als antwoord aanbieden
+ * aan Google is erger dan de vraag weglaten.
+ */
+const faqSchema = {
+  "@type": "FAQPage",
+  mainEntity: vragen
+    .filter((item) => !item.todo)
+    .map((item) => ({
+      "@type": "Question",
+      name: item.vraag,
+      acceptedAnswer: { "@type": "Answer", text: item.antwoord },
+    })),
+};
 ---
 
 <Basis
   titel="Aanpak: eerst het proces, dan automatiseren | Jeau.st"
   beschrijving="Eerst het proces vastleggen en standaardiseren, dan automatiseren waar de meeste tijd in gaat zitten, dan meetbaar maken. En dan opnieuw."
+  extraSchema={faqSchema}
 >
   <section class="px-4 py-20 sm:px-6 sm:py-24">
     <div class="mx-auto max-w-5xl">
@@ -56,10 +79,28 @@ import { denkwijze, niveaus } from "../data/site";
     <Stappentabel />
   </Sectie>
 
+  <Sectie
+    id="daarna"
+    kop="En dan gaat het pas werken"
+    intro="De oplevering is het begin. Dit is het ritme daarna."
+  >
+    <div class="mt-12 grid gap-10 md:grid-cols-3">
+      {nabouw.map((stap) => <Nastap stap={stap} />)}
+    </div>
+    <p class="mt-10">
+      <a
+        class="tekstlink inline-flex min-h-11 items-center text-tekst"
+        href="/diensten/ondersteuning-en-training/"
+      >
+        Lees wat ondersteuning en training inhoudt
+      </a>
+    </p>
+  </Sectie>
+
   {/* Dit stond als raster van vier gelijke blokjes. Zo gelijk van vorm en
       lengte leest het als een sjabloon, dus nu een lijst met blokken die
       net zo lang zijn als ze hoeven te zijn. */}
-  <Sectie id="werkwijze" kop="Hoe ik werk">
+  <Sectie id="werkwijze" vlak kop="Hoe ik werk">
     <div class="mt-12 max-w-2xl space-y-10">
       <div>
         <h3 class="text-lg">
@@ -93,6 +134,12 @@ import { denkwijze, niveaus } from "../data/site";
           Dan een plan dat over een jaar af is.
         </p>
       </div>
+    </div>
+  </Sectie>
+
+  <Sectie id="vragen" kop="Veelgestelde vragen">
+    <div class="mt-10 max-w-3xl">
+      {vragen.map((item) => <Vraag item={item} />)}
     </div>
   </Sectie>
 

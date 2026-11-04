@@ -110,14 +110,24 @@ const schema = {
         ))
       }
     </ul>
-    <p class="mt-8">
-      <a
-        class="tekstlink inline-flex min-h-11 items-center text-tekst"
-        href="/aanpak"
-      >
-        Lees hoe een traject verloopt
-      </a>
-    </p>
+    <ul class="mt-8 max-w-2xl space-y-3 border-t border-rand/60 pt-6">
+      <li>
+        <a
+          class="tekstlink inline-flex min-h-11 items-center text-tekst"
+          href="/aanpak"
+        >
+          Lees hoe een traject verloopt
+        </a>
+      </li>
+      <li>
+        <a
+          class="tekstlink inline-flex min-h-11 items-center text-tekst"
+          href="/pipedrive"
+        >
+          Bekijk wat Pipedrive voor je team doet
+        </a>
+      </li>
+    </ul>
   </Sectie>
 
   <Sectie id="plannen" vlak={(dienst.verhaal?.length ?? 0) % 2 === 1}>

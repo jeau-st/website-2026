@@ -368,6 +368,69 @@ export const aiStappen: AiStap[] = [
   },
 ];
 
+export type Functie = {
+  titel: string;
+  tekst: string;
+};
+
+/**
+ * Wat er in Pipedrive zit, voor /pipedrive. Bewust zonder abonnementen en
+ * zonder prijzen: wat er in welk pakket zit verandert sneller dan wat de
+ * functie doet, en prijzen staan niet op deze site. Geen partnerschap
+ * claimen: zie docs/brand-persona.md.
+ */
+export const pipedriveFuncties: Functie[] = [
+  {
+    titel: "E-mailsynchronisatie",
+    tekst:
+      "Je mailbox hangt aan Pipedrive. Elke mail komt bij de juiste klant en de juiste deal te staan, ook die van je collega.",
+  },
+  {
+    titel: "Agendakoppeling",
+    tekst: "Afspraken uit Outlook of Google staan in Pipedrive, en andersom.",
+  },
+  {
+    titel: "Afspraken laten inplannen",
+    tekst:
+      "Je stuurt een link en de klant kiest zelf een moment uit je agenda. Dat scheelt het heen en weer over donderdag.",
+  },
+  {
+    titel: "WhatsApp",
+    tekst:
+      "Je voert het gesprek vanuit Pipedrive en het blijft bij de klant staan. Het zit dan niet meer in de telefoon van één collega.",
+  },
+  {
+    titel: "Nova, de AI aan boord",
+    tekst:
+      "Nova kent je klanten en je deals, en helpt bij het voorbereiden en vastleggen van gesprekken. Wat AI verder met je gegevens kan, staat verderop.",
+  },
+  {
+    titel: "Automatiseringen",
+    tekst:
+      "Een deal die van fase verandert, zet vanzelf een taak, een mail of een update in gang. Dat is het rijtje handelingen dat iedereen na elk gesprek zou moeten doen en soms vergeet.",
+  },
+  {
+    titel: "Campaigns",
+    tekst:
+      "Nieuwsbrieven en mailcampagnes vanuit je eigen klantgegevens. Wie opent en wie klikt, zie je terug bij de klant.",
+  },
+  {
+    titel: "Projects",
+    tekst:
+      "Na de verkoop loopt het werk door in hetzelfde systeem. Een gewonnen deal wordt een project, met de planning en de taken eraan.",
+  },
+  {
+    titel: "Rapportages",
+    tekst:
+      "Dashboards met wat er in de pijplijn zit, wat er aan omzet aankomt en hoe het per verkoper loopt.",
+  },
+  {
+    titel: "Mobiele app",
+    tekst:
+      "Alles bij de hand onderweg. Een bezoek leg je vast in de auto, voor je het vergeet.",
+  },
+];
+
 export type Processtap = {
   nummer: string;
   titel: string;

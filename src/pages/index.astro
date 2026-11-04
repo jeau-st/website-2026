@@ -5,44 +5,19 @@ import Basis from "../layouts/Basis.astro";
 import Naamwissel from "../components/Naamwissel.astro";
 import Sectie from "../components/Sectie.astro";
 import Knop from "../components/Knop.astro";
-import AiStap from "../components/AiStap.astro";
 import Pijnpunt from "../components/Pijnpunt.astro";
 import Schema from "../components/Schema.astro";
 import Dienst from "../components/Dienst.astro";
 import Cyclus from "../components/Cyclus.astro";
-import Stappenbalk from "../components/Stappenbalk.astro";
-import Nastap from "../components/Nastap.astro";
-import Vraag from "../components/Vraag.astro";
 import { kiesPersoon } from "../data/namen";
-import {
-  aiStappen,
-  bedrijf,
-  diensten,
-  nabouw,
-  pijnpunten,
-  vragen,
-  werkKort,
-} from "../data/site";
-
-/* Expres ongelijk van lengte en vorm. Vier punten met hetzelfde ritme
-   lazen als een gegenereerd lijstje. Zie SCHRIJFWIJZER.md. */
-/* Alleen vrijgegeven vragen in het schema: een TODO als antwoord
-   aanbieden aan Google is erger dan de vraag weglaten. */
-const faqSchema = {
-  "@type": "FAQPage",
-  mainEntity: vragen
-    .filter((item) => !item.todo)
-    .map((item) => ({
-      "@type": "Question",
-      name: item.vraag,
-      acceptedAnswer: { "@type": "Answer", text: item.antwoord },
-    })),
-};
+import { bedrijf, diensten, pijnpunten, werkKort } from "../data/site";
 
 /* De naam in de kop is niet vast: de build kiest er een, en Naamwissel
    kiest bij elk bezoek opnieuw. Zie src/data/namen.ts. */
 const persoon = kiesPersoon();
 
+/* Expres ongelijk van lengte en vorm. Vier punten met hetzelfde ritme
+   lazen als een gegenereerd lijstje. Zie SCHRIJFWIJZER.md. */
 const kernpunten = [
   "Je proces vastgelegd in Pipedrive, voor iedereen hetzelfde",
   "Eén bron van waarheid voor je hele team",
@@ -50,12 +25,19 @@ const kernpunten = [
   "Rapportages waar je op kunt sturen",
   "Een basis die strak genoeg is voor AI",
 ];
+
+/**
+ * Elk blok hieronder zegt kort iets en wijst door naar de pagina waar het
+ * verhaal staat. Wat hier eerst voluit stond, staat nu op één plek: de
+ * processtappen, het ritme na de oplevering en de veelgestelde vragen op
+ * /aanpak, waar dit het beste werkt op /diensten, en de achtergrond op
+ * /over. Zie docs/structuurvoorstel.md.
+ */
 ---
 
 <Basis
   titel="Jeau.st: CRM, koppelingen en procesautomatisering"
   beschrijving="Joost Beers richt Pipedrive in, koppelt je systemen en automatiseert handwerk. Voor mkb en scale-ups met lange projecten, die vastlopen in losse systemen en Excel."
-  extraSchema={faqSchema}
 >
   {/* Minder lucht boven de kop dan in de andere secties, zodat de kop, de
       zin eronder en de actie samen op 1280 bij 800 passen zonder scrollen. */}
@@ -115,9 +97,21 @@ const kernpunten = [
     kop="Eerst de basis, dan AI"
     intro="AI is zo goed als de gegevens eronder. Staat je proces in een systeem en klopt wat erin staat, dan kun je er wat mee."
   >
-    <div class="mt-12 grid gap-10 md:grid-cols-3">
-      {aiStappen.map((stap) => <AiStap stap={stap} />)}
+    <div class="mt-8 max-w-2xl text-zacht">
+      <p>
+        Dat gaat op drie manieren: de AI die in je CRM zelf zit, je eigen AI
+        die rechtstreeks aan je cijfers mag, en de koppelingen waardoor je
+        systemen elkaar op de hoogte houden.
+      </p>
     </div>
+    <p class="mt-8">
+      <a
+        class="tekstlink inline-flex min-h-11 items-center text-tekst"
+        href="/pipedrive#ai"
+      >
+        Lees wat AI met je eigen gegevens doet
+      </a>
+    </p>
   </Sectie>
 
   <Sectie
@@ -130,46 +124,16 @@ const kernpunten = [
     </div>
   </Sectie>
 
-  <Sectie id="voorwie" vlak kop="Waar dit het beste werkt">
-    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
-      <p>
-        Bij bedrijven met weinig projecten die lang duren. Bouw en
-        architectuur zijn het duidelijkste voorbeeld. Een traject loopt
-        maanden, er gaat veel informatie in om, afspraken moeten vastliggen,
-        en je wilt zien wat er loopt, wat eraan komt en wat wanneer actie
-        nodig heeft.
-      </p>
-      <p>
-        De winst zit daar in de lengte van het proces en niet in de
-        aantallen. Hoe langer een traject loopt, hoe meer momenten er zijn
-        waarop iets blijft liggen omdat niemand het zag.
-      </p>
-    </div>
-  </Sectie>
-
   <Sectie
     id="volgorde"
+    vlak
     kop="De volgorde is het werk"
-    intro="In welke volgorde je dingen aanpakt, bepaalt of het werkt."
+    intro="Eerst vastleggen hoe het nu echt gaat, dan één manier van werken kiezen. Automatiseren komt daarna, en meten als laatste."
   >
-    {/* De vier stappen stonden hier ook nog eens voluit, terwijl de
-        tekening ze al noemt en /aanpak ze uitlegt. Hier dus alleen de
-        tekening en het argument eronder. */}
+    {/* De tekening noemt de vier stappen al en /aanpak legt ze uit, dus
+        hier staan ze niet ook nog eens voluit. */}
     <Cyclus />
-    <div class="mt-10 max-w-2xl space-y-4 text-zacht">
-      <p>
-        Eerst vastleggen hoe het nu echt gaat en daarna één manier van werken
-        kiezen. Sla je die stap over, dan gaat de rommel straks alleen
-        sneller. Automatiseren komt pas daarna, en alleen waar de meeste tijd
-        in gaat zitten. Meten als laatste, want je verbetert alleen waar je
-        zicht op hebt.
-      </p>
-      <p>
-        Elk rondje is kleiner dan het vorige, want er is steeds minder te
-        standaardiseren.
-      </p>
-    </div>
-    <p class="mt-8">
+    <p class="mt-10">
       <a
         class="tekstlink inline-flex min-h-11 items-center text-tekst"
         href="/aanpak#volgorde"
@@ -181,9 +145,8 @@ const kernpunten = [
 
   <Sectie
     id="diensten"
-    vlak
     kop="Wat ik doe"
-    intro="Dezelfde vier stappen, nu in wat er concreet gebouwd wordt."
+    intro="Vier soorten werk, in de volgorde waarin ik ze aanpak."
   >
     <ol class="mt-12">
       {
@@ -192,34 +155,19 @@ const kernpunten = [
         ))
       }
     </ol>
-  </Sectie>
-
-  <Sectie
-    id="proces"
-    kop="Hoe een traject loopt"
-    intro="De volgorde hierboven is de denkwijze. Zo ziet een opdracht er in de praktijk uit."
-  >
-    <Stappenbalk />
-    <p class="mt-10 text-zacht">
-      <a class="tekstlink inline-flex min-h-11 items-center text-tekst" href="/aanpak">
-        Lees wat er per stap gebeurt
+    <p class="mt-10">
+      <a
+        class="tekstlink inline-flex min-h-11 items-center text-tekst"
+        href="/diensten"
+      >
+        Bekijk alle diensten
       </a>
     </p>
   </Sectie>
 
   <Sectie
-    id="daarna"
-    vlak
-    kop="En dan gaat het pas werken"
-    intro="De oplevering is het begin. Dit is het ritme daarna."
-  >
-    <div class="mt-12 grid gap-10 md:grid-cols-3">
-      {nabouw.map((stap) => <Nastap stap={stap} />)}
-    </div>
-  </Sectie>
-
-  <Sectie
     id="werk"
+    vlak
     kop="Voorbeelden van werk"
     intro="Vier opdrachten, samengevat. Dit is wat er steeds terugkomt."
   >
@@ -253,7 +201,7 @@ const kernpunten = [
     </p>
   </Sectie>
 
-  <Sectie id="over" vlak kop="Over mij">
+  <Sectie id="over" kop="Wie dit doet">
     <div class="mt-10">
       {/* Het hele kader, dus geen kolom ernaast: liggend naast tekst wordt
           de foto zo laag dat er een streepje van overblijft. Hij staat
@@ -270,40 +218,18 @@ const kernpunten = [
       <div class="mt-10 max-w-2xl">
         <p class="text-lg text-tekst">
           Ik ben {bedrijf.persoon}, koppelkoning en procesnerd uit {bedrijf.plaats}.
-          Ik houd van systemen die met elkaar praten en van processen die
-          kloppen omdat ze doordacht zijn, niet omdat ze altijd zo gingen.
-        </p>
-        <p class="mt-4 text-zacht">
-          De afgelopen drie jaar deed ik drie volledige Pipedrive-implementaties,
-          inclusief migraties en maatwerk. Daarvoor werkte ik zeven jaar bij
-          een energieleverancier, in drie functies: Business Consultant IT,
-          teamleider sales en data-analist. Hetzelfde systeem vanuit de bouw,
-          het gebruik en de cijfers, en overal zag ik hetzelfde: wat
-          ingewikkeld is, wordt niet gebruikt.
-        </p>
-        <p class="mt-4 text-zacht">
-          Waar ik het voor doe: een klein bedrijf verdient net zo'n strak
-          proces en net zulke goede systemen als een groot bedrijf, en
-          inmiddels hoort daar ook AI bij. Bij een klein bedrijf zie ik
-          bovendien meteen wat mijn werk oplevert.
+          Drie jaar Pipedrive-implementaties, daarvoor zeven jaar Business
+          Consultant IT bij een energieleverancier.
         </p>
         <p class="mt-6">
           <a
             class="tekstlink inline-flex min-h-11 items-center text-tekst"
-            href={bedrijf.linkedin}
-            target="_blank"
-            rel="noopener"
+            href="/over"
           >
-            Laten we connecten op LinkedIn
+            Lees waar ik het heb geleerd
           </a>
         </p>
       </div>
-    </div>
-  </Sectie>
-
-  <Sectie id="vragen" kop="Veelgestelde vragen">
-    <div class="mt-10 max-w-3xl">
-      {vragen.map((item) => <Vraag item={item} />)}
     </div>
   </Sectie>
 

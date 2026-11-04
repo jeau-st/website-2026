@@ -4,14 +4,24 @@ import Woordmerk from "./Woordmerk.astro";
 import ThemaKnop from "./ThemaKnop.astro";
 import { cta } from "../data/site";
 
+/**
+ * Vijf links passen niet meer naast het woordmerk, de themaknop en de
+ * knop. Daarom staat het menu tot lg in een uitklapper en vanaf lg weer
+ * gewoon in de balk. Een details en geen eigen knop met JavaScript: zo
+ * werkt het menu ook als het script niet draait.
+ */
 const pad = Astro.url.pathname;
 const links = [
+  { href: "/diensten", tekst: "Diensten" },
   { href: "/aanpak", tekst: "Aanpak" },
   { href: "/werk", tekst: "Werk" },
+  { href: "/over", tekst: "Over" },
   { href: "/contact", tekst: "Contact" },
 ];
 
-const actief = (href: string) => pad === href || pad === `${href}/`;
+/* Een dienstpagina laat Diensten oplichten, want die hangt eronder. */
+const actief = (href: string) =>
+  pad === href || pad === `${href}/` || pad.startsWith(`${href}/`);
 ---
 
 <header class="border-b border-rand/60">
@@ -24,22 +34,28 @@ const actief = (href: string) => pad === href || pad === `${href}/`;
       <Woordmerk class="h-6 sm:h-8" />
     </a>
 
-    <nav aria-label="Hoofdmenu" class="flex items-center gap-4 sm:gap-7">
-      {
-        links.map((link) => (
-          <a
-            href={link.href}
-            aria-current={actief(link.href) ? "page" : undefined}
-            class:list={[
-              "inline-flex min-h-11 items-center text-sm hover:text-tekst",
-              actief(link.href) ? "text-tekst underline underline-offset-8 decoration-rand" : "text-zacht",
-            ]}
-          >
-            {link.tekst}
-          </a>
-        ))
-      }
+    <div class="flex items-center gap-2 sm:gap-4">
+      <nav aria-label="Hoofdmenu" class="hidden items-center gap-7 lg:flex">
+        {
+          links.map((link) => (
+            <a
+              href={link.href}
+              aria-current={actief(link.href) ? "page" : undefined}
+              class:list={[
+                "inline-flex min-h-11 items-center text-sm hover:text-tekst",
+                actief(link.href)
+                  ? "text-tekst underline underline-offset-8 decoration-rand"
+                  : "text-zacht",
+              ]}
+            >
+              {link.tekst}
+            </a>
+          ))
+        }
+      </nav>
+
       <ThemaKnop />
+
       {
         /* Zonder planner-URL staat de TODO in de hero; in het menu zou hij
            de balk uit elkaar trekken. Verbergen gebeurt op de span: de
@@ -50,6 +66,84 @@ const actief = (href: string) => pad === href || pad === `${href}/`;
           </span>
         )
       }
-    </nav>
+
+      <details class="relative lg:hidden" data-menu>
+        <summary
+          class="inline-flex min-h-11 min-w-11 cursor-pointer list-none items-center justify-center text-zacht hover:text-tekst"
+          aria-label="Menu"
+        >
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            class="size-5"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+          >
+            <path class="menu-streep" d="M3.5 7h17M3.5 12h17M3.5 17h17"></path>
+            <path class="menu-kruis hidden" d="M5.5 5.5l13 13M18.5 5.5l-13 13"
+            ></path>
+          </svg>
+        </summary>
+
+        <nav
+          aria-label="Menu"
+          class="absolute right-0 top-full z-40 mt-3 w-56 border border-rand bg-bg p-2 shadow-lg"
+        >
+          <ul>
+            {
+              links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    aria-current={actief(link.href) ? "page" : undefined}
+                    class:list={[
+                      "flex min-h-11 items-center px-3 hover:bg-vlak hover:text-tekst",
+                      actief(link.href) ? "bg-vlak text-tekst" : "text-zacht",
+                    ]}
+                  >
+                    {link.tekst}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+      </details>
+    </div>
   </div>
 </header>
+
+<style>
+  /* Safari zet standaard een driehoekje voor de summary. */
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  details[data-menu][open] .menu-streep {
+    display: none;
+  }
+  details[data-menu][open] .menu-kruis {
+    display: inline;
+  }
+</style>
+
+<script is:inline>
+  /* De uitklapper werkt zonder dit script. Dit sluit hem alleen ook bij
+     Escape en bij een klik ernaast, want dat verwacht je van een menu. */
+  (() => {
+    const menu = document.querySelector("details[data-menu]");
+    if (!menu) return;
+
+    document.addEventListener("click", (e) => {
+      if (menu.open && !menu.contains(e.target)) menu.open = false;
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && menu.open) {
+        menu.open = false;
+        menu.querySelector("summary")?.focus();
+      }
+    });
+  })();
+</script>
