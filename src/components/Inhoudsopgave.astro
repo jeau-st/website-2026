@@ -6,8 +6,8 @@
  *
  * Vanaf lg staat hij als vastgeplakte kolom naast de tekst. Daaronder
  * past geen kolom, dus daar staat hij als uitklapper boven de inhoud.
- * Het meelopen met wat je leest doet een IntersectionObserver; zonder
- * script blijft het gewoon een rijtje links dat werkt.
+ * Het meelopen met wat je leest doet het script onderaan; zonder script
+ * blijft het gewoon een rijtje links dat werkt.
  */
 export type Opgave = { id: string; tekst: string };
 
@@ -88,48 +88,84 @@ const { items } = Astro.props;
      waar hij naar wijst, dus die bestaan nog niet als dit script draait. */
   (() => {
     const start = () => {
-    const opgave = document.querySelector("[data-opgave]");
-    if (!opgave || !("IntersectionObserver" in window)) return;
+      const opgave = document.querySelector("[data-opgave]");
+      if (!opgave) return;
 
-    const links = [...opgave.querySelectorAll("[data-opgave-link]")];
-    const delen = links
-      .map((link) => document.getElementById(link.dataset.opgaveLink))
-      .filter(Boolean);
-    if (delen.length === 0) return;
+      const links = [...opgave.querySelectorAll("[data-opgave-link]")];
 
-    const aan = (id) => {
-      for (const link of links) {
-        const actief = link.dataset.opgaveLink === id;
-        /* Geen accent: dat is voor de knop en de focusring. De streep
-           links krijgt de tekstkleur, de rest houdt de rand. */
-        link.classList.toggle("border-tekst", actief);
-        link.classList.toggle("text-tekst", actief);
-        link.classList.toggle("text-zacht", !actief);
-        if (actief) link.setAttribute("aria-current", "location");
-        else link.removeAttribute("aria-current");
-      }
-    };
+      /* Waar een deel begint. De kop als die er is, anders de sectie
+         zelf: een sectie begint bij haar bovenruimte, en die is 6 rem,
+         dus daarmee zou een deel al actief worden terwijl de kop nog
+         ruim onder beeld staat. */
+      const delen = links
+        .map((link) => {
+          const id = link.dataset.opgaveLink;
+          const sectie = document.getElementById(id);
+          if (!sectie) return null;
+          return { id, merk: document.getElementById(`${id}-kop`) ?? sectie };
+        })
+        .filter(Boolean);
+      if (delen.length === 0) return;
 
-    /* Het deel dat het hoogst in beeld staat wint. Een enkele
-       zichtbaarheidsvlag flikkert heen en weer zodra twee secties
-       tegelijk in beeld zijn. */
-    const zichtbaar = new Set();
-    const waarnemer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) zichtbaar.add(entry.target.id);
-          else zichtbaar.delete(entry.target.id);
+      let huidig = null;
+      const aan = (id) => {
+        if (id === huidig) return;
+        huidig = id;
+        for (const link of links) {
+          const actief = link.dataset.opgaveLink === id;
+          /* Geen accent: dat is voor de knop en de focusring. De streep
+             links krijgt de tekstkleur, de rest houdt de rand. */
+          link.classList.toggle("border-tekst", actief);
+          link.classList.toggle("text-tekst", actief);
+          link.classList.toggle("text-zacht", !actief);
+          if (actief) link.setAttribute("aria-current", "location");
+          else link.removeAttribute("aria-current");
         }
-        const eerste = delen.find((deel) => zichtbaar.has(deel.id));
-        if (eerste) aan(eerste.id);
-      },
-      /* In pixels, want rem mag hier niet. 96 px is de hoogte van de kop
-         plus wat lucht, zodat een sectie pas meetelt als hij er echt
-         onderuit komt. */
-      { rootMargin: "-96px 0px -60% 0px" },
-    );
+      };
 
-    for (const deel of delen) waarnemer.observe(deel);
+      /* Hier stond een IntersectionObserver die het hoogste deel koos
+         dat in een band tussen de kop en 40% van het scherm viel. Tussen
+         twee koppen in zit op een rustige pagina meer lucht dan die band
+         hoog is, en dan valt er niets in: de opgave bleef hangen op het
+         vorige deel terwijl de volgende kop al bovenaan stond.
+
+         Nu is het een streep. Actief is het laatste deel waarvan de kop
+         die streep is gepasseerd, dus er is altijd precies één antwoord,
+         ook als er geen kop in beeld is. De streep staat onder de
+         vastgeplakte kop, zodat een deel omslaat op het moment dat je de
+         kop ervan onder de balk ziet verdwijnen. */
+      const streep = () => 160;
+
+      let bezig = false;
+      const meten = () => {
+        bezig = false;
+
+        /* Onderaan de pagina kan de laatste kop de streep nooit meer
+           halen, want er is niets meer om onder te schuiven. Dan hoort
+           het laatste deel actief te zijn. */
+        const onderaan =
+          window.innerHeight + window.scrollY >=
+          document.documentElement.scrollHeight - 2;
+        if (onderaan) return aan(delen[delen.length - 1].id);
+
+        const lijn = streep();
+        let gekozen = delen[0];
+        for (const deel of delen) {
+          if (deel.merk.getBoundingClientRect().top <= lijn) gekozen = deel;
+          else break;
+        }
+        aan(gekozen.id);
+      };
+
+      const plannen = () => {
+        if (bezig) return;
+        bezig = true;
+        requestAnimationFrame(meten);
+      };
+
+      meten();
+      window.addEventListener("scroll", plannen, { passive: true });
+      window.addEventListener("resize", plannen);
     };
 
     if (document.readyState === "loading") {
