@@ -5,7 +5,7 @@ import Knop from "../../components/Knop.astro";
 import Todo from "../../components/Todo.astro";
 import MetOpgave from "../../components/MetOpgave.astro";
 import Kruimels, { kruimelSchema } from "../../components/Kruimels.astro";
-import Kaart from "../../components/Kaart.astro";
+import Icoon from "../../components/Icoon.astro";
 import AiStap from "../../components/AiStap.astro";
 import {
   aiStappen,
@@ -149,12 +149,45 @@ const schema = {
   {
     dienst.extra?.includes("functies") && (
       <Sectie id="functies" vol nummer={nr.functies} kop={extraDelen.functies}>
-        <dl class="mt-10 grid gap-4 md:grid-cols-2">
+        {/* Vijf breed en twee hoog, met een icoon per functie. Geen
+            kaarten: tien omlijnde vlakken naast elkaar wegen alle tien
+            even zwaar, en dit is naslag. Alleen de haarlijn ertussen,
+            dus de cellen staan op de achtergrondkleur en niet op de
+            kaartkleur. Eén regel per functie, want in een smalle kolom
+            wordt een alinea een muur.
+
+            Vijf naast elkaar pas vanaf xl. Daaronder is de kolom naast
+            de inhoudsopgave te smal: dan valt een woord als
+            E-mailsynchronisatie middenin uit elkaar. */}
+        <dl
+          class="mt-10 grid gap-px bg-rand-zacht sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5"
+        >
           {pipedriveFuncties.map((functie) => (
-            <Kaart krap class="min-w-0">
-              <dt class="text-lg text-kop">{functie.titel}</dt>
-              <dd class="mt-2 min-w-0 text-zacht">{functie.tekst}</dd>
-            </Kaart>
+            <div class="min-w-0 bg-bg p-4">
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                class="size-5 text-zacht"
+              >
+                <Icoon naam={functie.icoon} maat={24} />
+              </svg>
+              {/* Een kolom is hier honderdveertig pixels breed, en
+                  E-mailsynchronisatie is langer dan dat. Vandaar de
+                  kleinere maat en hyphens-auto: de pagina staat op
+                  lang="nl", dus de browser breekt af met een koppelteken
+                  en op een plek waar dat mag. break-word staat er als
+                  vangnet achter, voor een browser zonder Nederlandse
+                  afbreekregels: dan breekt het woord lelijk, maar het
+                  loopt nooit de cel uit. Het gewicht houdt het de kop
+                  van de cel, al staat het op dezelfde maat als de
+                  regel. */}
+              <dt
+                class="mt-3 hyphens-auto text-sm font-medium text-tekst [overflow-wrap:break-word]"
+              >
+                {functie.titel}
+              </dt>
+              <dd class="mt-1.5 min-w-0 text-sm text-zacht">{functie.tekst}</dd>
+            </div>
           ))}
         </dl>
         <p class="mt-10 max-w-2xl text-zacht">

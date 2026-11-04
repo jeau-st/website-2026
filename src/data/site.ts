@@ -442,64 +442,71 @@ export const aiStappen: AiStap[] = [
 
 export type Functie = {
   titel: string;
+  /** Het Lucide-icoon uit `src/icons`, zonder .svg. Zie Icoon.astro. */
+  icoon: string;
   tekst: string;
 };
 
 /**
- * Wat er in Pipedrive zit, voor de CRM-inrichting. Bewust zonder abonnementen en
- * zonder prijzen: wat er in welk pakket zit verandert sneller dan wat de
- * functie doet, en prijzen staan niet op deze site. Geen partnerschap
- * claimen: zie docs/brand-persona.md.
+ * Wat er in Pipedrive zit, voor de CRM-inrichting. Bewust zonder
+ * abonnementen en zonder prijzen: wat er in welk pakket zit verandert
+ * sneller dan wat de functie doet, en prijzen staan niet op deze site.
+ * Geen partnerschap claimen: zie docs/brand-persona.md.
+ *
+ * Eén regel per functie. Dit is naslag en geen betoog: je leest het rijtje
+ * af om te zien wat er in zit, en wat je ervan gebruikt volgt uit je
+ * proces. Daar gaat de rest van de pagina over.
  */
 export const pipedriveFuncties: Functie[] = [
   {
     titel: "E-mailsynchronisatie",
-    tekst:
-      "Je mailbox hangt aan Pipedrive. Elke mail komt bij de juiste klant en de juiste deal te staan, ook die van je collega.",
+    icoon: "mail",
+    tekst: "Elke mail bij de juiste klant en de juiste deal, ook die van je collega.",
   },
   {
     titel: "Agendakoppeling",
+    icoon: "calendar",
     tekst: "Afspraken uit Outlook of Google staan in Pipedrive, en andersom.",
   },
   {
     titel: "Afspraken laten inplannen",
-    tekst:
-      "Je stuurt een link en de klant kiest zelf een moment uit je agenda. Dat scheelt het heen en weer over donderdag.",
+    icoon: "calendar-check",
+    tekst: "Je stuurt een link en de klant kiest zelf een moment uit je agenda.",
   },
   {
     titel: "WhatsApp",
-    tekst:
-      "Je voert het gesprek vanuit Pipedrive en het blijft bij de klant staan. Het zit dan niet meer in de telefoon van één collega.",
+    icoon: "message-square",
+    tekst: "Het gesprek blijft bij de klant staan en niet in de telefoon van één collega.",
   },
   {
     titel: "Nova, de AI aan boord",
-    tekst:
-      "Nova kent je klanten en je deals, en helpt bij het voorbereiden en vastleggen van gesprekken. Wat AI verder met je gegevens kan, staat verderop.",
+    icoon: "sparkles",
+    tekst: "Kent je klanten en je deals, en helpt gesprekken voorbereiden en vastleggen.",
   },
   {
     titel: "Automatiseringen",
-    tekst:
-      "Een deal die van fase verandert, zet vanzelf een taak, een mail of een update in gang. Dat is het rijtje handelingen dat iedereen na elk gesprek zou moeten doen en soms vergeet.",
+    icoon: "zap",
+    tekst: "Een deal die van fase verandert, zet vanzelf een taak of een mail in gang.",
   },
   {
     titel: "Campaigns",
-    tekst:
-      "Nieuwsbrieven en mailcampagnes vanuit je eigen klantgegevens. Wie opent en wie klikt, zie je terug bij de klant.",
+    icoon: "megaphone",
+    tekst: "Nieuwsbrieven uit je eigen klantgegevens. Wie opent en klikt, zie je terug.",
   },
   {
     titel: "Projects",
-    tekst:
-      "Na de verkoop loopt het werk door in hetzelfde systeem. Een gewonnen deal wordt een project, met de planning en de taken eraan.",
+    icoon: "folder-kanban",
+    tekst: "Een gewonnen deal wordt een project, met de planning en de taken eraan.",
   },
   {
     titel: "Rapportages",
-    tekst:
-      "Dashboards met wat er in de pijplijn zit, wat er aan omzet aankomt en hoe het per verkoper loopt.",
+    icoon: "chart-column",
+    tekst: "Wat er in de pijplijn zit, wat er aan omzet aankomt en hoe het per verkoper loopt.",
   },
   {
     titel: "Mobiele app",
-    tekst:
-      "Alles bij de hand onderweg. Een bezoek leg je vast in de auto, voor je het vergeet.",
+    icoon: "smartphone",
+    tekst: "Een bezoek leg je vast in de auto, voor je het vergeet.",
   },
 ];
 
