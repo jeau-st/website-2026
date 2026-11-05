@@ -51,6 +51,28 @@ jobs:
       # Zonder dit bestand in het artefact vergeet Pages bij elke uitrol
       # welk domein erbij hoort en valt hij terug op github.io.
       - run: echo jeau.st > dist/client/CNAME
+      # De omleiding van /pipedrive staat in _redirects, en dat bestand
+      # leest alleen Cloudflare. Die URL stond in de voet, in llms.txt en
+      # in de sitemap, dus hij mag niet doodlopen. Pages kan geen 301,
+      # dus hier een pagina die zichzelf doorstuurt.
+      - run: |
+          mkdir -p dist/client/pipedrive
+          cat > dist/client/pipedrive/index.html <<'HTML'
+          <!doctype html>
+          <html lang="nl">
+            <head>
+              <meta charset="utf-8" />
+              <title>Verhuisd</title>
+              <link rel="canonical" href="https://jeau.st/diensten/crm-inrichting/" />
+              <meta http-equiv="refresh" content="0; url=/diensten/crm-inrichting/" />
+              <meta name="robots" content="noindex" />
+            </head>
+            <body>
+              <p>Deze pagina staat nu bij
+                <a href="/diensten/crm-inrichting/">CRM-inrichting</a>.</p>
+            </body>
+          </html>
+          HTML
       - uses: actions/configure-pages@v5
       # De Cloudflare-adapter zet de pagina's in dist/client en de Worker
       # in dist/server. Alleen het eerste is een statische site.
