@@ -28,6 +28,7 @@ const kleur = {
   tekst: "#f4f6f7",
   kop: "#c4d0d8",
   zacht: "#6d8595",
+  accent: "#c76a19",
 };
 
 const fontmap = "./.astro/fonts";
@@ -69,17 +70,27 @@ function naarTtf(voorvoegsel, naam) {
 const titelfont = naarTtf("font-manrope-600-normal-latin-", "manrope");
 const mono = naarTtf("font-ibm-plex-mono-400-normal-latin-", "mono");
 
-/** Het woordmerkpad uit de component, zodat er één bron van waarheid is. */
+/**
+ * De paden uit de component, zodat er één bron van waarheid is. Het zijn er
+ * twee: het merk staat in zacht en het blokje rechtsonder in de punt in het
+ * accent. De tokens bestaan hier niet, dus het worden de donkere waarden,
+ * want deze plaat staat altijd in het donkere thema.
+ */
 const woordmerk = readFileSync("src/components/Woordmerk.astro", "utf8");
-const pad = woordmerk.match(/<path d="([^"]+)"/)?.[1];
-if (!pad) throw new Error("Geen pad gevonden in Woordmerk.astro.");
+const paden = [...woordmerk.matchAll(/<path([^>]*?)d="([^"]+)"/g)].map(
+  ([, attributen, d]) => ({
+    d,
+    vulling: attributen.includes("--color-accent") ? kleur.accent : kleur.zacht,
+  }),
+);
+if (paden.length === 0) throw new Error("Geen pad gevonden in Woordmerk.astro.");
 
 const merkBreedte = 440;
 const merkHoogte = Math.round((merkBreedte * 903) / 3485);
 
 const merk = await sharp(
   Buffer.from(
-    `<svg xmlns="http://www.w3.org/2000/svg" width="${merkBreedte}" height="${merkHoogte}" viewBox="-39 -705 3485 903"><path fill="${kleur.tekst}" d="${pad}"/></svg>`,
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${merkBreedte}" height="${merkHoogte}" viewBox="-39 -705 3485 903">${paden.map((p) => `<path fill="${p.vulling}" d="${p.d}"/>`).join("")}</svg>`,
   ),
 )
   .png()

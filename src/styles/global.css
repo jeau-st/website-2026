@@ -56,7 +56,6 @@
   --c-kop: #c4d0d8;
   --c-accent: #c76a19;
   --c-op-accent: #090e11;
-  --c-merk: #f4f6f7;
 }
 
 :root[data-thema="licht"] {
@@ -72,7 +71,6 @@
   --c-kop: #28353e;
   --c-accent: #a75915;
   --c-op-accent: #f8fafc;
-  --c-merk: #101519;
 }
 
 @theme {
@@ -111,11 +109,6 @@
   --color-kop: var(--c-kop);
   --color-accent: var(--c-accent);
   --color-op-accent: var(--c-op-accent);
-  /* Alleen het woordmerk. Zwart in licht en wit in donker, dezelfde
-     waarde als de tekst. Apart benoemd zodat je het woordmerk kunt
-     verzetten zonder de tekst, en andersom. */
-  --color-merk: var(--c-merk);
-
   /* Vaste merkkleuren, alleen waar een kleur per se niet mag wisselen.
      Het percentage is het aandeel van het doek dat deze cluster beslaat. */
   --color-inkt: #272b34; /* 3,8%, het diepste blauwzwart in de jas */
