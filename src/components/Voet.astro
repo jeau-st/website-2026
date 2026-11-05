@@ -8,20 +8,28 @@ import { bedrijf, diensten } from "../data/site";
  * laatste staat helemaal rechts, want het is het minst waarvoor je komt
  * en het meest waarnaar je zoekt als je het nodig hebt.
  *
- * De links in de derde kolom lopen van buiten naar binnen: eerst mail en
- * LinkedIn, waarmee je iemand bereikt, dan de pagina's die over de zaak
- * zelf gaan. `min-h-11` op elke link maakt er een aanraakvlak van; in een
- * rijtje van vijf is dat het verschil tussen mikken en tikken.
+ * De derde kolom gaat naar buiten: LinkedIn, en dan de pagina's die over
+ * de zaak zelf gaan. `min-h-11` op elke link maakt er een aanraakvlak
+ * van, want in een rijtje op een telefoon is dat het verschil tussen
+ * mikken en tikken.
  *
- * De bedrijfsgegevens zijn geen links en staan dus als tekst, net als op
- * de contactpagina.
+ * De bedrijfsgegevens staan als tekst, net als op de contactpagina. De
+ * mail staat daar ook, want het is een gegeven en geen bestemming, ook
+ * al kun je erop klikken.
  */
 
 const jaar = new Date().getFullYear();
 
-/** Eén klasse voor alle links in de voet, anders staat hij er acht keer. */
+/**
+ * Eén klasse voor alle links in de voet, anders staat hij er acht keer.
+ *
+ * Geen onderstreping hier, anders staat de voet vol strepen. Wat de
+ * link aanwijsbaar maakt is de kleur die naar de tekstkleur gaat, en op
+ * een telefoon `drukbaar`: daar bestaat hover niet, en zonder streep is
+ * er dan niets meer dat zegt dat er iets gebeurt.
+ */
 const link =
-  "tekstlink inline-flex min-h-11 items-center hover:text-tekst";
+  "drukbaar inline-flex min-h-11 items-center transition-colors hover:text-tekst";
 ---
 
 <footer class="border-t border-rand/60 px-4 pb-28 pt-14 sm:px-6 sm:pb-14">
@@ -54,11 +62,6 @@ const link =
       <h2 class="text-sm font-semibold">Links</h2>
       <ul class="mt-2 space-y-1 text-sm text-zacht">
         <li>
-          <a class={link} href={`mailto:${bedrijf.email}`}>
-            {bedrijf.email}
-          </a>
-        </li>
-        <li>
           <a
             class={link}
             href={bedrijf.linkedin}
@@ -79,6 +82,11 @@ const link =
       <div class="mt-2 space-y-1 text-sm text-zacht">
         <p>{bedrijf.straat}</p>
         <p>{bedrijf.postcode}&nbsp;{bedrijf.plaats}</p>
+        <p class="min-w-0 break-words">
+          <a class={link} href={`mailto:${bedrijf.email}`}>
+            {bedrijf.email}
+          </a>
+        </p>
         <p>KvK&nbsp;{bedrijf.kvk}</p>
       </div>
 
