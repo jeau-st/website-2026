@@ -75,7 +75,12 @@ const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
   {/* Geen onderruimte: de cijferband eronder brengt zijn eigen lucht
       mee, aan beide kanten. Twee blokken die allebei iets bijdragen
       tellen op tot een gat waar niemand op gestuurd heeft. */}
-  <section class="px-4 pb-0 pt-14 sm:px-6 sm:pt-16 lg:pt-10">
+  {/* De ruimte tussen de kop van de site en de h1. Die stond op lg op
+      40, zodat de hero met de ring op 1280 bij 800 in beeld paste, maar
+      daarmee plakte de titel aan de balk. Nu dezelfde 80 en 96 als op de
+      andere pagina's, zonder uitzondering voor lg. Gemeten op 1280 bij
+      800: de knop en de regel eronder blijven zichtbaar. */}
+  <section class="px-4 pb-0 pt-20 sm:px-6 sm:pt-24">
     <div
       class="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-[minmax(0,0.55fr)_minmax(0,0.45fr)] lg:gap-10"
     >
@@ -153,8 +158,12 @@ const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
 
       Geen kop erboven. De labels Wie, Wat en Waar zeggen al wat dit is,
       en een kop die "In het kort" heet boven een rijtje dat zichzelf
-      aankondigt is een regel die niets toevoegt. */}
-  <Sectie id="kort" aansluitend>
+      aankondigt is een regel die niets toevoegt.
+
+      Wel de volle ruimte erboven en dus geen `aansluitend`. Dit is een
+      eigen onderwerp en geen staartje van de cijferband: zonder die
+      ruimte zie je de hero, de band en dit rijtje aan voor één blok. */}
+  <Sectie id="kort">
     {/* Haarlijnen, geen vlakken. Dit is tekst die je leest, en een rand
         eromheen maakt er zes kaartjes van die je zou kunnen indrukken.
 

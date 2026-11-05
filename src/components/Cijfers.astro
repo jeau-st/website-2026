@@ -59,10 +59,13 @@ const getallen = [
 const opmaak = new Intl.NumberFormat(cijfercode[taal]);
 ---
 
-{/* Alleen bovenruimte, net als een Sectie: de band hoort bij de hero,
-    dus dat is de kleine maat, 56 px oplopend naar 64. De lucht eronder
-    komt van de sectie die volgt, en die staat op dezelfde maat. */}
-<section class="px-4 pt-14 sm:px-6 sm:pt-16">
+{/* Alleen bovenruimte, net als een Sectie, en op de grote maat: 112 px
+    oplopend naar 128. De band hoort niet bij de hero. Hij stond eerst op
+    de kleine maat, en dan lezen de hero, de band en de samenvatting
+    eronder als één blok met drie regels in plaats van drie dingen die
+    los van elkaar iets zeggen. De lucht eronder komt van de sectie die
+    volgt, en die staat op dezelfde maat. */}
+<section class="px-4 pt-28 sm:px-6 sm:pt-32">
   <dl
     class="mx-auto grid max-w-5xl grid-cols-2 gap-px overflow-hidden rounded-groot bg-rand-zacht sm:grid-cols-4"
     data-cijfers
