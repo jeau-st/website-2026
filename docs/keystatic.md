@@ -63,33 +63,52 @@ Draait er al een dev server, dan start de tweede niet. Eerst
 ## Live opslaan via GitHub
 
 Op de live site schrijft Keystatic niet op schijf maar maakt hij een
-commit in `jeau-st/website-2026`. Daarvoor is een GitHub App nodig. Dat
-is nog niet gedaan; dit zijn de stappen.
+commit in `jeau-st/website-2026`. Dat staat ingericht:
 
-1. Ga naar `/keystatic/setup` op de site en doorloop de wizard. GitHub
-   maakt dan een App aan met de juiste rechten en stuurt je terug met de
-   drie waarden.
-2. Zet ze lokaal in `.env.local` (zie `.env.example`), zodat je het kunt
-   proberen zonder uit te rollen.
-3. Zet dezelfde waarden op de Worker:
-
-   ```
-   npx wrangler secret put KEYSTATIC_GITHUB_CLIENT_ID
-   npx wrangler secret put KEYSTATIC_GITHUB_CLIENT_SECRET
-   npx wrangler secret put KEYSTATIC_SECRET
-   ```
-
-   `PUBLIC_KEYSTATIC_GITHUB_APP_SLUG` is geen secret maar wordt bij de
-   build in de pagina gebakken. Die hoort dus bij de buildvariabelen van
-   Cloudflare, niet bij de secrets.
-4. Zet in Cloudflare een build op bij elke push naar `main`
-   (Workers Builds). Zonder dat verandert er na een commit uit het CMS
-   niets aan de site: de pagina's zijn statisch en worden bij de build
-   gemaakt.
+- De GitHub App heet **jeau-st Keystatic**, staat onder de organisatie
+  `jeau-st` en is geinstalleerd op de repo website-2026.
+- De drie sleutels staan in `.env` voor lokaal en als secret op de
+  Worker. Nakijken welke er staan: `npx wrangler secret list`. De
+  waarden zelf zijn niet meer op te vragen; raak je ze kwijt, dan maak
+  je in de App-instellingen een nieuw clientgeheim aan.
+- De slug `jeau-st-keystatic` staat in `astro.config.mjs` en niet in
+  `.env`. Hij is niet geheim, hij staat gewoon in de openbare URL
+  https://github.com/apps/jeau-st-keystatic. Zo kan een build hem niet
+  missen en hoeft hij nergens als variabele bij.
 
 Wie kan opslaan, bepaalt GitHub: iedereen met schrijfrechten op de repo.
-`/keystatic` zelf is openbaar bereikbaar, maar zonder zo'n account kom
-je niet verder dan het inlogscherm.
+`/keystatic` is openbaar bereikbaar, maar zonder zo'n account kom je
+niet verder dan het inlogscherm.
+
+### Moet je het ooit opnieuw doen
+
+De setup-wizard draait alleen op een dev server op Node. In de
+Worker-build staat letterlijk "App setup only allowed in development",
+dus op de live site loopt hij dood zodra GitHub je terugstuurt. Start
+dan:
+
+```
+npm run cms -- --github
+```
+
+Dat is dezelfde Node-server, maar met GitHub-opslag in plaats van
+opslaan op schijf. Ga naar `/keystatic/setup`, vul bij Deployed App URL
+de live URL in en bij organisatie `jeau-st`, en laat GitHub de App
+aanmaken. De sleutels komen in `.env`; zet ze daarna met
+`npx wrangler secret put` ook op de Worker.
+
+### Wat er nog niet staat
+
+Een build bij elke push naar `main`, via Workers Builds in het
+Cloudflare-dashboard. Zonder dat verandert er na een commit uit het CMS
+niets aan de site: de pagina's zijn statisch en worden bij de build
+gemaakt. Tot die tijd rol je na een wijziging zelf uit met
+`npm run deploy`.
+
+Het buildcommando is `npm run build`, het deploycommando
+`npx wrangler deploy -c dist/server/wrangler.json`. Omgevingsvariabelen
+zijn er niet voor nodig: de sleutels zijn Worker-secrets en worden pas
+bij het draaien gelezen, en de slug staat in de config.
 
 ## Als er iets stukgaat
 
