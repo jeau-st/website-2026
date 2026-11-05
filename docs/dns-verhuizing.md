@@ -18,6 +18,17 @@ misgaat als er een record wegvalt.
 Tot dat moment draait de site op
 `https://website-2026.joostbeers.workers.dev`.
 
+## Waar het nu staat
+
+Bijgewerkt op 5 november 2026.
+
+Stap 1 tot en met 3 zijn gedaan. De zone staat compleet in Cloudflare,
+gecontroleerd tegen de export, en alles staat op DNS only. Stap 4 is
+geprobeerd en geweigerd door de registry: zie daar.
+
+De delegatie staat dus nog bij Cloud86 en er is voor bezoekers en mail
+niets veranderd.
+
 ## Wat er nu staat
 
 Opgevraagd bij `ns1.cloud86.nl`, de autoritatieve nameserver, op
@@ -42,7 +53,24 @@ Opgevraagd bij `ns1.cloud86.nl`, de autoritatieve nameserver, op
 
 Er staat geen CAA-record en geen MTA-STS.
 
-**Deze lijst is niet de waarheid.** Hij is van buitenaf opgebouwd door
+**Deze lijst was niet de waarheid.** De export uit stap 1 bracht zes
+records aan het licht die hier niet in stonden, en die ook de scan van
+Cloudflare niet vond:
+
+| Naam | Type | TTL | Waarde |
+| --- | --- | --- | --- |
+| `bbc` | A | 14400 | `45.82.191.53` |
+| `citadel` | A | 14400 | `45.82.191.53` |
+| `atlassian-c75f7b._domainkey` | CNAME | 14400 | `atlassian-c75f7b.dkim.atlassian.net` |
+| `atlassian-877420._domainkey` | CNAME | 14400 | `atlassian-877420.dkim.atlassian.net` |
+| `atlassian-bounces` | CNAME | 14400 | `bounces.mail-us.atlassian.net` |
+| `service` | CNAME | 14400 | `edge.redirect.pizza` |
+
+Drie daarvan hangen aan mail. Was de verhuizing op de scan van Cloudflare
+gebaseerd, dan was de DKIM-ondertekening van alles wat Jira en Confluence
+versturen stilletjes omgevallen. Dit is de reden dat stap 1 stap 1 is.
+
+Waarom je ze van buitenaf niet ziet: Hij is van buitenaf opgebouwd door
 namen af te lopen die vaak voorkomen. Een record met een naam die niet in
 die lijst stond, zie je hier niet: DNS laat je niet vragen wat er allemaal
 in een zone zit, alleen of een bepaalde naam bestaat. De echte bron is de
@@ -57,6 +85,16 @@ bestand. Bewaar hem buiten de repo. Leg hem naast de tabel hierboven en
 noteer wat er extra in staat: dat is precies wat je anders kwijtraakt.
 
 ### 2. Zet de TTL's omlaag
+
+**Overgeslagen op 5 november 2026.** Niet omdat het niet hoefde, maar
+omdat er een goedkopere zekerheid bleek te zijn: beide nameserversets
+serveren nu exact dezelfde data, gecontroleerd op alle 17 naam- en
+typeparen. Tijdens de overlap kan er dus niets kapot, want welke van de
+twee een resolver ook te pakken krijgt, hij krijgt hetzelfde antwoord.
+
+Blijft staan dat een terugval hierdoor tot 3 uur kan duren, de TTL van de
+delegatie bij de .ST-registry. Ga je alsnog iets wijzigen aan de records
+voordat de delegatie om is, doe deze stap dan eerst.
 
 Zet de TTL van alles op 300 seconden, minstens een etmaal voordat je de
 nameservers omzet. De TTL's staan nu op 4 tot 24 uur, en zonder deze stap
@@ -98,6 +136,33 @@ Cloud86.
 Vanaf hier serveert Cloudflare de zone. De site staat op dat moment nog
 op GitHub Pages, want de A-records van `jeau.st` wijzen daar nog heen. Dat
 is expres: je verhuist eerst DNS, en pas daarna de site.
+
+**Hier liep het vast.** `jeau.st` staat bij nic.st, de registry van .ST
+zelf. Cloudflare wees `candy.ns.cloudflare.com` en
+`kenneth.ns.cloudflare.com` toe. Het formulier antwoordde:
+
+```
+Unable to process host kenneth.ns.cloudflare.com. Operation not permitted
+```
+
+De wijziging is niet doorgevoerd; de velden sprongen terug naar Cloud86.
+
+De .ST-registry werkt met host objects: een nameserver is daar een apart
+geregistreerd object en niet zomaar een stuk tekst bij je domein. De
+foutmelding noemt alleen `kenneth`, terwijl die als tweede werd
+ingediend, dus `candy` kwam er wel doorheen. Allebei resolven ze normaal
+van buitenaf. Dat wijst op een host object dat bij de registry nog niet
+bestaat en dat het klantpaneel niet zelf mag aanmaken.
+
+Niet doen: ze een voor een proberen om te zien welke wel wordt
+geaccepteerd. Zodra zo'n poging slaagt staat het domein op één
+nameserver en is de verhuizing half gebeurd, met de zakelijke mail eraan.
+
+Opgelost via ticket **#104477** bij nic.st, afdeling Support, 5 november
+2026: of zij registreren het host object, of ze zetten de nameservers aan
+hun kant om. Lukt dat niet, dan is de omweg Cloudflare om een ander
+nameserverpaar vragen, in de hoop dat die namen bij de registry wel
+bekend zijn.
 
 ### 5. Controleer de mail voordat je verdergaat
 

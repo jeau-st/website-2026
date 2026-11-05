@@ -14,7 +14,6 @@ hieronder staat, is werk dat nog moet gebeuren voordat de site live kan.
 | Wat | Waar | Toelichting |
 | --- | --- | --- |
 | Cloudflare Web Analytics | Keystatic, Bedrijfsgegevens, veld Analyticstoken | Cookieloos, dus geen cookiemelding nodig. De beacon laadt alleen met een token. |
-| Build bij elke push naar `main` | Cloudflare-dashboard, Workers Builds | Keystatic slaat live op als commit in GitHub, maar zonder deze build verandert de site daar niet van: de pagina's zijn statisch. Tot die tijd na een wijziging zelf `npm run deploy`. Commando's in `docs/keystatic.md`. |
 | Domein jeau.st koppelen | Cloudflare-dashboard | De zone staat bij Cloud86 en moet naar Cloudflare voordat dit kan. Draaiboek in `docs/dns-verhuizing.md`. De site staat intussen live op https://website-2026.joostbeers.workers.dev. |
 
 ## Gecontroleerd en akkoord

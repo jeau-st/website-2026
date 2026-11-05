@@ -97,18 +97,36 @@ de live URL in en bij organisatie `jeau-st`, en laat GitHub de App
 aanmaken. De sleutels komen in `.env`; zet ze daarna met
 `npx wrangler secret put` ook op de Worker.
 
-### Wat er nog niet staat
+### Wat er daarna gebeurt
 
-Een build bij elke push naar `main`, via Workers Builds in het
-Cloudflare-dashboard. Zonder dat verandert er na een commit uit het CMS
-niets aan de site: de pagina's zijn statisch en worden bij de build
-gemaakt. Tot die tijd rol je na een wijziging zelf uit met
-`npm run deploy`.
+Niets meer, met de hand. Sinds 5 november 2026 staat Workers Builds aan:
+Cloudflare bouwt en rolt uit bij elke push naar `main`, dus ook bij een
+commit die Keystatic zelf maakt. Dat is nodig omdat de pagina's statisch
+zijn en bij de build worden gemaakt; de commit alleen verandert de site
+niet.
 
-Het buildcommando is `npm run build`, het deploycommando
-`npx wrangler deploy -c dist/server/wrangler.json`. Omgevingsvariabelen
-zijn er niet voor nodig: de sleutels zijn Worker-secrets en worden pas
-bij het draaien gelezen, en de slug staat in de config.
+Zo staat het ingesteld:
+
+| Veld | Waarde |
+| --- | --- |
+| Repository | `jeau-st/website-2026` |
+| Productiebranch | `main` |
+| Buildcommando | `npm run build` |
+| Deploycommando | `npx wrangler deploy -c dist/server/wrangler.json` |
+| Versiecommando | `npx wrangler versions upload -c dist/server/wrangler.json` |
+
+De `-c` is geen franje. De build schrijft de Worker naar `dist/server`
+met zijn eigen `wrangler.json` ernaast; zonder dat pad pakt wrangler de
+config in de wortel, en daar staat alleen de naam en de
+compatibiliteitsdatum in.
+
+Omgevingsvariabelen zijn er niet voor nodig: de sleutels zijn
+Worker-secrets en worden pas bij het draaien gelezen, en de slug staat
+in `astro.config.mjs`.
+
+De GitHub-app van Cloudflare staat op de organisatie `jeau-st` en is
+beperkt tot deze ene repository. `npm run deploy` werkt nog gewoon, voor
+als je niet op een build wilt wachten.
 
 ## Als er iets stukgaat
 
