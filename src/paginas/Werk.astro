@@ -1,0 +1,66 @@
+---
+import Basis from "../layouts/Basis.astro";
+import Sectie from "../components/Sectie.astro";
+import MetOpgave from "../components/MetOpgave.astro";
+import Knop from "../components/Knop.astro";
+import Case from "../components/Case.astro";
+import Todo from "../components/Todo.astro";
+import { site } from "../data/site";
+import type { Taal } from "../data/taal";
+import { teksten } from "../data/teksten";
+
+interface Props {
+  taal: Taal;
+}
+
+const { taal } = Astro.props;
+const t = teksten[taal];
+const { cases } = site(taal);
+
+const vrijgegeven = cases.filter((item) => !item.todo);
+
+/* Deze pagina heeft maar een sectie, dus de inhoudsopgave wijst naar de
+   cases zelf. De nummers lopen gelijk met de nummers in de lijst. Een
+   case die nog een TODO is, krijgt geen regel in de opgave: daar valt
+   nog niets te lezen. */
+const opgave = cases
+  .map((item, i) => ({
+    id: `case-${String(i + 1).padStart(2, "0")}`,
+    tekst: item.titel,
+    todo: item.todo,
+  }))
+  .filter((item) => !item.todo);
+---
+
+<Basis titel={t.werk.titel} beschrijving={t.werk.beschrijving}>
+  <section class="px-4 py-20 sm:px-6 sm:py-24">
+    <div class="mx-auto max-w-5xl">
+      <h1 class="max-w-3xl text-4xl sm:text-5xl lg:text-6xl">{t.werk.kop}</h1>
+      <p class="mt-6 max-w-2xl text-lg text-zacht">{t.werk.intro}</p>
+    </div>
+  </section>
+
+  <MetOpgave items={opgave}>
+  <Sectie id="cases" vol>
+    {vrijgegeven.length === 0 && <Todo wat={t.werk.todo} />}
+    <ol class="mt-8 grid gap-px bg-rand-zacht">
+      {
+        cases.map((item, i) => (
+          <Case item={item} nummer={String(i + 1).padStart(2, "0")} />
+        ))
+      }
+    </ol>
+  </Sectie>
+
+  </MetOpgave>
+
+  <Sectie id="plannen">
+    <div class="max-w-2xl">
+      <h2 class="text-3xl sm:text-4xl">{t.werk.plannenKop}</h2>
+      <p class="mt-4 text-lg text-zacht">{t.werk.plannenTekst}</p>
+      <div class="mt-8">
+        <Knop toonToelichting />
+      </div>
+    </div>
+  </Sectie>
+</Basis>

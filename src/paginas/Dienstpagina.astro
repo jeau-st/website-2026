@@ -1,0 +1,253 @@
+---
+import Basis from "../layouts/Basis.astro";
+import Sectie from "../components/Sectie.astro";
+import Knop from "../components/Knop.astro";
+import Todo from "../components/Todo.astro";
+import MetOpgave from "../components/MetOpgave.astro";
+import Kruimels, { kruimelSchema } from "../components/Kruimels.astro";
+import Icoon from "../components/Icoon.astro";
+import AiStap from "../components/AiStap.astro";
+import { bedrijf, site, type Dienst } from "../data/site";
+import { dienstPad, routes, type Taal } from "../data/taal";
+import { teksten, vul } from "../data/teksten";
+import Doorlink from "../components/Doorlink.astro";
+
+/**
+ * Een eigen pagina per dienst. Dat is geen opmaakkeuze maar een
+ * vindbaarheidskeuze: een zoekopdracht gaat over één onderwerp, en een
+ * pagina die over vijf dingen gaat verliest het van een pagina die over
+ * één ding gaat. Elke pagina heeft dus een eigen title, beschrijving en
+ * Service-schema.
+ *
+ * Een dienst zonder verhaalblok heeft alleen de regel en de bullets uit
+ * de lijst op de homepage. Dat is te weinig om op te ranken, dus die
+ * pagina draagt een TODO tot Joost het aanvult. Zie OPLEVERING.md.
+ *
+ * Een dienst kan daarnaast `extra` blokken hebben. Dat zijn de twee
+ * stukken van de oude pagina /pipedrive: wat er in Pipedrive zit en wat
+ * AI met je eigen gegevens doet. Die pagina ging over het product en
+ * niet over het werk, dus hij is opgegaan in de CRM-inrichting. Ze staan
+ * achter het verhaal en voor de verwijzingen, want ze zijn naslag en
+ * geen betoog.
+ *
+ * De id's van de secties zijn niet vertaald. Een anker is geen tekst die
+ * iemand leest, en zo blijft een link naar #functies in beide talen
+ * werken.
+ */
+interface Props {
+  taal: Taal;
+  dienst: Dienst;
+}
+
+const { taal, dienst } = Astro.props;
+const t = teksten[taal];
+const { aiStappen, diensten, pipedriveFuncties } = site(taal);
+
+const anderen = diensten.filter((item) => item.slug !== dienst.slug);
+
+/* Een dienstpagina hangt onder /diensten. Dat staat nu boven de kop en
+   in het schema, uit dezelfde lijst. */
+const kruimels = [
+  { tekst: bedrijf.naam, href: routes.home[taal] },
+  { tekst: t.kop.menuLinks.diensten, href: routes.diensten[taal] },
+  { tekst: dienst.titel },
+];
+
+/* De inhoudsopgave volgt de secties van deze pagina: het lijstje met wat
+   je krijgt, de verhaalblokken uit de yaml, en de verwijzing naar de rest.
+   Een dienst zonder verhaal houdt er twee over, en dan laat de
+   Inhoudsopgave zichzelf weg. */
+const extraDelen = {
+  functies: t.dienst.functies,
+  ai: t.dienst.ai,
+} as const;
+
+const opgave = [
+  { id: "watkrijgje", tekst: t.dienst.watKrijgJe },
+  ...(dienst.verhaal ?? []).map((blok, i) => ({
+    id: `hoe-${i + 1}`,
+    tekst: blok.kop,
+  })),
+  ...(dienst.extra ?? []).map((id) => ({ id, tekst: extraDelen[id] })),
+  { id: "verder", tekst: t.dienst.verder },
+];
+
+/* Hetzelfde nummer in de kantlijn als in de inhoudsopgave, afgeleid uit
+   dezelfde lijst, zodat de twee niet uit elkaar kunnen lopen. */
+const nr = Object.fromEntries(opgave.map((deel, i) => [deel.id, i + 1]));
+
+const schema = {
+  "@type": "Service",
+  name: dienst.titel,
+  description: dienst.meta,
+  serviceType: dienst.titel,
+  provider: { "@id": `${Astro.site}#bedrijf` },
+  areaServed: [
+    { "@type": "City", name: bedrijf.plaats },
+    { "@type": "Country", name: t.algemeen.land },
+  ],
+};
+---
+
+<Basis
+  titel={`${dienst.kop} | ${bedrijf.naam}`}
+  beschrijving={dienst.meta}
+  extraSchema={[schema, kruimelSchema(kruimels, Astro.site)]}
+>
+  <section class="px-4 py-20 sm:px-6 sm:py-24">
+    <div class="mx-auto max-w-5xl">
+      <Kruimels kruimels={kruimels} />
+      <h1 class="mt-3 max-w-3xl text-4xl sm:text-5xl lg:text-6xl">{dienst.kop}</h1>
+      <p class="mt-6 max-w-2xl text-lg text-zacht">{dienst.tekst}</p>
+      {
+        dienst.voorWie && (
+          <p class="mt-4 max-w-2xl text-zacht">{dienst.voorWie}</p>
+        )
+      }
+    </div>
+  </section>
+
+  <MetOpgave items={opgave}>
+  <Sectie
+    id="watkrijgje"
+    vol
+    nummer={nr.watkrijgje}
+    kop={t.dienst.watKrijgJe}
+  >
+    {/* Twee rijtjes naast elkaar, zonder vlak eromheen. Dit stond als
+        omlijnd raster van cellen op de pagina, en een vlak hoort volgens
+        CLAUDE.md bij iets dat je aanwijst of indrukt. Dit is een rijtje
+        dat je leest, dus het zijn gewone opsommingen.
+
+        En het zijn er twee, want "wat het is" beantwoordt niet de vraag
+        die eronder zit. Naast elkaar lees je per dienst waar hij uit
+        bestaat en wat je ervoor terugkrijgt. */}
+    <div class="mt-10 grid max-w-3xl gap-8 sm:grid-cols-2 sm:gap-10">
+      <div>
+        <p class="label">{t.dienst.watHetIs}</p>
+        <ul class="mt-4 list-outside list-disc space-y-2 pl-4 text-tekst marker:text-rand">
+          {dienst.punten.map((punt) => <li class="min-w-0">{punt}</li>)}
+        </ul>
+      </div>
+      <div>
+        <p class="label">{t.dienst.watHetOplevert}</p>
+        <ul class="mt-4 list-outside list-disc space-y-2 pl-4 text-tekst marker:text-rand">
+          {dienst.oplevert.map((punt) => <li class="min-w-0">{punt}</li>)}
+        </ul>
+      </div>
+    </div>
+
+    {
+      (!dienst.verhaal || dienst.verhaal.length === 0) && (
+        <div class="mt-10 max-w-2xl">
+          <Todo
+            wat={vul(t.dienst.todo, { dienst: dienst.titel.toLowerCase() })}
+          />
+        </div>
+      )
+    }
+  </Sectie>
+
+  {
+    dienst.verhaal?.map((blok, i) => (
+      <Sectie id={`hoe-${i + 1}`} vol nummer={nr[`hoe-${i + 1}`]} kop={blok.kop}>
+        <div class="mt-8 max-w-2xl space-y-4 text-zacht">
+          {blok.alineas.map((alinea) => (
+            <p>{alinea}</p>
+          ))}
+        </div>
+      </Sectie>
+    ))
+  }
+
+  {
+    dienst.extra?.includes("functies") && (
+      <Sectie id="functies" vol nummer={nr.functies} kop={extraDelen.functies}>
+        {/* Vijf breed en twee hoog, met een icoon per functie. Geen
+            kaarten: tien omlijnde vlakken naast elkaar wegen alle tien
+            even zwaar, en dit is naslag. Alleen de haarlijn ertussen,
+            dus de cellen staan op de achtergrondkleur en niet op de
+            kaartkleur. Eén regel per functie, want in een smalle kolom
+            wordt een alinea een muur. */}
+        <dl
+          class="mt-10 grid gap-px bg-rand-zacht grid-cols-2 lg:grid-cols-5"
+        >
+          {pipedriveFuncties.map((functie) => (
+            <div class="min-w-0 bg-bg p-4">
+              <svg
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+                class="size-5 text-zacht"
+              >
+                <Icoon naam={functie.icoon} maat={24} />
+              </svg>
+              {/* Een kolom is hier honderdveertig pixels breed, en
+                  Mailsynchronisatie is langer dan dat. Vandaar de
+                  kleinere maat en hyphens-auto: de pagina zegt in welke
+                  taal ze staat, dus de browser breekt af met een
+                  koppelteken en op een plek waar dat mag. break-word
+                  staat er als vangnet achter, voor een browser zonder
+                  afbreekregels voor die taal: dan breekt het woord
+                  lelijk, maar het loopt nooit de cel uit. */}
+              <dt
+                class="mt-3 hyphens-auto text-sm font-medium text-tekst [overflow-wrap:break-word]"
+              >
+                {functie.titel}
+              </dt>
+              <dd class="mt-1.5 min-w-0 text-sm text-zacht">{functie.tekst}</dd>
+            </div>
+          ))}
+        </dl>
+        <p class="mt-10 max-w-2xl text-zacht">{t.dienst.functiesSlot}</p>
+      </Sectie>
+    )
+  }
+
+  {
+    dienst.extra?.includes("ai") && (
+      <Sectie
+        id="ai"
+        vol
+        nummer={nr.ai}
+        kop={extraDelen.ai}
+        intro={t.dienst.aiIntro}
+      >
+        <div class="mt-10 grid gap-px bg-rand-zacht md:grid-cols-3">
+          {aiStappen.map((stap) => (
+            <AiStap stap={stap} />
+          ))}
+        </div>
+        <p class="mt-10 max-w-2xl text-zacht">{t.dienst.aiSlot}</p>
+      </Sectie>
+    )
+  }
+
+  <Sectie id="verder" vol nummer={nr.verder} kop={t.dienst.verder}>
+    <ul class="mt-8 max-w-2xl space-y-3">
+      {
+        anderen.map((item) => (
+          <li>
+            <Doorlink href={dienstPad(item.slug, taal)}>{item.titel}</Doorlink>
+          </li>
+        ))
+      }
+    </ul>
+    <ul class="mt-8 max-w-2xl space-y-3 border-t border-rand/60 pt-6">
+      <li>
+        <Doorlink href={routes.aanpak[taal]}>{t.dienst.trajectLink}</Doorlink>
+      </li>
+    </ul>
+  </Sectie>
+
+  </MetOpgave>
+
+  <Sectie id="plannen">
+    <div class="max-w-2xl">
+      <h2 class="text-3xl sm:text-4xl">{t.dienst.plannenKop}</h2>
+      <p class="mt-4 text-lg text-zacht">{t.dienst.plannenTekst}</p>
+      <div class="mt-8">
+        <Knop toonToelichting />
+      </div>
+    </div>
+  </Sectie>
+</Basis>

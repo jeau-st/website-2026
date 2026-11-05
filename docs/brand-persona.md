@@ -80,6 +80,14 @@ Elk project krijgt een eigen schilderij als kleurenpalet. Voor Jeau.st zelf is d
 - **Principe:** vorm volgt functie. Het ontwerp dient de leesbaarheid en de route naar contact.
 - **Palet en fonts:** staan in `src/styles/global.css` en `docs/palet.html`, de regels in `CLAUDE.md`. Hier staan bewust geen hexwaarden.
 
+## In het Engels
+
+Dezelfde persoon, dezelfde toon, Brits Engels. Niet formeler worden omdat het
+Engels is: de ondernemer aan tafel blijft de ondernemer aan tafel. De zin
+"ik kijk eerst wat er al staat" wordt "I look at what you already have", niet
+"we commence with a thorough assessment of your current landscape".
+Zie de sectie Engels in [`SCHRIJFWIJZER.md`](../SCHRIJFWIJZER.md).
+
 ## Toets per tekst
 
 Na `npm run schrijfwijzer`:

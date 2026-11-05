@@ -1,6 +1,8 @@
 ---
 import Icoon from "./Icoon.astro";
-import { denkwijze } from "../data/site";
+import { site } from "../data/site";
+import { taalUitPad } from "../data/taal";
+import { teksten } from "../data/teksten";
 
 /**
  * De denkwijze als tekening: drie stations en een terugloop. De vierde
@@ -17,9 +19,13 @@ import { denkwijze } from "../data/site";
  * Twee opmaken: vanaf sm naast elkaar met de terugloop eronderdoor,
  * daaronder onder elkaar met de terugloop langs de linkerkant.
  */
+const taal = taalUitPad(Astro.url.pathname);
+const t = teksten[taal];
+const { denkwijze } = site(taal);
+
 const stations = denkwijze.slice(0, 3).map((stap, i) => ({
   nummer: stap.nummer,
-  kort: ["proces", "automatiseren", "meten"][i],
+  kort: t.tekeningen.cyclusKort[i],
   icoon: ["workflow", "zap", "chart-column"][i],
 }));
 const terug = denkwijze[3];
@@ -128,7 +134,7 @@ const terug = denkwijze[3];
       font-size="13"
       fill="var(--color-zacht)"
     >
-      {terug.nummer} opnieuw
+      {terug.nummer} {t.tekeningen.cyclusOpnieuw}
     </text>
   </svg>
 
@@ -229,7 +235,7 @@ const terug = denkwijze[3];
       font-size="12"
       fill="var(--color-zacht)"
     >
-      {terug.nummer} opnieuw
+      {terug.nummer} {t.tekeningen.cyclusOpnieuw}
     </text>
   </svg>
 

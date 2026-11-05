@@ -1,0 +1,22 @@
+---
+/**
+ * Een pagina per dienst, in het Engels.
+ *
+ * De opmaak en de teksten staan in `src/paginas/Dienstpagina.astro`. De
+ * slug komt uit de yaml van die taal, dus de Engelse pagina's staan op
+ * hun eigen Engelse adres. Zie docs/engelse-versie.md.
+ */
+import Dienstpagina from "../../../paginas/Dienstpagina.astro";
+import { site } from "../../../data/site";
+
+export function getStaticPaths() {
+  return site("en").diensten.map((dienst) => ({
+    params: { slug: dienst.slug },
+    props: { dienst },
+  }));
+}
+
+const { dienst } = Astro.props;
+---
+
+<Dienstpagina taal="en" dienst={dienst} />

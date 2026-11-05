@@ -1,6 +1,8 @@
 ---
 import Icoon from "./Icoon.astro";
-import { bouwstenen } from "../data/site";
+import { site } from "../data/site";
+import { taalUitPad } from "../data/taal";
+import { teksten } from "../data/teksten";
 
 /**
  * Het beeld waar de pagina om onthouden moet worden: alles wat bij een
@@ -45,6 +47,9 @@ import { bouwstenen } from "../data/site";
  * lijst in site.ts is de volgorde op de ring: wat je nu al hebt staat op
  * de linkerkant en bovenaan, wat het je oplevert op de rechterkant.
  */
+const taal = taalUitPad(Astro.url.pathname);
+const { bouwstenen } = site(taal);
+
 const punten = bouwstenen.map((steen, i) => ({
   ...steen,
   hoek: -90 + i * 30,
@@ -153,12 +158,7 @@ function labelPlek(
     }
   </svg>
 
-  <figcaption class="sr-only">
-    Eén ring met alles erop wat bij het werk hoort. Aan de ene kant wat je
-    nu al hebt: de mailbox, de boekhouding, offertes, WhatsApp, de
-    telefoon, de website en de agenda. Aan de andere kant wat je eruit
-    haalt: projecten, rapportages, slimme workflows, AI en databases.
-  </figcaption>
+  <figcaption class="sr-only">{teksten[taal].tekeningen.schema}</figcaption>
 </figure>
 
 <style>

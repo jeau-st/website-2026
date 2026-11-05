@@ -1,0 +1,74 @@
+paar: website-en-mail
+titel: Website and email
+volgorde: 50
+icoon: globe
+kort: One fast site, and email that arrives
+kop: Your website and email in order, tied to your CRM
+meta: >-
+  One fast site you manage yourself, a form that runs through to Pipedrive, and
+  email that reaches your customer.
+tekst: >-
+  The place where your enquiries come in and your answers arrive, tied to the
+  rest.
+punten:
+  - One site where there are several now
+  - A form that runs through to your CRM
+  - Mail, domains and DNS on your own accounts
+oplevert:
+  - Enquiries come in to your CRM, with the fields you need
+  - Your email reaches the person you sent it to
+  - Your domains and accounts are in your own name
+voorWie: >-
+  For companies with a site that has been left standing, or with a few sites
+  from different years living side by side. And for anyone who notices that
+  mail from their own domain ends up in spam. This is the layer under your CRM:
+  it is where your enquiries come from.
+verhaal:
+  - kop: Why this belongs with the CRM
+    alineas:
+      - >-
+        An enquiry through your site is the first step of your sales process.
+        If it arrives as a loose email, every enquiry starts with retyping, and
+        a week later you cannot remember which ones you picked up. If the form
+        runs through to Pipedrive, the enquiry is in there straight away, with
+        the fields you need to do something with it.
+      - >-
+        An architecture firm has a questionnaire like that on its site. What
+        someone fills in lands in the CRM, and they can book a slot themselves
+        right after. So enquiries come in that you can work with immediately,
+        and you see per customer where they are in the process.
+  - kop: Email that arrives
+    alineas:
+      - >-
+        Mail from your own domain has to pass three checks: SPF, DKIM and
+        DMARC. If those records are not right, your message lands in the
+        recipient's spam folder, or never gets there at all. You notice late,
+        because from your side it looks like it was sent.
+      - >-
+        At a webshop that turned out to be the reason an order or a question
+        sometimes went unanswered. The mail settings and the records that go
+        with them were put right, and after that messages arrived again.
+  - kop: What I build with
+    alineas:
+      - >-
+        A rebuild starts with looking at what already works. Which pages bring
+        visitors in, and on which search terms? That is an SEO audit, and it
+        comes before the design. If old addresses disappear, I set up redirects,
+        so your visibility does not leak away.
+      - >-
+        I build with Astro and host on Cloudflare. That gives you a site that
+        is fast and costs close to nothing to run. A simple editor can come with
+        it, so you write your own text without me. Mail, domains and DNS I put
+        on accounts that are yours, because otherwise you depend on whoever set
+        them up once.
+  - kop: Where this stops
+    alineas:
+      - >-
+        This is about modernising what is already there. A site that has been
+        left behind, a few old sites that have to become one, a form that goes
+        nowhere, mail that does not arrive.
+      - >-
+        If it has to look completely different, with a lot of new functionality
+        on top, you are better off at a design agency. I say that in the first
+        conversation as well.
+extra: []

@@ -4,6 +4,15 @@ import Kop from "../components/Kop.astro";
 import Voet from "../components/Voet.astro";
 import ZwevendeKnop from "../components/ZwevendeKnop.astro";
 import { analyticsToken, bedrijf } from "../data/site";
+import { teksten } from "../data/teksten";
+import { tegenhanger } from "../data/paden";
+import {
+  TALEN,
+  ogTaal,
+  taalUitPad,
+  taalcode,
+  type Taal,
+} from "../data/taal";
 import "../styles/global.css";
 
 interface Props {
@@ -19,8 +28,32 @@ interface Props {
 
 const { titel, beschrijving, extraSchema } = Astro.props;
 
+/**
+ * De taal komt uit het pad en niet uit een prop: elke pagina staat op een
+ * adres dat de taal al zegt, dus een tweede bron zou er alleen van kunnen
+ * afwijken. Zie src/data/taal.ts.
+ */
+const taal: Taal = taalUitPad(Astro.url.pathname);
+const t = teksten[taal];
+
 const canoniek = new URL(Astro.url.pathname, Astro.site);
 const ogAfbeelding = new URL("/og.png", Astro.site);
+
+/**
+ * De verwijzingen naar dezelfde pagina in de andere taal. Google leest de
+ * twee daarmee als een paar in plaats van als twee pagina's die op elkaar
+ * lijken, en x-default wijst naar het Nederlands: dat is de taal van de
+ * site, en wie geen van beide spreekt komt daar terecht.
+ *
+ * Een pagina zonder tegenhanger krijgt geen hreflang. Een halve
+ * verwijzing is erger dan geen: dan belooft hij een pagina die niet
+ * bestaat.
+ */
+const alternatieven = TALEN.map((ander) => ({
+  taal: ander,
+  pad: tegenhanger(Astro.url.pathname, ander),
+})).filter((rij): rij is { taal: Taal; pad: string } => Boolean(rij.pad));
+const heeftPaar = alternatieven.length === TALEN.length;
 
 /**
  * ProfessionalService is een soort LocalBusiness, dus adres en plaats
@@ -58,7 +91,7 @@ const bedrijfSchema = {
     : {}),
   areaServed: [
     { "@type": "City", name: bedrijf.plaats },
-    { "@type": "Country", name: "Nederland" },
+    { "@type": "Country", name: t.algemeen.land },
   ],
   knowsAbout: [
     "Pipedrive",
@@ -81,7 +114,7 @@ const siteSchema = {
   "@id": `${Astro.site}#site`,
   name: bedrijf.naam,
   url: Astro.site?.toString(),
-  inLanguage: "nl-NL",
+  inLanguage: taalcode[taal],
   publisher: { "@id": `${Astro.site}#bedrijf` },
 };
 
@@ -99,7 +132,7 @@ const schema = {
 ---
 
 <!doctype html>
-<html lang="nl" data-thema="donker">
+<html lang={taalcode[taal]} data-thema="donker">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -124,9 +157,30 @@ const schema = {
     <title>{titel}</title>
     <meta name="description" content={beschrijving} />
     <link rel="canonical" href={canoniek} />
+    {
+      heeftPaar && (
+        <>
+          {alternatieven.map((rij) => (
+            <link
+              rel="alternate"
+              hreflang={taalcode[rij.taal]}
+              href={new URL(rij.pad, Astro.site)}
+            />
+          ))}
+          <link
+            rel="alternate"
+            hreflang="x-default"
+            href={new URL(
+              alternatieven.find((rij) => rij.taal === "nl")!.pad,
+              Astro.site,
+            )}
+          />
+        </>
+      )
+    }
 
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="nl_NL" />
+    <meta property="og:locale" content={ogTaal[taal]} />
     <meta property="og:site_name" content={bedrijf.naam} />
     <meta property="og:title" content={titel} />
     <meta property="og:description" content={beschrijving} />
@@ -145,7 +199,7 @@ const schema = {
       href="#inhoud"
       class="fixed left-4 top-4 z-40 inline-flex min-h-11 -translate-y-24 items-center rounded-klein bg-accent px-5 py-2 text-sm font-medium tracking-[0.02em] text-op-accent focus:translate-y-0"
     >
-      Naar de inhoud
+      {t.algemeen.naarInhoud}
     </a>
     <Kop />
     <main id="inhoud">

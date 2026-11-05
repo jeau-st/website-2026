@@ -1,0 +1,25 @@
+titel: Architecture firm
+volgorde: 30
+kort: Architecture firm
+bouwstenen:
+  - globe
+  - mail
+  - calendar
+  - workflow
+situatie:
+  - Several websites, all of them dated.
+  - Mail, domains and hosting sat with different providers.
+  - There was no place where enquiries came together, so getting an overview meant digging every time.
+aanpak:
+  - An SEO audit first.
+  - Everything merged into one site on Astro and Cloudflare, with redirects from the old addresses.
+  - Dutch and English, with Keystatic to write the text themselves.
+  - A questionnaire that runs through to Pipedrive.
+  - Mail, domains and DNS on their own accounts.
+opbrengst: One site the firm manages itself. Enquiries come in to the CRM, with a meeting attached.
+resultaat:
+  - One fast site the firm manages itself.
+  - Through the form, enquiries come in that can book a meeting right away.
+  - You see per client where they are in the process.
+  - The odds and ends around it together in one system.
+todo: false

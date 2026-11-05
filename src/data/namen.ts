@@ -217,14 +217,23 @@ export const namen = {
 
 export type Persoon = {
   naam: string;
-  /** Hoort bij de naam: "in haar hoofd" of "in zijn hoofd". */
-  bezittelijk: "haar" | "zijn";
+  /**
+   * Hoort bij de naam: "in haar hoofd" of "in zijn hoofd", en op de
+   * Engelse pagina "in her head" of "in his head". Per taal, want de kop
+   * op de homepage staat in beide talen en het voornaamwoord hoort bij de
+   * taal van de zin en niet bij de naam.
+   */
+  bezittelijk: { nl: "haar" | "zijn"; en: "her" | "his" };
 };
 
 /** Elke naam met het voornaamwoord dat erbij hoort, in één bak. */
 export const personen: Persoon[] = [
-  ...namen.vrouwen.map((naam): Persoon => ({ naam, bezittelijk: "haar" })),
-  ...namen.mannen.map((naam): Persoon => ({ naam, bezittelijk: "zijn" })),
+  ...namen.vrouwen.map(
+    (naam): Persoon => ({ naam, bezittelijk: { nl: "haar", en: "her" } }),
+  ),
+  ...namen.mannen.map(
+    (naam): Persoon => ({ naam, bezittelijk: { nl: "zijn", en: "his" } }),
+  ),
 ];
 
 export function kiesPersoon(): Persoon {

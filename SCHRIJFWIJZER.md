@@ -80,6 +80,32 @@ hebben een harde grens.
 `npm run meta` meet het na een build en noemt elke pagina die eroverheen
 gaat. De build zelf draait hem ook, dus te lang betekent: build rood.
 
+## Engels
+
+De site staat ook in het Engels, op `/en/`. Alles hierboven geldt daar ook:
+dezelfde stem, dezelfde korte zinnen, dezelfde afkeer van tegenstellingen als
+stijlmiddel. Drie dingen komen erbij.
+
+- **Brits Engels.** Dus `-ise` en niet `-ize`, `colour` en niet `color`,
+  `organisation` en niet `organization`. Wie dit leest zit in Nederland en is
+  Europees Engels gewend.
+- **Geen vertaalde zin, maar dezelfde zin opnieuw gezegd.** Een Nederlandse zin
+  woord voor woord omzetten geeft Engels dat klopt en niet klinkt. Lees wat er
+  in het Nederlands staat, en zeg dat in het Engels zoals je het zou zeggen.
+  Daarom staan de twee versies in `src/data/teksten.ts` naast elkaar en niet in
+  twee bestanden: je ziet wat de andere taal doet.
+- **Dezelfde verboden woorden, hun Engelse vorm.** Seamless, effortless,
+  unlock, crucial, essential, robust, holistic, synergy, future-proof, empower,
+  leverage, cutting-edge, best-in-class, "take it to the next level", "deep
+  dive", "in today's digital landscape". En dezelfde vormen: geen "not only X
+  but also Y", geen uitroeptekens, geen em dash.
+
+`npm run schrijfwijzer` weet per bestand welke taal erin staat. De Engelse yaml
+in `src/inhoud/en` krijgt de Engelse lijst, `src/data/teksten.ts` krijgt beide
+omdat daar beide talen in staan, en de rest van `src` krijgt de Nederlandse.
+De spellingcontrole op `-ize` zit in de harde lijst, dus Amerikaans gespeld
+betekent: script rood.
+
 ## Werkwijze bij een nieuwe tekst
 
 1. Vraag eerst voor welke plek de tekst is, wat hij moet doen en hoe lang hij mag zijn.

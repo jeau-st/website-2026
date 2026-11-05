@@ -1,6 +1,7 @@
 ---
 import Icoon from "./Icoon.astro";
-import { bouwsteen } from "../data/site";
+import { site } from "../data/site";
+import { taalUitPad } from "../data/taal";
 
 /**
  * De onderdelen die in een opdracht zijn aangepakt, als rijtje iconen
@@ -33,6 +34,7 @@ interface Props {
 }
 
 const { namen, maat = 9, class: extra = "" } = Astro.props;
+const { bouwsteen } = site(taalUitPad(Astro.url.pathname));
 const stenen = namen.map(bouwsteen);
 
 const hok = maat === 9 ? "size-9" : "size-8";

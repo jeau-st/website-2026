@@ -15,7 +15,8 @@
     "og": "node scripts/og.mjs",
     "schrijfwijzer": "node scripts/schrijfwijzer.mjs",
     "meta": "node scripts/meta.mjs",
-    "astro": "astro"
+    "astro": "astro",
+    "cijfers": "node scripts/cijfers.mjs"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.4.4",

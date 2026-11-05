@@ -1,39 +1,59 @@
 ---
 /**
- * Waar de eilanden liggen, via de insluiting van Google Maps. Dit is het
- * enige onderdeel op de site dat iets bij een derde partij ophaalt, dus
- * het laadt pas als de bezoeker in de buurt scrollt. De privacypagina
- * noemt het met naam.
+ * Waar de eilanden liggen, via de insluiting van OpenStreetMap. Dit is het
+ * enige onderdeel op de site dat iets bij een derde partij ophaalt, dus het
+ * laadt pas als de bezoeker in de buurt scrollt. De privacypagina noemt het
+ * met naam.
  *
- * Deze stond eerder in `Kaart.astro` en is daar verdwenen toen dat de
- * naam werd van het component voor een vlak. Vandaar `Landkaart`: in
- * deze codebase is een kaart iets waar je op klikt, en dit is er een om
- * naar te kijken.
+ * Het was Google Maps. Die insluiting tekent geen plus en min meer: je
+ * krijgt een pan-knop en de melding dat je ctrl moet indrukken om te
+ * zoomen, en dat blijft zo op elk formaat. De variant met die knoppen is de
+ * Embed API, en die wil een sleutel en een project met facturering aan.
+ * OpenStreetMap heeft de knoppen gewoon, heeft geen sleutel nodig, en
+ * scheelt een partij in de privacyverklaring.
  *
- * `overflow-hidden` op de wikkel, want een iframe trekt zich niets aan
- * van de ronding van zijn ouder.
+ * De bbox is het venster, in graden: van 4,0 tot 11,5 oost en van 1,2 zuid
+ * tot 3,0 noord. Dat is 7,5 bij 4,2 graden, vrijwel dezelfde verhouding als
+ * het vlak zelf, dus er wordt niets bijgesneden of bijgeplakt. Zo staan
+ * allebei de eilanden erop en de kust van Gabon en Kameroen ernaast: zonder
+ * die kust is het twee stipjes in een leeg blauw vlak en weet je nog niets.
+ * Geen speld erbij, want het gaat om een land en niet om een adres, en de
+ * kaart zet de namen er zelf bij.
+ *
+ * Deze stond eerder in `Kaart.astro` en is daar verdwenen toen dat de naam
+ * werd van het component voor een vlak. Vandaar `Landkaart`: in deze
+ * codebase is een kaart iets waar je op klikt, en dit is er een om naar te
+ * kijken.
+ *
+ * `overflow-hidden` op de wikkel, want een iframe trekt zich niets aan van
+ * de ronding van zijn ouder. De verhouding staat ook op de wikkel en niet
+ * op de iframe, zodat de iframe hem gewoon kan vullen.
  */
+import { taalUitPad } from "../data/taal";
+import { teksten } from "../data/teksten";
+
 interface Props {
   /** Extra klassen, in de praktijk de breedte en de uitlijning. */
   class?: string;
 }
 
 const { class: extra = "" } = Astro.props;
+const t = teksten[taalUitPad(Astro.url.pathname)];
 
 const bron =
-  "https://www.google.com/maps?q=S%C3%A3o+Tom%C3%A9+en+Pr%C3%ADncipe&z=7&output=embed";
+  "https://www.openstreetmap.org/export/embed.html?bbox=4.0%2C-1.2%2C11.5%2C3.0&layer=mapnik";
 ---
 
 <div
   class:list={[
-    "overflow-hidden rounded-kaart border border-rand/60",
+    "aspect-video overflow-hidden rounded-kaart border border-rand/60",
     extra,
   ]}
 >
   <iframe
     src={bron}
-    title="Kaart van São Tomé en Príncipe in de Golf van Guinee"
-    class="aspect-4/3 w-full"
+    title={t.tekeningen.kaartTitel}
+    class="h-full w-full"
     loading="lazy"
     referrerpolicy="no-referrer-when-downgrade"></iframe>
 </div>

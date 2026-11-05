@@ -1,0 +1,92 @@
+---
+import type { Taal } from "../data/taal";
+
+/**
+ * De twee vlaggen voor de taalknop, met de hand getekend als pad.
+ *
+ * Niet uit een iconenset: Lucide heeft geen vlaggen, en een vlaggenfont
+ * of een emoji levert op Windows een vierkantje of twee letters op. Twee
+ * rechthoeken met wat strepen erin zijn in svg zo gemaakt, en dan weet je
+ * zeker dat ze overal hetzelfde zijn.
+ *
+ * Alle maten komen uit een doos van 20 bij 14. De echte verhoudingen
+ * verschillen, 3:2 voor Nederland en 2:1 voor het Verenigd Koninkrijk,
+ * maar twee vlaggetjes naast elkaar in een kop moeten even groot zijn,
+ * anders lijkt de ene knop groter dan de andere. Dus allebei dezelfde
+ * doos, en de Union Jack wordt een fractie minder langgerekt dan hij
+ * hoort.
+ *
+ * Dit is de enige plek op de site met kleuren die niet uit de tokens
+ * komen. Dat kan niet anders: een vlag in de huisstijlkleuren is geen
+ * vlag meer. Daarom zijn ze klein, staan ze alleen in de kop, en ligt er
+ * een haarlijn in de tekstkleur omheen, zodat de witte baan van de
+ * Nederlandse vlag niet in de lichte achtergrond wegvalt.
+ */
+interface Props {
+  /** Welke vlag. De taal waar de knop heen gaat, niet de taal van de pagina. */
+  taal: Taal;
+  class?: string;
+}
+
+const { taal, class: extra = "" } = Astro.props;
+
+/** Eigen id per vlag, zodat twee vlaggen op één pagina elkaars clip niet pakken. */
+const clip = `vlag-${taal}`;
+---
+
+<svg
+  class:list={["h-[14px] w-5 shrink-0", extra]}
+  viewBox="0 0 20 14"
+  width="20"
+  height="14"
+  aria-hidden="true"
+  focusable="false"
+>
+  <clipPath id={clip}>
+    <rect width="20" height="14" rx="2"></rect>
+  </clipPath>
+  <g clip-path={`url(#${clip})`}>
+    {
+      taal === "nl" ? (
+        <>
+          <rect width="20" height="14" fill="#fff" />
+          <rect width="20" height="4.67" fill="#AE1C28" />
+          <rect y="9.33" width="20" height="4.67" fill="#21468B" />
+        </>
+      ) : (
+        <>
+          {/* De Union Jack is een blauw vlak met twee kruisen eroverheen:
+              eerst de witte schuine balken, dan de rode erbovenop in de
+              helft van de breedte. De rode schuine balken liggen per
+              kwart aan de andere kant van de witte, dat is de clip
+              hieronder. Daarna hetzelfde voor het rechte kruis. */}
+          <rect width="20" height="14" fill="#012169" />
+          <clipPath id={`${clip}-kwart`}>
+            <path d="M10,7 h10 v7 z v7 h-10 z h-10 v-7 z v-7 h10 z" />
+          </clipPath>
+          <path
+            d="M0,0 L20,14 M20,0 L0,14"
+            stroke="#fff"
+            stroke-width="2.8"
+          />
+          <path
+            d="M0,0 L20,14 M20,0 L0,14"
+            clip-path={`url(#${clip}-kwart)`}
+            stroke="#C8102E"
+            stroke-width="1.87"
+          />
+          <path d="M10,0 v14 M0,7 h20" stroke="#fff" stroke-width="4.67" />
+          <path d="M10,0 v14 M0,7 h20" stroke="#C8102E" stroke-width="2.8" />
+        </>
+      )
+    }
+  </g>
+  <rect
+    width="20"
+    height="14"
+    rx="2"
+    fill="none"
+    stroke="currentColor"
+    stroke-opacity="0.35"
+  ></rect>
+</svg>

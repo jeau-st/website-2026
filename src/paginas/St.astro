@@ -1,0 +1,133 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import Basis from "../layouts/Basis.astro";
+import Landkaart from "../components/Landkaart.astro";
+import kerk from "../assets/st/kerk.webp";
+import muur from "../assets/st/muur.webp";
+import kinderen from "../assets/st/kinderen.webp";
+import pico from "../assets/st/pico.webp";
+import baai from "../assets/st/baai.webp";
+import paleis from "../assets/st/paleis.webp";
+import type { Taal } from "../data/taal";
+import { teksten } from "../data/teksten";
+
+/**
+ * Uitleg bij het domein. Een doorlopend verhaal, geen secties: wie hier
+ * komt is nieuwsgierig en leest van boven naar beneden.
+ *
+ * De kolom staat gecentreerd en niet links. Op de andere pagina's hangt
+ * er rechts van de tekst altijd iets, een tekening of een kaart, maar
+ * hier is niets, en dan leest een smalle kolom tegen de linkerrand als
+ * een pagina waar de helft van is weggevallen.
+ *
+ * De foto's stonden als galerij onder het verhaal. Nu staan ze ertussen:
+ * het verhaal krijgt lucht op de plekken waar anders een tussenkop had
+ * gestaan. Elke foto staat bij het stuk waar hij over gaat, dus de
+ * volgorde hieronder is inhoudelijk en niet decoratief.
+ *
+ * Ze stonden even om en om links en rechts uitgelijnd. Dat hield de
+ * bladzijde in beweging maar maakte hem ook onrustig: je oog moet dan
+ * bij elk beeld opnieuw de linkermarge zoeken. Nu staat alles links
+ * tegen dezelfde marge als de tekst, op drie vijfde van de kolom.
+ *
+ * De kaart doet mee als een beeld en staat meteen na de alinea die
+ * vertelt waar de eilanden liggen, even breed als de foto's.
+ *
+ * De volgorde staat hier en de tekst in `teksten.ts`: welke alinea bij
+ * welke foto hoort is opmaak, en die hoort niet twee keer te bestaan. De
+ * alinea's worden dus op nummer opgehaald.
+ */
+interface Props {
+  taal: Taal;
+}
+
+const { taal } = Astro.props;
+const t = teksten[taal];
+
+type Blok =
+  | { soort: "tekst"; tekst: string }
+  | { soort: "foto"; src: ImageMetadata; alt: string }
+  | { soort: "kaart" };
+
+const a = t.st.alineas;
+
+const blokken: Blok[] = [
+  { soort: "tekst", tekst: a[0] },
+  { soort: "kaart" },
+  { soort: "tekst", tekst: a[1] },
+  { soort: "foto", src: kerk, alt: t.st.fotos.kerk },
+  { soort: "tekst", tekst: a[2] },
+  { soort: "foto", src: paleis, alt: t.st.fotos.paleis },
+  { soort: "tekst", tekst: a[3] },
+  { soort: "tekst", tekst: a[4] },
+  { soort: "foto", src: muur, alt: t.st.fotos.muur },
+  { soort: "tekst", tekst: a[5] },
+  { soort: "tekst", tekst: a[6] },
+  { soort: "foto", src: kinderen, alt: t.st.fotos.kinderen },
+  { soort: "tekst", tekst: a[7] },
+  { soort: "foto", src: pico, alt: t.st.fotos.pico },
+  { soort: "tekst", tekst: a[8] },
+  { soort: "foto", src: baai, alt: t.st.fotos.baai },
+];
+
+/* De adressen staan hier en niet in `teksten.ts`: een url is geen tekst
+   die je vertaalt. De uitleg erachter wel. */
+const adressen = ["https://saoferias.st/", "https://www.djoser.nl/rondreis-sao-tome-en-principe/"];
+const reizen = t.st.reizen.map((reis, i) => ({ ...reis, href: adressen[i] }));
+---
+
+<Basis titel={t.st.titel} beschrijving={t.st.beschrijving}>
+  <section class="px-4 py-20 sm:px-6 sm:py-24">
+    <div class="mx-auto max-w-3xl">
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl">{t.st.kop}</h1>
+      <p class="mt-6 text-lg text-zacht">
+        {t.st.introVoor}<strong class="font-semibold text-tekst"
+          >{t.st.land}</strong
+        >{t.st.introNa}
+      </p>
+    </div>
+  </section>
+
+  <section class="px-4 pb-16 sm:px-6 sm:pb-24">
+    <div class="mx-auto max-w-3xl">
+      {
+        blokken.map((blok) =>
+          blok.soort === "tekst" ? (
+            <p class="mt-5 text-zacht">{blok.tekst}</p>
+          ) : blok.soort === "kaart" ? (
+            <Landkaart class="my-10 sm:w-3/5" />
+          ) : (
+            <Image
+              src={blok.src}
+              alt={blok.alt}
+              widths={[320, 480, 640]}
+              sizes="(min-width: 640px) 28rem, 100vw"
+              class="my-10 w-full rounded-kaart border border-rand/60 sm:w-3/5"
+            />
+          ),
+        )
+      }
+
+      <p class="mt-12 text-zacht">{t.st.reizenIntro}</p>
+
+      <ul class="mt-6 space-y-3">
+        {
+          reizen.map((reis) => (
+            <li>
+              <a
+                class="tekstlink inline-flex min-h-11 items-center text-tekst"
+                href={reis.href}
+                target="_blank"
+                rel="noopener"
+              >
+                {reis.tekst}
+              </a>
+              <span class="text-zacht">, {reis.uitleg}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</Basis>

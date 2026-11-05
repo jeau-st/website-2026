@@ -1,5 +1,6 @@
 ---
-import { cta } from "../data/site";
+import { site } from "../data/site";
+import { taalUitPad } from "../data/taal";
 
 /**
  * De primaire actie op mobiel. In de balk bovenin paste hij niet: samen
@@ -20,6 +21,7 @@ import { cta } from "../data/site";
  * er niet. Zonder planner-URL rendert hij niets; de hero toont dan de
  * TODO.
  */
+const { cta } = site(taalUitPad(Astro.url.pathname));
 ---
 
 {

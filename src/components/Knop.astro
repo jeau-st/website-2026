@@ -1,5 +1,7 @@
 ---
-import { cta } from "../data/site";
+import { site } from "../data/site";
+import { taalUitPad } from "../data/taal";
+import { teksten } from "../data/teksten";
 
 /**
  * De primaire actie. Zonder planner-URL rendert dit bewust geen dode link
@@ -12,6 +14,9 @@ interface Props {
 }
 
 const { variant = "gevuld", class: extra = "", toonToelichting = false } = Astro.props;
+
+const taal = taalUitPad(Astro.url.pathname);
+const { cta } = site(taal);
 
 /* Lichter dan hij was. Hij stond op 16 px semibold en dat schreeuwde:
    een knop die harder roept dan de kop eronder leest als sjabloon.
@@ -44,7 +49,7 @@ const stijl =
         extra,
       ]}
     >
-      TODO: URL afspraakplanner
+      {teksten[taal].algemeen.knopTodo}
     </span>
   )
 }

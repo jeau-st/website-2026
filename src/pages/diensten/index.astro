@@ -1,84 +1,12 @@
 ---
-import Basis from "../../layouts/Basis.astro";
-import Sectie from "../../components/Sectie.astro";
-import Knop from "../../components/Knop.astro";
-import Dienst from "../../components/Dienst.astro";
-import { diensten } from "../../data/site";
-import Doorlink from "../../components/Doorlink.astro";
-
 /**
- * De hub boven de dienstpagina's. Hij bestaat om twee redenen: het
- * menu-item moet ergens naartoe, en een crawler moet zien dat die
- * pagina's bij elkaar horen en hieronder hangen. Daarom staat hier de
- * ItemList en niet alleen een rij links.
+ * De hub boven de dienstpagina's, in het Nederlands.
  *
- * Het blok "waar dit het beste werkt" stond hier eerst onder. Het noemde
- * bouw en architectuur als voorbeeld, en daarmee las de pagina alsof de
- * rest er niet bij hoort. De verwijzingen die eronder stonden zijn
- * blijven staan.
+ * De opmaak en de teksten staan in `src/paginas`: één pagina voor beide
+ * talen, met de tekst per taal in `src/data/teksten.ts`. Deze route zegt
+ * alleen welke taal het is. Zie docs/engelse-versie.md.
  */
-const schema = {
-  "@type": "ItemList",
-  name: "Diensten van Jeau.st",
-  itemListElement: diensten.map((dienst, i) => ({
-    "@type": "ListItem",
-    position: i + 1,
-    name: dienst.titel,
-    url: `${Astro.site}diensten/${dienst.slug}/`,
-  })),
-};
+import Diensten from "../../paginas/Diensten.astro";
 ---
 
-<Basis
-  titel="Diensten: CRM, koppelingen en automatisering | Jeau.st"
-  beschrijving="Pipedrive inrichten, je systemen koppelen, cijfers waar je op kunt sturen, en ondersteuning na de oplevering. Door Joost Beers uit 's-Hertogenbosch."
-  extraSchema={schema}
->
-  <section class="px-4 py-20 sm:px-6 sm:py-24">
-    <div class="mx-auto max-w-5xl">
-      <h1 class="max-w-3xl text-4xl sm:text-5xl lg:text-6xl">
-        CRM, koppelingen en automatisering
-      </h1>
-      <p class="mt-6 max-w-2xl text-lg text-zacht">
-        Vijf soorten werk. De eerste vier volgen de volgorde waarin ik ze
-        aanpak: eerst je proces in Pipedrive, dan de koppelingen eraan, dan
-        de cijfers erover, en daarna loopt de ondersteuning door. De vijfde
-        is de laag eronder, waar je aanvragen binnenkomen.
-      </p>
-    </div>
-  </section>
-
-  <Sectie id="diensten">
-    <ol class="grid gap-px bg-rand-zacht">
-      {
-        diensten.map((dienst, i) => (
-          <Dienst dienst={dienst} nummer={String(i + 1).padStart(2, "0")} />
-        ))
-      }
-    </ol>
-  </Sectie>
-
-  <Sectie id="verder" aansluitend>
-    <ul class="max-w-2xl space-y-3 border-t border-rand/60 pt-8">
-      <li>
-        <Doorlink href="/aanpak">Lees hoe een traject verloopt</Doorlink>
-      </li>
-      <li>
-        <Doorlink href="/diensten/crm-inrichting/#functies">Bekijk wat er in Pipedrive zit</Doorlink>
-      </li>
-    </ul>
-  </Sectie>
-
-  <Sectie id="plannen">
-    <div class="max-w-2xl">
-      <h2 class="text-3xl sm:text-4xl">Welke hiervan je nodig hebt</h2>
-      <p class="mt-4 text-lg text-zacht">
-        Dat hoor ik in een gesprek van 30 minuten. Soms is het er één, en
-        vaker begint het bij het proces.
-      </p>
-      <div class="mt-8">
-        <Knop toonToelichting />
-      </div>
-    </div>
-  </Sectie>
-</Basis>
+<Diensten taal="nl" />

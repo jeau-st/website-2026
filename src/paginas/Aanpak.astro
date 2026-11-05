@@ -1,0 +1,176 @@
+---
+import Basis from "../layouts/Basis.astro";
+import Sectie from "../components/Sectie.astro";
+import MetOpgave from "../components/MetOpgave.astro";
+import Knop from "../components/Knop.astro";
+import Denkstap from "../components/Denkstap.astro";
+import Cyclus from "../components/Cyclus.astro";
+import Niveau from "../components/Niveau.astro";
+import Stappentabel from "../components/Stappentabel.astro";
+import Vraag from "../components/Vraag.astro";
+import { site } from "../data/site";
+import { dienstPad, type Taal } from "../data/taal";
+import { teksten } from "../data/teksten";
+import Doorlink from "../components/Doorlink.astro";
+
+/**
+ * De vragen stonden op de homepage. Ze gaan bijna allemaal over hoe een
+ * traject loopt, dus ze horen hier, bij de stappen en bij het ritme na de
+ * oplevering. Het FAQPage-schema verhuist mee: dat hoort op de pagina waar
+ * het antwoord staat.
+ *
+ * Alleen vrijgegeven vragen in het schema: een TODO als antwoord aanbieden
+ * aan Google is erger dan de vraag weglaten.
+ *
+ * De secties van deze pagina staan als lijst in `teksten.ts`, met de tekst
+ * die in de inhoudsopgave komt. Eén lijst voor allebei: de kop van de
+ * sectie en de regel in de opgave. Zo kunnen ze niet uit elkaar lopen. De
+ * afspraak onderaan staat er niet in, want een inhoudsopgave wijst naar
+ * inhoud.
+ */
+interface Props {
+  taal: Taal;
+}
+
+const { taal } = Astro.props;
+const t = teksten[taal];
+const { denkwijze, diensten, nabouw, niveaus, vragen } = site(taal);
+
+const delen = t.aanpak.delen;
+
+/* De link naar ondersteuning en training. De slug verschilt per taal, dus
+   hij komt uit de lijst en staat niet als pad in de tekst. Hij wordt
+   gevonden op het icoon en niet op de naam: het icoon staat in de yaml
+   en is in beide talen hetzelfde, de slug en de titel niet. Lukt dat
+   niet, dan is het de vierde dienst, want dat is zijn plek in de
+   volgorde. */
+const ondersteuning =
+  diensten.find((dienst) => dienst.icoon === "graduation-cap") ?? diensten[3];
+
+const opgave = Object.entries(delen).map(([id, tekst]) => ({ id, tekst }));
+
+/* Hetzelfde nummer in de kantlijn als in de inhoudsopgave, afgeleid uit
+   dezelfde lijst, zodat de twee niet uit elkaar kunnen lopen. */
+const nr = Object.fromEntries(Object.keys(delen).map((id, i) => [id, i + 1]));
+
+const faqSchema = {
+  "@type": "FAQPage",
+  mainEntity: vragen
+    .filter((item) => !item.todo)
+    .map((item) => ({
+      "@type": "Question",
+      name: item.vraag,
+      acceptedAnswer: { "@type": "Answer", text: item.antwoord },
+    })),
+};
+---
+
+<Basis
+  titel={t.aanpak.titel}
+  beschrijving={t.aanpak.beschrijving}
+  extraSchema={faqSchema}
+>
+  <section class="px-4 py-20 sm:px-6 sm:py-24">
+    <div class="mx-auto max-w-5xl">
+      <h1 class="max-w-3xl text-4xl sm:text-5xl lg:text-6xl">
+        {t.aanpak.kop}
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-zacht">{t.aanpak.intro}</p>
+    </div>
+  </section>
+
+  <MetOpgave items={opgave}>
+  <Sectie id="volgorde" vol nummer={nr.volgorde} kop={delen.volgorde}>
+    <ol class="mt-10 grid gap-px bg-rand-zacht">
+      {denkwijze.map((stap) => <Denkstap stap={stap} />)}
+    </ol>
+    <Cyclus />
+  </Sectie>
+
+  <Sectie
+    id="niveaus"
+    vol
+    nummer={nr.niveaus}
+    kop={delen.niveaus}
+    intro={t.aanpak.niveausIntro}
+  >
+    <ol class="mt-12 space-y-4">
+      {niveaus.map((niveau) => <Niveau niveau={niveau} />)}
+    </ol>
+    <p class="max-w-2xl border-t border-rand/60 pt-8 text-zacht">
+      {t.aanpak.niveausSlot}
+    </p>
+  </Sectie>
+
+  <Sectie
+    id="stappen"
+    vol
+    nummer={nr.stappen}
+    kop={delen.stappen}
+    intro={t.aanpak.stappenIntro}
+  >
+    <Stappentabel />
+  </Sectie>
+
+  <Sectie
+    id="daarna"
+    vol
+    nummer={nr.daarna}
+    kop={delen.daarna}
+    intro={t.aanpak.daarnaIntro}
+  >
+    {/* Twee korte alinea's naast elkaar. Ze stonden in een kader van
+        max-w-xl, en dan is het kader breder dan wat erin staat. */}
+    <div class="mt-10 grid gap-px bg-rand-zacht md:grid-cols-2">
+      {
+        nabouw.map((stap) => (
+          <div class="bg-bg py-6 md:px-6 md:py-0 md:first:pl-0">
+            <h3 class="text-lg">{stap.titel}</h3>
+            <p class="mt-2 text-zacht">{stap.tekst}</p>
+          </div>
+        ))
+      }
+    </div>
+    <p class="mt-10">
+      <Doorlink href={dienstPad(ondersteuning.slug, taal)}>
+        {t.aanpak.daarnaLink}
+      </Doorlink>
+    </p>
+  </Sectie>
+
+  {/* Dit stond eerst als raster van vier gelijke blokjes, daarna als
+      vier kaarten onder elkaar. Allebei fout: dit zijn stellingen en geen
+      objecten. Je kiest er niets uit, je leest ze achter elkaar. Dus
+      alleen een haarlijn tussen de een en de ander, en de lengte die ze
+      nodig hebben. */}
+  <Sectie id="werkwijze" vol nummer={nr.werkwijze} kop={delen.werkwijze}>
+    <div class="mt-10 grid max-w-2xl gap-px bg-rand-zacht">
+      {
+        t.aanpak.werkwijzePunten.map((punt) => (
+          <div class="bg-bg py-6 first:pt-0 last:pb-0">
+            <h3 class="text-lg">{punt.kop}</h3>
+            <p class="mt-2 text-zacht">{punt.tekst}</p>
+          </div>
+        ))
+      }
+    </div>
+  </Sectie>
+
+  <Sectie id="vragen" vol nummer={nr.vragen} kop={delen.vragen}>
+    <div class="mt-10 max-w-3xl space-y-3">
+      {vragen.map((item) => <Vraag item={item} />)}
+    </div>
+  </Sectie>
+
+  </MetOpgave>
+
+  <Sectie id="plannen">
+    <div class="max-w-2xl">
+      <h2 class="text-3xl sm:text-4xl">{t.aanpak.plannenKop}</h2>
+      <p class="mt-4 text-lg text-zacht">{t.aanpak.plannenTekst}</p>
+      <div class="mt-8">
+        <Knop toonToelichting />
+      </div>
+    </div>
+  </Sectie>
+</Basis>

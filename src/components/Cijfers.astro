@@ -1,0 +1,127 @@
+---
+import {
+  automatiseringenLabel,
+  automatiseringenNu,
+  ankerTijd,
+  ijkpunten,
+  k,
+  uitvoeringenNu,
+  vast,
+  venster,
+  vensterLabel,
+} from "../data/cijfers";
+import { cijfercode, taalUitPad } from "../data/taal";
+
+/**
+ * De cijfers boven "In het kort": vier getallen op een haarlijnraster, het
+ * label erboven en het getal eronder. Waar ze vandaan komen en waarom het
+ * een model is en geen meting staat in src/data/cijfers.ts.
+ *
+ * Twee lopen op. Die worden hier bij de build gezet en bij het openen van
+ * de pagina opnieuw gerekend, want een statische pagina kan maanden oud
+ * zijn en dan staat er een getal van toen. Het scriptje is inline en
+ * rekent met dezelfde formule als de server, dus zonder javascript staat
+ * er het getal van de build en met javascript dat van nu.
+ *
+ * "Uitvoeringen deze maand" is niet afgerond. Een rond getal leest als een
+ * schatting, en dit is een stand. Let op: op de eerste van de maand begint
+ * hij bijna op nul. Wil je dat niet, dan zet je `venster` in cijfers.json
+ * op "jaar" of "sinds"; het label gaat automatisch mee.
+ *
+ * Een getal per seconde laten tikken zou hier beweging zonder gebaar zijn,
+ * en bij 287 per dag gebeurt er eens per vijf minuten iets. Dus niet.
+ *
+ * De taal komt uit het pad, net als in de kop en de voet: de labels en de
+ * duizendscheiding verschillen per taal, het getal niet.
+ */
+const taal = taalUitPad(Astro.url.pathname);
+
+const nu = Date.now();
+const anker = [...ijkpunten].sort((a, b) => (a.datum < b.datum ? 1 : -1))[0]!;
+
+const getallen = [
+  ...vast.map((cijfer) => ({
+    label: taal === "nl" ? cijfer.label : cijfer.labelEn,
+    getal: cijfer.getal,
+  })),
+  {
+    label: automatiseringenLabel[taal],
+    getal: automatiseringenNu(nu),
+    soort: "auto",
+  },
+  {
+    label: vensterLabel[venster][taal],
+    getal: uitvoeringenNu(nu),
+    soort: "uitvoeringen",
+  },
+];
+
+const opmaak = new Intl.NumberFormat(cijfercode[taal]);
+---
+
+<section class="px-4 pt-10 sm:px-6 sm:pt-12">
+  <dl
+    class="mx-auto grid max-w-5xl grid-cols-2 gap-px overflow-hidden rounded-groot bg-rand-zacht sm:grid-cols-4"
+    data-cijfers
+    data-tempo={anker.uitvoeringenPerDag}
+    data-basis={anker.automatiseringen}
+    data-k={k}
+    data-anker={ankerTijd}
+    data-venster={venster}
+    data-taalcode={cijfercode[taal]}
+  >
+    {
+      getallen.map((cijfer) => (
+        <div class="min-w-0 bg-kaart px-5 py-6">
+          <dt class="label">{cijfer.label}</dt>
+          <dd
+            class="mt-2 font-titel text-3xl text-kop sm:text-4xl"
+            data-soort={"soort" in cijfer ? cijfer.soort : undefined}
+          >
+            {typeof cijfer.getal === "number" ? opmaak.format(cijfer.getal) : cijfer.getal}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+</section>
+
+<script>
+  /* Dezelfde formules als src/data/cijfers.ts, maar dan bij het openen van
+     de pagina. Faalt er iets, dan blijft het getal van de build staan. */
+  const DAG = 86400000;
+  const raster = document.querySelector<HTMLElement>("[data-cijfers]");
+  if (raster) {
+    const tempo = Number(raster.dataset.tempo);
+    const basis = Number(raster.dataset.basis);
+    const k = Number(raster.dataset.k);
+    const ankerTijd = Number(raster.dataset.anker);
+    const venster = raster.dataset.venster;
+    const nu = Date.now();
+
+    const start = (() => {
+      const d = new Date(nu);
+      if (venster === "maand") return new Date(d.getFullYear(), d.getMonth(), 1).getTime();
+      if (venster === "jaar") return new Date(d.getFullYear(), 0, 1).getTime();
+      return new Date(2024, 0, 1).getTime();
+    })();
+
+    const a = (start - ankerTijd) / DAG;
+    const b = (nu - ankerTijd) / DAG;
+    const uitvoeringen = Math.max(
+      0,
+      Math.floor(
+        k === 0 ? tempo * (b - a) : (tempo / k) * (Math.exp(k * b) - Math.exp(k * a)),
+      ),
+    );
+    const automatiseringen = Math.floor(basis * Math.exp(k * b));
+
+    const opmaak = new Intl.NumberFormat(raster.dataset.taalcode || "nl-NL");
+    const zet = (soort: string, waarde: number) => {
+      const cel = raster.querySelector<HTMLElement>(`[data-soort="${soort}"]`);
+      if (cel && Number.isFinite(waarde)) cel.textContent = opmaak.format(waarde);
+    };
+    zet("uitvoeringen", uitvoeringen);
+    zet("auto", automatiseringen);
+  }
+</script>

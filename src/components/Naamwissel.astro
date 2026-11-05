@@ -1,5 +1,6 @@
 ---
 import { personen } from "../data/namen";
+import { taalUitPad } from "../data/taal";
 
 /**
  * Wisselt de naam in de kop. De pagina is statisch, dus de naam die de
@@ -10,10 +11,19 @@ import { personen } from "../data/namen";
  * Het staat direct achter de tekst die het aanpast en niet onderaan de
  * pagina, want dan zie je de naam nog even verspringen. Zonder JavaScript
  * blijft de naam uit de build staan, en dat is een geldige kop.
+ *
+ * Het voornaamwoord hoort bij de taal van de zin: "in haar hoofd" en
+ * "in her head". Daarom gaat alleen het woord van deze taal mee naar de
+ * browser en niet het hele object.
  */
+const taal = taalUitPad(Astro.url.pathname);
+const keuze = personen.map((persoon) => ({
+  naam: persoon.naam,
+  bezittelijk: persoon.bezittelijk[taal],
+}));
 ---
 
-<script is:inline define:vars={{ personen }}>
+<script is:inline define:vars={{ personen: keuze }}>
   const namen = document.querySelectorAll("[data-naam]");
   const woorden = document.querySelectorAll("[data-bezittelijk]");
 

@@ -7,6 +7,9 @@
  *
  * De laatste kruimel is de pagina zelf en is dus geen link.
  */
+import { taalUitPad } from "../data/taal";
+import { teksten } from "../data/teksten";
+
 export type Kruimel = { tekst: string; href?: string };
 
 export function kruimelSchema(kruimels: Kruimel[], site: URL | undefined) {
@@ -26,9 +29,10 @@ interface Props {
 }
 
 const { kruimels } = Astro.props;
+const t = teksten[taalUitPad(Astro.url.pathname)];
 ---
 
-<nav aria-label="Kruimelpad">
+<nav aria-label={t.algemeen.kruimelpad}>
   <ol class="flex flex-wrap items-center gap-x-2 label">
     {
       kruimels.map((kruimel, i) => (

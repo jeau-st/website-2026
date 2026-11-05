@@ -1,6 +1,7 @@
 ---
 import Icoon from "./Icoon.astro";
 import type { Dienst } from "../data/site";
+import { dienstPad, taalUitPad } from "../data/taal";
 
 /**
  * Een dienst als rij op de hub, met het nummer en het icoon in de
@@ -18,6 +19,7 @@ interface Props {
 }
 
 const { dienst, nummer } = Astro.props;
+const href = dienstPad(dienst.slug, taalUitPad(Astro.url.pathname));
 ---
 
 <li class="relative bg-bg py-6 first:pt-0 last:pb-0">
@@ -34,7 +36,7 @@ const { dienst, nummer } = Astro.props;
           tekst was hij 24 px hoog en dat is op een telefoon te klein.
           Alleen de titel is de link; de rest blijft selecteerbaar. */}
       <h3 class="text-xl">
-        <a class="tekstlink after:absolute after:inset-0" href={`/diensten/${dienst.slug}/`}>
+        <a class="tekstlink after:absolute after:inset-0" href={href}>
           {dienst.titel}
         </a>
       </h3>

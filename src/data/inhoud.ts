@@ -1,4 +1,5 @@
 import { parse } from "yaml";
+import { TALEN, type PerTaal, type Taal } from "./taal";
 
 /**
  * De inhoud die Joost zelf bijwerkt, gelezen uit `src/inhoud`. Dat zijn
@@ -14,6 +15,18 @@ import { parse } from "yaml";
  * site. Alleen /keystatic zelf draait op de server, en dat raakt dit
  * bestand niet.
  *
+ * Tweetalig werkt met twee bomen: Nederlands staat in `src/inhoud`, Engels
+ * in `src/inhoud/en`, met dezelfde mappen erin. De koppeling tussen een
+ * Nederlandse en een Engelse dienst gaat via het veld `paar` in het
+ * Engelse bestand, en niet via de bestandsnaam: de slugs verschillen juist,
+ * want die staat in de URL en is dus tekst die meetelt.
+ *
+ * Wat niet per taal verschilt, staat een keer. Het adres, het KvK-nummer,
+ * het mailadres en de LinkedIn-pagina staan in `bedrijf.yaml` en niet twee
+ * keer: een tweede kopie van een huisnummer is een tweede plek waar het
+ * fout kan staan. De knoptekst en de regel eronder staan daar wel per
+ * taal, want dat is tekst.
+ *
  * `site.ts` geeft alles hieronder ongewijzigd door, zodat de pagina's en
  * de componenten niet hoeven te weten waar het vandaan komt. Blijf dus
  * uit site.ts importeren en niet hieruit.
@@ -27,35 +40,57 @@ const bestanden = import.meta.glob<string>("../inhoud/**/*.yaml", {
 });
 
 /**
+ * De map waar de inhoud van deze taal staat. Nederlands staat in de
+ * wortel van `src/inhoud`, Engels een laag dieper.
+ */
+function basis(taal: Taal) {
+  return taal === "nl" ? "../inhoud/" : "../inhoud/en/";
+}
+
+/**
  * De bestanden uit één map, op het veld `volgorde`. Een collectie staat
  * bij Keystatic op bestandsnaam, en dat is zelden de volgorde waarin je
  * iets wilt lezen, dus die staat in het bestand zelf.
+ *
+ * De Nederlandse filter pakt `../inhoud/diensten/` en dus niet
+ * `../inhoud/en/diensten/`: het voorvoegsel verschilt, dus de twee bomen
+ * lopen elkaar niet in de weg.
  */
-function collectie<T extends { volgorde: number }>(map: string) {
+function collectie<T extends { volgorde: number }>(taal: Taal, map: string) {
+  const voorvoegsel = `${basis(taal)}${map}/`;
   const rijen = Object.entries(bestanden)
-    .filter(([pad]) => pad.startsWith(`../inhoud/${map}/`))
+    .filter(([pad]) => pad.startsWith(voorvoegsel))
     .map(([pad, tekst]) => ({
-      slug: pad.slice(`../inhoud/${map}/`.length).replace(/\.yaml$/, ""),
+      slug: pad.slice(voorvoegsel.length).replace(/\.yaml$/, ""),
       entry: parse(tekst) as T,
     }));
   if (rijen.length === 0) {
-    throw new Error(`Geen inhoud gevonden in src/inhoud/${map}.`);
+    throw new Error(
+      `Geen inhoud gevonden in ${voorvoegsel.replace("../", "src/")}.`,
+    );
   }
   return rijen.sort((a, b) => a.entry.volgorde - b.entry.volgorde);
 }
 
 /** Eén los bestand, zoals bedrijf.yaml. */
-function los<T>(naam: string): T {
-  const tekst = bestanden[`../inhoud/${naam}.yaml`];
-  if (!tekst) throw new Error(`src/inhoud/${naam}.yaml ontbreekt.`);
+function los<T>(taal: Taal, naam: string): T {
+  const pad = `${basis(taal)}${naam}.yaml`;
+  const tekst = bestanden[pad];
+  if (!tekst) throw new Error(`${pad.replace("../", "src/")} ontbreekt.`);
   const inhoud = parse(tekst) as T | null;
-  if (!inhoud) throw new Error(`src/inhoud/${naam}.yaml is leeg.`);
+  if (!inhoud) throw new Error(`${pad.replace("../", "src/")} is leeg.`);
   return inhoud;
 }
 
 export type Dienst = {
-  /** Wordt de URL: /diensten/<slug>. Niet wijzigen zonder redirect. */
+  /** Wordt de URL: /diensten/<slug> of /en/services/<slug>. */
   slug: string;
+  /**
+   * De slug van dezelfde dienst in de andere taal, zodat de taalknop en
+   * de hreflang-verwijzing weten waar de tegenhanger staat. Staat in het
+   * Engelse bestand en wijst naar de Nederlandse slug.
+   */
+  paar?: string;
   titel: string;
   tekst: string;
   /**
@@ -119,17 +154,19 @@ export type Vraag = {
 
 type DienstBestand = Omit<
   Dienst,
-  "slug" | "voorWie" | "verhaal" | "extra"
+  "slug" | "voorWie" | "verhaal" | "extra" | "paar"
 > & {
   volgorde: number;
   voorWie: string;
   verhaal: { kop: string; alineas: string[] }[];
   extra: ("functies" | "ai")[];
+  paar?: string;
 };
 
-export const diensten: Dienst[] = collectie<DienstBestand>("diensten").map(
-  ({ slug, entry }) => ({
+function dienstenVan(taal: Taal): Dienst[] {
+  return collectie<DienstBestand>(taal, "diensten").map(({ slug, entry }) => ({
     slug,
+    paar: entry.paar || undefined,
     titel: entry.titel,
     tekst: entry.tekst,
     kort: entry.kort,
@@ -141,29 +178,33 @@ export const diensten: Dienst[] = collectie<DienstBestand>("diensten").map(
     voorWie: entry.voorWie || undefined,
     verhaal: entry.verhaal ?? [],
     extra: entry.extra ?? [],
-  }),
-);
+  }));
+}
 
-export const cases: Case[] = collectie<Case & { volgorde: number }>(
-  "opdrachten",
-).map(({ entry }) => ({
-  titel: entry.titel,
-  kort: entry.kort,
-  opbrengst: entry.opbrengst,
-  bouwstenen: entry.bouwstenen ?? [],
-  situatie: entry.situatie ?? [],
-  aanpak: entry.aanpak ?? [],
-  resultaat: entry.resultaat ?? [],
-  todo: entry.todo ?? false,
-}));
+function casesVan(taal: Taal): Case[] {
+  return collectie<Case & { volgorde: number }>(taal, "opdrachten").map(
+    ({ entry }) => ({
+      titel: entry.titel,
+      kort: entry.kort,
+      opbrengst: entry.opbrengst,
+      bouwstenen: entry.bouwstenen ?? [],
+      situatie: entry.situatie ?? [],
+      aanpak: entry.aanpak ?? [],
+      resultaat: entry.resultaat ?? [],
+      todo: entry.todo ?? false,
+    }),
+  );
+}
 
-export const vragen: Vraag[] = collectie<Vraag & { volgorde: number }>(
-  "vragen",
-).map(({ entry }) => ({
-  vraag: entry.vraag,
-  antwoord: entry.antwoord,
-  todo: entry.todo ?? false,
-}));
+function vragenVan(taal: Taal): Vraag[] {
+  return collectie<Vraag & { volgorde: number }>(taal, "vragen").map(
+    ({ entry }) => ({
+      vraag: entry.vraag,
+      antwoord: entry.antwoord,
+      todo: entry.todo ?? false,
+    }),
+  );
+}
 
 type Bedrijfsbestand = {
   naam: string;
@@ -180,11 +221,25 @@ type Bedrijfsbestand = {
   afspraakLabel: string;
   afspraakUrl: string;
   afspraakToelichting: string;
+  /**
+   * De Engelse kant van de knop. De planner-URL mag leeg blijven: dan
+   * staat er de Nederlandse, en dat is een keuze en geen vergissing. Zie
+   * OPLEVERING.md.
+   */
+  afspraakLabelEn: string;
+  afspraakUrlEn?: string;
+  afspraakToelichtingEn: string;
   analyticsToken?: string;
 };
 
-const gegevens = los<Bedrijfsbestand>("bedrijf");
+const gegevens = los<Bedrijfsbestand>("nl", "bedrijf");
 
+/**
+ * De bedrijfsgegevens. Die staan een keer en niet per taal: een adres en
+ * een KvK-nummer veranderen niet door de taal van de pagina. Wat er in het
+ * Engels anders heet, zoals "Dutch chamber of commerce" voor KvK, staat in
+ * `teksten.ts`.
+ */
 export const bedrijf = {
   naam: gegevens.naam,
   persoon: gegevens.persoon,
@@ -195,33 +250,88 @@ export const bedrijf = {
   kvk: gegevens.kvk,
   email: gegevens.email,
   linkedin: gegevens.linkedin,
+  /* Het adres als link naar Google Maps, hier uitgerekend zodat de voet
+     en de contactpagina niet elk hun eigen variant krijgen. Dit is de
+     officiële zoek-url van Maps: geen sleutel nodig, en hij werkt op een
+     telefoon ook als de app ervoor openspringt. */
+  kaartUrl:
+    "https://www.google.com/maps/search/?api=1&query=" +
+    encodeURIComponent(
+      `${gegevens.straat}, ${gegevens.postcode} ${gegevens.plaats}`,
+    ),
 };
 
-/** De enige primaire actie op de site. */
-export const cta = {
-  label: gegevens.afspraakLabel,
-  toelichting: gegevens.afspraakToelichting,
-  url: gegevens.afspraakUrl,
+/*
+ * Er stond hier een mobiel nummer, en het stond daardoor in de voet van
+ * elke pagina, op /contact, in de JSON-LD en in llms.txt. Het is eraf
+ * gehaald en niet achter een knop gezet: een knop houdt alleen de
+ * scrapers tegen die de html lezen en niet die met een echte browser
+ * eronder, en in de gestructureerde data stond het er sowieso leesbaar
+ * naast.
+ */
+
+export type Cta = { label: string; toelichting: string; url: string };
+
+/** De enige primaire actie op de site, per taal. */
+const ctas: PerTaal<Cta> = {
+  nl: {
+    label: gegevens.afspraakLabel,
+    toelichting: gegevens.afspraakToelichting,
+    url: gegevens.afspraakUrl,
+  },
+  en: {
+    label: gegevens.afspraakLabelEn,
+    toelichting: gegevens.afspraakToelichtingEn,
+    /* Geen eigen Engelse planner? Dan de Nederlandse, want een knop die
+       nergens heen gaat is erger dan een planner in de verkeerde taal.
+       Dat het er een hoort te zijn, staat in OPLEVERING.md. */
+    url: gegevens.afspraakUrlEn || gegevens.afspraakUrl,
+  },
 };
 
 /** Leeg betekent: geen meting, en dus ook geen beacon in de pagina. */
 export const analyticsToken = gegevens.analyticsToken ?? "";
 
-const startpagina = los<{
+type Startpagina = {
   kernpunten: string[];
   inHetKort: { vraag: string; antwoord: string }[];
-}>("homepage");
+};
+
+export type Inhoud = {
+  diensten: Dienst[];
+  cases: Case[];
+  vragen: Vraag[];
+  /**
+   * De vinkjes in de hero. Expres ongelijk van lengte en vorm: vijf punten
+   * met hetzelfde ritme lazen als een gegenereerd lijstje.
+   */
+  kernpunten: string[];
+  /**
+   * De samenvatting onder de hero: de vijf W's en de H. Wie op de homepage
+   * landt en niet doorleest, moet na dit blok weten wie dit is, wat het
+   * oplevert en wat de eerste stap is. Elk antwoord staat op één regel,
+   * want zodra het een alinea wordt is het geen samenvatting meer.
+   */
+  inHetKort: { vraag: string; antwoord: string }[];
+  cta: Cta;
+};
+
+function inhoudVan(taal: Taal): Inhoud {
+  const startpagina = los<Startpagina>(taal, "homepage");
+  return {
+    diensten: dienstenVan(taal),
+    cases: casesVan(taal),
+    vragen: vragenVan(taal),
+    kernpunten: startpagina.kernpunten,
+    inHetKort: startpagina.inHetKort,
+    cta: ctas[taal],
+  };
+}
 
 /**
- * De vinkjes in de hero. Expres ongelijk van lengte en vorm: vijf punten
- * met hetzelfde ritme lazen als een gegenereerd lijstje.
+ * De inhoud van beide talen. Alles wordt bij de build gelezen, dus een
+ * ontbrekend bestand valt hier om en niet pas op de pagina.
  */
-export const kernpunten: string[] = startpagina.kernpunten;
-
-/**
- * De samenvatting onder de hero: de vijf W's en de H. Wie op de homepage
- * landt en niet doorleest, moet na dit blok weten wie dit is, wat het
- * oplevert en wat de eerste stap is. Elk antwoord staat op één regel,
- * want zodra het een alinea wordt is het geen samenvatting meer.
- */
-export const inHetKort = startpagina.inHetKort;
+export const inhoud = Object.fromEntries(
+  TALEN.map((taal) => [taal, inhoudVan(taal)]),
+) as PerTaal<Inhoud>;

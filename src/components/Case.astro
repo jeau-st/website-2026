@@ -2,6 +2,8 @@
 import Bouwstenen from "./Bouwstenen.astro";
 import Todo from "./Todo.astro";
 import type { Case } from "../data/site";
+import { taalUitPad } from "../data/taal";
+import { teksten } from "../data/teksten";
 
 /**
  * Een opdracht als rij, niet als kaart. Een kaart is voor iets dat je
@@ -25,10 +27,12 @@ interface Props {
 
 const { item, nummer } = Astro.props;
 
+const t = teksten[taalUitPad(Astro.url.pathname)];
+
 const delen = [
-  { kop: "Situatie", punten: item.situatie },
-  { kop: "Aanpak", punten: item.aanpak },
-  { kop: "Resultaat", punten: item.resultaat },
+  { kop: t.opdracht.situatie, punten: item.situatie },
+  { kop: t.opdracht.aanpak, punten: item.aanpak },
+  { kop: t.opdracht.resultaat, punten: item.resultaat },
 ];
 
 const schoon = (tekst: string) => tekst.replace(/^TODO:\s*/, "");

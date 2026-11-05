@@ -9,6 +9,9 @@
  * Het meelopen met wat je leest doet het script onderaan; zonder script
  * blijft het gewoon een rijtje links dat werkt.
  */
+import { taalUitPad } from "../data/taal";
+import { teksten } from "../data/teksten";
+
 export type Opgave = { id: string; tekst: string };
 
 interface Props {
@@ -16,6 +19,7 @@ interface Props {
 }
 
 const { items } = Astro.props;
+const t = teksten[taalUitPad(Astro.url.pathname)];
 ---
 
 {
@@ -29,7 +33,7 @@ const { items } = Astro.props;
         class="hidden lg:sticky lg:top-24 lg:block lg:self-start lg:py-24"
       >
         <p id="opgave-kop" class="label">
-          Op deze pagina
+          {t.algemeen.opDezePagina}
         </p>
         <ol class="mt-4 space-y-1 border-l border-rand">
           {items.map((item, i) => (
@@ -52,7 +56,7 @@ const { items } = Astro.props;
       {/* Tot lg: dicht, want op een telefoon wil je eerst de kop zien. */}
       <details class="mt-8 rounded-kaart border border-rand bg-kaart lg:hidden">
         <summary class="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 px-4 label">
-          Op deze pagina
+          {t.algemeen.opDezePagina}
           <span aria-hidden="true" class="text-zacht">
             +
           </span>

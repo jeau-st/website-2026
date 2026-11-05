@@ -28,7 +28,28 @@ export default defineConfig({
   // metaControle leest na de build de titel en de beschrijving van elke
   // pagina en laat de build vallen als er een te lang is. Hij staat
   // achteraan, want hij heeft de geschreven html nodig.
-  integrations: [sitemap(), react(), keystatic(), metaControle()],
+  // De site is tweetalig. Nederlands staat op de wortel en Engels onder
+  // /en/, dus `prefixDefaultLocale` staat uit: zo verandert er geen enkel
+  // bestaand Nederlands adres. Zie src/data/taal.ts en docs/engelse-versie.md.
+  i18n: {
+    defaultLocale: 'nl',
+    locales: ['nl', 'en'],
+    routing: { prefixDefaultLocale: false },
+  },
+  // De sitemap krijgt geen i18n-instelling. Die koppelt twee talen door het
+  // taaldeel in het pad te verruilen, en dat werkt alleen als de rest van het
+  // pad gelijk is. Onze slugs zijn per taal vertaald, dus /aanpak hoort bij
+  // /en/approach en niet bij /en/aanpak. Met die instelling erin zette de
+  // sitemap alternates bij de twee pagina's waar het pad toevallig klopt en
+  // bij de acht andere niets, en dat is misleidender dan nergens. Het paar
+  // staat als hreflang in de head van elke pagina, in Basis.astro, compleet
+  // en met x-default. Daar kijkt Google ook naar.
+  integrations: [
+    sitemap(),
+    react(),
+    keystatic(),
+    metaControle(),
+  ],
   // /pipedrive is opgegaan in de dienstpagina. De oude URL blijft werken,
   // want hij stond in de voet, in llms.txt en in de sitemap, en een
   // verdwenen pagina is een 404 voor wie hem had opgeslagen.

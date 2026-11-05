@@ -16,6 +16,13 @@ hieronder staat, is werk dat nog moet gebeuren voordat de site live kan.
 | Cloudflare Web Analytics | Keystatic, Bedrijfsgegevens, veld Analyticstoken | Cookieloos, dus geen cookiemelding nodig. De beacon laadt alleen met een token. |
 | Domein jeau.st koppelen | `wrangler.jsonc` | Wacht op nic.st: zie het draaiboek in `docs/dns-verhuizing.md`. Het routesblok staat klaar in `wrangler.jsonc`, in commentaar. Haal dat weg zodra de zone in Cloudflare actief is. Tot die tijd staat de site op jeau.st via GitHub Pages, en daarvoor staat de repo openbaar. Zet hem daarna weer op privé en haal Pages weg: de stappen staan in het draaiboek bij stap 7. |
 
+## Engelse versie
+
+| Wat | Waar | Toelichting |
+| --- | --- | --- |
+| Engelse belafspraak in Bookings | Keystatic, Bedrijfsgegevens, veld Link naar de planner (Engels) | Zolang dit veld leeg is, wijst de knop op `/en/` naar de Nederlandse planner, en komt iemand die net Engels las in een Nederlands formulier terecht. Maak een tweede Bookings-pagina in het Engels en zet de link erin. |
+| Engelse tekst nalezen door iemand die Engels spreekt | `src/data/teksten.ts` en `src/inhoud/en` | De tekst is geschreven en niet vertaald, en gecontroleerd op Brits Engels en op de verboden woorden. Een moedertaalspreker hoort er nog dingen in die een script niet vindt. |
+
 ## Gecontroleerd en akkoord
 
 - Contrast donker, tegen de achtergrond: tekst 17,9:1, kop 12,3:1, zacht 5,0:1, accent 5,1:1

@@ -19,21 +19,50 @@ import { parse } from "yaml";
 const WORTEL = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
 const BRON = join(WORTEL, "src");
 
-/** Woorden en vormen die er altijd uit moeten. Zie "Niet gebruiken". */
+/**
+ * De site staat in twee talen, en een verboden woord is niet hetzelfde
+ * woord. "Naadloos" bestaat niet in de Engelse tekst en "seamless" niet
+ * in de Nederlandse, dus een lijst met allebei zegt per bestand maar de
+ * helft. Daarom drie sets: wat altijd fout is, wat in het Nederlands
+ * fout is, en wat in het Engels fout is. Welke erbij horen hangt aan het
+ * pad, zie `talenVan`.
+ */
+
+/** Vormfouten. Die staan los van de taal: dit is opmaak, geen woordkeus. */
 const FOUT = [
-  [/\u2014|\u2013/, "em dash of en dash"],
+  [/—|–/, "em dash of en dash"],
   [/\w!/, "uitroepteken"],
+  [/\bSLA\b/, '"SLA", gebruik onderhoudsabonnement'],
+];
+
+/** Nederlands. Zie "Niet gebruiken" in SCHRIJFWIJZER.md. */
+const FOUT_NL = [
   [/\bniet alleen\b[^.]{0,80}?\b(maar ook|ook)\b/i, '"niet alleen X, maar ook Y"'],
   [/\bis geen\b[^.]{0,60}?\bmaar\b/i, '"het is geen X, het is Y"'],
   [/^\s*Niet\b[^.]{0,80}?,\s*maar\b/i, '"Niet X, maar Y"'],
-  [/\bSLA\b/, '"SLA", gebruik onderhoudsabonnement'],
   // Op de stam en niet op het hele woord, anders glipt "naadloze" erdoor
   [/\b(naadlo|moeitelo|ontgrendel|crucia|essenti|robuust|holistisch|synergie|toekomstbestendig|empower)/i, "woord van de verboden lijst"],
   [/\bhoger niveau\b|\bdigitale landschap\b|\bgame changer\b/i, "uitdrukking van de verboden lijst"],
 ];
 
+/**
+ * Engels. Dezelfde soort woorden als in het Nederlands, plus de
+ * spelling: de site staat in Brits Engels, want wie dit leest zit in
+ * Nederland en is Europees Engels gewend. Dus -ise en niet -ize, en
+ * colour en niet color.
+ */
+const FOUT_EN = [
+  [/\bnot only\b[^.]{0,80}?\bbut also\b/i, '"not only X but also Y"'],
+  [/\bit is not\b[^.]{0,60}?\bit is\b/i, '"it is not X, it is Y"'],
+  [/\b(seamless|effortless|unlock|crucial|essential|robust|holistic|synerg|future-proof|empower|leverag|cutting.edge|best.in.class|delve)/i, "woord van de verboden lijst"],
+  [/\bnext level\b|\bgame.changer\b|\bdigital landscape\b|\bdeep dive\b/i, "uitdrukking van de verboden lijst"],
+  [/\b\w{3,}iz(e|es|ed|ing|ation|ations)\b/i, "Amerikaanse spelling, schrijf -ise"],
+  [/\b\w{3,}yz(e|es|ed|ing)\b/i, "Amerikaanse spelling, schrijf -yse"],
+  [/\b(colors?|behaviors?|favorite|centers?|fulfill|traveled|canceled)\b/i, "Amerikaanse spelling"],
+];
+
 /** Tegenstellingen. Toegestaan, maar niet te vaak. Zie "Tegenstellingen". */
-const LETOP = [
+const LETOP_NL = [
   [/,\s*niet\b/i, '"X, niet Y"'],
   [/,\s*geen\b|^\s*Geen\b/i, '"Geen X, geen Y"'],
   [/\bin plaats van\b/i, '"X in plaats van Y"'],
@@ -43,6 +72,33 @@ const LETOP = [
   [/\boplossing/i, '"oplossing", zeg wat het is'],
   [/\boptimaliser/i, '"optimaliseren", zeg wat er beter wordt'],
 ];
+
+/** Hetzelfde in het Engels. Dezelfde wegstreeptoets geldt. */
+const LETOP_EN = [
+  [/,\s*not\b/i, '"X, not Y"'],
+  [/\binstead of\b/i, '"X instead of Y"'],
+  [/\brather than\b/i, '"X rather than Y"'],
+  [/\b(rarely|seldom|hardly ever)\b/i, '"X is rarely the problem"'],
+  [/\bnowhere else\b/i, '"and nowhere else"'],
+  [/\bsolution/i, '"solution", zeg wat het is'],
+  [/\boptimis/i, '"optimise", zeg wat er beter wordt'],
+];
+
+/**
+ * Welke lijsten over een bestand heen gaan. De Engelse yaml staat in een
+ * eigen map, dus die is aan het pad te zien. `teksten.ts` heeft beide
+ * talen in één bestand, want daar staan de twee versies van dezelfde
+ * regel naast elkaar; dat bestand krijgt dus beide lijsten. De rest van
+ * src is Nederlands.
+ */
+function talenVan(pad) {
+  if (pad.includes("/inhoud/en/")) return ["en"];
+  if (pad.endsWith("src/data/teksten.ts")) return ["nl", "en"];
+  return ["nl"];
+}
+
+const FOUT_PER_TAAL = { nl: FOUT_NL, en: FOUT_EN };
+const LETOP_PER_TAAL = { nl: LETOP_NL, en: LETOP_EN };
 
 async function bestanden(map) {
   const uit = [];
@@ -121,19 +177,22 @@ for (const pad of paden) {
   // Backslashes naar slashes, zodat het pad in de terminal klikbaar is
   const kort = relative(WORTEL, pad).split(sep).join("/");
   const meldingen = [];
+  const talen = talenVan(kort);
+  const fout = [...FOUT, ...talen.flatMap((taal) => FOUT_PER_TAAL[taal])];
+  const letop = talen.flatMap((taal) => LETOP_PER_TAAL[taal]);
   const lezer = pad.endsWith(".yaml") ? tekstUitYaml : tekstUit;
   for (const { regel, tekst } of lezer(readFileSync(pad, "utf8"))) {
     for (const zin of tekst.split(/(?<=[.?])\s+/)) {
       const woorden = zin.trim().split(/\s+/).filter(Boolean);
       if (woorden.length < 3) continue;
       lengtes.push(woorden.length);
-      for (const [patroon, naam] of FOUT) {
+      for (const [patroon, naam] of fout) {
         if (patroon.test(zin)) {
           meldingen.push(`${kort}:${regel} - fout: ${naam}\n    ${zin}`);
           fouten++;
         }
       }
-      for (const [patroon, naam] of LETOP) {
+      for (const [patroon, naam] of letop) {
         if (patroon.test(zin)) {
           meldingen.push(`${kort}:${regel} - let op: ${naam}\n    ${zin}`);
           tegenstellingen++;

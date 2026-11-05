@@ -1,74 +1,12 @@
 ---
-import Basis from "../layouts/Basis.astro";
-import Sectie from "../components/Sectie.astro";
-import MetOpgave from "../components/MetOpgave.astro";
-import Knop from "../components/Knop.astro";
-import Case from "../components/Case.astro";
-import Todo from "../components/Todo.astro";
-import { cases } from "../data/site";
-
-const vrijgegeven = cases.filter((item) => !item.todo);
-
-/* Deze pagina heeft maar een sectie, dus de inhoudsopgave wijst naar de
-   cases zelf. De nummers lopen gelijk met de nummers in de lijst. Een
-   case die nog een TODO is, krijgt geen regel in de opgave: daar valt
-   nog niets te lezen. */
-const opgave = cases
-  .map((item, i) => ({
-    id: `case-${String(i + 1).padStart(2, "0")}`,
-    tekst: item.titel,
-    todo: item.todo,
-  }))
-  .filter((item) => !item.todo);
+/**
+ * Het werk in het Nederlands.
+ *
+ * De opmaak en de teksten staan in `src/paginas`: één pagina voor beide
+ * talen, met de tekst per taal in `src/data/teksten.ts`. Deze route zegt
+ * alleen welke taal het is. Zie docs/engelse-versie.md.
+ */
+import Werk from "../paginas/Werk.astro";
 ---
 
-<Basis
-  titel="Werk: voorbeelden uit de praktijk | Jeau.st"
-  beschrijving="Geanonimiseerde voorbeelden van CRM-implementaties, koppelingen en automatiseringen, opgebouwd als situatie, aanpak en resultaat."
->
-  <section class="px-4 py-20 sm:px-6 sm:py-24">
-    <div class="mx-auto max-w-5xl">
-      <h1 class="max-w-3xl text-4xl sm:text-5xl lg:text-6xl">
-        Voorbeelden van werk
-      </h1>
-      <p class="mt-6 max-w-2xl text-lg text-zacht">
-        Geanonimiseerd, omdat het over de systemen en cijfers van klanten
-        gaat. Opgebouwd als situatie, aanpak en resultaat, zodat je kunt zien
-        of het op jouw situatie lijkt.
-      </p>
-    </div>
-  </section>
-
-  <MetOpgave items={opgave}>
-  <Sectie id="cases" vol>
-    {
-      vrijgegeven.length === 0 && (
-        <Todo wat="deze pagina staat nog volledig op placeholders. Vul de cases in src/data/site.ts in, of haal Werk uit het menu tot er inhoud is." />
-      )
-    }
-    <ol class="mt-8 grid gap-px bg-rand-zacht">
-      {
-        cases.map((item, i) => (
-          <Case item={item} nummer={String(i + 1).padStart(2, "0")} />
-        ))
-      }
-    </ol>
-  </Sectie>
-
-  </MetOpgave>
-
-  <Sectie id="plannen">
-    <div class="max-w-2xl">
-      <h2 class="text-3xl sm:text-4xl">
-        Lijkt dit op wat jij nodig hebt?
-      </h2>
-      <p class="mt-4 text-lg text-zacht">
-        In een gesprek van 30 minuten hoor je of jouw situatie hierop lijkt
-        en wat er voor nodig is.
-      </p>
-      <div class="mt-8">
-        <Knop toonToelichting />
-      </div>
-    </div>
-  </Sectie>
-</Basis>
+<Werk taal="nl" />

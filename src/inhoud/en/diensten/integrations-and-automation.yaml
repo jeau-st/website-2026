@@ -1,0 +1,87 @@
+paar: koppelingen-en-automatisering
+titel: Integrations and automation
+volgorde: 20
+icoon: workflow
+kort: Systems connected, and AI on your own data
+kop: Connecting your systems to each other
+meta: >-
+  Integrations between CRM, accounting and mail, built with n8n, and AI that
+  works with your own data.
+tekst: >-
+  Systems that pass each other what they need, so nobody enters the same thing
+  twice. And AI that is allowed at that same data.
+punten:
+  - Integrations between CRM, accounting and mail
+  - Recurring manual work gone
+  - AI that works with your own data
+  - Agreements on what does and does not go into the AI
+oplevert:
+  - Nobody types the same thing twice any more
+  - A signed quote lands in the accounts straight away
+  - You see where something got stuck when it goes wrong
+  - You can ask questions about your own figures in plain language
+voorWie: >-
+  For companies where the same data has to be right in several systems, and
+  where someone is keeping that up by hand. An integration is not one fixed
+  thing: it can be a button you press, a sync that runs overnight, or something
+  that fires the moment one system changes.
+verhaal:
+  - kop: How often does it have to move?
+    alineas:
+      - >-
+        That is the first question, and the answer follows from your process. A
+        signed quote can go straight through to the accounts. A timesheet can
+        wait a night. Real time always sounds better, but it costs more upkeep
+        and you only notice the difference if someone does something with that
+        data within the hour.
+      - >-
+        So we pick the minimum that makes it work properly. That is cheaper to
+        build and less of it breaks.
+  - kop: First check whether it already exists
+    alineas:
+      - >-
+        Pipedrive has a marketplace, and a fair number of companies have built
+        their own integration for it. DocuSign for signing documents, CloudTalk
+        for your telephony. If one of those works for your situation, it saves
+        a lot of building.
+      - >-
+        Building it myself comes after that. One example of what that gives
+        you: the link between a phone system and the CRM. A missed call or a
+        voicemail lands on the right person automatically, and the account
+        manager for that customer gets the task to call back or listen to the
+        message.
+  - kop: Yours to run, and in pieces
+    alineas:
+      - >-
+        I build with n8n. It comes from a German company and the cloud version
+        runs on servers in the EU. It works well with AI models, and you can
+        keep it in your own hands. That last part weighs heaviest for me: you
+        see exactly which information goes where and when. If something is
+        missing in a system, you see where it got stuck. If you want to watch
+        along when something goes wrong, you can.
+      - >-
+        One large workflow that does everything is one thing that can fall
+        over. So I cut them into pieces with their own error handling, so the
+        rest carries on when one part stalls. Those pieces are reusable too:
+        updating contact details, or checking whether someone already exists
+        before a second contact is created. That comes back in almost every
+        project.
+  - kop: What not to expect
+    alineas:
+      - >-
+        That it is a switch you flip and it then works the way you want. An
+        integration is bespoke, and if your process changes, the integration
+        has to change with it. I think along on that.
+  - kop: Where your data goes
+    alineas:
+      - >-
+        You cannot simply send customer data to a server, inside the EU or
+        outside it. There has to be a lawful basis for it and it belongs in
+        your privacy statement. The same goes for AI: what you put in a prompt
+        goes to the provider of that model.
+      - >-
+        So I look at where you stand on GDPR and which points deserve
+        attention. Which data may and may not go in gets written down before
+        anything is switched on.
+extra:
+  - ai

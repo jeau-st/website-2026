@@ -1,0 +1,25 @@
+titel: Social organisation matching families and sitters
+volgorde: 10
+kort: Social organisation
+bouwstenen:
+  - database
+  - workflow
+  - file-text
+  - calculator
+  - chart-column
+situatie:
+  - The work ran through loose systems and a row of spreadsheets.
+  - The same data had to be right everywhere, so a lot of time went into retyping.
+  - Applications came in unstructured, so every one started with sorting it out.
+aanpak:
+  - Made Pipedrive the lead system for the contacts and the matches.
+  - A database behind it for the hours, tied to Pipedrive with n8n.
+  - The document flow for reporting to partners attached to it.
+  - Intakes and won deals go back to Google Ads.
+opbrengst: The batches for collection and payment run by themselves. After every step the follow-up task is ready.
+resultaat:
+  - The collection and payment batches are created automatically.
+  - After every step a follow-up task is waiting.
+  - An application arrives in a form you can work with straight away.
+  - A good deal less manual work, and reporting you can build on.
+todo: false

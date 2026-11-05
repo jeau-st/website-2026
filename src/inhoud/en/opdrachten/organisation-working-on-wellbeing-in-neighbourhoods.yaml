@@ -1,0 +1,25 @@
+titel: Organisation working on wellbeing in neighbourhoods
+volgorde: 20
+kort: Wellbeing organisation
+bouwstenen:
+  - calendar
+  - mail
+  - workflow
+  - globe
+  - sparkles
+situatie:
+  - The systems were scattered.
+  - Communication with people was kept somewhere other than their progress, so who was at which stage had to be pieced together.
+  - Keeping that up was manual work.
+aanpak:
+  - Put Pipedrive at the centre, with the contacts, the organisations and everyone's progress in it.
+  - The rest hangs off it with n8n.
+  - Cleaned up the duplicate records.
+  - A ticketing system tied to the CRM for the events.
+opbrengst: In one place you see per event who was invited, who came and what the follow-up is.
+resultaat:
+  - Per event you see who was invited, who signed up, who came and what the follow-up is.
+  - One place to look, instead of two lists side by side.
+  - A good deal less retyping, and the sign-up flow is tighter.
+  - A basis tight enough to put AI on.
+todo: false

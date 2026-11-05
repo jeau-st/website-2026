@@ -1,0 +1,93 @@
+---
+import Basis from "../layouts/Basis.astro";
+import Sectie from "../components/Sectie.astro";
+import { bedrijf } from "../data/site";
+import type { Taal } from "../data/taal";
+import { teksten } from "../data/teksten";
+
+/**
+ * De partijen waar gegevens terechtkomen staan in `teksten.ts`. Mail en
+ * agenda draaien op Microsoft 365, dus Microsoft staat er met drie petten
+ * op en toch als één regel. Pipedrive staat erbij omdat een geplande
+ * afspraak in het CRM belandt, wat hierboven ook al staat.
+ *
+ * Deze tekst is nog niet juridisch nagelezen. Zie OPLEVERING.md.
+ *
+ * De Engelse versie zegt in één regel dat bij verschil de Nederlandse
+ * geldt. Een vertaling is hier namelijk ook een juridische belofte, en de
+ * versie die wordt nagelezen is de Nederlandse.
+ */
+interface Props {
+  taal: Taal;
+}
+
+const { taal } = Astro.props;
+const t = teksten[taal];
+---
+
+<Basis titel={t.privacy.titel} beschrijving={t.privacy.beschrijving}>
+  <section class="px-4 py-20 sm:px-6 sm:py-24">
+    <div class="mx-auto max-w-5xl">
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl">{t.privacy.kop}</h1>
+      <p class="mt-6 max-w-2xl text-lg text-zacht">{t.privacy.intro}</p>
+      {
+        t.privacy.voorrang && (
+          <p class="mt-4 max-w-2xl text-zacht">{t.privacy.voorrang}</p>
+        )
+      }
+    </div>
+  </section>
+
+  <Sectie id="uitleg">
+    <div class="max-w-2xl space-y-8">
+      <div>
+        <h2 class="text-xl">{t.privacy.statistiekKop}</h2>
+        <p class="mt-2 text-zacht">{t.privacy.statistiekTekst}</p>
+      </div>
+
+      <div>
+        <h2 class="text-xl">{t.privacy.contactKop}</h2>
+        <p class="mt-2 text-zacht">{t.privacy.contactTekst}</p>
+      </div>
+
+      <div>
+        <h2 class="text-xl">{t.privacy.rechtenKop}</h2>
+        <p class="mt-2 text-zacht">
+          {t.privacy.rechtenVoor}<a
+            class="tekstlink text-tekst"
+            href={`mailto:${bedrijf.email}`}>{bedrijf.email}</a
+          >{t.privacy.rechtenNa}
+        </p>
+      </div>
+
+      <div>
+        <h2 class="text-xl">{t.privacy.kaartKop}</h2>
+        <p class="mt-2 text-zacht">{t.privacy.kaartTekst}</p>
+      </div>
+
+      <div>
+        <h2 class="text-xl">{t.privacy.verwerkersKop}</h2>
+        <p class="mt-2 text-zacht">{t.privacy.verwerkersIntro}</p>
+        {/* Geen kader eromheen: de dl heeft al een scheidslijn per rij,
+            en een rand daaromheen is dezelfde streep twee keer. */}
+        <dl class="mt-4 divide-y divide-rand/60">
+          {
+            t.privacy.verwerkers.map((partij) => (
+              <div class="py-3">
+                <dt class="text-tekst">{partij.naam}</dt>
+                <dd class="mt-1 text-zacht">{partij.waarvoor}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+
+      <div>
+        <h2 class="text-xl">{t.privacy.gegevensKop}</h2>
+        <p class="mt-2 text-zacht">
+          {bedrijf.naam}, {bedrijf.plaats}, {t.algemeen.kvk}&nbsp;{bedrijf.kvk}.
+        </p>
+      </div>
+    </div>
+  </Sectie>
+</Basis>

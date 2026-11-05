@@ -1,0 +1,90 @@
+---
+import Basis from "../layouts/Basis.astro";
+import Sectie from "../components/Sectie.astro";
+import Knop from "../components/Knop.astro";
+import { bedrijf } from "../data/site";
+import type { Taal } from "../data/taal";
+import { teksten, vul } from "../data/teksten";
+
+/* Geen telefoonnummer. Zie de toelichting bij `bedrijf` in inhoud.ts. */
+interface Props {
+  taal: Taal;
+}
+
+const { taal } = Astro.props;
+const t = teksten[taal];
+
+const gegevens = [
+  { kop: t.contact.mail, tekst: bedrijf.email, href: `mailto:${bedrijf.email}` },
+  {
+    kop: t.contact.linkedin,
+    tekst: "jfbeers",
+    href: bedrijf.linkedin,
+    extern: true,
+  },
+];
+---
+
+<Basis titel={t.contact.titel} beschrijving={t.contact.beschrijving}>
+  <section class="px-4 py-20 sm:px-6 sm:py-24">
+    <div class="mx-auto max-w-5xl">
+      <h1 class="max-w-3xl text-4xl sm:text-5xl lg:text-6xl">
+        {t.contact.kop}
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-zacht">{t.contact.intro}</p>
+      <div class="mt-10">
+        <Knop toonToelichting />
+      </div>
+    </div>
+  </section>
+
+  <Sectie
+    id="gegevens"
+    kop={t.contact.gegevensKop}
+    intro={t.contact.gegevensIntro}
+  >
+    <dl class="mt-10 grid gap-8 sm:grid-cols-2">
+      {
+        gegevens.map((item) => (
+          <div>
+            <dt class="text-sm font-semibold text-zacht">{item.kop}</dt>
+            <dd class="mt-1 min-w-0 break-words text-lg">
+              <a
+                class="tekstlink inline-flex min-h-11 items-center text-tekst"
+                href={item.href}
+                target={item.extern ? "_blank" : undefined}
+                rel={item.extern ? "noopener" : undefined}
+              >
+                {item.tekst}
+              </a>
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+
+    {/* Het adres staat er sinds Jeau.st bij Studio Citadel zit. Een
+        bezoekadres is ook wat een zoekmachine van een lokaal bedrijf
+        verwacht, dus het staat hier en in de gestructureerde data. */}
+    <div class="mt-12 border-t border-rand/60 pt-8 text-zacht">
+      <p class="font-medium text-tekst">{bedrijf.naam}</p>
+      {
+        bedrijf.onderdeelVan && (
+          <p class="mt-1">
+            {vul(t.contact.onderdeelVan, { studio: bedrijf.onderdeelVan })}
+          </p>
+        )
+      }
+      <a
+        class="drukbaar mt-1 block transition-colors hover:text-tekst"
+        href={bedrijf.kaartUrl}
+        target="_blank"
+        rel="noopener"
+      >
+        <span class="block">{bedrijf.straat}</span>
+        <span class="block">{bedrijf.postcode}&nbsp;{bedrijf.plaats}</span>
+      </a>
+      <p class="mt-3">{t.algemeen.kvk}&nbsp;{bedrijf.kvk}</p>
+    </div>
+  </Sectie>
+</Basis>

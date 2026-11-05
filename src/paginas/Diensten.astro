@@ -1,0 +1,102 @@
+---
+import Basis from "../layouts/Basis.astro";
+import Sectie from "../components/Sectie.astro";
+import Knop from "../components/Knop.astro";
+import Dienst from "../components/Dienst.astro";
+import { site } from "../data/site";
+import { dienstPad, routes, type Taal } from "../data/taal";
+import { teksten } from "../data/teksten";
+import Doorlink from "../components/Doorlink.astro";
+
+/**
+ * De hub boven de dienstpagina's. Hij bestaat om twee redenen: het
+ * menu-item moet ergens naartoe, en een crawler moet zien dat die
+ * pagina's bij elkaar horen en hieronder hangen. Daarom staat hier de
+ * ItemList en niet alleen een rij links.
+ *
+ * Het blok "waar dit het beste werkt" stond hier eerst onder. Het noemde
+ * bouw en architectuur als voorbeeld, en daarmee las de pagina alsof de
+ * rest er niet bij hoort. De verwijzingen die eronder stonden zijn
+ * blijven staan.
+ */
+interface Props {
+  taal: Taal;
+}
+
+const { taal } = Astro.props;
+const t = teksten[taal];
+const { diensten } = site(taal);
+
+/* De eerste dienst is de CRM-inrichting, en daar hangt het blok met de
+   Pipedrive-functies onder. De link eronder wijst daarheen, en in het
+   Engels is dat een andere slug, dus hij komt uit de lijst en staat niet
+   als pad in de tekst. */
+const metFuncties = diensten.find((dienst) =>
+  dienst.extra?.includes("functies"),
+);
+
+const schema = {
+  "@type": "ItemList",
+  name: t.diensten.schemaNaam,
+  itemListElement: diensten.map((dienst, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: dienst.titel,
+    url: new URL(dienstPad(dienst.slug, taal), Astro.site).toString(),
+  })),
+};
+---
+
+<Basis
+  titel={t.diensten.titel}
+  beschrijving={t.diensten.beschrijving}
+  extraSchema={schema}
+>
+  <section class="px-4 py-20 sm:px-6 sm:py-24">
+    <div class="mx-auto max-w-5xl">
+      <h1 class="max-w-3xl text-4xl sm:text-5xl lg:text-6xl">
+        {t.diensten.kop}
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-zacht">{t.diensten.intro}</p>
+    </div>
+  </section>
+
+  <Sectie id="diensten">
+    <ol class="grid gap-px bg-rand-zacht">
+      {
+        diensten.map((dienst, i) => (
+          <Dienst dienst={dienst} nummer={String(i + 1).padStart(2, "0")} />
+        ))
+      }
+    </ol>
+  </Sectie>
+
+  <Sectie id="verder" aansluitend>
+    <ul class="max-w-2xl space-y-3 border-t border-rand/60 pt-8">
+      <li>
+        <Doorlink href={routes.aanpak[taal]}>
+          {t.diensten.trajectLink}
+        </Doorlink>
+      </li>
+      {
+        metFuncties && (
+          <li>
+            <Doorlink href={`${dienstPad(metFuncties.slug, taal)}#functies`}>
+              {t.diensten.functiesLink}
+            </Doorlink>
+          </li>
+        )
+      }
+    </ul>
+  </Sectie>
+
+  <Sectie id="plannen">
+    <div class="max-w-2xl">
+      <h2 class="text-3xl sm:text-4xl">{t.diensten.plannenKop}</h2>
+      <p class="mt-4 text-lg text-zacht">{t.diensten.plannenTekst}</p>
+      <div class="mt-8">
+        <Knop toonToelichting />
+      </div>
+    </div>
+  </Sectie>
+</Basis>

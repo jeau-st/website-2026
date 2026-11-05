@@ -12,7 +12,28 @@ er nog moet gebeuren voordat het ook op de live site werkt.
 | Opdrachten | `src/inhoud/opdrachten/*.yaml` | Wat op /werk staat |
 | Veelgestelde vragen | `src/inhoud/vragen/*.yaml` | De uitklappers op /aanpak |
 | Homepage | `src/inhoud/homepage.yaml` | De vinkjes in de hero en het blok In het kort |
-| Bedrijfsgegevens | `src/inhoud/bedrijf.yaml` | Naam, plaats, KvK, mail, LinkedIn, de afspraakknop en het analyticstoken |
+| Bedrijfsgegevens | `src/inhoud/bedrijf.yaml` | Naam, plaats, KvK, mail, LinkedIn, de afspraakknop in beide talen en het analyticstoken |
+
+En dezelfde vier schermen nog een keer in het Engels, onder de kop Engels in
+het menu:
+
+| Scherm | Bestanden | Wat het is |
+| --- | --- | --- |
+| Diensten (Engels) | `src/inhoud/en/diensten/*.yaml` | Dezelfde vijf diensten, op `/en/services/<engelse-slug>` |
+| Opdrachten (Engels) | `src/inhoud/en/opdrachten/*.yaml` | Wat op /en/work staat |
+| Veelgestelde vragen (Engels) | `src/inhoud/en/vragen/*.yaml` | De uitklappers op /en/approach |
+| Homepage (Engels) | `src/inhoud/en/homepage.yaml` | De vinkjes en In het kort op /en/ |
+
+De velden zijn dezelfde, met twee verschillen. Een Engelse dienst heeft het
+veld **Nederlandse tegenhanger**: de slugs verschillen per taal, dus uit het
+pad valt niet op te maken dat `reporting` en `cijfers` dezelfde pagina zijn.
+Dat veld is waar de taalknop op mikt en waar de hreflang in de head van komt;
+leeg laten betekent dat de dienst alleen in het Engels bestaat. En de
+bedrijfsgegevens staan maar één keer: het adres en het KvK-nummer veranderen
+niet per taal. Alleen de knop staat er twee keer in, want dat is tekst.
+
+De helpteksten bij de Engelse velden zijn Nederlands. De tekst in het veld is
+Engels, degene die hem typt niet.
 
 Wat er bewust **niet** in zit: de pijnpunten, de denkwijze, de niveaus op
 /aanpak, de Pipedrive-functies, de processtappen en de bouwstenen van de
@@ -27,16 +48,23 @@ terwijl je typt en niet achteraf in `SCHRIJFWIJZER.md`.
 ## Hoe het aan elkaar hangt
 
 ```
-Keystatic  ->  src/inhoud/*.yaml  ->  src/data/inhoud.ts  ->  src/data/site.ts  ->  de pagina's
+Keystatic  ->  src/inhoud/*.yaml     ->  src/data/inhoud.ts  ->  src/data/site.ts  ->  de pagina's
+               src/inhoud/en/*.yaml
 ```
 
 `inhoud.ts` leest de yaml bij de build met `import.meta.glob`, niet met
 de reader van Keystatic: die leest met `node:fs`, en het prerenderen
 gebeurt in de Cloudflare-runtime, waar geen bestandssysteem is.
 
-`site.ts` geeft alles ongewijzigd door. Daardoor hoeft geen enkele
-pagina te weten of iets uit een formulier komt of uit code. Importeer
-dus altijd uit `site.ts`.
+Het leest beide bomen en zet ze in `inhoud.nl` en `inhoud.en`. De
+Nederlandse collecties filteren op `../inhoud/diensten/`, en dat pad past
+niet op `../inhoud/en/diensten/`, dus de Engelse bestanden glippen er niet
+tussen. Welke taal een pagina is, komt uit het pad: alles onder `/en/` is
+Engels. Zie `src/data/taal.ts`.
+
+`site(taal)` geeft de helft van die taal door, met de lijsten uit de code
+eraan. Daardoor hoeft geen enkele pagina te weten of iets uit een formulier
+komt of uit code. Importeer dus altijd uit `site.ts`.
 
 De bezoeker krijgt gewone statische html. Er draait geen CMS achter de
 site; alleen `/keystatic` en `/api/keystatic` draaien op de server.

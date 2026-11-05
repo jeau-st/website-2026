@@ -1,0 +1,50 @@
+---
+import Vlag from "./Vlag.astro";
+import { taalwissel } from "../data/paden";
+import { taalUitPad, taalcode } from "../data/taal";
+import { teksten } from "../data/teksten";
+
+/**
+ * De taalknop in de kop. Een link en geen knop, want hij gaat ergens
+ * naartoe: naar dezelfde pagina in de andere taal.
+ *
+ * Geen omleiding op `Accept-Language` en geen onthouden van de keuze. De
+ * uitvoer is statisch, dus zo'n omleiding zou op de Worker moeten, een
+ * Nederlander met een Engelse telefoon krijgt de verkeerde taal, en een
+ * crawler die alle pagina's wil zien moet ze kunnen ophalen zonder dat er
+ * iets tussen zit. Dezelfde regel als bij het thema: de systeemvoorkeur
+ * schakelt niet automatisch om.
+ *
+ * De keuze onthouden is er ook niet, en dat is een keuze. Onthouden heeft
+ * alleen zin als een volgend bezoek er iets mee doet, en dat betekent
+ * omleiden zodra de pagina in beeld komt. Dat is precies het stilletjes
+ * ergens anders uitkomen dat hierboven niet mag, en op een statische site
+ * zie je de verkeerde pagina dan ook even staan.
+ *
+ * Bestaat de tegenhanger niet, dan wijst de knop naar de homepage van die
+ * taal en zegt het label dat erbij. Nooit een link die iets anders doet
+ * dan hij belooft.
+ *
+ * In de knop staat de vlag van de taal waar hij heen gaat, niet de vlag
+ * van de pagina waar je bent: de knop toont wat je krijgt als je hem
+ * indrukt. De vlag is een tekening en geen tekst, dus hij is aria-hidden
+ * en het label blijft een hele zin voor wie hem voorgelezen krijgt.
+ */
+const pad = Astro.url.pathname;
+const taal = taalUitPad(pad);
+const t = teksten[taal];
+const { naar, href, zelfdePagina } = taalwissel(pad);
+
+const uitleg = zelfdePagina ? t.taal.naarAndere : t.taal.naarAndereHome;
+---
+
+<a
+  class="drukbaar inline-flex min-h-11 min-w-11 items-center justify-center text-zacht transition-colors hover:text-tekst"
+  href={href}
+  hreflang={taalcode[naar]}
+  lang={taalcode[naar]}
+  title={uitleg}
+  aria-label={uitleg}
+>
+  <Vlag taal={naar} />
+</a>

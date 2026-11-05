@@ -1,6 +1,8 @@
 ---
 import Woordmerk from "./Woordmerk.astro";
-import { bedrijf, diensten } from "../data/site";
+import { bedrijf, site } from "../data/site";
+import { dienstPad, routes, taalUitPad } from "../data/taal";
+import { teksten, vul } from "../data/teksten";
 
 /**
  * Drie kolommen: wie het is, wat er te koop is, en met wie je te maken
@@ -10,14 +12,19 @@ import { bedrijf, diensten } from "../data/site";
  * Er heeft een kolom "Links" gestaan met LinkedIn, Over Jeau.st, .st?!
  * en Privacy erin. Dat was een kolom die zichzelf moest uitleggen, en
  * die vier horen alle vier ergens anders: LinkedIn bij de gegevens, want
- * daar bereik je iemand mee. `.st?!` onderaan de eerste kolom, want het gaat
- * over de naam. Privacy achter het copyright, want daar gaat die regel
- * over. En Over Jeau.st nergens meer: die staat al in de kop.
+ * daar bereik je iemand mee. Privacy en `.st?!` achter het copyright:
+ * dat is de regel voor wat over de site zelf gaat en niet over het werk.
+ * En Over Jeau.st nergens meer: die staat al in de kop.
  *
  * Studio Citadel staat in de eerste kolom, onder het woordmerk. Het zegt
  * iets over wie hier spreekt, niet over waar het bedrijf staat
  * ingeschreven, dus het hoort bij het merk en niet bij de gegevens. Een
- * maat kleiner dan de rest: het is een bijzin, geen bewering. De regel
+ * maat kleiner dan de rest: het is een bijzin, geen bewering, en hij
+ * staat onderaan uitgelijnd: de kolom is een flexkolom en de wikkel
+ * eromheen heeft mt-auto, dus hij zakt naar de onderkant van de
+ * hoogste kolom in plaats van tegen de belofte aan te plakken. De
+ * pt-10 is de ondergrens voor als deze kolom zelf de hoogste is.
+ * De regel
  * breekt met de hand achter "van", want anders bepaalt de kolombreedte
  * waar hij omslaat en staat "collectief" los van de naam erachter.
  *
@@ -27,6 +34,10 @@ import { bedrijf, diensten } from "../data/site";
  * of hij nu een link is of niet, zodat het adresblok hetzelfde ritme
  * houdt als het lijstje ernaast.
  */
+
+const taal = taalUitPad(Astro.url.pathname);
+const t = teksten[taal];
+const { diensten } = site(taal);
 
 const jaar = new Date().getFullYear();
 
@@ -55,10 +66,15 @@ const kopLink = "drukbaar transition-colors hover:text-tekst";
 
 <footer class="border-t border-rand/60 px-4 pb-28 pt-14 sm:px-6 sm:pb-14">
   <div class="mx-auto grid max-w-5xl gap-10 sm:grid-cols-2 lg:grid-cols-3">
-    <div>
-      <Woordmerk class="h-6 text-merk" />
+    <div class="flex flex-col">
+      {/* self-start, want de kolom is een flexkolom en die rekt zijn
+          kinderen in de breedte op. De svg heeft w-auto, dus hij rekte
+          mee tot de kolombreedte, en dan zet preserveAspectRatio de
+          tekening midden in dat te brede vak: het woordmerk stond
+          ineens gecentreerd. */}
+      <Woordmerk class="h-6 self-start" />
       <p class="mt-3 text-sm text-zacht">
-        CRM en procesautomatisering voor mkb en scale-ups.
+        {t.voet.belofte}
       </p>
       {/* Studio Citadel is het collectief waar Jeau.st zit. Het beeldmerk
           is hun eigen favicon: een uitsnede van het bastion, wit op
@@ -68,39 +84,43 @@ const kopLink = "drukbaar transition-colors hover:text-tekst";
 
           Geen pijltje achter de link. Dat is voor een pagina van deze
           site, en dit gaat naar buiten. */}
-      <a
-        class="drukbaar mt-5 inline-flex items-center gap-3 text-xs text-zacht transition-colors hover:text-tekst"
-        href="https://www.studiocitadel.nl/"
-        target="_blank"
-        rel="noopener"
-      >
-        <img
-          src="/studio-citadel.png"
-          alt=""
-          width="128"
-          height="128"
-          loading="lazy"
-          class="size-8 shrink-0 rounded-klein"
-        />
-        <span class="min-w-0">
-          {bedrijf.naam} is onderdeel van<br />collectief {bedrijf.onderdeelVan}
-        </span>
-      </a>
-
-      <p class="mt-4 text-sm text-zacht">
-        <a class={link} href="/st">.st?!</a>
-      </p>
+      <div class="mt-auto pt-10">
+        <a
+          class="drukbaar inline-flex items-center gap-3 text-xs text-zacht transition-colors hover:text-tekst"
+          href="https://www.studiocitadel.nl/"
+          target="_blank"
+          rel="noopener"
+        >
+          <img
+            src="/studio-citadel.png"
+            alt=""
+            width="128"
+            height="128"
+            loading="lazy"
+            class="size-8 shrink-0 rounded-klein"
+          />
+          {/* Twee regels met een harde breuk ertussen, want anders bepaalt
+              de kolombreedte waar hij omslaat. In het Engels staat het
+              lidwoord op een andere plek, dus het zijn twee hele regels uit
+              `teksten` en geen zin die hier in stukken wordt geknipt. */}
+          <span class="min-w-0">
+            {vul(t.voet.onderdeelVan1, { naam: bedrijf.naam })}<br />{
+              vul(t.voet.onderdeelVan2, { studio: bedrijf.onderdeelVan })
+            }
+          </span>
+        </a>
+      </div>
     </div>
 
     <div>
       <h2 class="text-sm font-semibold">
-        <a class={kopLink} href="/diensten">Diensten</a>
+        <a class={kopLink} href={routes.diensten[taal]}>{t.voet.diensten}</a>
       </h2>
       <ul class="mt-1 text-sm text-zacht">
         {
           diensten.map((dienst) => (
             <li>
-              <a class={link} href={`/diensten/${dienst.slug}/`}>
+              <a class={link} href={dienstPad(dienst.slug, taal)}>
                 {dienst.titel}
               </a>
             </li>
@@ -112,22 +132,34 @@ const kopLink = "drukbaar transition-colors hover:text-tekst";
     <div>
       <h2 class="text-sm font-semibold">{bedrijf.naam}</h2>
       <div class="mt-1 text-sm text-zacht">
-        <p class="py-1.5">{bedrijf.straat}</p>
-        <p class="py-1.5">{bedrijf.postcode}&nbsp;{bedrijf.plaats}</p>
+        {/* Eén link over allebei de regels en niet twee losse: het is
+            één adres en één bestemming. Geen pijltje, dat is voor een
+            pagina van deze site. */}
+        <a
+          class={`${link} not-italic`}
+          href={bedrijf.kaartUrl}
+          target="_blank"
+          rel="noopener"
+        >
+          <span class="block">{bedrijf.straat}</span>
+          <span class="block">
+            {bedrijf.postcode}&nbsp;{bedrijf.plaats}
+          </span>
+        </a>
         <a
           class={`${link} min-w-0 break-words`}
           href={`mailto:${bedrijf.email}`}
         >
           {bedrijf.email}
         </a>
-        <p class="py-1.5">KvK&nbsp;{bedrijf.kvk}</p>
+        <p class="py-1.5">{t.algemeen.kvk}&nbsp;{bedrijf.kvk}</p>
         <a
           class={link}
           href={bedrijf.linkedin}
           target="_blank"
           rel="noopener"
         >
-          Connect op LinkedIn
+          {t.voet.linkedin}
         </a>
       </div>
     </div>
@@ -137,6 +169,7 @@ const kopLink = "drukbaar transition-colors hover:text-tekst";
     class="mx-auto mt-12 flex max-w-5xl flex-wrap items-center gap-x-5 text-sm text-zacht"
   >
     <span>&copy; {jaar} {bedrijf.naam}</span>
-    <a class={kopLink} href="/privacy">Privacy</a>
+    <a class={kopLink} href={routes.privacy[taal]}>{t.voet.privacy}</a>
+    <a class={kopLink} href={routes.st[taal]}>{t.voet.st}</a>
   </p>
 </footer>

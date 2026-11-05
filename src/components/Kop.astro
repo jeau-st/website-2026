@@ -3,7 +3,10 @@ import Knop from "./Knop.astro";
 import Woordmerk from "./Woordmerk.astro";
 import ThemaKnop from "./ThemaKnop.astro";
 import Icoon from "./Icoon.astro";
-import { cta, diensten } from "../data/site";
+import Taalknop from "./Taalknop.astro";
+import { site } from "../data/site";
+import { dienstPad, routes, taalUitPad } from "../data/taal";
+import { teksten } from "../data/teksten";
 
 /**
  * De kop blijft bovenaan staan en krimpt zodra je gaat scrollen: het
@@ -20,21 +23,28 @@ import { cta, diensten } from "../data/site";
  * blijft een knop voor wie klikt of tabt. Op een aanraakscherm doet de
  * hover niets: daar volgt een tik gewoon de link.
  *
- * Vijf links passen niet naast het woordmerk, de themaknop en de knop.
+ * Vijf links passen niet naast het woordmerk, de taalknop, de themaknop
+ * en de knop.
  * Daarom staat het menu tot lg in een uitklapper. Dat is een details en
  * geen eigen knop met JavaScript: zo werkt het menu ook als het script
  * niet draait. Het uitklappen van Diensten in de balk heeft wel een
  * script nodig, en zonder dat script blijft de link het doen.
  */
 const pad = Astro.url.pathname;
+const taal = taalUitPad(pad);
+const t = teksten[taal];
+const { cta, diensten } = site(taal);
 
-const links = [
-  { href: "/diensten", tekst: "Diensten" },
-  { href: "/aanpak", tekst: "Aanpak" },
-  { href: "/werk", tekst: "Werk" },
-  { href: "/over", tekst: "Over" },
-  { href: "/contact", tekst: "Contact" },
-];
+/* De vijf menu-items. De paden komen uit `routes` en de namen uit
+   `teksten`, want in het Engels staan ze op /en/services, /en/approach en
+   zo verder: een menu-item is dus een route en geen vast pad. */
+const links = (["diensten", "aanpak", "werk", "over", "contact"] as const).map(
+  (naam) => ({ href: routes[naam][taal], tekst: t.kop.menuLinks[naam] }),
+);
+
+/* Waar het uitklappertje onder Diensten aan hangt. In het Engels is dat
+   /en/services, dus de vergelijking hieronder mag geen vast pad zijn. */
+const dienstenHref = routes.diensten[taal];
 
 /* Wat er onder Diensten hangt. De korte regel en het icoon staan bij de
    dienst zelf in site.ts, zodat het menu en de blokken op de homepage uit
@@ -45,15 +55,26 @@ const links = [
    bij de inrichting: daarom zit het nu in die eerste regel. De pagina
    zelf blijft bereikbaar vanaf de hub, elke dienstpagina en de voet. */
 const onderDiensten = diensten.map((dienst) => ({
-  href: `/diensten/${dienst.slug}/`,
+  href: dienstPad(dienst.slug, taal),
   tekst: dienst.titel,
   uitleg: dienst.kort,
   icoon: dienst.icoon,
 }));
 
-/* Een dienstpagina laat Diensten oplichten, want die hangt eronder. */
+/* Twee vragen die uit elkaar moeten blijven. `actief` is: je bent hier
+   ergens, dus een dienstpagina laat Diensten oplichten, want die hangt
+   eronder. `huidig` is: dit is de pagina waar je nu staat.
+
+   Het verschil is aria-current. Dat mag maar op één link in een menu,
+   en op /diensten/crm-inrichting stond het op Diensten en op de dienst
+   zelf: dan zegt het menu dat je op twee pagina's tegelijk bent. In de
+   uitklapper op mobiel was dat ook te zien, want daar kregen allebei
+   een gevuld vlak, en die vlakken raakten elkaar: twee rondingen tegen
+   elkaar aan lezen als één vorm met een knik erin.
+   Diensten blijft daar wel oplichten, maar alleen in de tekstkleur. */
 const actief = (href: string) =>
   pad === href || pad === `${href}/` || pad.startsWith(`${href}/`);
+const huidig = (href: string) => pad === href || pad === `${href}/`;
 ---
 
 <header
@@ -64,22 +85,22 @@ const actief = (href: string) =>
     class="kop-balk mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 sm:px-6"
   >
     <a
-      href="/"
-      class="inline-flex min-h-11 items-center text-merk"
-      aria-current={pad === "/" ? "page" : undefined}
+      href={routes.home[taal]}
+      class="inline-flex min-h-11 items-center"
+      aria-current={huidig(routes.home[taal]) ? "page" : undefined}
     >
       <Woordmerk class="kop-merk" />
     </a>
 
     <div class="flex items-center gap-2 sm:gap-4">
-      <nav aria-label="Hoofdmenu" class="hidden items-center gap-7 lg:flex">
+      <nav aria-label={t.kop.hoofdmenu} class="hidden items-center gap-7 lg:flex">
         {
           links.map((link) =>
-            link.href === "/diensten" ? (
+            link.href === dienstenHref ? (
               <div class="group relative flex items-center" data-uitklap>
                 <a
                   href={link.href}
-                  aria-current={actief(link.href) ? "page" : undefined}
+                  aria-current={huidig(link.href) ? "page" : undefined}
                   class:list={[
                     "inline-flex min-h-11 items-center text-sm group-hover:text-tekst",
                     actief(link.href)
@@ -94,7 +115,9 @@ const actief = (href: string) =>
                   data-uitklap-knop
                   aria-expanded="false"
                   aria-controls="menu-diensten"
-                  aria-label="Alle diensten tonen"
+                  aria-label={t.kop.dienstenTonen}
+                  data-label-tonen={t.kop.dienstenTonen}
+                  data-label-verbergen={t.kop.dienstenVerbergen}
                   class="drukbaar ml-1 inline-flex min-h-11 w-6 cursor-pointer items-center justify-center text-zacht group-hover:text-tekst"
                 >
                   <svg
@@ -118,14 +141,14 @@ const actief = (href: string) =>
                   class="absolute left-0 top-full z-40 mt-2 w-[24rem] rounded-kaart border border-rand bg-kaart p-2 shadow-xl before:absolute before:inset-x-0 before:-top-2 before:h-2 before:content-['']"
                 >
                   <p class="px-3 pb-1 pt-2 label">
-                    Vijf soorten werk
+                    {t.kop.paneelkop}
                   </p>
                   <ul class="grid gap-0.5">
                     {onderDiensten.map((item) => (
                       <li>
                         <a
                           href={item.href}
-                          aria-current={actief(item.href) ? "page" : undefined}
+                          aria-current={huidig(item.href) ? "page" : undefined}
                           class:list={[
                             "flex gap-3 rounded-klein px-3 py-2 hover:bg-bg active:bg-bg",
                             actief(item.href) ? "bg-bg" : "",
@@ -155,7 +178,7 @@ const actief = (href: string) =>
             ) : (
               <a
                 href={link.href}
-                aria-current={actief(link.href) ? "page" : undefined}
+                aria-current={huidig(link.href) ? "page" : undefined}
                 class:list={[
                   "inline-flex min-h-11 items-center text-sm hover:text-tekst",
                   actief(link.href)
@@ -170,6 +193,7 @@ const actief = (href: string) =>
         }
       </nav>
 
+      <Taalknop />
       <ThemaKnop />
 
       {
@@ -186,7 +210,7 @@ const actief = (href: string) =>
       <details class="relative lg:hidden" data-menu>
         <summary
           class="drukbaar inline-flex min-h-11 min-w-11 cursor-pointer list-none items-center justify-center text-zacht hover:text-tekst"
-          aria-label="Menu"
+          aria-label={t.kop.menu}
         >
           <svg
             aria-hidden="true"
@@ -204,7 +228,7 @@ const actief = (href: string) =>
         </summary>
 
         <nav
-          aria-label="Menu"
+          aria-label={t.kop.menu}
           class="absolute right-0 top-full z-40 mt-3 w-64 rounded-kaart border border-rand bg-kaart p-2 shadow-xl"
         >
           <ul>
@@ -213,10 +237,14 @@ const actief = (href: string) =>
                 <li>
                   <a
                     href={link.href}
-                    aria-current={actief(link.href) ? "page" : undefined}
+                    aria-current={huidig(link.href) ? "page" : undefined}
                     class:list={[
                       "flex min-h-11 items-center rounded-klein px-3 hover:bg-bg hover:text-tekst active:bg-bg",
-                      actief(link.href) ? "bg-bg text-tekst" : "text-zacht",
+                      huidig(link.href)
+                        ? "bg-bg text-tekst"
+                        : actief(link.href)
+                          ? "text-tekst"
+                          : "text-zacht",
                     ]}
                   >
                     {link.tekst}
@@ -224,14 +252,14 @@ const actief = (href: string) =>
                   {/* De diensten hangen eronder, dus ze staan ingesprongen
                       in dezelfde lijst. Geen tweede uitklapper in een
                       uitklapper: dat is op een telefoon niet te raken. */}
-                  {link.href === "/diensten" && (
+                  {link.href === dienstenHref && (
                     <ul class="mb-1 ml-3 border-l border-rand/60 pl-2">
                       {onderDiensten.map((item) => (
                         <li>
                           <a
                             href={item.href}
                             aria-current={
-                              actief(item.href) ? "page" : undefined
+                              huidig(item.href) ? "page" : undefined
                             }
                             class:list={[
                               "flex min-h-11 items-center gap-2.5 rounded-klein px-3 text-sm hover:bg-bg hover:text-tekst active:bg-bg",
@@ -394,9 +422,11 @@ const actief = (href: string) =>
       const zetten = (open) => {
         paneel.toggleAttribute("data-open", open);
         knop.setAttribute("aria-expanded", String(open));
+        /* De twee teksten staan op de knop zelf als data-attribuut, want
+           dit script staat in de pagina en kent de taal niet. */
         knop.setAttribute(
           "aria-label",
-          open ? "Alle diensten verbergen" : "Alle diensten tonen",
+          open ? knop.dataset.labelVerbergen : knop.dataset.labelTonen,
         );
       };
 

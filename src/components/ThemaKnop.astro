@@ -1,8 +1,15 @@
 ---
+import { taalUitPad } from "../data/taal";
+import { teksten } from "../data/teksten";
+
 /**
  * Wisselt tussen donker en licht en onthoudt de keuze.
  * Donker is de standaard, dus zonder keuze staat er niets in localStorage.
+ *
+ * De twee labels staan als data-attribuut op de knop: het script hieronder
+ * staat in de pagina en kent de taal niet.
  */
+const t = teksten[taalUitPad(Astro.url.pathname)];
 ---
 
 <button
@@ -10,7 +17,9 @@
   id="thema-knop"
   class="drukbaar inline-flex min-h-11 min-w-11 items-center justify-center text-zacht hover:text-tekst"
   aria-pressed="true"
-  aria-label="Lichte modus aanzetten"
+  aria-label={t.algemeen.themaLicht}
+  data-label-licht={t.algemeen.themaLicht}
+  data-label-donker={t.algemeen.themaDonker}
 >
   <svg
     aria-hidden="true"
@@ -52,7 +61,7 @@
       knop.setAttribute("aria-pressed", String(donker));
       knop.setAttribute(
         "aria-label",
-        donker ? "Lichte modus aanzetten" : "Donkere modus aanzetten",
+        donker ? knop.dataset.labelLicht : knop.dataset.labelDonker,
       );
     };
 

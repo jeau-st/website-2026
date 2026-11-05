@@ -1,0 +1,47 @@
+paar: cijfers
+titel: Figures you can steer on
+volgorde: 30
+icoon: chart-column
+kort: Reporting on what you actually want to know
+kop: Figures you can steer on
+meta: >-
+  Reporting on what you actually want to know, and a signal when something
+  goes wrong. By a CRM consultant in the Netherlands.
+tekst: >-
+  A handful of figures that are right is worth more than a dashboard nobody
+  looks at.
+punten:
+  - Reporting on what you want to know
+  - Signals when something goes wrong
+  - Fields that make sure the figures are right
+oplevert:
+  - You know where the work stalls before anyone reports it
+  - A few numbers you really steer on
+  - Figures that say the same thing whoever asks for them
+voorWie: >-
+  For companies that do have reports but do not steer on them.
+verhaal:
+  - kop: The dashboard of a car
+    alineas:
+      - >-
+        There are two kinds of figure on it. Speed, revs and temperature you
+        need now, and you steer on them while you drive. The distance covered,
+        the outside temperature and when to refuel say something about the time
+        ahead. A report works the same way, and if you mix those two up, nobody
+        looks at it any more.
+      - >-
+        Which figures those are for you differs per company. Usually it comes
+        down to new enquiries, how they stand, which activities hang off them,
+        and what is coming in financially against what has already come in.
+  - kop: And then the figures have to be right
+    alineas:
+      - >-
+        A report is only as good as what sits under it. If a deal has been in
+        the wrong stage for three months, every chart it counts towards is
+        wrong. So data quality belongs in the process and not in a clean-up
+        afterwards.
+      - >-
+        In Pipedrive you can make fields required, mark them as important, or
+        lock them down so not everyone can change them. Then what is in there
+        stays right without anyone chasing it.
+extra: []

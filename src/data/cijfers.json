@@ -1,0 +1,25 @@
+{
+  "groeiPerJaar": 1.5,
+  "houdbaarDagen": 120,
+  "venster": "maand",
+  "vast": [
+    {
+      "label": "Sinds",
+      "labelEn": "Since",
+      "getal": "2024"
+    },
+    {
+      "label": "Implementaties",
+      "labelEn": "Implementations",
+      "getal": "8"
+    }
+  ],
+  "ijkpunten": [
+    {
+      "datum": "2026-11-05",
+      "automatiseringen": 127,
+      "uitvoeringenPerDag": 287.2,
+      "bron": "4 n8n-instances, actieve workflows geteld en uitvoeringen over 2026-10-06 t/m 2026-11-05 (8616)"
+    }
+  ]
+}

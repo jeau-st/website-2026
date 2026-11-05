@@ -1,0 +1,141 @@
+---
+import { Image } from "astro:assets";
+import foto from "../assets/joost.webp";
+import Basis from "../layouts/Basis.astro";
+import Sectie from "../components/Sectie.astro";
+import Knop from "../components/Knop.astro";
+import { bedrijf } from "../data/site";
+import { routes, type Taal } from "../data/taal";
+import { teksten, vul } from "../data/teksten";
+import Doorlink from "../components/Doorlink.astro";
+
+/**
+ * Deze pagina heette "Over mij" en ging over één persoon. Dat leest
+ * prettig, maar het zet de site vast op de bezetting van vandaag: komt
+ * er iemand bij, dan klopt de helft van de zinnen niet meer. Hij gaat nu
+ * over Jeau.st, met Joost erin.
+ *
+ * De stem blijft wel van Joost. Wie er spreekt staat in
+ * docs/brand-persona.md, en dat verandert niet doordat het bedrijf
+ * groeit. Wat eruit moest zijn de zinnen die beweren dat Jeau.st en
+ * Joost hetzelfde zijn.
+ *
+ * Het Person-blok blijft staan. Op "wie is Joost Beers" is dit de pagina
+ * met de achtergrond en de link naar LinkedIn, en die vraag stelt een
+ * AI-assistent nog steeds. Het blok staat in beide talen op dezelfde
+ * @id, want het is dezelfde persoon: de Engelse pagina is een tweede
+ * beschrijving en geen tweede mens.
+ */
+interface Props {
+  taal: Taal;
+}
+
+const { taal } = Astro.props;
+const t = teksten[taal];
+
+const schema = {
+  "@type": "Person",
+  "@id": `${Astro.site}over/#joost`,
+  name: bedrijf.persoon,
+  jobTitle: t.over.functie,
+  email: bedrijf.email,
+  worksFor: { "@id": `${Astro.site}#bedrijf` },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: bedrijf.plaats,
+    addressCountry: "NL",
+  },
+  knowsAbout: [
+    "Pipedrive",
+    "CRM-implementatie",
+    "datamigratie",
+    "n8n",
+    "procesautomatisering",
+    "AI-automatisering",
+    "MCP",
+  ],
+  sameAs: [bedrijf.linkedin],
+};
+
+const plaatsEnStudio = {
+  plaats: bedrijf.plaats,
+  studio: bedrijf.onderdeelVan,
+  naam: bedrijf.persoon,
+};
+---
+
+<Basis
+  titel={t.over.titel}
+  beschrijving={t.over.beschrijving}
+  extraSchema={schema}
+>
+  <section class="px-4 py-20 sm:px-6 sm:py-24">
+    <div class="mx-auto max-w-5xl">
+      <p class="font-mono text-sm text-zacht">{t.over.label}</p>
+      <h1 class="mt-2 max-w-3xl text-4xl sm:text-5xl lg:text-6xl">
+        {t.over.kop}
+      </h1>
+      <p class="mt-6 max-w-2xl text-lg text-zacht">
+        {vul(t.over.intro, plaatsEnStudio)}
+      </p>
+
+      <div class="mt-10">
+        <Image
+          src={foto}
+          alt={vul(t.over.fotoAlt, { naam: bedrijf.persoon })}
+          width={896}
+          height={448}
+          class="w-full max-w-lg rounded-groot border border-rand/60"
+        />
+      </div>
+    </div>
+  </section>
+
+  <Sectie id="wie" kop={t.over.wieKop}>
+    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
+      {t.over.wieAlineas.map((alinea) => <p>{vul(alinea, plaatsEnStudio)}</p>)}
+    </div>
+  </Sectie>
+
+  <Sectie id="achtergrond" kop={t.over.achtergrondKop}>
+    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
+      {t.over.achtergrondAlineas.map((alinea) => <p>{alinea}</p>)}
+    </div>
+    <p class="mt-8">
+      <Doorlink href={`${routes.aanpak[taal]}#werkwijze`}>
+        {t.over.achtergrondLink}
+      </Doorlink>
+    </p>
+  </Sectie>
+
+  <Sectie id="waarom" kop={t.over.waaromKop}>
+    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
+      {t.over.waaromAlineas.map((alinea) => <p>{alinea}</p>)}
+    </div>
+    <ul class="mt-10 max-w-2xl space-y-3">
+      <li>
+        <a
+          class="tekstlink inline-flex min-h-11 items-center text-tekst"
+          href={bedrijf.linkedin}
+          target="_blank"
+          rel="noopener"
+        >
+          {t.over.linkedin}
+        </a>
+      </li>
+      <li>
+        <Doorlink href={routes.st[taal]}>{t.over.stLink}</Doorlink>
+      </li>
+    </ul>
+  </Sectie>
+
+  <Sectie id="plannen">
+    <div class="max-w-2xl">
+      <h2 class="text-3xl sm:text-4xl">{t.over.plannenKop}</h2>
+      <p class="mt-4 text-lg text-zacht">{t.over.plannenTekst}</p>
+      <div class="mt-8">
+        <Knop toonToelichting />
+      </div>
+    </div>
+  </Sectie>
+</Basis>

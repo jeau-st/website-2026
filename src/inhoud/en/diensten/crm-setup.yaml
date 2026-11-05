@@ -1,0 +1,46 @@
+paar: crm-inrichting
+titel: CRM setup
+volgorde: 10
+icoon: settings-2
+kort: Pipedrive around your sales process, and what it can do
+kop: Setting up Pipedrive around how you sell
+meta: >-
+  Pipedrive set up around how you sell, with migration from spreadsheets or
+  your old system. By a Pipedrive consultant in the Netherlands.
+tekst: >-
+  Pipedrive set up around how you sell, including the steps that only go that
+  way at your company.
+punten:
+  - Pipelines and stages that follow your process
+  - Migration from spreadsheets, mailbox or an old system
+  - Fields, permissions and reporting
+oplevert:
+  - Everyone works the same way
+  - You see at a glance what is running and what is coming
+  - Your old data is in there, cleaned up and usable
+voorWie: >-
+  For companies still working in spreadsheets, or with a CRM nobody really
+  uses. That system is badly set up, it is connected to nothing, or both.
+  Picking a new system is quickly done. The question is what happens to the
+  data you already have.
+verhaal:
+  - kop: The migration is the real work
+    alineas:
+      - >-
+        Moving data sounds like copying. It is not. In an old database or a
+        spreadsheet every column is there for a reason, and that reason is
+        written down nowhere. A field called status means one thing to sales
+        and another to the back office. Before anything moves, I work out how
+        that data came about.
+      - >-
+        Then it goes into the new process, and that is one way of working for
+        everyone. Sometimes that means merging, sometimes throwing away, and
+        sometimes it turns out two departments use the same word for different
+        things. Those conversations are part of the setup.
+      - >-
+        You can also start fresh. That is quicker and it happens more often
+        than you would think. Even so I bring the history along, because a
+        customer from four years ago can call tomorrow. At that moment you want
+        to see what you agreed back then.
+extra:
+  - functies

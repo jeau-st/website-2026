@@ -1,0 +1,19 @@
+titel: Webshop in antique and design lamps
+volgorde: 40
+kort: Webshop in lamps
+bouwstenen:
+  - globe
+  - mail
+situatie:
+  - The webshop was badly dated.
+  - Mail landed in customers' spam, so an order or a question sometimes went unanswered without anyone noticing.
+aanpak:
+  - Rebuilt the webshop.
+  - Put the mail settings and the DNS records that go with them in order.
+  - Checked that mail from their own domain arrives.
+opbrengst: Mail from their own domain arrives again. Sales picked up.
+resultaat:
+  - Mail from their own domain arrives instead of landing in spam.
+  - Customers find the shop again and can reach it.
+  - Sales picked up.
+todo: false

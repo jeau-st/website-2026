@@ -1,0 +1,68 @@
+paar: ondersteuning-en-training
+titel: Support and training
+volgorde: 40
+icoon: graduation-cap
+kort: Training and upkeep after go-live
+kop: Training and upkeep after go-live
+meta: >-
+  Training on your own way of working and a support retainer, so the system is
+  still being used half a year later.
+tekst: >-
+  A system only works once the team uses it, half a year later as well.
+punten:
+  - Training on your own way of working
+  - A support retainer if you want me close at hand
+  - Adjusting when the process changes
+oplevert:
+  - The team is still working with it half a year later
+  - Your own superusers answer most of the questions
+  - Small changes are made quickly, without a queue
+voorWie: >-
+  Setting up a system for the way the world looks today is one thing. Making
+  sure it still fits and is still used in half a year is another.
+verhaal:
+  - kop: What a support retainer is
+    alineas:
+      - >-
+        That I pick up the phone. I set aside a number of hours a month for
+        you, so small changes get made quickly and you are not at the back of a
+        queue. And every two weeks I speak to one or two of your superusers
+        about how it is going and what is on their minds.
+  - kop: Training does not stop at go-live
+    alineas:
+      - >-
+        You train the people who have to work with it at that moment. But a
+        team changes, and the colleague who starts in a year was not there. So
+        there should be a written reference covering how the process is set up
+        and where to find what.
+      - >-
+        This is where CRM projects often come apart. Someone comes by, explains
+        how it should work, points out where everything is, and leaves. Half a
+        year later half the team is working around it again.
+  - kop: Superusers as a safeguard
+    alineas:
+      - >-
+        That is why I push for one or more superusers inside your company. They
+        are the first point of contact internally, they gather the wishes that
+        come up and check them against how the system is meant to work.
+        Technically they grow along, so they can act as the client towards me.
+      - >-
+        The aim is that you do not need me any more. If you have the people
+        internally who understand it, I am glad to get them there.
+  - kop: And a piece of culture
+    alineas:
+      - >-
+        If everyone came from a situation where they had their own habits, then
+        standardising also means unlearning one. There has to be less room for
+        a private spreadsheet alongside the system, and you steer on that. If
+        someone wants something different, they take it up with a superuser, so
+        the new way applies to the whole team at once.
+      - >-
+        Ideas for improvement are welcome in that. There are always people who
+        see a better way, and something should happen with it. Work like that
+        and your system is still in use in half a year, and still right.
+      - >-
+        It is never finished, by the way. Standardising, automating and
+        measuring take you to the next thing that can be better by themselves.
+        That is a pleasant cycle to be in together.
+extra: []
