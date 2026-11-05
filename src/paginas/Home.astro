@@ -75,12 +75,14 @@ const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
   {/* Geen onderruimte: de cijferband eronder brengt zijn eigen lucht
       mee, aan beide kanten. Twee blokken die allebei iets bijdragen
       tellen op tot een gat waar niemand op gestuurd heeft. */}
-  {/* De ruimte tussen de kop van de site en de h1. Die stond op lg op
-      40, zodat de hero met de ring op 1280 bij 800 in beeld paste, maar
-      daarmee plakte de titel aan de balk. Nu dezelfde 80 en 96 als op de
-      andere pagina's, zonder uitzondering voor lg. Gemeten op 1280 bij
-      800: de knop en de regel eronder blijven zichtbaar. */}
-  <section class="px-4 pb-0 pt-20 sm:px-6 sm:pt-24">
+  {/* De ruimte tussen de kop van de site en de h1 is de kleine maat uit
+      het ritme, 56 en vanaf sm 64. De hero hoort bij de balk erboven: die
+      staat vast bovenaan en hoort bij deze pagina, dus het is dezelfde
+      afstand als tussen een blok en wat erbij hoort. De grote maat stond
+      er ook, en dan hangt de titel los van alles. Op lg heeft hier 40
+      gestaan om de ring op 1280 bij 800 in beeld te houden; die
+      uitzondering is niet meer nodig. */}
+  <section class="px-4 pb-0 pt-14 sm:px-6 sm:pt-16">
     <div
       class="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-[minmax(0,0.55fr)_minmax(0,0.45fr)] lg:gap-10"
     >
@@ -108,7 +110,7 @@ const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
             Eén alinea en niet twee: het probleem en wat ik eraan doe
             horen bij elkaar, en met een witregel ertussen las het tweede
             stuk als een losse slogan. */}
-        <p class="mt-5 text-lg text-tekst">
+        <p class="mt-6 text-lg text-tekst">
           {t.home.leadVoor}<span data-naam>{persoon.naam}</span>{
             t.home.leadMidden
           }<span data-bezittelijk>{persoon.bezittelijk[taal]}</span>{
@@ -140,7 +142,7 @@ const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
           }
         </ul>
 
-        <div class="mt-8">
+        <div class="mt-10">
           <Knop toonToelichting />
         </div>
       </div>
