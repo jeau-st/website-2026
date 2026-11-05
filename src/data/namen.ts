@@ -1,7 +1,8 @@
 /**
  * De meest voorkomende voornamen in de huidige Nederlandse
  * beroepsbevolking. Het waren er tweehonderd; Andreas is eruit omdat
- * André er al in stond. De kop op de homepage draait om één naam, en die naam
+ * André er al in stond, en Joost omdat de kop dan over de persoon
+ * gaat die de site heeft geschreven in plaats van over de lezer. De kop op de homepage draait om één naam, en die naam
  * hoort niet altijd dezelfde te zijn: de persoon die het proces in haar of
  * zijn hoofd heeft zitten kan iedereen zijn.
  *
@@ -74,7 +75,6 @@ export const namen = {
     "Raymond",
     "Rick",
     "Bert",
-    "Joost",
     "Maurice",
     "Theo",
     "Bastiaan",
