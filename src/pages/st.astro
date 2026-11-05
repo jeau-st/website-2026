@@ -1,6 +1,8 @@
 ---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import Basis from "../layouts/Basis.astro";
-import Galerij from "../components/Galerij.astro";
+import Landkaart from "../components/Landkaart.astro";
 import kerk from "../assets/st/kerk.webp";
 import muur from "../assets/st/muur.webp";
 import kinderen from "../assets/st/kinderen.webp";
@@ -10,36 +12,120 @@ import paleis from "../assets/st/paleis.webp";
 
 /**
  * Uitleg bij het domein. Een doorlopend verhaal, geen secties: wie hier
- * komt is nieuwsgierig en leest van boven naar beneden. De foto's doen
- * wat tussenkoppen anders zouden doen en geven de tekst zijn adem.
- * Geen knop naar de planner onderaan, wel twee links naar reizen.
+ * komt is nieuwsgierig en leest van boven naar beneden.
+ *
+ * De kolom staat gecentreerd en niet links. Op de andere pagina's hangt
+ * er rechts van de tekst altijd iets, een tekening of een kaart, maar
+ * hier is niets, en dan leest een smalle kolom tegen de linkerrand als
+ * een pagina waar de helft van is weggevallen.
+ *
+ * De foto's stonden als galerij onder het verhaal. Nu staan ze ertussen,
+ * om beurten links en rechts uitgelijnd en smaller dan de tekst. Dat doet
+ * twee dingen: het verhaal krijgt lucht op de plekken waar anders een
+ * tussenkop had gestaan, en de wisselende kant houdt de bladzijde in
+ * beweging. Elke foto staat bij het stuk waar hij over gaat, dus de
+ * volgorde hieronder is inhoudelijk en niet decoratief.
+ *
+ * De kaart telt mee in diezelfde afwisseling en staat meteen na de
+ * alinea die vertelt waar de eilanden liggen.
  */
-const fotos = [
+
+type Blok =
+  | { soort: "tekst"; tekst: string }
+  | { soort: "foto"; src: ImageMetadata; alt: string }
+  | { soort: "kaart" };
+
+const blokken: Blok[] = [
   {
+    soort: "tekst",
+    tekst:
+      "São Tomé en Príncipe ligt in de Golf van Guinee, een paar honderd kilometer voor de kust van Gabon. Twee vulkanische eilanden met regenwoud tot aan het water, een paar kleine eilandjes eromheen, en de evenaar die er dwars doorheen loopt. Er wonen ruim tweehonderdduizend mensen en de taal is Portugees. Op de Seychellen na is het het kleinste land van Afrika.",
+  },
+  { soort: "kaart" },
+  {
+    soort: "tekst",
+    tekst:
+      "Toen Portugese zeevaarders rond 1470 aankwamen, woonde er niemand. Dat maakte de eilanden bruikbaar voor wat erna kwam. Er werd suikerriet geplant en het werk werd gedaan door mensen die van het vasteland werden weggehaald en tot slaaf gemaakt. São Tomé groeide uit tot een doorvoerhaven in de trans-Atlantische slavenhandel, met Brazilië als bestemming.",
+  },
+  {
+    soort: "foto",
     src: kerk,
     alt: "Een wit kerkje op de rotsen waar een rivier in zee uitkomt, met een rode houten brug ernaartoe en mensen onder de luifel.",
   },
   {
-    src: pico,
-    alt: "De Pico Cao Grande, een smalle rotspijp die uit het beboste heuvelland omhoog steekt, met wolkenflarden eromheen.",
+    soort: "tekst",
+    tekst:
+      "In de negentiende eeuw kwamen cacao en koffie, verbouwd op grote plantages die roças heten. Begin twintigste eeuw was dit land een van de grootste cacao-exporteurs ter wereld. De slavernij was toen officieel afgeschaft, het werk op de roças bleef dwangarbeid onder een andere naam. In 1975 werd het land onafhankelijk van Portugal.",
   },
   {
-    src: baai,
-    alt: "Uitzicht vanaf een heuvel over bos en palmen op een baai, met een landtong en een rotspunt die vaag in de nevel staan.",
-  },
-  {
+    soort: "foto",
     src: paleis,
     alt: "Vier schoolmeisjes in uniform lopen langs het roze presidentieel paleis, met de vlag van Sao Tome en Principe ernaast.",
   },
   {
+    soort: "tekst",
+    tekst:
+      "In 1641 voer een vloot van de West-Indische Compagnie onder Cornelis Jol, bijgenaamd Houtebeen, de haven van São Tomé binnen en nam het eiland in. Datzelfde jaar viel Luanda. Dat was geen toeval: de WIC had Nederlands-Brazilië in handen en wilde ook de aanvoer van tot slaaf gemaakte mensen die de suikerplantages daar draaiende hield.",
+  },
+  {
+    soort: "tekst",
+    tekst:
+      "Lang duurde het niet. Het klimaat sloopte de bezetting en in 1648 stuurde Salvador Correia de Sá, gouverneur van Rio de Janeiro, een vloot om het gebied terug te halen. Luanda viel als eerste, kort daarna gaven de Nederlanders ook São Tomé op. Zeven jaar Nederlands bestuur, en het ging van begin tot eind over slavenhandel. Je vindt het nauwelijks terug in de Nederlandse geschiedenisles.",
+  },
+  {
+    soort: "foto",
     src: muur,
     alt: "Een verweerde muur met een verbleekte verkiezingsmuurschildering: een gezicht dat grotendeels is weggesleten, met de woorden Vota, Vida en Amor ernaast.",
   },
   {
+    soort: "tekst",
+    tekst:
+      "Het land is arm en kwetsbaar. Vrijwel alles komt per schip binnen, inclusief de brandstof voor de elektriciteitscentrales, dus een prijsstijging op de wereldmarkt komt hier hard aan. Stroomuitval is gewoon. De cacao is nog steeds de belangrijkste export, tegenwoordig vaak biologisch en met een keurmerk voor de Europese markt.",
+  },
+  {
+    soort: "tekst",
+    tekst:
+      "Werk is schaars, dus jonge mensen vertrekken naar Portugal. Er is jaren gehoopt op olie voor de kust, die hoop heeft tot nu toe niets opgeleverd. Toerisme groeit langzaam en is een van de weinige manieren waarop geld in het land zelf terechtkomt.",
+  },
+  {
+    soort: "foto",
     src: kinderen,
     alt: "Een groep kinderen en een jongeman op een grasveld, poserend voor de camera met een bal bij hun voeten.",
   },
+  {
+    soort: "tekst",
+    tekst:
+      "En toch: het is er veilig. Criminaliteit tegen bezoekers is zeldzaam en de sfeer is rustig en vriendelijk, iets wat vrijwel iedereen die er geweest is als eerste noemt. Ook mooi: regenwoud dat tot aan zee doorloopt, lege zwarte en gele stranden, en de Pico Cão Grande, een rotspijp van ruim driehonderd meter die uit het groen omhoog steekt.",
+  },
+  {
+    soort: "foto",
+    src: pico,
+    alt: "De Pico Cao Grande, een smalle rotspijp die uit het beboste heuvelland omhoog steekt, met wolkenflarden eromheen.",
+  },
+  {
+    soort: "tekst",
+    tekst:
+      "Je kunt er slapen op een oude roça, cacao volgen van boon tot reep, zeeschildpadden zien die eieren leggen en tussen juli en oktober bultruggen voor de kust. Er komen weinig toeristen, dus je staat nergens in de rij.",
+  },
+  {
+    soort: "foto",
+    src: baai,
+    alt: "Uitzicht vanaf een heuvel over bos en palmen op een baai, met een landtong en een rotspunt die vaag in de nevel staan.",
+  },
 ];
+
+/**
+ * Om beurten links en rechts. De teller loopt alleen over beeld, want
+ * tekst heeft geen kant: anders zou een alinea meer of minder tussen
+ * twee foto's de afwisseling omgooien.
+ */
+let beeldteller = 0;
+const metKant = blokken.map((blok) => {
+  if (blok.soort === "tekst") return { blok, links: true };
+  const links = beeldteller % 2 === 0;
+  beeldteller += 1;
+  return { blok, links };
+});
 
 const reizen = [
   {
@@ -60,9 +146,9 @@ const reizen = [
   beschrijving="Jeau.st eindigt op .st, het landendomein van Sao Tome en Principe. Over de geschiedenis van die eilanden, ook de Nederlandse, en waarom je er heen gaat."
 >
   <section class="px-4 py-20 sm:px-6 sm:py-24">
-    <div class="mx-auto max-w-5xl">
-      <h1 class="max-w-3xl text-4xl sm:text-5xl lg:text-6xl">.st?!</h1>
-      <p class="mt-6 max-w-2xl text-lg text-zacht">
+    <div class="mx-auto max-w-3xl">
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl">.st?!</h1>
+      <p class="mt-6 text-lg text-zacht">
         Jeau.st eindigt op .st omdat mijn naam daar toevallig in past. Dat is
         het landendomein van <strong class="font-semibold text-tekst">São
         Tomé en Príncipe</strong>. Ik ben er twee keer geweest, en sindsdien
@@ -71,86 +157,39 @@ const reizen = [
     </div>
   </section>
 
-  <section class="px-4 py-16 sm:px-6 sm:py-24">
-    <div class="mx-auto max-w-5xl">
-      <div class="max-w-2xl space-y-4 text-zacht">
-        <p>
-          São Tomé en Príncipe ligt in de Golf van Guinee, een paar honderd
-          kilometer voor de kust van Gabon. Twee vulkanische eilanden met
-          regenwoud tot aan het water, een paar kleine eilandjes eromheen, en
-          de evenaar die er dwars doorheen loopt. Er wonen ruim
-          tweehonderdduizend mensen en de taal is Portugees. Op de Seychellen
-          na is het het kleinste land van Afrika.
-        </p>
-      </div>
+  <section class="px-4 pb-16 sm:px-6 sm:pb-24">
+    <div class="mx-auto max-w-3xl">
+      {
+        metKant.map(({ blok, links }) =>
+          blok.soort === "tekst" ? (
+            <p class="mt-5 text-zacht">{blok.tekst}</p>
+          ) : blok.soort === "kaart" ? (
+            <Landkaart
+              class:list={[
+                "my-10 sm:w-3/4",
+                links ? "sm:mr-auto" : "sm:ml-auto",
+              ]}
+            />
+          ) : (
+            <Image
+              src={blok.src}
+              alt={blok.alt}
+              widths={[400, 600, 800]}
+              sizes="(min-width: 640px) 36rem, 100vw"
+              class:list={[
+                "my-10 w-full rounded-kaart border border-rand/60 sm:w-3/4",
+                links ? "sm:mr-auto" : "sm:ml-auto",
+              ]}
+            />
+          ),
+        )
+      }
 
-
-      <div class="max-w-2xl space-y-4 text-zacht">
-        <p>
-          Toen Portugese zeevaarders rond 1470 aankwamen, woonde er niemand.
-          Dat maakte de eilanden bruikbaar voor wat erna kwam. Er werd
-          suikerriet geplant en het werk werd gedaan door mensen die van het
-          vasteland werden weggehaald en tot slaaf gemaakt. São Tomé groeide
-          uit tot een doorvoerhaven in de trans-Atlantische slavenhandel, met
-          Brazilië als bestemming.
-        </p>
-        <p>
-          In de negentiende eeuw kwamen cacao en koffie, verbouwd op grote
-          plantages die roças heten. Begin twintigste eeuw was dit land een
-          van de grootste cacao-exporteurs ter wereld. De slavernij was toen
-          officieel afgeschaft, het werk op de roças bleef dwangarbeid onder
-          een andere naam. In 1975 werd het land onafhankelijk van Portugal.
-        </p>
-        <p>
-          In 1641 voer een vloot van de West-Indische Compagnie onder Cornelis
-          Jol, bijgenaamd Houtebeen, de haven van São Tomé binnen en nam het
-          eiland in. Datzelfde jaar viel Luanda. Dat was geen toeval: de WIC
-          had Nederlands-Brazilië in handen en wilde ook de aanvoer van tot
-          slaaf gemaakte mensen die de suikerplantages daar draaiende hield.
-        </p>
-        <p>
-          Lang duurde het niet. Het klimaat sloopte de bezetting en in 1648
-          stuurde Salvador Correia de Sá, gouverneur van Rio de Janeiro, een
-          vloot om het gebied terug te halen. Luanda viel als eerste, kort
-          daarna gaven de Nederlanders ook São Tomé op. Zeven jaar Nederlands
-          bestuur, en het ging van begin tot eind over slavenhandel. Je vindt
-          het nauwelijks terug in de Nederlandse geschiedenisles.
-        </p>
-        <p>
-          Het land is arm en kwetsbaar. Vrijwel alles komt per schip binnen,
-          inclusief de brandstof voor de elektriciteitscentrales, dus een
-          prijsstijging op de wereldmarkt komt hier hard aan. Stroomuitval is
-          gewoon. De cacao is nog steeds de belangrijkste export, tegenwoordig
-          vaak biologisch en met een keurmerk voor de Europese markt.
-        </p>
-        <p>
-          Werk is schaars, dus jonge mensen vertrekken naar Portugal. Er is
-          jaren gehoopt op olie voor de kust, die hoop heeft tot nu toe niets
-          opgeleverd. Toerisme groeit langzaam en is een van de weinige
-          manieren waarop geld in het land zelf terechtkomt.
-        </p>
-        <p>
-          En toch: het is er veilig. Criminaliteit tegen bezoekers is zeldzaam
-          en de sfeer is rustig en vriendelijk, iets wat vrijwel iedereen die
-          er geweest is als eerste noemt. Ook mooi: regenwoud dat tot aan zee
-          doorloopt, lege zwarte en gele stranden, en de Pico Cão Grande, een
-          rotspijp van ruim driehonderd meter die uit het groen omhoog steekt.
-        </p>
-        <p>
-          Je kunt er slapen op een oude roça, cacao volgen van boon tot reep,
-          zeeschildpadden zien die eieren leggen en tussen juli en oktober
-          bultruggen voor de kust. Er komen weinig toeristen, dus je staat
-          nergens in de rij.
-        </p>
-      </div>
-
-      <Galerij fotos={fotos} />
-
-      <p class="mt-10 max-w-2xl text-zacht">
+      <p class="mt-12 text-zacht">
         Ga je zelf? Er zijn twee makkelijke manieren om er te komen.
       </p>
 
-      <ul class="mt-6 max-w-2xl space-y-3">
+      <ul class="mt-6 space-y-3">
         {
           reizen.map((reis) => (
             <li>

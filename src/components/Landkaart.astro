@@ -1,0 +1,39 @@
+---
+/**
+ * Waar de eilanden liggen, via de insluiting van Google Maps. Dit is het
+ * enige onderdeel op de site dat iets bij een derde partij ophaalt, dus
+ * het laadt pas als de bezoeker in de buurt scrollt. De privacypagina
+ * noemt het met naam.
+ *
+ * Deze stond eerder in `Kaart.astro` en is daar verdwenen toen dat de
+ * naam werd van het component voor een vlak. Vandaar `Landkaart`: in
+ * deze codebase is een kaart iets waar je op klikt, en dit is er een om
+ * naar te kijken.
+ *
+ * `overflow-hidden` op de wikkel, want een iframe trekt zich niets aan
+ * van de ronding van zijn ouder.
+ */
+interface Props {
+  /** Extra klassen, in de praktijk de breedte en de uitlijning. */
+  class?: string;
+}
+
+const { class: extra = "" } = Astro.props;
+
+const bron =
+  "https://www.google.com/maps?q=S%C3%A3o+Tom%C3%A9+en+Pr%C3%ADncipe&z=7&output=embed";
+---
+
+<div
+  class:list={[
+    "overflow-hidden rounded-kaart border border-rand/60",
+    extra,
+  ]}
+>
+  <iframe
+    src={bron}
+    title="Kaart van São Tomé en Príncipe in de Golf van Guinee"
+    class="aspect-4/3 w-full"
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
