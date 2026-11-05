@@ -14,7 +14,7 @@ hieronder staat, is werk dat nog moet gebeuren voordat de site live kan.
 | Wat | Waar | Toelichting |
 | --- | --- | --- |
 | Cloudflare Web Analytics | Keystatic, Bedrijfsgegevens, veld Analyticstoken | Cookieloos, dus geen cookiemelding nodig. De beacon laadt alleen met een token. |
-| Domein jeau.st koppelen | `wrangler.jsonc` | Wacht op nic.st: zie het draaiboek in `docs/dns-verhuizing.md`. Het routesblok staat klaar in `wrangler.jsonc`, in commentaar. Haal dat weg zodra de zone in Cloudflare actief is. jeau.st geeft tot dan een 404; de site staat op https://website-2026.joostbeers.workers.dev. |
+| Domein jeau.st koppelen | `wrangler.jsonc` | Wacht op nic.st: zie het draaiboek in `docs/dns-verhuizing.md`. Het routesblok staat klaar in `wrangler.jsonc`, in commentaar. Haal dat weg zodra de zone in Cloudflare actief is. Tot die tijd staat de site op jeau.st via GitHub Pages, en daarvoor staat de repo openbaar. Zet hem daarna weer op privé en haal Pages weg: de stappen staan in het draaiboek bij stap 7. |
 
 ## Gecontroleerd en akkoord
 

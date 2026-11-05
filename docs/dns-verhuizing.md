@@ -16,7 +16,9 @@ mee. Daarmee verhuist ook je mail-DNS, en dat is het stuk waar het
 misgaat als er een record wegvalt.
 
 Tot dat moment draait de site op
-`https://website-2026.joostbeers.workers.dev`.
+`https://website-2026.joostbeers.workers.dev`, en staat hij daarnaast
+tijdelijk op GitHub Pages zodat `jeau.st` zelf ook iets laat zien. Zie
+"Tussenoplossing" hieronder.
 
 ## Waar het nu staat
 
@@ -111,6 +113,39 @@ namen af te lopen die vaak voorkomen. Een record met een naam die niet in
 die lijst stond, zie je hier niet: DNS laat je niet vragen wat er allemaal
 in een zone zit, alleen of een bepaalde naam bestaat. De echte bron is de
 zone-export bij Cloud86, en die is stap 1.
+
+## Tussenoplossing: de site staat zolang op GitHub Pages
+
+Gedaan op 5 november 2026, omdat stap 4 vastzit en `jeau.st` anders dagen
+een 404 geeft.
+
+Eerst het uitgesloten alternatief, zodat niemand het nog eens probeert:
+`jeau.st` via DNS naar `website-2026.joostbeers.workers.dev` laten wijzen
+werkt niet. Gemeten, niet aangenomen. Een verzoek voor `jeau.st` naar de
+randservers van workers.dev strandt al in de TLS-handshake, want
+Cloudflare geeft geen certificaat af voor een domein dat niet actief is
+in het account. En over een werkende verbinding antwoordt Cloudflare met
+403 zodra de Host-header `jeau.st` is: een workers.dev-adres weigert
+expres verkeer voor een vreemd domein. Een CNAME zou bezoekers dus een
+gebroken beveiligde verbinding geven, en dat is erger dan een 404.
+
+Wat wel kan: de A-records van `jeau.st` wijzen nog naar GitHub Pages, en
+GitHub regelt zelf een certificaat. Dus staat de site daar tijdelijk ook.
+
+- `.github/workflows/pages.yml` bouwt bij elke push naar `main` en
+  publiceert `dist/client`. De Keystatic-commits komen zo gewoon live.
+- `jeau-st/website-2026` staat daarvoor op openbaar. Pages werkt niet op
+  een privé-repo zonder betaald plan. Er staan geen secrets in de repo:
+  `.env*` is genegeerd, alleen `.env.example` is gevolgd.
+- Pages staat op bron **GitHub Actions**, custom domain `jeau.st`,
+  Enforce HTTPS aan.
+
+Twee dingen doet Pages niet. `/keystatic` heeft een server nodig, dus het
+beheer draai je zolang lokaal met `npm run cms`. En de omleiding van
+`/pipedrive` staat in `_redirects`, een bestand dat alleen Cloudflare
+leest.
+
+Dit is tijdelijk en moet weg bij stap 7.
 
 ## Volgorde
 
@@ -251,14 +286,23 @@ laat `www` uit de routes.
   `jeau-st/jeau-st-site`; een `CNAME`-bestand stond er niet in. De oude
   site staat nog op https://jeau-st.github.io/jeau-st-site/.
 
-  Dat betekent dat `jeau.st` nu een 404 van GitHub geeft, en dat blijft
-  zo tot de Worker eraan hangt. GitHub Pages kiest de site namelijk op
+  Daarmee gaf `jeau.st` een 404 van GitHub, tot de tussenoplossing
+  later die dag. GitHub Pages kiest de site namelijk op
   de Host-header en niet op het IP-adres, dus zonder claim weet het niet
   meer welke site erbij hoort. Bewust gedaan: de oude site mocht omvallen
   en het alternatief was wachten op nic.st.
 
   Wil je dit een volgende keer zonder onderbreking, doe deze stap dan na
   stap 6.
+- Haal de tussenoplossing weg, in deze volgorde, en pas nadat stap 6 is
+  gelukt en `jeau.st` de Worker serveert:
+  1. Verwijder het custom domain `jeau.st` bij
+     `jeau-st/website-2026`, instellingen, Pages. Laat je dat staan,
+     dan claimen twee partijen hetzelfde domein.
+  2. Zet Pages daar uit.
+  3. Verwijder `.github/workflows/pages.yml`.
+  4. **Zet de repo weer op privé.** Afgesproken op 5 november 2026: hij
+     staat alleen openbaar omdat Pages niet anders kan.
 - Verwijder de zone bij Cloud86. Die is dan niets meer dan een tweede
   waarheid die stilletjes uit de pas kan gaan lopen. Doe dit pas als de
   delegatie om is en de mail een week goed loopt, want tot dat moment is
