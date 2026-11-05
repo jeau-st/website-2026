@@ -17,23 +17,22 @@ import { bouwstenen } from "../data/site";
  * Wie met de klok mee leest, leest dus van bronnen naar opbrengst.
  *
  * De maat is gebonden aan de kolom waar hij in staat. Die kolom was de
- * helft van de hero en is nu 39 procent, want de kop moet ook bij de
+ * helft van de hero en is nu twee vijfde, want de kop moet ook bij de
  * langste naam op een regel passen: "Dat doet Sebastiaan altijd" is
- * 554 px bij 48 px Manrope. Bij max-w-5xl houdt de tekening dan 365 px
+ * 554 px bij 48 px Manrope. Bij max-w-5xl houdt de tekening dan 368 px
  * over. Groter en ze duwt de kop naar een tweede regel.
  *
- * Twee opmaken, en welke je ziet hangt af van de ruimte en niet van de
- * schermbreedte alleen. De volle ring met de labels voluit staat tussen
- * sm en lg: daar staat de tekening onder de tekst en heeft ze de hele
- * kolom. Op een telefoon en vanaf lg staat de compacte ring, en daar is
- * `kort` nodig: "slimme workflows" past niet naast de cirkel zonder dat
- * de cirkel te klein wordt om nog iets voor te stellen.
+ * De tekening is daarop meegekrompen, en niet door hem kleiner te
+ * schalen: dan was het labelfont van 13 px op 8 px uitgekomen. De ring
+ * is kleiner getekend binnen een viewBox die even breed blijft, zodat
+ * de letters op hun plek blijven. Zo houd je de volle labels, de hover
+ * en de draden, en zijn de letters nog te lezen. Gemeten bij 368 px:
+ * labels 10,3 px en een ring met een straal van 86.
  *
- * Vanaf lg staat de tekening naast de kop, en die kolom is twee vijfde
- * van de hero: 365 px, want de kop moet ook bij de langste naam op een
- * regel passen. De volle ring is daar niet te krap maar te klein: hij
- * schaalt als geheel mee, dus de labels van 13 px zouden op 8 px
- * uitkomen. De compacte ring is op dat formaat getekend.
+ * Twee opmaken. Vanaf sm de volle ring met de labels naast de punten.
+ * Daaronder dezelfde ring maar kleiner, en daar is `kort` nodig: op een
+ * telefoon past "slimme workflows" niet naast de cirkel zonder dat de
+ * cirkel te klein wordt om nog iets voor te stellen.
  *
  * Alles staat op `currentColor` en de kleuren komen uit de tokens, dus
  * hij kleurt mee met het thema. Het geheel is aria-hidden, de
@@ -81,24 +80,24 @@ function labelPlek(
 <figure class="mt-8 sm:mt-0">
   {/* Vanaf sm: de volle ring */}
   <svg
-    class="mx-auto hidden h-auto w-full max-w-[30rem] sm:block lg:hidden"
-    viewBox="0 0 560 360"
+    class="mx-auto hidden h-auto w-full max-w-[23rem] sm:block"
+    viewBox="0 0 430 280"
     role="presentation"
     aria-hidden="true"
     font-family="var(--font-mono)"
   >
     <circle
-      cx="250"
-      cy="180"
-      r="132"
+      cx="185"
+      cy="140"
+      r="100"
       fill="none"
       stroke="var(--color-rand)"
       stroke-width="1.5"
     />
     {
       punten.map((punt, i) => {
-        const p = opRing(punt.hoek, 250, 180, 132);
-        const l = labelPlek(punt.hoek, p, 25, 28);
+        const p = opRing(punt.hoek, 185, 140, 100);
+        const l = labelPlek(punt.hoek, p, 24, 24);
         return (
           <g class="punt">
             {/* De draden naar alle andere punten. Ze staan op nul en komen
@@ -109,7 +108,7 @@ function labelPlek(
             <g class="draden">
               {punten.map((ander, j) => {
                 if (j === i) return null;
-                const q = opRing(ander.hoek, 250, 180, 132);
+                const q = opRing(ander.hoek, 185, 140, 100);
                 return (
                   <line
                     x1={p.x}
@@ -128,17 +127,17 @@ function labelPlek(
               class="schijf"
               cx={p.x}
               cy={p.y}
-              r="17"
+              r="13"
               fill="var(--color-kaart)"
               stroke="var(--color-rand)"
               stroke-width="1.5"
             />
             <g
               class="teken"
-              transform={`translate(${p.x - 9} ${p.y - 9})`}
+              transform={`translate(${p.x - 7} ${p.y - 7})`}
               style="color: var(--color-tekst)"
             >
-              <Icoon naam={punt.icoon} maat={18} />
+              <Icoon naam={punt.icoon} maat={14} />
             </g>
             <text
               class="naam"
@@ -146,7 +145,7 @@ function labelPlek(
               y={l.y}
               text-anchor={l.anker}
               dominant-baseline="middle"
-              font-size="13"
+              font-size="12"
               fill="var(--color-tekst)"
             >
               {punt.label}
@@ -157,9 +156,9 @@ function labelPlek(
     }
   </svg>
 
-  {/* Tot sm en weer vanaf lg: dezelfde ring, kleiner, met de korte labels */}
+  {/* Tot sm: dezelfde ring, kleiner, met de korte labels */}
   <svg
-    class="mx-auto h-auto w-full max-w-[22rem] sm:hidden lg:block lg:max-w-[22.5rem]"
+    class="mx-auto h-auto w-full max-w-[22rem] sm:hidden"
     viewBox="0 0 340 340"
     role="presentation"
     aria-hidden="true"

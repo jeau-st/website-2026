@@ -68,7 +68,7 @@ const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
       39, en de ring is daarop meegekrompen. Zie Schema.astro. */}
   <section class="px-4 py-14 sm:px-6 sm:py-16 lg:pb-14 lg:pt-10">
     <div
-      class="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-[minmax(0,0.61fr)_minmax(0,0.39fr)] lg:gap-10"
+      class="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-[minmax(0,0.6fr)_minmax(0,0.4fr)] lg:gap-10"
     >
       <div>
         {/* De naam draagt het accent, want hij is een actie: klikken geeft
@@ -222,16 +222,18 @@ const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
         is hier zo. Aanwijzen maakt het vlak een stap lichter, want op
         een telefoon bestaat hover niet en moet `drukbaar` het doen.
 
-        Drie kolommen en geen vijf: vijf naast elkaar worden zo smal dat
-        de titel van elke dienst over twee regels valt. De volle uitleg
-        staat op de dienstpagina, hier staat per soort één regel. */}
-    <ol class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        Vijf naast elkaar vanaf lg, zodat de vijf soorten werk één rij
+        zijn en je ze in één blik overziet. Een kolom is dan 192 px, dus
+        de ruimte eromheen is krap en de tussenruimte klein. De volle
+        uitleg staat op de dienstpagina, hier staat per soort één
+        regel. */}
+    <ol class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-5 lg:gap-3">
       {
         diensten.map((dienst, i) => (
           <Kaart
             als="li"
             krap
-            class="group drukbaar relative transition-colors hover:bg-kaart-hover"
+            class="group drukbaar relative p-5 transition-colors hover:bg-kaart-hover sm:p-5"
           >
             <p class="label" aria-hidden="true">
               {String(i + 1).padStart(2, "0")}
@@ -244,12 +246,13 @@ const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
               <Icoon naam={dienst.icoon} maat={24} />
             </svg>
             {/* De link rekt zich over het hele blok uit, want als los
-                stukje tekst is hij op een telefoon te klein om te raken. */}
-            <h3 class="mt-3 text-lg">
-              <a
-                class="tekstlink after:absolute after:inset-0"
-                href={`/diensten/${dienst.slug}/`}
-              >
+                stukje tekst is hij op een telefoon te klein om te raken.
+                Geen onderstreping: het hele blok is de link, en dan wijst
+                een streepje onder de titel naar iets kleiners dan wat je
+                aanklikt. Dat het een link is, zie je aan het vlak dat
+                oplicht. */}
+            <h3 class="mt-3 text-base">
+              <a class="after:absolute after:inset-0" href={`/diensten/${dienst.slug}/`}>
                 {dienst.titel}
               </a>
             </h3>
