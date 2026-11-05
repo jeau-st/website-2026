@@ -68,13 +68,6 @@ const gegevens = [
         verwacht, dus het staat hier en in de gestructureerde data. */}
     <div class="mt-12 border-t border-rand/60 pt-8 text-zacht">
       <p class="font-medium text-tekst">{bedrijf.naam}</p>
-      {
-        bedrijf.onderdeelVan && (
-          <p class="mt-1">
-            {vul(t.contact.onderdeelVan, { studio: bedrijf.onderdeelVan })}
-          </p>
-        )
-      }
       <a
         class="drukbaar mt-1 block transition-colors hover:text-tekst"
         href={bedrijf.kaartUrl}
@@ -84,6 +77,13 @@ const gegevens = [
         <span class="block">{bedrijf.straat}</span>
         <span class="block">{bedrijf.postcode}&nbsp;{bedrijf.plaats}</span>
       </a>
+      {
+        bedrijf.onderdeelVan && (
+          <p class="mt-3">
+            {vul(t.contact.onderdeelVan, { studio: bedrijf.onderdeelVan })}
+          </p>
+        )
+      }
       <p class="mt-3">{t.algemeen.kvk}&nbsp;{bedrijf.kvk}</p>
     </div>
   </Sectie>

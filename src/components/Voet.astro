@@ -16,17 +16,13 @@ import { teksten, vul } from "../data/teksten";
  * dat is de regel voor wat over de site zelf gaat en niet over het werk.
  * En Over Jeau.st nergens meer: die staat al in de kop.
  *
- * Studio Citadel staat in de eerste kolom, onder het woordmerk. Het zegt
- * iets over wie hier spreekt, niet over waar het bedrijf staat
- * ingeschreven, dus het hoort bij het merk en niet bij de gegevens. Een
- * maat kleiner dan de rest: het is een bijzin, geen bewering, en hij
- * staat onderaan uitgelijnd: de kolom is een flexkolom en de wikkel
- * eromheen heeft mt-auto, dus hij zakt naar de onderkant van de
- * hoogste kolom in plaats van tegen de belofte aan te plakken. De
- * pt-10 is de ondergrens voor als deze kolom zelf de hoogste is.
- * De regel
- * breekt met de hand achter "van", want anders bepaalt de kolombreedte
- * waar hij omslaat en staat "collectief" los van de naam erachter.
+ * Studio Citadel staat onder de adresgegevens, in de derde kolom. Het
+ * heeft in de eerste gestaan, onder het woordmerk, als bijzin bij het
+ * merk. Maar wie het leest zoekt waar dit bedrijf zit, en dan hoort het
+ * bij het adres en de KvK en niet bij de belofte. Een maat kleiner dan
+ * de rest: het is een bijzin, geen bewering. De regel breekt met de
+ * hand achter "van", want anders bepaalt de kolombreedte waar hij
+ * omslaat en staat "collectief" los van de naam erachter.
  *
  * De bedrijfsgegevens staan als tekst, net als op de contactpagina. De
  * mail staat daar ook, want het is een gegeven en geen bestemming, ook
@@ -76,40 +72,6 @@ const kopLink = "drukbaar transition-colors hover:text-tekst";
       <p class="mt-3 text-sm text-zacht">
         {t.voet.belofte}
       </p>
-      {/* Studio Citadel is het collectief waar Jeau.st zit. Het beeldmerk
-          is hun eigen favicon: een uitsnede van het bastion, wit op
-          grijsgroen. Dat het vlak zijn eigen achtergrond meebrengt is hier
-          handig, want het enige andere dat ze publiceren is een lichte
-          png van het woordmerk, en die valt in het lichte thema weg.
-
-          Geen pijltje achter de link. Dat is voor een pagina van deze
-          site, en dit gaat naar buiten. */}
-      <div class="mt-auto pt-10">
-        <a
-          class="drukbaar inline-flex items-center gap-3 text-xs text-zacht transition-colors hover:text-tekst"
-          href="https://www.studiocitadel.nl/"
-          target="_blank"
-          rel="noopener"
-        >
-          <img
-            src="/studio-citadel.png"
-            alt=""
-            width="128"
-            height="128"
-            loading="lazy"
-            class="size-8 shrink-0 rounded-klein"
-          />
-          {/* Twee regels met een harde breuk ertussen, want anders bepaalt
-              de kolombreedte waar hij omslaat. In het Engels staat het
-              lidwoord op een andere plek, dus het zijn twee hele regels uit
-              `teksten` en geen zin die hier in stukken wordt geknipt. */}
-          <span class="min-w-0">
-            {vul(t.voet.onderdeelVan1, { naam: bedrijf.naam })}<br />{
-              vul(t.voet.onderdeelVan2, { studio: bedrijf.onderdeelVan })
-            }
-          </span>
-        </a>
-      </div>
     </div>
 
     <div>
@@ -161,6 +123,40 @@ const kopLink = "drukbaar transition-colors hover:text-tekst";
         >
           {t.voet.linkedin}
         </a>
+        {/* Studio Citadel is het collectief waar Jeau.st zit. Het beeldmerk
+            is hun eigen favicon: een uitsnede van het bastion, wit op
+            grijsgroen. Dat het vlak zijn eigen achtergrond meebrengt is hier
+            handig, want het enige andere dat ze publiceren is een lichte
+            png van het woordmerk, en die valt in het lichte thema weg.
+
+            Geen pijltje achter de link. Dat is voor een pagina van deze
+            site, en dit gaat naar buiten. */}
+        <div class="mt-6">
+          <a
+            class="drukbaar inline-flex items-center gap-3 text-xs text-zacht transition-colors hover:text-tekst"
+            href="https://www.studiocitadel.nl/"
+            target="_blank"
+            rel="noopener"
+          >
+            <img
+              src="/studio-citadel.png"
+              alt=""
+              width="128"
+              height="128"
+              loading="lazy"
+              class="size-8 shrink-0 rounded-klein"
+            />
+            {/* Twee regels met een harde breuk ertussen, want anders bepaalt
+                de kolombreedte waar hij omslaat. In het Engels staat het
+                lidwoord op een andere plek, dus het zijn twee hele regels uit
+                `teksten` en geen zin die hier in stukken wordt geknipt. */}
+            <span class="min-w-0">
+              {vul(t.voet.onderdeelVan1, { naam: bedrijf.naam })}<br />{
+                vul(t.voet.onderdeelVan2, { studio: bedrijf.onderdeelVan })
+              }
+            </span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
