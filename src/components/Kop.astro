@@ -23,6 +23,14 @@ import { teksten } from "../data/teksten";
  * blijft een knop voor wie klikt of tabt. Op een aanraakscherm doet de
  * hover niets: daar volgt een tik gewoon de link.
  *
+ * De vijf links staan in het midden, tussen het woordmerk en de knoppen
+ * rechts. Ze hebben tegen die knoppen aan gestaan, als zesde tot tiende
+ * ding in een rij rechts, en dan is de balk links een merk en rechts een
+ * hoop. In het midden is het menu het menu en staat de bediening apart.
+ * Dat doet `flex-1` op de nav: hij pakt wat er tussen de twee overblijft
+ * en zet zijn inhoud daar in het midden. Onder lg is de nav er niet, dus
+ * dan valt dat vak vanzelf weg.
+ *
  * Vijf links passen niet naast het woordmerk, de taalknop, de themaknop
  * en de knop.
  * Daarom staat het menu tot lg in een uitklapper. Dat is een details en
@@ -92,95 +100,19 @@ const huidig = (href: string) => pad === href || pad === `${href}/`;
       <Woordmerk class="kop-merk" />
     </a>
 
-    <div class="flex items-center gap-2 sm:gap-4">
-      <nav aria-label={t.kop.hoofdmenu} class="hidden items-center gap-7 lg:flex">
-        {
-          links.map((link) =>
-            link.href === dienstenHref ? (
-              <div class="group relative flex items-center" data-uitklap>
-                <a
-                  href={link.href}
-                  aria-current={huidig(link.href) ? "page" : undefined}
-                  class:list={[
-                    "inline-flex min-h-11 items-center text-sm group-hover:text-tekst",
-                    actief(link.href)
-                      ? "text-tekst underline underline-offset-8 decoration-rand"
-                      : "text-zacht",
-                  ]}
-                >
-                  {link.tekst}
-                </a>
-                <button
-                  type="button"
-                  data-uitklap-knop
-                  aria-expanded="false"
-                  aria-controls="menu-diensten"
-                  aria-label={t.kop.dienstenTonen}
-                  data-label-tonen={t.kop.dienstenTonen}
-                  data-label-verbergen={t.kop.dienstenVerbergen}
-                  class="drukbaar ml-1 inline-flex min-h-11 w-6 cursor-pointer items-center justify-center text-zacht group-hover:text-tekst"
-                >
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    class="size-3.5 transition-transform duration-150"
-                    data-uitklap-pijl
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2.2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  >
-                    <path d="M5 9l7 7 7-7" />
-                  </svg>
-                </button>
-
-                <div
-                  id="menu-diensten"
-                  data-uitklap-paneel
-                  class="absolute left-0 top-full z-40 mt-2 w-[24rem] rounded-kaart border border-rand bg-kaart p-2 shadow-xl before:absolute before:inset-x-0 before:-top-2 before:h-2 before:content-['']"
-                >
-                  <p class="px-3 pb-1 pt-2 label">
-                    {t.kop.paneelkop}
-                  </p>
-                  <ul class="grid gap-0.5">
-                    {onderDiensten.map((item) => (
-                      <li>
-                        <a
-                          href={item.href}
-                          aria-current={huidig(item.href) ? "page" : undefined}
-                          class:list={[
-                            "flex gap-3 rounded-klein px-3 py-2 hover:bg-bg active:bg-bg",
-                            actief(item.href) ? "bg-bg" : "",
-                          ]}
-                        >
-                          <svg
-                            viewBox="0 0 24 24"
-                            aria-hidden="true"
-                            class="mt-0.5 size-4 shrink-0 text-zacht"
-                          >
-                            <Icoon naam={item.icoon} maat={24} />
-                          </svg>
-                          <span class="min-w-0">
-                            <span class="block text-sm text-tekst">
-                              {item.tekst}
-                            </span>
-                            <span class="mt-0.5 block text-xs text-zacht">
-                              {item.uitleg}
-                            </span>
-                          </span>
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            ) : (
+    <nav
+      aria-label={t.kop.hoofdmenu}
+      class="hidden flex-1 items-center justify-center gap-7 lg:flex"
+    >
+      {
+        links.map((link) =>
+          link.href === dienstenHref ? (
+            <div class="group relative flex items-center" data-uitklap>
               <a
                 href={link.href}
                 aria-current={huidig(link.href) ? "page" : undefined}
                 class:list={[
-                  "inline-flex min-h-11 items-center text-sm hover:text-tekst",
+                  "inline-flex min-h-11 items-center text-sm group-hover:text-tekst",
                   actief(link.href)
                     ? "text-tekst underline underline-offset-8 decoration-rand"
                     : "text-zacht",
@@ -188,10 +120,89 @@ const huidig = (href: string) => pad === href || pad === `${href}/`;
               >
                 {link.tekst}
               </a>
-            ),
-          )
-        }
-      </nav>
+              <button
+                type="button"
+                data-uitklap-knop
+                aria-expanded="false"
+                aria-controls="menu-diensten"
+                aria-label={t.kop.dienstenTonen}
+                data-label-tonen={t.kop.dienstenTonen}
+                data-label-verbergen={t.kop.dienstenVerbergen}
+                class="drukbaar ml-1 inline-flex min-h-11 w-6 cursor-pointer items-center justify-center text-zacht group-hover:text-tekst"
+              >
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  class="size-3.5 transition-transform duration-150"
+                  data-uitklap-pijl
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M5 9l7 7 7-7" />
+                </svg>
+              </button>
+
+              <div
+                id="menu-diensten"
+                data-uitklap-paneel
+                class="absolute left-0 top-full z-40 mt-2 w-[24rem] rounded-kaart border border-rand bg-kaart p-2 shadow-xl before:absolute before:inset-x-0 before:-top-2 before:h-2 before:content-['']"
+              >
+                <p class="px-3 pb-1 pt-2 label">
+                  {t.kop.paneelkop}
+                </p>
+                <ul class="grid gap-0.5">
+                  {onderDiensten.map((item) => (
+                    <li>
+                      <a
+                        href={item.href}
+                        aria-current={huidig(item.href) ? "page" : undefined}
+                        class:list={[
+                          "flex gap-3 rounded-klein px-3 py-2 hover:bg-bg active:bg-bg",
+                          actief(item.href) ? "bg-bg" : "",
+                        ]}
+                      >
+                        <svg
+                          viewBox="0 0 24 24"
+                          aria-hidden="true"
+                          class="mt-0.5 size-4 shrink-0 text-zacht"
+                        >
+                          <Icoon naam={item.icoon} maat={24} />
+                        </svg>
+                        <span class="min-w-0">
+                          <span class="block text-sm text-tekst">
+                            {item.tekst}
+                          </span>
+                          <span class="mt-0.5 block text-xs text-zacht">
+                            {item.uitleg}
+                          </span>
+                        </span>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ) : (
+            <a
+              href={link.href}
+              aria-current={huidig(link.href) ? "page" : undefined}
+              class:list={[
+                "inline-flex min-h-11 items-center text-sm hover:text-tekst",
+                actief(link.href)
+                  ? "text-tekst underline underline-offset-8 decoration-rand"
+                  : "text-zacht",
+              ]}
+            >
+              {link.tekst}
+            </a>
+          ),
+        )
+      }
+    </nav>
+    <div class="flex items-center gap-2 sm:gap-4">
 
       <Taalknop />
       <ThemaKnop />
