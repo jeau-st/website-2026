@@ -335,16 +335,15 @@ export const processtappen: Processtap[] = [
  *
  * De volgorde is de volgorde op de ring, met de klok mee vanaf boven.
  * Schema.astro rekent daar de hoek uit, dus een onderdeel verplaatsen
- * betekent hier verplaatsen. `kort` is voor de telefoon, waar het volle
- * label niet naast de cirkel past.
+ * betekent hier verplaatsen.
  */
-export type Bouwsteen = { icoon: string; label: string; kort?: string };
+export type Bouwsteen = { icoon: string; label: string };
 
 export const bouwstenen: Bouwsteen[] = [
   { icoon: "mail", label: "mailbox" },
   { icoon: "folder-kanban", label: "projecten" },
   { icoon: "chart-column", label: "rapportages" },
-  { icoon: "workflow", label: "slimme workflows", kort: "workflows" },
+  { icoon: "workflow", label: "slimme workflows" },
   { icoon: "sparkles", label: "AI" },
   { icoon: "database", label: "databases" },
   { icoon: "calculator", label: "boekhouding" },

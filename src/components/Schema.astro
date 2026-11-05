@@ -16,23 +16,21 @@ import { bouwstenen } from "../data/site";
  * op de linkerkant en bovenaan, wat het je oplevert op de rechterkant.
  * Wie met de klok mee leest, leest dus van bronnen naar opbrengst.
  *
- * De maat is gebonden aan de kolom waar hij in staat. Die kolom was de
- * helft van de hero en is nu twee vijfde, want de kop moet ook bij de
- * langste naam op een regel passen: "Dat doet Sebastiaan altijd" is
- * 554 px bij 48 px Manrope. Bij max-w-5xl houdt de tekening dan 368 px
- * over. Groter en ze duwt de kop naar een tweede regel.
+ * De maat is gebonden aan de kolom waar hij in staat. Die kolom is
+ * 45% van de hero, en bij max-w-5xl is dat 414 px. Even heeft hij op
+ * twee vijfde gestaan, zodat de kop ook bij de langste naam op een
+ * regel bleef: "Dat doet Sebastiaan altijd" is 554 px bij 48 px
+ * Manrope, en dat paste net. Die eis is losgelaten, de kop mag
+ * omslaan, en de tekening heeft de ruimte terug.
  *
- * De tekening is daarop meegekrompen, en niet door hem kleiner te
- * schalen: dan was het labelfont van 13 px op 8 px uitgekomen. De ring
- * is kleiner getekend binnen een viewBox die even breed blijft, zodat
- * de letters op hun plek blijven. Zo houd je de volle labels, de hover
- * en de draden, en zijn de letters nog te lezen. Gemeten bij 368 px:
- * labels 10,3 px en een ring met een straal van 86.
- *
- * Twee opmaken. Vanaf sm de volle ring met de labels naast de punten.
- * Daaronder dezelfde ring maar kleiner, en daar is `kort` nodig: op een
- * telefoon past "slimme workflows" niet naast de cirkel zonder dat de
- * cirkel te klein wordt om nog iets voor te stellen.
+ * Er is geen tweede opmaak meer. Op een telefoon stond hier dezelfde
+ * ring maar kleiner, met de korte labels, want "slimme workflows" past
+ * daar niet naast de cirkel zonder dat de cirkel te klein wordt om nog
+ * iets voor te stellen. Dat bleef een compromis: een schema van twaalf
+ * onderdelen is op 360 px geen schema meer, alleen een rondje met
+ * afkortingen eromheen. Onder sm staat er nu niets. De figcaption gaat
+ * mee, want wat er niet staat hoeft ook niet beschreven te worden; de
+ * tekst van de hero zegt hetzelfde in woorden.
  *
  * Alles staat op `currentColor` en de kleuren komen uit de tokens, dus
  * hij kleurt mee met het thema. Het geheel is aria-hidden, de
@@ -77,10 +75,9 @@ function labelPlek(
 }
 ---
 
-<figure class="mt-8 sm:mt-0">
-  {/* Vanaf sm: de volle ring */}
+<figure class="hidden sm:mt-0 sm:block">
   <svg
-    class="mx-auto hidden h-auto w-full max-w-[23rem] sm:block"
+    class="mx-auto h-auto w-full max-w-[26rem]"
     viewBox="0 0 430 280"
     role="presentation"
     aria-hidden="true"
@@ -151,58 +148,6 @@ function labelPlek(
               {punt.label}
             </text>
           </g>
-        );
-      })
-    }
-  </svg>
-
-  {/* Tot sm: dezelfde ring, kleiner, met de korte labels */}
-  <svg
-    class="mx-auto h-auto w-full max-w-[22rem] sm:hidden"
-    viewBox="0 0 340 340"
-    role="presentation"
-    aria-hidden="true"
-    font-family="var(--font-mono)"
-  >
-    <circle
-      cx="170"
-      cy="170"
-      r="72"
-      fill="none"
-      stroke="var(--color-rand)"
-      stroke-width="1.5"
-    />
-    {
-      punten.map((punt) => {
-        const p = opRing(punt.hoek, 170, 170, 72);
-        const l = labelPlek(punt.hoek, p, 19, 24);
-        return (
-          <>
-            <circle
-              cx={p.x}
-              cy={p.y}
-              r="13"
-              fill="var(--color-kaart)"
-              stroke="var(--color-rand)"
-              stroke-width="1.5"
-            />
-            <g
-              transform={`translate(${p.x - 7} ${p.y - 7})`}
-              style="color: var(--color-tekst)"
-            >
-              <Icoon naam={punt.icoon} maat={14} />
-            </g>
-            <text
-              x={l.x}
-              y={l.y}
-              text-anchor={l.anker}
-              dominant-baseline="middle"
-              font-size="10"
-              fill="var(--color-tekst)"
-            >
-              {punt.kort ?? punt.label}
-            </text>
-          </>
         );
       })
     }
