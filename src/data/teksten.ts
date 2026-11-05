@@ -121,11 +121,11 @@ const nl = {
     herkenningIntro: "Drie dingen die ik bijna elk gesprek hoor.",
     volgordeKop: "De volgorde is het werk",
     volgordeIntro:
-      "Eerst vastleggen hoe het nu echt gaat, dan één manier van werken kiezen. Automatiseren komt daarna, en meten als laatste.",
+      "Eerst vastleggen hoe het nu echt gaat, dan één manier van werken kiezen. Daarna automatiseren, meten en continu verbeteren.",
     volgordeLink: "Lees waarom de volgorde zo is",
     dienstenKop: "Wat ik doe",
     dienstenIntro:
-      "Vijf soorten werk. De eerste vier volgen de volgorde waarin ik ze aanpak.",
+      "Vijf soorten werk.",
     dienstenLink: "Bekijk alle diensten",
     werkKop: "Resultaten",
     werkIntro:
@@ -492,11 +492,11 @@ const en: typeof nl = {
     herkenningIntro: "Three things I hear in almost every conversation.",
     volgordeKop: "The order is the work",
     volgordeIntro:
-      "First write down how the work really goes, then pick one way of working. Automating comes after that, and measuring last.",
+      "First write down how the work really goes, then pick one way of working. After that: automating, measuring and getting better round after round.",
     volgordeLink: "Read why the order is what it is",
     dienstenKop: "What I do",
     dienstenIntro:
-      "Five kinds of work. The first four follow the order I tackle them in.",
+      "Five kinds of work.",
     dienstenLink: "See all services",
     werkKop: "Results",
     werkIntro:
