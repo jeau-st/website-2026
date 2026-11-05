@@ -86,14 +86,36 @@ function labelPlek(
       stroke-width="1.5"
     />
     {
-      punten.map((punt) => {
+      punten.map((punt, i) => {
         const p = opRing(punt.hoek, 250, 180, 132);
         const l = labelPlek(punt.hoek, p, 25, 28);
         return (
-          <>
+          <g class="punt">
+            {/* De draden naar alle andere punten. Ze staan op nul en komen
+                op als je dit punt aanwijst: dan zie je dat het niet twaalf
+                losse dingen zijn maar twaalf dingen die met elkaar praten.
+                Ze vangen zelf geen muis, anders houden ze de hover vast
+                zodra ze verschijnen. */}
+            <g class="draden">
+              {punten.map((ander, j) => {
+                if (j === i) return null;
+                const q = opRing(ander.hoek, 250, 180, 132);
+                return (
+                  <line
+                    x1={p.x}
+                    y1={p.y}
+                    x2={q.x}
+                    y2={q.y}
+                    stroke="var(--color-rand)"
+                    stroke-dasharray="2 5"
+                  />
+                );
+              })}
+            </g>
             {/* Een schijfje op de lijn, gevuld met de kaartkleur, zodat
                 de ring er netjes achter wegvalt. */}
             <circle
+              class="schijf"
               cx={p.x}
               cy={p.y}
               r="17"
@@ -102,12 +124,14 @@ function labelPlek(
               stroke-width="1.5"
             />
             <g
+              class="teken"
               transform={`translate(${p.x - 9} ${p.y - 9})`}
               style="color: var(--color-tekst)"
             >
               <Icoon naam={punt.icoon} maat={18} />
             </g>
             <text
+              class="naam"
               x={l.x}
               y={l.y}
               text-anchor={l.anker}
@@ -117,7 +141,7 @@ function labelPlek(
             >
               {punt.label}
             </text>
-          </>
+          </g>
         );
       })
     }
@@ -182,3 +206,52 @@ function labelPlek(
     haalt: projecten, rapportages, slimme workflows, AI en databases.
   </figcaption>
 </figure>
+
+<style>
+  /* Aanwijzen licht een punt op: het icoon en de rand van het schijfje
+     gaan naar de kopkleur, het label wordt zwaarder, en de draden naar de
+     andere elf punten komen op. Geen accent, want dat is voor de primaire
+     actie. Alleen opacity en kleur, 150 ms, zoals alles op deze site. */
+  .draden {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 150ms;
+  }
+
+  .punt:hover .draden {
+    opacity: 1;
+  }
+
+  .schijf,
+  .naam {
+    transition:
+      stroke 150ms,
+      fill 150ms;
+  }
+
+  .teken {
+    transition: color 150ms;
+  }
+
+  .punt:hover .schijf {
+    stroke: var(--color-kop);
+  }
+
+  .punt:hover .teken {
+    color: var(--color-kop);
+  }
+
+  .punt:hover .naam {
+    fill: var(--color-kop);
+    font-weight: 500;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .draden,
+    .schijf,
+    .naam,
+    .teken {
+      transition: none;
+    }
+  }
+</style>

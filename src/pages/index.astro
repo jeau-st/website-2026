@@ -164,12 +164,12 @@ const inHetKort = [
       zes kaarten, want zes losse vlakken naast elkaar wegen alle zes
       hetzelfde en dan is het een blokkenschema. */}
   <Sectie id="kort" kop="In het kort" aansluitend>
-    <dl
-      class="mt-10 grid gap-px overflow-hidden rounded-kaart border border-rand bg-rand-zacht sm:grid-cols-2 lg:grid-cols-3"
-    >
+    {/* Haarlijnen, geen vlakken. Dit is tekst die je leest, en een rand
+        eromheen maakt er zes kaartjes van die je zou kunnen indrukken. */}
+    <dl class="mt-10 grid gap-px bg-rand-zacht sm:grid-cols-2 lg:grid-cols-3">
       {
         inHetKort.map((regel) => (
-          <div class="min-w-0 bg-kaart p-5 sm:p-6">
+          <div class="min-w-0 bg-bg py-5 sm:px-6 sm:py-6 sm:[&:nth-child(2n+1)]:pl-0 lg:pl-6 lg:[&:nth-child(3n+1)]:pl-0">
             <dt class="label">{regel.vraag}</dt>
             <dd class="mt-2 min-w-0 text-tekst">{regel.antwoord}</dd>
           </div>
