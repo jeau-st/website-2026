@@ -13,9 +13,16 @@ import { taalUitPad } from "../data/taal";
  * bediening, en de inhoud schuift eronder door in plaats van eronder weg
  * te vallen.
  *
- * Hij gaat weg zodra de echte knop in beeld komt: twee keer dezelfde
- * actie onder elkaar is er een te veel. Zonder JavaScript blijft hij
- * staan, en dat is de veilige kant.
+ * Hij begint weg en komt pas tevoorschijn zodra de echte knop uit beeld
+ * is: twee keer dezelfde actie onder elkaar is er een te veel. Andersom
+ * begonnen is hoe het eerst stond, en dan stond de balk er bij het laden
+ * meteen, om een tel later weg te schuiven omdat de knop in de hero
+ * gewoon in beeld stond. Dat je hem ziet komen en gaan voordat je iets
+ * gedaan hebt, is precies wat vaste bediening niet moet doen.
+ *
+ * Zonder JavaScript staat hij er wel, want dan is er niets dat hem kan
+ * laten komen. Dat regelt de noscript hieronder, en dat is de veilige
+ * kant.
  *
  * Vanaf sm staat de knop weer gewoon in de koppenbalk, dus dan is deze
  * er niet. Zonder planner-URL rendert hij niets; de hero toont dan de
@@ -28,6 +35,7 @@ const { cta } = site(taalUitPad(Astro.url.pathname));
   cta.url && (
     <div
       data-onderbalk
+      data-weg
       class="fixed inset-x-0 bottom-0 z-30 border-t border-rand bg-bg px-4 pb-[calc(0.75rem+env(safe-area-inset-bottom,0px))] pt-3 sm:hidden"
     >
       <a
@@ -41,6 +49,16 @@ const { cta } = site(taalUitPad(Astro.url.pathname));
     </div>
   )
 }
+
+<noscript>
+  <style>
+    [data-onderbalk][data-weg] {
+      pointer-events: auto;
+      opacity: 1;
+      transform: none;
+    }
+  </style>
+</noscript>
 
 <style>
   /* Alleen opacity en transform, en de balk is niet aan te tikken als
@@ -60,11 +78,24 @@ const { cta } = site(taalUitPad(Astro.url.pathname));
 <script is:inline>
   (() => {
     const balk = document.querySelector("[data-onderbalk]");
-    if (!balk || !("IntersectionObserver" in window)) return;
+    if (!balk) return;
+
+    /* De balk staat in de html al weg. Kan deze browser niet zien wat er
+       in beeld staat, dan zetten we hem gewoon neer: dan is hij er een
+       keer te veel, en dat is beter dan een actie die ontbreekt. */
+    const tonen = () => balk.removeAttribute("data-weg");
+
+    if (!("IntersectionObserver" in window)) {
+      tonen();
+      return;
+    }
 
     const start = () => {
       const echte = [...document.querySelectorAll("[data-cta]")];
-      if (echte.length === 0) return;
+      if (echte.length === 0) {
+        tonen();
+        return;
+      }
 
       const inBeeld = new Set();
       const waarnemer = new IntersectionObserver((entries) => {
