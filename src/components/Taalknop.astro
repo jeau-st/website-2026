@@ -25,10 +25,16 @@ import { teksten } from "../data/teksten";
  * taal en zegt het label dat erbij. Nooit een link die iets anders doet
  * dan hij belooft.
  *
- * In de knop staat de vlag van de taal waar hij heen gaat, niet de vlag
- * van de pagina waar je bent: de knop toont wat je krijgt als je hem
- * indrukt. De vlag is een tekening en geen tekst, dus hij is aria-hidden
- * en het label blijft een hele zin voor wie hem voorgelezen krijgt.
+ * In de knop staat de vlag van de taal waar je nu bent, niet die van de
+ * taal waar hij heen gaat. Het is dus een standmelder en geen voorproefje.
+ * Andersom heeft het gestaan, en dan zie je op de Nederlandse homepage
+ * een Britse vlag: wie die vlag leest als "dit is de taal waarin ik kijk"
+ * denkt op de verkeerde pagina te staan, en dat is een duurdere
+ * vergissing dan een klik die je niet had zien aankomen.
+ *
+ * De vlag is een tekening en geen tekst, dus hij is aria-hidden, en het
+ * label blijft een hele zin die zegt waar de link heen gaat. Dat is wat
+ * de link doet, en dat verandert hier niet.
  */
 const pad = Astro.url.pathname;
 const taal = taalUitPad(pad);
@@ -46,5 +52,5 @@ const uitleg = zelfdePagina ? t.taal.naarAndere : t.taal.naarAndereHome;
   title={uitleg}
   aria-label={uitleg}
 >
-  <Vlag taal={naar} />
+  <Vlag taal={taal} />
 </a>
