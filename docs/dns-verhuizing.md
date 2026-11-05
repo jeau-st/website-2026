@@ -35,7 +35,9 @@ nameservers om zijn.
 
 ## Wat er in Cloudflare staat
 
-Na het opschonen van 5 november 2026 zijn het 13 records.
+Na het opschonen van 5 november 2026 zijn het 13 records. Op
+5 november is daar het eigendomsbewijs voor Google Search Console
+bij gekomen, dus nu 14.
 
 | Naam | Type | Waarde | Waarom |
 | --- | --- | --- | --- |
@@ -49,6 +51,7 @@ Na het opschonen van 5 november 2026 zijn het 13 records.
 | `selector2._domainkey` | CNAME | Microsoft | DKIM |
 | `_dmarc` | TXT | `v=DMARC1; p=none; sp=none; rua=mailto:joost@jeau.st; fo=1;` | Rapportage staat nu aan |
 | `jeau.st` | TXT | `atlassian-domain-verification=...` | Eigendomsbewijs voor jeaust.atlassian.net |
+| `jeau.st` | TXT | `google-site-verification=...` | Eigendomsbewijs voor Google Search Console |
 
 Weggehaald: `citadel`, `ftp`, `smtp`, `mail`, `service` en de vier
 Atlassian-mailrecords. `ftp`, `smtp` en `mail` wezen alle drie naar
@@ -309,6 +312,43 @@ laat `www` uit de routes.
   hij je enige weg terug.
 - Zeg de hosting bij Cloud86 apart op, en niet zonder na te denken over
   `bbc.jeau.st`: die site staat erop.
+
+## Eigendomsbewijs voor Google Search Console
+
+Search Console moet weten dat `jeau.st` van jou is. Dat gaat met een
+TXT-record op de wortel van het domein:
+
+```
+jeau.st TXT google-site-verification=CzBzzEGWCucK1EjhyGjIU18prul9VwQ6Oa4_1d3_QO8
+```
+
+Dit is geen geheim. Het is een publiek DNS-record dat iedereen kan
+opvragen, en het geeft geen toegang tot iets. Daarom staat het hier en
+niet in `.env.local`.
+
+Waarom een TXT-record en niet een bestand of een meta-tag in de pagina:
+met DNS verifieer je het hele domein in een keer. Dat heet in Search
+Console een domain property, en die dekt `http` en `https`, met en
+zonder `www`, en elke subdomein die er nog bij komt. Een bestand of een
+meta-tag verifieert alleen de ene site waar hij op staat.
+
+Twee plekken, omdat de verhuizing nog loopt:
+
+1. **Nu bij Cloud86**, want daar staan de nameservers nog. Zonder dit
+   record kan Google de eigendom vandaag niet vaststellen.
+2. **In de Cloudflare-zone**, zodat het na stap 4 blijft werken. Dat
+   staat er al in, toegevoegd op 5 november 2026. Het hoort niet bij
+   de vergelijking in stap 3: dit record bestaat bij Cloud86 pas
+   sinds vandaag, dus het staat niet in de export uit stap 1.
+
+Haal het record bij Cloud86 pas weg als de nameservers om zijn en Search
+Console groen blijft. Verdwijnt het bewijs, dan verliest de property na
+een tijd zijn verificatie en stopt de rapportage.
+
+De sitemap hoeft nergens heen. Die wordt bij elke build gegenereerd en
+staat op `https://jeau.st/sitemap-index.xml`, met een verwijzing in
+`public/robots.txt`. In Search Console vul je die url onder Sitemaps een
+keer in; daarna haalt Google hem zelf opnieuw op.
 
 ## Wat ik hierna zou aanzetten
 
