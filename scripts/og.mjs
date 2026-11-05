@@ -72,15 +72,15 @@ const mono = naarTtf("font-ibm-plex-mono-400-normal-latin-", "mono");
 
 /**
  * De paden uit de component, zodat er één bron van waarheid is. Het zijn er
- * twee: het merk staat in zacht en het blokje rechtsonder in de punt in het
- * accent. De tokens bestaan hier niet, dus het worden de donkere waarden,
- * want deze plaat staat altijd in het donkere thema.
+ * twee: de letters in tekst en de punt in het accent. De tokens bestaan hier
+ * niet, dus het worden de donkere waarden, want deze plaat staat altijd in
+ * het donkere thema.
  */
 const woordmerk = readFileSync("src/components/Woordmerk.astro", "utf8");
 const paden = [...woordmerk.matchAll(/<path([^>]*?)d="([^"]+)"/g)].map(
   ([, attributen, d]) => ({
     d,
-    vulling: attributen.includes("--color-accent") ? kleur.accent : kleur.zacht,
+    vulling: attributen.includes("--color-accent") ? kleur.accent : kleur.tekst,
   }),
 );
 if (paden.length === 0) throw new Error("Geen pad gevonden in Woordmerk.astro.");

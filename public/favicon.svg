@@ -13,24 +13,28 @@
 
         Geen rondingen: het merk is een pixelvorm.
 
-        Twee vaste kleuren, geen prefers-color-scheme. Een favicon staat
-        op de tabbalk van de browser en niet op de site, dus het thema van
-        de site zegt er niets over, en de ondergrond is per browser anders.
-        Deze twee halen op alle vier de gangbare tabbalken meer dan 3,4:1,
-        de norm voor een vlak dat geen tekst is:
+        Alle vier de vierkantjes in het accent, net als de punt in het
+        woordmerk. Drie in zacht en een in het accent heeft het geweest,
+        maar op 16 bij 16 is dat een grijs blokje met een vlekje: het
+        teken moet op die maat in een keer te herkennen zijn, en dan is
+        een kleur duidelijker dan een patroon.
+
+        Een vaste kleur, geen prefers-color-scheme. Een favicon staat op
+        de tabbalk van de browser en niet op de site, dus het thema van de
+        site zegt er niets over, en de ondergrond is per browser anders.
+        Het accent haalt op alle vier de gangbare tabbalken meer dan
+        3,4:1, de norm voor een vlak dat geen tekst is:
 
                               wit   Chrome licht   Chrome donker   Firefox donker
-        zacht   #6d8595      3,86       3,49            4,17            3,67
         accent  #c76a19      3,82       3,44            4,22            3,71
 
-        Allebei komen uit het palet. Het accent is het oranje van het
-        donkere thema; dat van het lichte haalt op een donkere tabbalk
-        maar 3,1:1.
+        Het is het oranje van het donkere thema; dat van het lichte haalt
+        op een donkere tabbalk maar 3,1:1.
     -->
-    <g fill="#6d8595">
+    <g fill="#c76a19">
         <path d="M8 8h48v48H8z" />
         <path d="M72 8h48v48H72z" />
         <path d="M8 72h48v48H8z" />
+        <path d="M72 72h48v48H72z" />
     </g>
-    <path fill="#c76a19" d="M72 72h48v48H72z" />
 </svg>
