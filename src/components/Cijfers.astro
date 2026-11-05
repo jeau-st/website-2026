@@ -59,7 +59,10 @@ const getallen = [
 const opmaak = new Intl.NumberFormat(cijfercode[taal]);
 ---
 
-<section class="px-4 pt-10 sm:px-6 sm:pt-12">
+{/* Alleen bovenruimte, net als een Sectie: de band hoort bij de hero,
+    dus dat is de kleine maat, 56 px oplopend naar 64. De lucht eronder
+    komt van de sectie die volgt, en die staat op dezelfde maat. */}
+<section class="px-4 pt-14 sm:px-6 sm:pt-16">
   <dl
     class="mx-auto grid max-w-5xl grid-cols-2 gap-px overflow-hidden rounded-groot bg-rand-zacht sm:grid-cols-4"
     data-cijfers

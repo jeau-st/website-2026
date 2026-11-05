@@ -78,7 +78,7 @@ const reizen = t.st.reizen.map((reis, i) => ({ ...reis, href: adressen[i] }));
 ---
 
 <Basis titel={t.st.titel} beschrijving={t.st.beschrijving}>
-  <section class="px-4 py-20 sm:px-6 sm:py-24">
+  <section class="px-4 pb-0 pt-20 sm:px-6 sm:pt-24">
     <div class="mx-auto max-w-3xl">
       <h1 class="text-4xl sm:text-5xl lg:text-6xl">{t.st.kop}</h1>
       <p class="mt-6 text-lg text-zacht">
@@ -89,7 +89,7 @@ const reizen = t.st.reizen.map((reis, i) => ({ ...reis, href: adressen[i] }));
     </div>
   </section>
 
-  <section class="px-4 pb-16 sm:px-6 sm:pb-24">
+  <section class="px-4 pt-14 sm:px-6 sm:pt-16">
     <div class="mx-auto max-w-3xl">
       {
         blokken.map((blok) =>

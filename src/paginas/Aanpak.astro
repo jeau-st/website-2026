@@ -70,7 +70,7 @@ const faqSchema = {
   beschrijving={t.aanpak.beschrijving}
   extraSchema={faqSchema}
 >
-  <section class="px-4 py-20 sm:px-6 sm:py-24">
+  <section class="px-4 pb-0 pt-20 sm:px-6 sm:pt-24">
     <div class="mx-auto max-w-5xl">
       <h1 class="max-w-3xl text-4xl sm:text-5xl lg:text-6xl">
         {t.aanpak.kop}
@@ -94,7 +94,7 @@ const faqSchema = {
     kop={delen.niveaus}
     intro={t.aanpak.niveausIntro}
   >
-    <ol class="mt-12 space-y-4">
+    <ol class="mt-10 space-y-4">
       {niveaus.map((niveau) => <Niveau niveau={niveau} />)}
     </ol>
     <p class="max-w-2xl border-t border-rand/60 pt-8 text-zacht">

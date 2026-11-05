@@ -14,6 +14,12 @@
  * is aria-hidden: de nummering is houvast voor het oog, en een
  * screenreader heeft de koppenstructuur al.
  *
+ * De eerste regel onder de kop staat op `mt-10`, overal. Dat is geen
+ * regel van dit component maar van de pagina's die hem gebruiken, want
+ * de inhoud komt uit de slot. Stond er hier en daar `mt-8` of `mt-12`,
+ * en dan zie je dezelfde kop de ene keer dichter op zijn tekst staan
+ * dan de andere zonder dat iemand dat zo bedoeld heeft.
+ *
  * Het ritme is niet overal gelijk. `aansluitend` zet de bovenruimte
  * terug voor een sectie die bij de vorige hoort: dan ademt de pagina in
  * groepen in plaats van overal even hard te tikken.
@@ -53,13 +59,27 @@ const {
 } = Astro.props;
 const kopId = id ? `${id}-kop` : undefined;
 
+/**
+ * Een sectie heeft alleen bovenruimte. Het gat tussen twee blokken is
+ * dan van de sectie die begint, en niet de som van de onderruimte van
+ * de een en de bovenruimte van de ander. Zo staat er één getal voor één
+ * gat, op één plek.
+ *
+ * Twee maten, en niet meer: 112 px tussen twee onderwerpen, oplopend
+ * naar 128, en de helft daarvan, 56 en 64, voor een blok dat bij het
+ * vorige hoort. Die verhouding van twee op een is wat je ziet: groepen
+ * staan verder uit elkaar dan de delen binnen een groep.
+ *
+ * De onderkant van de pagina komt van `main` in Basis.astro, want dat
+ * is weer één gat met één eigenaar.
+ */
 const ruimte = vol
   ? aansluitend
-    ? "pb-12 pt-2 sm:pb-16 sm:pt-4"
-    : "py-12 sm:py-16"
+    ? "pt-14 sm:pt-16"
+    : "pt-28 sm:pt-32"
   : aansluitend
-    ? "px-4 pb-16 pt-4 sm:px-6 sm:pb-24 sm:pt-6"
-    : "px-4 py-16 sm:px-6 sm:py-24";
+    ? "px-4 pt-14 sm:px-6 sm:pt-16"
+    : "px-4 pt-28 sm:px-6 sm:pt-32";
 ---
 
 <section

@@ -72,7 +72,10 @@ const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
       een regel: "Dat doet Sebastiaan altijd" is 554 px bij 48 px Manrope
       en de kolom was er 484. De tekst krijgt nu 61 procent en de ring
       39, en de ring is daarop meegekrompen. Zie Schema.astro. */}
-  <section class="px-4 py-14 sm:px-6 sm:py-16 lg:pb-14 lg:pt-10">
+  {/* Geen onderruimte: de cijferband eronder brengt zijn eigen lucht
+      mee, aan beide kanten. Twee blokken die allebei iets bijdragen
+      tellen op tot een gat waar niemand op gestuurd heeft. */}
+  <section class="px-4 pb-0 pt-14 sm:px-6 sm:pt-16 lg:pt-10">
     <div
       class="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-[minmax(0,0.55fr)_minmax(0,0.45fr)] lg:gap-10"
     >
@@ -158,13 +161,23 @@ const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
         Alleen de eerste cel van een rij staat tegen de kantlijn, de rest
         houdt 24 px van de haarlijn af. Welke cel dat is, hangt af van
         het aantal kolommen, en dat verschilt per breekpunt. De pagina
-        rekent het zelf uit, want de index is hier bekend. */}
+        rekent het zelf uit, want de index is hier bekend.
+
+        Hetzelfde geldt voor de bovenruimte van de eerste rij. Die cellen
+        staan onder de cijferband, en de lucht daartussen komt van de
+        sectie. Lieten ze hun eigen py-5 staan, dan kwam die er nog eens
+        bij en stond dit blok verder van de band af dan de band van de
+        hero. Bij een kolom is dat alleen de eerste cel, bij twee de
+        eerste twee, bij drie de eerste drie. */}
     <dl class="grid gap-px bg-rand-zacht sm:grid-cols-2 lg:grid-cols-3">
       {
         inHetKort.map((regel, i) => (
           <div
             class:list={[
               "min-w-0 bg-bg py-5 sm:py-6 sm:pr-6",
+              i === 0 && "pt-0 sm:pt-0",
+              i === 1 && "sm:pt-0",
+              i === 2 && "lg:pt-0",
               i % 2 !== 0 && "sm:pl-6",
               i % 3 === 0 ? "lg:pl-0" : "lg:pl-6",
             ]}

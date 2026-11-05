@@ -69,7 +69,7 @@ const plaatsEnStudio = {
   beschrijving={t.over.beschrijving}
   extraSchema={schema}
 >
-  <section class="px-4 py-20 sm:px-6 sm:py-24">
+  <section class="px-4 pb-0 pt-20 sm:px-6 sm:pt-24">
     <div class="mx-auto max-w-5xl">
       <p class="font-mono text-sm text-zacht">{t.over.label}</p>
       <h1 class="mt-2 max-w-3xl text-4xl sm:text-5xl lg:text-6xl">
@@ -92,13 +92,13 @@ const plaatsEnStudio = {
   </section>
 
   <Sectie id="wie" kop={t.over.wieKop}>
-    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
+    <div class="mt-10 max-w-2xl space-y-4 text-zacht">
       {t.over.wieAlineas.map((alinea) => <p>{vul(alinea, plaatsEnStudio)}</p>)}
     </div>
   </Sectie>
 
   <Sectie id="achtergrond" kop={t.over.achtergrondKop}>
-    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
+    <div class="mt-10 max-w-2xl space-y-4 text-zacht">
       {t.over.achtergrondAlineas.map((alinea) => <p>{alinea}</p>)}
     </div>
     <p class="mt-8">
@@ -109,7 +109,7 @@ const plaatsEnStudio = {
   </Sectie>
 
   <Sectie id="waarom" kop={t.over.waaromKop}>
-    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
+    <div class="mt-10 max-w-2xl space-y-4 text-zacht">
       {t.over.waaromAlineas.map((alinea) => <p>{alinea}</p>)}
     </div>
     <ul class="mt-10 max-w-2xl space-y-3">

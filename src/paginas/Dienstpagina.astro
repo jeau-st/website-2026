@@ -94,7 +94,7 @@ const schema = {
   beschrijving={dienst.meta}
   extraSchema={[schema, kruimelSchema(kruimels, Astro.site)]}
 >
-  <section class="px-4 py-20 sm:px-6 sm:py-24">
+  <section class="px-4 pb-0 pt-20 sm:px-6 sm:pt-24">
     <div class="mx-auto max-w-5xl">
       <Kruimels kruimels={kruimels} />
       <h1 class="mt-3 max-w-3xl text-4xl sm:text-5xl lg:text-6xl">{dienst.kop}</h1>
@@ -151,7 +151,7 @@ const schema = {
   {
     dienst.verhaal?.map((blok, i) => (
       <Sectie id={`hoe-${i + 1}`} vol nummer={nr[`hoe-${i + 1}`]} kop={blok.kop}>
-        <div class="mt-8 max-w-2xl space-y-4 text-zacht">
+        <div class="mt-10 max-w-2xl space-y-4 text-zacht">
           {blok.alineas.map((alinea) => (
             <p>{alinea}</p>
           ))}
@@ -223,7 +223,7 @@ const schema = {
   }
 
   <Sectie id="verder" vol nummer={nr.verder} kop={t.dienst.verder}>
-    <ul class="mt-8 max-w-2xl space-y-3">
+    <ul class="mt-10 max-w-2xl space-y-3">
       {
         anderen.map((item) => (
           <li>

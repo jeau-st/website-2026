@@ -202,7 +202,10 @@ const schema = {
       {t.algemeen.naarInhoud}
     </a>
     <Kop />
-    <main id="inhoud">
+    {/* De ruimte onder de laatste sectie. Secties hebben alleen
+        bovenruimte, dus zonder dit zou de voet tegen de laatste regel
+        aan staan. Zelfde maat als tussen twee onderwerpen. */}
+    <main id="inhoud" class="pb-28 sm:pb-32">
       <slot />
     </main>
     <Voet />
