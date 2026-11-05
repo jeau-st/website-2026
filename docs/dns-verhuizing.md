@@ -237,13 +237,18 @@ laat `www` uit de routes.
 
 ### 7. Ruim op
 
-- Haal het custom domain weg bij de oude GitHub Pages-repo, en het
-  `CNAME`-bestand erin. **Pas na stap 6, niet eerder.** GitHub Pages
-  kiest de site op de Host-header, niet op het IP-adres: haal je het
-  domein daar weg terwijl de A-records nog naar GitHub wijzen, dan
-  antwoordt `jeau.st` met een 404 tot de Worker eraan hangt. Zolang
-  GitHub het domein geclaimd houdt, kan niemand anders het claimen, maar
-  daarna staat het in de weg.
+- **Gedaan op 5 november 2026.** Het custom domain is weg bij
+  `jeau-st/jeau-st-site`; een `CNAME`-bestand stond er niet in. De oude
+  site staat nog op https://jeau-st.github.io/jeau-st-site/.
+
+  Dat betekent dat `jeau.st` nu een 404 van GitHub geeft, en dat blijft
+  zo tot de Worker eraan hangt. GitHub Pages kiest de site namelijk op
+  de Host-header en niet op het IP-adres, dus zonder claim weet het niet
+  meer welke site erbij hoort. Bewust gedaan: de oude site mocht omvallen
+  en het alternatief was wachten op nic.st.
+
+  Wil je dit een volgende keer zonder onderbreking, doe deze stap dan na
+  stap 6.
 - Verwijder de zone bij Cloud86. Die is dan niets meer dan een tweede
   waarheid die stilletjes uit de pas kan gaan lopen. Doe dit pas als de
   delegatie om is en de mail een week goed loopt, want tot dat moment is
