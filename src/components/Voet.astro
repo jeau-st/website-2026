@@ -2,7 +2,26 @@
 import Woordmerk from "./Woordmerk.astro";
 import { bedrijf, diensten } from "../data/site";
 
+/**
+ * Vier kolommen, met een eigen soort inhoud per kolom: wie het is, wat
+ * er te koop is, waar je heen kunt, en met wie je te maken hebt. Dat
+ * laatste staat helemaal rechts, want het is het minst waarvoor je komt
+ * en het meest waarnaar je zoekt als je het nodig hebt.
+ *
+ * De links in de derde kolom lopen van buiten naar binnen: eerst mail en
+ * LinkedIn, waarmee je iemand bereikt, dan de pagina's die over de zaak
+ * zelf gaan. `min-h-11` op elke link maakt er een aanraakvlak van; in een
+ * rijtje van vijf is dat het verschil tussen mikken en tikken.
+ *
+ * De bedrijfsgegevens zijn geen links en staan dus als tekst, net als op
+ * de contactpagina.
+ */
+
 const jaar = new Date().getFullYear();
+
+/** Eén klasse voor alle links in de voet, anders staat hij er acht keer. */
+const link =
+  "tekstlink inline-flex min-h-11 items-center hover:text-tekst";
 ---
 
 <footer class="border-t border-rand/60 px-4 pb-28 pt-14 sm:px-6 sm:pb-14">
@@ -12,6 +31,56 @@ const jaar = new Date().getFullYear();
       <p class="mt-3 text-sm text-zacht">
         CRM en procesautomatisering voor mkb en scale-ups.
       </p>
+    </div>
+
+    <div>
+      <h2 class="text-sm font-semibold">
+        <a class={link} href="/diensten">Diensten</a>
+      </h2>
+      <ul class="mt-2 space-y-1 text-sm text-zacht">
+        {
+          diensten.map((dienst) => (
+            <li>
+              <a class={link} href={`/diensten/${dienst.slug}/`}>
+                {dienst.titel}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-sm font-semibold">Links</h2>
+      <ul class="mt-2 space-y-1 text-sm text-zacht">
+        <li>
+          <a class={link} href={`mailto:${bedrijf.email}`}>
+            {bedrijf.email}
+          </a>
+        </li>
+        <li>
+          <a
+            class={link}
+            href={bedrijf.linkedin}
+            target="_blank"
+            rel="noopener"
+          >
+            LinkedIn
+          </a>
+        </li>
+        <li><a class={link} href="/over">Over Jeau.st</a></li>
+        <li><a class={link} href="/st">.st?!</a></li>
+        <li><a class={link} href="/privacy">Privacy</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-sm font-semibold">{bedrijf.naam}</h2>
+      <div class="mt-2 space-y-1 text-sm text-zacht">
+        <p>{bedrijf.straat}</p>
+        <p>{bedrijf.postcode}&nbsp;{bedrijf.plaats}</p>
+        <p>KvK&nbsp;{bedrijf.kvk}</p>
+      </div>
 
       {/* Studio Citadel is het collectief waar Jeau.st zit. Het beeldmerk
           is hun eigen favicon: een uitsnede van het bastion, wit op
@@ -22,7 +91,7 @@ const jaar = new Date().getFullYear();
           Geen pijltje achter de link. Dat is voor een pagina van deze
           site, en dit gaat naar buiten. */}
       <a
-        class="drukbaar mt-6 inline-flex max-w-xs items-center gap-3 text-sm text-zacht transition-colors hover:text-tekst"
+        class="drukbaar mt-6 inline-flex items-center gap-3 text-sm text-zacht transition-colors hover:text-tekst"
         href="https://www.studiocitadel.nl/"
         target="_blank"
         rel="noopener"
@@ -36,64 +105,11 @@ const jaar = new Date().getFullYear();
           class="size-9 shrink-0 rounded-klein"
         />
         <span class="min-w-0">
-          Joost is onderdeel van het collectief Studio Citadel
+          {bedrijf.naam} is onderdeel van het collectief {
+            bedrijf.onderdeelVan
+          }
         </span>
       </a>
-    </div>
-
-    <div>
-      <h2 class="text-sm font-semibold">
-        <a
-          class="tekstlink inline-flex min-h-11 items-center hover:text-tekst"
-          href="/diensten">Diensten</a
-        >
-      </h2>
-      <ul class="mt-2 space-y-1 text-sm text-zacht">
-        {
-          diensten.map((dienst) => (
-            <li>
-              <a
-                class="tekstlink inline-flex min-h-11 items-center hover:text-tekst"
-                href={`/diensten/${dienst.slug}/`}
-              >
-                {dienst.titel}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </div>
-
-    <div>
-      <h2 class="text-sm font-semibold">Contact</h2>
-      <ul class="mt-2 space-y-1 text-sm text-zacht">
-        <li>
-          <a class="tekstlink inline-flex min-h-11 items-center hover:text-tekst" href={`mailto:${bedrijf.email}`}>
-            {bedrijf.email}
-          </a>
-        </li>
-        <li>
-          <a
-            class="tekstlink inline-flex min-h-11 items-center hover:text-tekst"
-            href={bedrijf.linkedin}
-            target="_blank"
-            rel="noopener"
-          >
-            LinkedIn
-          </a>
-        </li>
-      </ul>
-    </div>
-
-    <div>
-      <h2 class="text-sm font-semibold">Jeau.st</h2>
-      <ul class="mt-2 space-y-1 text-sm text-zacht">
-        <li>{bedrijf.plaats}</li>
-        <li>KvK&nbsp;{bedrijf.kvk}</li>
-        <li><a class="tekstlink inline-flex min-h-11 items-center hover:text-tekst" href="/over">Over Jeau.st</a></li>
-        <li><a class="tekstlink inline-flex min-h-11 items-center hover:text-tekst" href="/st">.st?!</a></li>
-        <li><a class="tekstlink inline-flex min-h-11 items-center hover:text-tekst" href="/privacy">Privacy</a></li>
-      </ul>
     </div>
   </div>
 
