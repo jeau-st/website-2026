@@ -15,6 +15,9 @@ pnpm-debug.log*
 
 # secrets en lokale omgeving
 .env*
+# behalve het voorbeeld: dat staat er juist om te laten zien
+# welke variabelen je nodig hebt, zonder de waarden.
+!.env.example
 .dev.vars*
 .wrangler/
 

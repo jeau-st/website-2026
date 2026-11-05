@@ -1,0 +1,24 @@
+titel: Maatschappelijke organisatie die gezinnen en oppassen koppelt
+volgorde: 10
+kort: Maatschappelijke organisatie
+bouwstenen:
+  - database
+  - workflow
+  - file-text
+  - calculator
+  - chart-column
+situatie:
+  - Het werk liep door losse systemen en een rij Excel-bestanden.
+  - Dezelfde gegevens moesten overal kloppen, dus er ging veel tijd in overtypen zitten.
+  - Aanmeldingen kwamen ongestructureerd binnen, dus elke aanmelding begon met uitzoeken.
+aanpak:
+  - Pipedrive leidend gemaakt voor de contacten en de matches.
+  - Een database erachter voor de urenadministratie, met n8n aan Pipedrive geknoopt.
+  - De documentflow voor de verslaglegging naar partners eraan vast.
+  - Intakes en gewonnen deals gaan terug naar Google Ads.
+resultaat:
+  - De incasso- en excassobatches worden vanzelf aangemaakt.
+  - Na elke stap staat er een opvolgtaak klaar.
+  - Een aanmelding komt binnen in een vorm waar je meteen mee verder kunt.
+  - Een stuk minder handwerk, en rapportages waar je op kunt bouwen.
+todo: false

@@ -1,0 +1,24 @@
+titel: Architectenbureau
+volgorde: 30
+kort: Architectenbureau
+bouwstenen:
+  - globe
+  - mail
+  - calendar
+  - workflow
+situatie:
+  - Verschillende websites, allemaal verouderd.
+  - Mail, domeinen en hosting lagen bij verschillende aanbieders.
+  - Er was geen plek waar aanvragen samenkwamen, dus overzicht krijgen was elke keer uitzoekwerk.
+aanpak:
+  - Eerst een SEO-audit.
+  - Alles samengevoegd tot één site op Astro en Cloudflare, met redirects vanaf de oude adressen.
+  - Nederlands en Engels, met Keystatic om zelf te schrijven.
+  - Een vragenformulier dat doorloopt naar Pipedrive.
+  - Mail, domeinen en DNS op eigen accounts.
+resultaat:
+  - Eén snelle site die het bureau zelf beheert.
+  - Via het formulier komen aanvragen binnen die meteen een afspraak kunnen inplannen.
+  - Je ziet per klant waar die in het proces zit.
+  - De randzaken eromheen bij elkaar in één systeem.
+todo: false

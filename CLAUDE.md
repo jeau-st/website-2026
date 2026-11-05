@@ -15,6 +15,7 @@ Output is statisch. De adapter staat er zodat losse endpoints of server islands 
 ```
 npm install
 npm run dev
+npm run cms
 npm run build
 npm run typecheck
 npm run schrijfwijzer
@@ -24,11 +25,17 @@ npm run deploy
 
 Astro houdt de dev server als los proces in leven. Draait er al een, dan start `npx astro dev` niet; gebruik `npx astro dev --force` of eerst `npx astro dev stop`. Een wijziging in `astro.config.mjs` vraagt altijd om een herstart.
 
-De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom lopen preview en deploy via `-c dist/client/wrangler.json`; de wrangler config in de wortel bevat alleen naam, compatibiliteitsdatum en flags.
+De build schrijft de pagina's naar `dist/client` en de Worker naar `dist/server`, met `wrangler.json` ernaast. Daarom lopen preview en deploy via `-c dist/server/wrangler.json`; de wrangler config in de wortel bevat alleen naam, compatibiliteitsdatum en flags.
+
+`npm run cms` opent de beheerschermen op `/keystatic`. Dat is een aparte dev server, want hij laat de Cloudflare-adapter weg en draait op Node: Keystatic schrijft lokaal met het bestandssysteem, en dat heeft de Cloudflare-runtime niet. Zie `docs/keystatic.md`.
 
 ## Waar staat wat
 
-- `src/data/site.ts`: alle herhaalde inhoud en de TODO-placeholders
+- `src/data/site.ts`: alle herhaalde inhoud. Geeft door wat uit Keystatic komt en bevat zelf wat in code blijft
+- `src/data/inhoud.ts`: leest `src/inhoud/*.yaml` bij de build. Importeer hier niet uit, maar uit `site.ts`
+- `src/inhoud`: de yaml die Keystatic schrijft. Niet met de hand bijwerken als het ook via `npm run cms` kan
+- `keystatic.config.ts`: welke schermen en velden er zijn, met de huisregel per veld als helptekst
+- `docs/keystatic.md`: wat er in het CMS zit, hoe je het lokaal draait en wat er nog moet voor GitHub-modus
 - `src/data/namen.ts`: de namen waaruit de kop op de homepage kiest, en de functie die er een uitzoekt
 - `OPLEVERING.md`: wat Joost nog moet invullen voor livegang
 - `SCHRIJFWIJZER.md`: stem, verboden woorden en werkwijze voor alle tekst op de site
@@ -76,4 +83,5 @@ De build schrijft naar `dist/client` en genereert daar `wrangler.json`. Daarom l
 - Beweging alleen met transform en opacity, 150 ms, en een menu komt uit zijn eigen knop vandaan via `transform-origin`. Geen bounce zonder gebaar.
 - De kop is doorschijnend met een blur. Kan de browser dat niet, of staat `prefers-reduced-transparency` aan, dan wordt hij dekkend. Allebei staan in `Kop.astro`.
 - Ontbrekende inhoud wordt een zichtbare TODO, nooit een verzonnen tekst.
+- Wat in Keystatic zit is de tekst die verandert: diensten, opdrachten, vragen, de homepageteksten en de bedrijfsgegevens. Wat aan iconen, geometrie of de opbouw van een pagina hangt blijft in `site.ts`. Een nieuw veld voeg je op twee plekken toe: in `keystatic.config.ts` en in het type in `inhoud.ts`. `npm run typecheck` zegt het als ze uit elkaar lopen.
 - Secrets alleen via `npx wrangler secret put` of `.env.local`, nooit in de repo.

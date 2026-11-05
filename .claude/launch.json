@@ -4,7 +4,19 @@
     {
       "name": "website-2026",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeArgs": [
+        "run",
+        "dev"
+      ],
+      "port": 4321
+    },
+    {
+      "name": "cms",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "cms"
+      ],
       "port": 4321
     }
   ]

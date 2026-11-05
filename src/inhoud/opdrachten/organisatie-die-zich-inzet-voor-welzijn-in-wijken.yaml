@@ -1,0 +1,24 @@
+titel: Organisatie die zich inzet voor welzijn in wijken
+volgorde: 20
+kort: Welzijnsorganisatie
+bouwstenen:
+  - calendar
+  - mail
+  - workflow
+  - globe
+  - sparkles
+situatie:
+  - De systemen waren versnipperd.
+  - De communicatie met mensen werd ergens anders bijgehouden dan hun voortgang, dus wie in welke fase zat moest je bij elkaar zoeken.
+  - Dat bijhouden was handwerk.
+aanpak:
+  - Pipedrive centraal gezet, met de contactpersonen, de organisaties en de voortgang van iedereen erin.
+  - De rest hangt er met n8n aan.
+  - De dubbele records opgeruimd.
+  - Een ticketsysteem aan het CRM voor de events.
+resultaat:
+  - Per event zie je wie is uitgenodigd, wie zich aanmeldde, wie er was en wat de opvolging is.
+  - Eén plek waar je kijkt, in plaats van twee lijsten naast elkaar.
+  - Er wordt een stuk minder overgetypt en de aanmeldflow is aangescherpt.
+  - Een basis die strak genoeg is om AI op in te zetten.
+todo: false

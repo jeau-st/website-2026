@@ -14,6 +14,7 @@
 import { readFileSync } from "node:fs";
 import { readdir } from "node:fs/promises";
 import { join, relative, sep } from "node:path";
+import { parse } from "yaml";
 
 const WORTEL = new URL("..", import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, "$1");
 const BRON = join(WORTEL, "src");
@@ -48,7 +49,7 @@ async function bestanden(map) {
   for (const item of await readdir(map, { withFileTypes: true })) {
     const pad = join(map, item.name);
     if (item.isDirectory()) uit.push(...(await bestanden(pad)));
-    else if (/\.(astro|ts)$/.test(item.name)) uit.push(pad);
+    else if (/\.(astro|ts|yaml)$/.test(item.name)) uit.push(pad);
   }
   return uit.sort();
 }
@@ -79,6 +80,38 @@ function tekstUit(bron) {
   return stukken;
 }
 
+/**
+ * Hetzelfde voor yaml, de inhoud die uit Keystatic komt. Daar staat de
+ * tekst niet tussen aanhalingstekens maar als kale waarde, dus het
+ * patroon hierboven ziet hem niet. De boom aflopen is betrouwbaarder dan
+ * er een regex op loslaten.
+ *
+ * Het regelnummer is bij benadering: we zoeken de eerste regel waar het
+ * begin van de tekst op staat. Bij een waarde over meerdere regels wijst
+ * hij dus naar de eerste.
+ */
+function tekstUitYaml(bron) {
+  const stukken = [];
+  const regels = bron.split(/\r?\n/);
+  const loop = (knoop) => {
+    if (typeof knoop === "string") {
+      if (knoop.trim().split(/\s+/).length < 3) return;
+      const begin = knoop.slice(0, 24);
+      const nr = regels.findIndex((r) => r.includes(begin));
+      stukken.push({
+        regel: nr < 0 ? 1 : nr + 1,
+        tekst: knoop.replace(/\s+/g, " ").trim(),
+      });
+    } else if (Array.isArray(knoop)) {
+      knoop.forEach(loop);
+    } else if (knoop && typeof knoop === "object") {
+      Object.values(knoop).forEach(loop);
+    }
+  };
+  loop(parse(bron));
+  return stukken;
+}
+
 const paden = await bestanden(BRON);
 let fouten = 0;
 let tegenstellingen = 0;
@@ -88,7 +121,8 @@ for (const pad of paden) {
   // Backslashes naar slashes, zodat het pad in de terminal klikbaar is
   const kort = relative(WORTEL, pad).split(sep).join("/");
   const meldingen = [];
-  for (const { regel, tekst } of tekstUit(readFileSync(pad, "utf8"))) {
+  const lezer = pad.endsWith(".yaml") ? tekstUitYaml : tekstUit;
+  for (const { regel, tekst } of lezer(readFileSync(pad, "utf8"))) {
     for (const zin of tekst.split(/(?<=[.?])\s+/)) {
       const woorden = zin.trim().split(/\s+/).filter(Boolean);
       if (woorden.length < 3) continue;

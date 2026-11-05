@@ -1,0 +1,28 @@
+titel: Koppelingen en automatisering
+volgorde: 20
+icoon: workflow
+kort: Systemen aan elkaar, niets twee keer invoeren
+kop: Je systemen aan elkaar koppelen
+meta: Koppelingen tussen CRM, administratie en mail, gebouwd met n8n, zodat niemand hetzelfde twee keer invoert.
+tekst: Systemen die elkaar iets doorgeven, zodat niemand hetzelfde twee keer invoert.
+punten:
+  - Koppelingen tussen CRM, administratie en mail
+  - Terugkerend handwerk weg
+voorWie: "Voor bedrijven waar dezelfde gegevens in meerdere systemen moeten staan, en waar iemand dat nu met de hand bijhoudt. Een koppeling is geen vast ding: het kan een knop zijn die je indrukt, een sync die elke nacht loopt, of iets dat afgaat zodra er in het ene systeem iets verandert."
+verhaal:
+  - kop: Hoe vaak moet het overgaan?
+    alineas:
+      - Dat is de eerste vraag, en het antwoord volgt uit je proces. Een offerte die akkoord is, mag meteen door naar de boekhouding. Een urenregistratie kan prima een nachtje wachten. Real-time klinkt altijd beter, maar het kost meer onderhoud en je merkt het verschil alleen als iemand binnen het uur iets met die gegevens doet.
+      - We kiezen daarom wat minimaal nodig is om het goed te laten werken. Dat is goedkoper om te bouwen en er gaat minder stuk.
+  - kop: Eerst kijken of het al bestaat
+    alineas:
+      - Pipedrive heeft een marktplaats, en een flink aantal partijen heeft er een eigen integratie voor gebouwd. DocuSign om documenten te laten ondertekenen, CloudTalk voor je telefonie. Werkt zo'n kant-en-klare koppeling voor jouw situatie, dan scheelt dat een hoop bouwwerk.
+      - "Zelf bouwen komt daarna. Een voorbeeld van wat dat oplevert: de koppeling tussen een telefooncentrale en het CRM. Een gemiste oproep of een voicemail komt automatisch bij de juiste persoon te staan, en de accountmanager van die klant krijgt de taak om terug te bellen of het bericht af te luisteren."
+  - kop: Zelf in beheer, en in stukken
+    alineas:
+      - "Ik bouw met n8n. Dat is van een Duits bedrijf en de cloudversie draait op servers in de EU. Het werkt goed samen met AI-modellen, en je kunt het in eigen beheer houden. Dat laatste weegt voor mij het zwaarst: je ziet precies welke informatie wanneer waarheen gaat. Mis je iets in een systeem, dan zie je waar het is blijven steken. Wil je zelf meekijken als er iets misgaat, dan kan dat."
+      - "Eén grote workflow die alles doet, is één ding dat kan omvallen. Ik hak ze daarom op in stukken met elk hun eigen foutafhandeling, zodat de rest doorloopt als er ergens iets vastloopt. Die stukken zijn ook herbruikbaar: contactgegevens bijwerken, of kijken of iemand al bestaat voordat er een tweede contact wordt aangemaakt. Dat komt in bijna elk project terug."
+  - kop: Wat je niet moet verwachten
+    alineas:
+      - Dat het een knop is die je omzet en dat het daarna werkt zoals jij het wil. Een koppeling is maatwerk, en als je proces verandert, moet de koppeling mee veranderen. Daar denk ik in mee.
+extra: []

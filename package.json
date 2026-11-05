@@ -7,9 +7,10 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "cms": "node scripts/cms.mjs",
     "build": "astro build",
-    "preview": "astro build && wrangler dev -c dist/client/wrangler.json",
-    "deploy": "astro build && wrangler deploy -c dist/client/wrangler.json",
+    "preview": "astro build && wrangler dev -c dist/server/wrangler.json",
+    "deploy": "astro build && wrangler deploy -c dist/server/wrangler.json",
     "typecheck": "astro check",
     "og": "node scripts/og.mjs",
     "schrijfwijzer": "node scripts/schrijfwijzer.mjs",
@@ -17,13 +18,21 @@
   },
   "dependencies": {
     "@astrojs/cloudflare": "^14.4.4",
+    "@astrojs/react": "^7.1.2",
     "@astrojs/sitemap": "^3.7.4",
-    "astro": "^7.4.5"
+    "@keystatic/astro": "^6.0.0",
+    "@keystatic/core": "^0.6.9",
+    "astro": "^7.4.5",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "yaml": "^2.9.1"
   },
   "private": true,
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
     "@tailwindcss/vite": "^4.3.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "lucide-static": "^1.68.0",
     "tailwindcss": "^4.3.4",
     "typescript": "^6.0.3",

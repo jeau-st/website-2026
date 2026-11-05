@@ -10,64 +10,25 @@ import Icoon from "../components/Icoon.astro";
 import Cyclus from "../components/Cyclus.astro";
 import { kiesPersoon } from "../data/namen";
 import Bouwstenen from "../components/Bouwstenen.astro";
-import { bedrijf, cases, diensten, pijnpunten } from "../data/site";
+import {
+  bedrijf,
+  cases,
+  diensten,
+  inHetKort,
+  kernpunten,
+  pijnpunten,
+} from "../data/site";
 import Doorlink from "../components/Doorlink.astro";
 
 /* De naam in de kop is niet vast: de build kiest er een, en Naamwissel
    kiest bij elk bezoek opnieuw. Zie src/data/namen.ts. */
 const persoon = kiesPersoon();
 
-/* Expres ongelijk van lengte en vorm. Vier punten met hetzelfde ritme
-   lazen als een gegenereerd lijstje. Zie SCHRIJFWIJZER.md. */
-const kernpunten = [
-  "Je proces vastgelegd in Pipedrive, voor iedereen hetzelfde",
-  "Eén bron van waarheid voor je hele team",
-  "Koppelingen met de systemen die je al gebruikt",
-  "Rapportages waar je op kunt sturen",
-  "Een basis die strak genoeg is voor AI",
-];
-
 /* De opdrachten die bij Resultaten op de homepage staan. Drie, want
    vier kolommen worden te smal voor een opsomming, en de rij moet op
    een regel passen. Ze komen uit dezelfde lijst als /werk, dus de
    homepage kan niets beloven wat daar niet uitgewerkt staat. */
 const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
-
-/**
- * De samenvatting onder de hero: de vijf W's en de H. Wie op de homepage
- * landt en niet doorleest, moet na dit blok weten wie dit is, wat het
- * oplevert en wat de eerste stap is. Elk antwoord staat op één regel,
- * want zodra het een alinea wordt is het geen samenvatting meer.
- */
-const inHetKort = [
-  {
-    vraag: "Wie",
-    antwoord: `${bedrijf.persoon}. Tien jaar ervaring met systeemimplementaties, salesteams en data-analyse bij mkb en scale-ups.`,
-  },
-  {
-    vraag: "Wat",
-    antwoord:
-      "Je proces in één systeem, je systemen aan elkaar, het handwerk ertussenuit en een basis voor AI.",
-  },
-  {
-    vraag: "Waar",
-    antwoord: `Vanuit ${bedrijf.plaats}. Overleg gaat online, en op locatie als dat beter werkt, bijvoorbeeld voor de trainingen.`,
-  },
-  {
-    vraag: "Wanneer",
-    antwoord:
-      "Zodra je gegevens tussen twee systemen zit over te typen, er handgeschreven notities verspreid op je bureau liggen en een simpel overzichtje een uur kost.",
-  },
-  {
-    vraag: "Waarom",
-    antwoord: "Omdat je werk sneller, beter en leuker wordt.",
-  },
-  {
-    vraag: "Hoe",
-    antwoord:
-      "Het beste systeem en proces voor jou, automatiseren waar het loont, overzicht en inzicht maken, en blijven verbeteren.",
-  },
-];
 
 /**
  * Elk blok hieronder zegt kort iets en wijst door naar de pagina waar het

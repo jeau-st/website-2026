@@ -1,47 +1,48 @@
 /**
- * Alle inhoud die op meerdere plekken terugkomt staat hier, zodat een
- * wijziging op één plek gebeurt. Alles met `todo: true` of een TODO-tekst
- * wordt op de pagina zichtbaar gemarkeerd en staat in de oplevernotitie.
+ * De inhoud die op meerdere plekken terugkomt. Importeer altijd hieruit,
+ * ook wat uit Keystatic komt: dan hoeft een pagina niet te weten of iets
+ * in een formulier staat of hier.
+ *
+ * Wat Joost zelf bijwerkt staat in `src/inhoud` als yaml en wordt bij de
+ * build gelezen door `inhoud.ts`. Zie `keystatic.config.ts`.
+ *
+ * Wat hieronder staat blijft bewust in code. Het hangt aan iconen, aan
+ * de geometrie van de tekeningen of aan de opbouw van een pagina, en een
+ * formulier dat dat mag veranderen is een formulier waarmee je een
+ * tekening stil kunt breken.
+ *
+ * Alles met `todo: true` of een TODO-tekst wordt op de pagina zichtbaar
+ * gemarkeerd en staat in de oplevernotitie.
  */
 
-export const bedrijf = {
-  naam: "Jeau.st",
-  persoon: "Joost Beers",
-  plaats: "'s-Hertogenbosch",
-  kvk: "88930343",
-  email: "joost@jeau.st",
-  linkedin: "https://www.linkedin.com/in/jfbeers",
-} as const;
+export {
+  bedrijf,
+  cta,
+  analyticsToken,
+  diensten,
+  cases,
+  vragen,
+  kernpunten,
+  inHetKort,
+} from "./inhoud";
+export type { Dienst, Case, Vraag } from "./inhoud";
 
 /*
- * Hier stond het mobiele nummer, en het stond daardoor in de voet van elke
- * pagina, op /contact, in de JSON-LD en in llms.txt. Het is eraf gehaald en
- * niet achter een knop gezet: een knop houdt alleen de scrapers tegen die
- * de html lezen en niet die met een echte browser eronder, en in de
- * gestructureerde data stond het er sowieso leesbaar naast.
+ * Er stond hier een mobiel nummer, en het stond daardoor in de voet van
+ * elke pagina, op /contact, in de JSON-LD en in llms.txt. Het is eraf
+ * gehaald en niet achter een knop gezet: een knop houdt alleen de
+ * scrapers tegen die de html lezen en niet die met een echte browser
+ * eronder, en in de gestructureerde data stond het er sowieso leesbaar
+ * naast.
  *
  * Een mobiel nummer is aan de persoon gekoppeld: het trekt acquisitie en
- * scamrondes, het kan gespoofd worden richting klanten, en het is bij veel
- * diensten de herstelroute van een account. Mail is wel verplicht als
- * snelle en rechtstreekse contactmogelijkheid, een telefoonnummer niet.
+ * scamrondes, het kan gespoofd worden richting klanten, en het is bij
+ * veel diensten de herstelroute van een account. Mail is wel verplicht
+ * als snelle en rechtstreekse contactmogelijkheid, een telefoonnummer
+ * niet.
  *
- * Bereikbaar blijven gaat via de afspraakplanner hieronder en via mail.
+ * Bereikbaar blijven gaat via de afspraakplanner en via mail.
  */
-
-/** De enige primaire actie op de site. */
-export const cta = {
-  label: "Plan een belafspraak",
-  toelichting: "30 minuten, via Teams",
-  /** Microsoft Bookings, met de boekingscode in de link. */
-  url: "https://bookings.cloud.microsoft/bookwithme/user/2ef78e3c29ec43bca11be33f576a3e10@jeau.st/meetingtype/nlsRujOTgECJL73BYpJDlg2?bookingcode=abdaab6c-d3a2-44a2-a511-83faa3f1733e&anonymous&ismsaljsauthenabled&ep=mlink",
-} as const;
-
-/**
- * Cloudflare Web Analytics: cookieloos, dus geen cookiemelding nodig.
- * TODO: vul het token uit het Cloudflare-dashboard in. Leeg betekent
- * dat de beacon niet geladen wordt.
- */
-export const analyticsToken = "";
 
 export type Pijnpunt = {
   citaat: string;
@@ -102,254 +103,6 @@ export const denkwijze: Denkstap[] = [
     titel: "Dan opnieuw",
     tekst:
       "Je bedrijf verandert, dus het proces verandert mee. Er komt geen moment waarop je klaar bent. Reken erop dat je dit rondje blijft maken.",
-  },
-];
-
-export type Dienst = {
-  /** Wordt de URL: /diensten/<slug>. Niet wijzigen zonder redirect. */
-  slug: string;
-  titel: string;
-  tekst: string;
-  /**
-   * Een regel van een woord of vijf, voor het menu en de band op de
-   * homepage. `tekst` is de volle alinea van de pagina zelf: in een rijtje
-   * van vijf wordt dat vijf afgekapte halve zinnen.
-   */
-  kort: string;
-  /** Het Lucide-icoon uit `src/icons`, zonder .svg. Zie Icoon.astro. */
-  icoon: string;
-  punten: string[];
-  /** De h1 op de eigen pagina. Mag langer zijn dan de titel in de lijst. */
-  kop: string;
-  /** Meta description van die pagina. Eén zin, met het zoekwoord erin. */
-  meta: string;
-  /** Voor wie deze dienst is. Staat onder de kop op de eigen pagina. */
-  voorWie?: string;
-  /** Het inhoudelijke stuk. Zonder deze blokken is de pagina te dun. */
-  verhaal?: { kop: string; alineas: string[] }[];
-  /**
-   * Blokken die niet uit `verhaal` komen maar uit een eigen lijst in dit
-   * bestand. Ze stonden op /pipedrive, een losse pagina naast /diensten.
-   * Die pagina ging over het product en niet over het werk, en wie hem
-   * las had daarna alsnog de inrichting nodig. Nu staan ze op de dienst
-   * waar ze bij horen. Zie `src/pages/diensten/[slug].astro`.
-   */
-  extra?: ("functies" | "ai")[];
-};
-
-export const diensten: Dienst[] = [
-  {
-    slug: "crm-inrichting",
-    extra: ["functies", "ai"],
-    kort: "Pipedrive op jouw verkoopproces, en wat het kan",
-    icoon: "settings-2",
-    titel: "CRM-inrichting",
-    kop: "Pipedrive inrichten op jouw verkoopproces",
-    meta: "Pipedrive ingericht op hoe jij verkoopt, inclusief migratie uit Excel of een oud systeem, en wat er in Pipedrive zit. Door een Pipedrive-consultant uit 's-Hertogenbosch.",
-    voorWie:
-      "Voor bedrijven die nog met Excel-bestanden werken, of met een CRM dat niemand echt gebruikt. Dat systeem is dan slecht ingericht, het hangt nergens aan vast, of allebei. Een nieuw systeem kiezen is zo gebeurd. De vraag is wat er met je bestaande gegevens gebeurt.",
-    verhaal: [
-      {
-        kop: "De migratie is het eigenlijke werk",
-        alineas: [
-          "Gegevens overzetten klinkt als kopiëren. Dat is het niet. In een oude database of een Excel staat elke kolom er met een reden, en die reden staat nergens opgeschreven. Een veld dat status heet, betekent bij verkoop iets anders dan bij de administratie. Voordat er iets overgaat, zoek ik uit hoe die gegevens tot stand zijn gekomen.",
-          "Daarna gaan ze het nieuwe proces in, en dat is één manier van werken voor iedereen. Soms betekent dat samenvoegen, soms weggooien, en soms blijkt dat twee afdelingen hetzelfde woord voor iets anders gebruiken. Die gesprekken horen bij de inrichting.",
-          "Je kunt ook fris beginnen. Dat is sneller en het gebeurt vaker dan je zou denken. Toch neem ik de historie mee, want een klant van vier jaar geleden kan morgen bellen. Op dat moment wil je zien wat je destijds hebt afgesproken.",
-        ],
-      },
-    ],
-    tekst:
-      "Pipedrive ingericht op hoe jij verkoopt, inclusief de stappen die alleen bij jou zo gaan.",
-    punten: [
-      "Pipelines en fases die je proces volgen",
-      "Migratie uit Excel, mailbox of een oud systeem",
-      "Velden, rechten en rapportage",
-    ],
-  },
-  {
-    slug: "koppelingen-en-automatisering",
-    kort: "Systemen aan elkaar, niets twee keer invoeren",
-    icoon: "workflow",
-    titel: "Koppelingen en automatisering",
-    kop: "Je systemen aan elkaar koppelen",
-    meta: "Koppelingen tussen CRM, administratie en mail, gebouwd met n8n, zodat niemand hetzelfde twee keer invoert.",
-    voorWie:
-      "Voor bedrijven waar dezelfde gegevens in meerdere systemen moeten staan, en waar iemand dat nu met de hand bijhoudt. Een koppeling is geen vast ding: het kan een knop zijn die je indrukt, een sync die elke nacht loopt, of iets dat afgaat zodra er in het ene systeem iets verandert.",
-    verhaal: [
-      {
-        kop: "Hoe vaak moet het overgaan?",
-        alineas: [
-          "Dat is de eerste vraag, en het antwoord volgt uit je proces. Een offerte die akkoord is, mag meteen door naar de boekhouding. Een urenregistratie kan prima een nachtje wachten. Real-time klinkt altijd beter, maar het kost meer onderhoud en je merkt het verschil alleen als iemand binnen het uur iets met die gegevens doet.",
-          "We kiezen daarom wat minimaal nodig is om het goed te laten werken. Dat is goedkoper om te bouwen en er gaat minder stuk.",
-        ],
-      },
-      {
-        kop: "Eerst kijken of het al bestaat",
-        alineas: [
-          "Pipedrive heeft een marktplaats, en een flink aantal partijen heeft er een eigen integratie voor gebouwd. DocuSign om documenten te laten ondertekenen, CloudTalk voor je telefonie. Werkt zo'n kant-en-klare koppeling voor jouw situatie, dan scheelt dat een hoop bouwwerk.",
-          "Zelf bouwen komt daarna. Een voorbeeld van wat dat oplevert: de koppeling tussen een telefooncentrale en het CRM. Een gemiste oproep of een voicemail komt automatisch bij de juiste persoon te staan, en de accountmanager van die klant krijgt de taak om terug te bellen of het bericht af te luisteren.",
-        ],
-      },
-      {
-        kop: "Zelf in beheer, en in stukken",
-        alineas: [
-          "Ik bouw met n8n. Dat is van een Duits bedrijf en de cloudversie draait op servers in de EU. Het werkt goed samen met AI-modellen, en je kunt het in eigen beheer houden. Dat laatste weegt voor mij het zwaarst: je ziet precies welke informatie wanneer waarheen gaat. Mis je iets in een systeem, dan zie je waar het is blijven steken. Wil je zelf meekijken als er iets misgaat, dan kan dat.",
-          "Eén grote workflow die alles doet, is één ding dat kan omvallen. Ik hak ze daarom op in stukken met elk hun eigen foutafhandeling, zodat de rest doorloopt als er ergens iets vastloopt. Die stukken zijn ook herbruikbaar: contactgegevens bijwerken, of kijken of iemand al bestaat voordat er een tweede contact wordt aangemaakt. Dat komt in bijna elk project terug.",
-        ],
-      },
-      {
-        kop: "Wat je niet moet verwachten",
-        alineas: [
-          "Dat het een knop is die je omzet en dat het daarna werkt zoals jij het wil. Een koppeling is maatwerk, en als je proces verandert, moet de koppeling mee veranderen. Daar denk ik in mee.",
-        ],
-      },
-    ],
-    tekst:
-      "Systemen die elkaar iets doorgeven, zodat niemand hetzelfde twee keer invoert.",
-    punten: [
-      "Koppelingen tussen CRM, administratie en mail",
-      "Terugkerend handwerk weg",
-    ],
-  },
-  {
-    slug: "cijfers-en-ai",
-    kort: "Rapportage en AI op je eigen cijfers",
-    icoon: "chart-column",
-    titel: "Cijfers waar je op kunt sturen",
-    kop: "Cijfers waar je op kunt sturen, en AI die je data kent",
-    meta: "Rapportage op wat je echt wilt weten, signalen als er iets misgaat, en AI die met je eigen cijfers werkt via Claude en MCP.",
-    voorWie:
-      "Voor bedrijven die wel rapportages hebben maar er niet op sturen, en voor wie AI op de eigen gegevens wil loslaten.",
-    verhaal: [
-      {
-        kop: "Het dashboard van een auto",
-        alineas: [
-          "Daar staan twee soorten cijfers op. Snelheid, toerental en temperatuur heb je nu nodig, daar stuur je op terwijl je rijdt. Het aantal gereden kilometers, de buitentemperatuur en wanneer je moet tanken zeggen iets over de komende tijd. Een rapportage werkt net zo, en als je die twee door elkaar zet kijkt niemand er meer naar.",
-          "Welke cijfers dat bij jou zijn, verschilt per bedrijf. Meestal gaat het over nieuwe aanvragen, hoe die ervoor staan, welke activiteiten eraan vasthangen, en wat er financieel aan zit te komen tegenover wat er binnen is.",
-        ],
-      },
-      {
-        kop: "AI die je eigen cijfers kent",
-        alineas: [
-          "Pipedrive heeft een MCP-server. Daarmee praat Claude rechtstreeks met je CRM, en krijg je antwoord op vragen waar je anders zelf lang voor had zitten zoeken. Een filter of een eenmalig inzicht is zo gemaakt, en een grote bulkwijziging kun je er ook mee doen.",
-        ],
-      },
-      {
-        kop: "Dan moet je data wel kloppen",
-        alineas: [
-          "Een AI die het verkeerde antwoord geeft omdat een veld leeg was, is erger dan geen AI. Datakwaliteit hoort daarom in het proces te zitten en niet in een opschoonactie achteraf. In Pipedrive kun je velden verplicht maken, ze als belangrijk markeren, of juist afschermen zodat niet iedereen ze kan wijzigen. Dan blijft kloppen wat erin staat zonder dat iemand erachteraan moet.",
-        ],
-      },
-      {
-        kop: "Waar je gegevens heengaan",
-        alineas: [
-          "Klantgegevens kun je niet zomaar naar een server sturen, binnen de EU of daarbuiten. Daar moet een grondslag voor zijn en het hoort in je privacyverklaring te staan. Voor AI geldt hetzelfde: wat je in een prompt zet, gaat naar de aanbieder van dat model.",
-          "Ik kijk daarom mee met hoe je er qua AVG voor staat en welke punten aandacht verdienen. Welke gegevens er wel en niet in mogen, leggen we vast voordat er iets aanstaat.",
-        ],
-      },
-    ],
-    tekst:
-      "Een paar getallen die kloppen zijn meer waard dan een dashboard waar niemand naar kijkt.",
-    punten: [
-      "Rapportage op wat je wilt weten",
-      "Signalen als er iets misgaat",
-      "AI die je eigen cijfers kent, via Claude en MCP",
-      "Afspraken over wat er wel en niet in de AI gaat",
-    ],
-  },
-  {
-    slug: "ondersteuning-en-training",
-    kort: "Training en onderhoud na de oplevering",
-    icoon: "graduation-cap",
-    titel: "Ondersteuning en training",
-    kop: "Training en onderhoud na de oplevering",
-    meta: "Training op je eigen werkwijze en een onderhoudsabonnement, zodat het systeem ook een half jaar later nog gebruikt wordt.",
-    voorWie:
-      "Een systeem inrichten op hoe de wereld er vandaag uitziet is één ding. Zorgen dat het over een half jaar nog klopt en nog gebruikt wordt, is een tweede.",
-    verhaal: [
-      {
-        kop: "Wat een onderhoudsabonnement is",
-        alineas: [
-          "Dat ik de telefoon opneem. Ik reserveer een aantal uur per maand voor je, zodat kleine wijzigingen snel doorgevoerd worden en je niet achteraan een wachtrij staat. En elke twee weken spreek ik één of twee van je superusers over hoe het loopt en wat er op dat moment speelt.",
-        ],
-      },
-      {
-        kop: "Training stopt niet bij de oplevering",
-        alineas: [
-          "Je traint de mensen die er op dat moment mee moeten werken. Maar een team wisselt van samenstelling, en de collega die over een jaar begint was er niet bij. Daarom hoort er naslagwerk te liggen waarin staat hoe het proces is ingericht en waar je wat vindt.",
-          "Dit is waar CRM-trajecten vaak stuklopen. Er komt iemand langs die vertelt hoe het moet werken, wijst waar alles staat, en vertrekt weer. Een half jaar later werkt de helft van het team er weer omheen.",
-        ],
-      },
-      {
-        kop: "Superusers als borging",
-        alineas: [
-          "Daarom dring ik erop aan dat er binnen je bedrijf één of meer superusers zijn. Zij zijn intern het eerste aanspreekpunt, ze verzamelen de wensen die er leven en toetsen die aan hoe het systeem bedoeld is. Technisch groeien ze mee, zodat ze richting mij als opdrachtgever kunnen optreden.",
-          "Het doel is dat je mij niet meer nodig hebt. Als je intern de mensen hebt die het snappen, help ik ze daar graag naartoe.",
-        ],
-      },
-      {
-        kop: "En een stuk cultuur",
-        alineas: [
-          "Kwam iedereen uit een situatie waarin je je eigen maniertjes had, dan is standaardiseren ook een gewoonte afleren. Er moet minder ruimte komen voor een eigen Excel naast het systeem, en daar stuur je op. Wil iemand iets anders, dan stemt die dat af met een superuser, zodat de nieuwe manier meteen voor het hele team geldt.",
-          "Verbeterideeën zijn daarbij welkom. Er zijn altijd mensen die een betere manier zien, en daar hoort iets mee te gebeuren. Werk je zo, dan wordt je systeem over een half jaar nog gebruikt en klopt het nog.",
-          "Af komt het trouwens nooit. Standaardiseren, automatiseren en meten brengen je vanzelf bij het volgende dat beter kan. Dat is een prettige cyclus om samen in te zitten.",
-        ],
-      },
-    ],
-    tekst:
-      "Een systeem werkt pas als het team het gebruikt, ook een half jaar later nog.",
-    punten: [
-      "Training op de eigen werkwijze",
-      "Een onderhoudsabonnement als je me vast bij de hand wilt",
-      "Bijsturen als het proces verandert",
-    ],
-  },
-  {
-    slug: "website-en-mail",
-    kort: "Eén snelle site, en mail die aankomt",
-    icoon: "globe",
-    titel: "Website en mail",
-    kop: "Je website en je mail op orde, en vast aan je CRM",
-    meta: "Eén snelle site die je zelf beheert, een formulier dat doorloopt naar Pipedrive, en mail die bij je klant aankomt.",
-    voorWie:
-      "Voor bedrijven met een site die is blijven staan, of met een paar sites uit verschillende jaren die naast elkaar leven. En voor wie merkt dat mail vanaf het eigen domein in de spam belandt. Dit is de laag onder je CRM: hier komen je aanvragen vandaan.",
-    verhaal: [
-      {
-        kop: "Waarom dit bij het CRM hoort",
-        alineas: [
-          "Een aanvraag via je site is de eerste stap van je verkoopproces. Komt die binnen als los mailtje, dan begint elke aanvraag met overtypen, en weet je een week later niet meer welke je al hebt opgepakt. Loopt het formulier door naar Pipedrive, dan staat de aanvraag er meteen in, met de velden die je nodig hebt om er iets mee te doen.",
-          "Bij een architectenbureau staat er zo'n vragenformulier op de site. Wat iemand invult komt in het CRM, en diegene kan aansluitend zelf een moment inplannen. Daardoor komen er aanvragen binnen waar je meteen mee verder kunt, en zie je per klant waar die in het proces zit.",
-        ],
-      },
-      {
-        kop: "Mail die aankomt",
-        alineas: [
-          "Mail vanaf je eigen domein moet langs drie controles: SPF, DKIM en DMARC. Staan die records niet goed, dan belandt je bericht bij de ontvanger in de spam, of komt het er helemaal niet. Je merkt dat laat, want aan jouw kant ziet het eruit alsof het verstuurd is.",
-          "Bij een webshop bleek dat de reden dat een bestelling of een vraag soms onbeantwoord bleef. De mailinstellingen en de bijbehorende records zijn rechtgezet, en daarna kwamen berichten weer aan.",
-        ],
-      },
-      {
-        kop: "Waarmee ik bouw",
-        alineas: [
-          "Een verbouwing begint met kijken wat er al werkt. Welke pagina's brengen bezoekers binnen en op welke zoekwoorden gebeurt dat? Dat is een SEO-audit, en die gaat voor op het ontwerp. Verdwijnen er oude adressen, dan zet ik redirects klaar, zodat je vindbaarheid niet weglekt.",
-          "Ik bouw met Astro en host op Cloudflare. Dat levert een site op die snel is en vrijwel niets kost om te draaien. Er kan een eenvoudige editor bij, zodat je zelf schrijft zonder mij. Mail, domeinen en DNS zet ik op accounts die van jou zijn, want anders ben je afhankelijk van degene die ze ooit heeft aangemaakt.",
-        ],
-      },
-      {
-        kop: "Waar dit ophoudt",
-        alineas: [
-          "Dit gaat over het moderniseren van wat er al staat. Een site die is blijven hangen, een paar oude sites die samen moeten, een formulier dat nergens heen gaat, mail die niet aankomt.",
-          "Moet het er totaal anders uit komen te zien, met veel nieuwe functionaliteit erbij, dan ben je bij een designbureau beter af. Dat zeg ik dan ook meteen in het eerste gesprek.",
-        ],
-      },
-    ],
-    tekst:
-      "De plek waar je aanvragen binnenkomen en je antwoorden aankomen, vast aan de rest.",
-    punten: [
-      "Eén site waar er nu meerdere zijn",
-      "Een formulier dat doorloopt naar je CRM",
-      "Mail, domeinen en DNS op eigen accounts",
-    ],
   },
 ];
 
@@ -574,45 +327,6 @@ export const processtappen: Processtap[] = [
   },
 ];
 
-export type Vraag = {
-  vraag: string;
-  antwoord: string;
-  todo?: boolean;
-};
-
-export const vragen: Vraag[] = [
-  {
-    vraag: "Hoe lang duurt een traject?",
-    antwoord:
-      "Een kleine inrichting staat in twee tot vier weken. Gaat er een migratie met koppelingen achteraan, reken dan op twee tot vier maanden. Wat het verschil maakt: hoeveel data er over moet, uit hoeveel systemen die komt, en hoe snel ik antwoord krijg op de vragen die onderweg opkomen.",
-  },
-  {
-    vraag: "Met welke tools werk je?",
-    antwoord:
-      "Pipedrive voor CRM, n8n voor koppelingen en automatisering, Airtable waar een database handiger is dan een spreadsheet, en Claude met MCP voor AI op je eigen data. Daarnaast de API's van wat je al gebruikt.",
-  },
-  {
-    vraag: "Werk je ook met systemen die we al hebben?",
-    antwoord:
-      "Ja. Meestal is vervangen niet nodig. Als je boekhouding, mail en offertetool bevallen, dan koppel ik die aan elkaar in plaats van er iets naast te zetten. Vervangen stel ik alleen voor als het systeem het proces echt in de weg zit.",
-  },
-  {
-    vraag: "Wat gebeurt er na de oplevering?",
-    antwoord:
-      "Binnen je bedrijf worden één of twee mensen superuser. Met hen zit ik elke twee weken samen: wat loopt er, wat is af en wat komt er nieuw bij. Wil je me vaster bij de hand hebben, dan heet dat een onderhoudsabonnement.",
-  },
-  {
-    vraag: "We hebben geen tijd voor een procesanalyse. Kan het niet sneller?",
-    antwoord:
-      "Het kan sneller, maar dan bouw ik op een aanname. Dat kost later meer tijd dan het nu scheelt. Het goede nieuws is dat de analyse klein mag blijven: vaak zijn een paar gesprekken en een middag meekijken genoeg om te zien waar het echt knelt.",
-  },
-  {
-    vraag: "Hoe begint het?",
-    antwoord:
-      "Met een belafspraak van 30 minuten. Je vertelt wat er vastloopt, ik vraag door en zeg eerlijk of ik de juiste persoon ben. Daar zit geen verplichting aan vast.",
-  },
-];
-
 /**
  * De onderdelen die bij een bedrijf horen: de ring in de hero, en de
  * bouwstenen die per opdracht genoemd worden. Eén lijst, want het is
@@ -650,131 +364,3 @@ export const bouwsteen = (icoon: string) => {
   return gevonden;
 };
 
-export type Case = {
-  titel: string;
-  /** Een paar woorden, voor het labeltje op de homepage. */
-  kort: string;
-  /**
-   * Wat er in deze opdracht is aangepakt, als icoonnaam uit `bouwstenen`.
-   * Zag je ze op de ring in de hero, dan herken je ze hier terug. Alleen
-   * wat hieronder ook echt genoemd wordt: het is een samenvatting van de
-   * tekst en geen etalage.
-   */
-  bouwstenen: string[];
-  /**
-   * Puntsgewijs. Een opdracht is een opsomming van wat er stond, wat er is
-   * gedaan en wat het werd. Als alinea wordt daar een verhaal van dat
-   * langer leest dan het is, en dan slaat iedereen het over.
-   */
-  situatie: string[];
-  aanpak: string[];
-  resultaat: string[];
-  todo: boolean;
-};
-
-/**
- * Geanonimiseerd: de namen zijn niet vrijgegeven, en het type organisatie
- * zegt genoeg om je erin te herkennen. Zie OPLEVERING.md.
- *
- * De eerste drie staan ook op de homepage, bij Resultaten. Daar stond
- * eerst een eigen lijstje met dezelfde regels erin. Nu is dit de enige
- * bron, dus de homepage kan niets beloven wat hier niet staat.
- */
-export const cases: Case[] = [
-  {
-    titel: "Maatschappelijke organisatie die gezinnen en oppassen koppelt",
-    kort: "Maatschappelijke organisatie",
-    bouwstenen: [
-      "database",
-      "workflow",
-      "file-text",
-      "calculator",
-      "chart-column",
-    ],
-    situatie: [
-      "Het werk liep door losse systemen en een rij Excel-bestanden.",
-      "Dezelfde gegevens moesten overal kloppen, dus er ging veel tijd in overtypen zitten.",
-      "Aanmeldingen kwamen ongestructureerd binnen, dus elke aanmelding begon met uitzoeken.",
-    ],
-    aanpak: [
-      "Pipedrive leidend gemaakt voor de contacten en de matches.",
-      "Een database erachter voor de urenadministratie, met n8n aan Pipedrive geknoopt.",
-      "De documentflow voor de verslaglegging naar partners eraan vast.",
-      "Intakes en gewonnen deals gaan terug naar Google Ads.",
-    ],
-    resultaat: [
-      "De incasso- en excassobatches worden vanzelf aangemaakt.",
-      "Na elke stap staat er een opvolgtaak klaar.",
-      "Een aanmelding komt binnen in een vorm waar je meteen mee verder kunt.",
-      "Een stuk minder handwerk, en rapportages waar je op kunt bouwen.",
-    ],
-    todo: false,
-  },
-  {
-    titel: "Organisatie die zich inzet voor welzijn in wijken",
-    kort: "Welzijnsorganisatie",
-    bouwstenen: ["calendar", "mail", "workflow", "globe", "sparkles"],
-    situatie: [
-      "De systemen waren versnipperd.",
-      "De communicatie met mensen werd ergens anders bijgehouden dan hun voortgang, dus wie in welke fase zat moest je bij elkaar zoeken.",
-      "Dat bijhouden was handwerk.",
-    ],
-    aanpak: [
-      "Pipedrive centraal gezet, met de contactpersonen, de organisaties en de voortgang van iedereen erin.",
-      "De rest hangt er met n8n aan.",
-      "De dubbele records opgeruimd.",
-      "Een ticketsysteem aan het CRM voor de events.",
-    ],
-    resultaat: [
-      "Per event zie je wie is uitgenodigd, wie zich aanmeldde, wie er was en wat de opvolging is.",
-      "Eén plek waar je kijkt, in plaats van twee lijsten naast elkaar.",
-      "Er wordt een stuk minder overgetypt en de aanmeldflow is aangescherpt.",
-      "Een basis die strak genoeg is om AI op in te zetten.",
-    ],
-    todo: false,
-  },
-  {
-    titel: "Architectenbureau",
-    kort: "Architectenbureau",
-    bouwstenen: ["globe", "mail", "calendar", "workflow"],
-    situatie: [
-      "Verschillende websites, allemaal verouderd.",
-      "Mail, domeinen en hosting lagen bij verschillende aanbieders.",
-      "Er was geen plek waar aanvragen samenkwamen, dus overzicht krijgen was elke keer uitzoekwerk.",
-    ],
-    aanpak: [
-      "Eerst een SEO-audit.",
-      "Alles samengevoegd tot één site op Astro en Cloudflare, met redirects vanaf de oude adressen.",
-      "Nederlands en Engels, met Keystatic om zelf te schrijven.",
-      "Een vragenformulier dat doorloopt naar Pipedrive.",
-      "Mail, domeinen en DNS op eigen accounts.",
-    ],
-    resultaat: [
-      "Eén snelle site die het bureau zelf beheert.",
-      "Via het formulier komen aanvragen binnen die meteen een afspraak kunnen inplannen.",
-      "Je ziet per klant waar die in het proces zit.",
-      "De randzaken eromheen bij elkaar in één systeem.",
-    ],
-    todo: false,
-  },
-  {
-    titel: "Webshop in antieke en designlampen",
-    kort: "Webshop in lampen",
-    bouwstenen: ["globe", "mail"],
-    situatie: [
-      "De webshop was sterk verouderd.",
-      "Mail kwam bij klanten in de spam terecht, dus een bestelling of een vraag bleef soms onbeantwoord zonder dat iemand het doorhad.",
-    ],
-    aanpak: [
-      "De webshop vernieuwd.",
-      "De mailinstellingen en de bijbehorende DNS-records op orde gebracht.",
-      "Nagelopen of mail vanaf het eigen domein aankomt.",
-    ],
-    resultaat: [
-      "Mail vanaf het eigen domein komt aan in plaats van in de spam.",
-      "Klanten vinden de winkel weer en kunnen hem bereiken.",
-      "De verkoop trok aan.",
-    ],
-    todo: false,
-  },
-];

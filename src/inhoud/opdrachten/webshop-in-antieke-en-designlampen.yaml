@@ -1,0 +1,18 @@
+titel: Webshop in antieke en designlampen
+volgorde: 40
+kort: Webshop in lampen
+bouwstenen:
+  - globe
+  - mail
+situatie:
+  - De webshop was sterk verouderd.
+  - Mail kwam bij klanten in de spam terecht, dus een bestelling of een vraag bleef soms onbeantwoord zonder dat iemand het doorhad.
+aanpak:
+  - De webshop vernieuwd.
+  - De mailinstellingen en de bijbehorende DNS-records op orde gebracht.
+  - Nagelopen of mail vanaf het eigen domein aankomt.
+resultaat:
+  - Mail vanaf het eigen domein komt aan in plaats van in de spam.
+  - Klanten vinden de winkel weer en kunnen hem bereiken.
+  - De verkoop trok aan.
+todo: false
