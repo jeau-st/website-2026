@@ -193,7 +193,7 @@ export const aiStappen: AiStap[] = [
     nummer: "02",
     titel: "Je eigen AI aan je gegevens",
     tekst:
-      "Via de koppeling van Pipedrive praat Claude of ChatGPT rechtstreeks met je eigen cijfers. Je vraagt in gewone taal welke offertes te lang openstaan, en je laat deals bijwerken terwijl jij meekijkt.",
+      "Pipedrive heeft een MCP-server, en daarmee praat Claude of ChatGPT rechtstreeks met je eigen cijfers. Je vraagt in gewone taal welke offertes te lang openstaan, je laat deals bijwerken terwijl jij meekijkt, en een grote bulkwijziging kan er ook mee.",
   },
   {
     nummer: "03",

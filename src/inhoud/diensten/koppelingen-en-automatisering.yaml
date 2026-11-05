@@ -1,13 +1,20 @@
 titel: Koppelingen en automatisering
 volgorde: 20
 icoon: workflow
-kort: Systemen aan elkaar, niets twee keer invoeren
+kort: Systemen aan elkaar, en AI op je eigen gegevens
 kop: Je systemen aan elkaar koppelen
-meta: Koppelingen tussen CRM, administratie en mail, gebouwd met n8n, zodat niemand hetzelfde twee keer invoert.
-tekst: Systemen die elkaar iets doorgeven, zodat niemand hetzelfde twee keer invoert.
+meta: Koppelingen tussen CRM, administratie en mail, gebouwd met n8n, en AI die met je eigen gegevens werkt.
+tekst: Systemen die elkaar iets doorgeven, zodat niemand hetzelfde twee keer invoert. En AI die aan diezelfde gegevens mag.
 punten:
   - Koppelingen tussen CRM, administratie en mail
   - Terugkerend handwerk weg
+  - AI die met je eigen gegevens werkt
+  - Afspraken over wat er wel en niet in de AI gaat
+oplevert:
+  - Niemand tikt hetzelfde nog twee keer in
+  - Een offerte die akkoord is, staat meteen in de boekhouding
+  - Je ziet waar iets is blijven steken als er iets misgaat
+  - Je kunt in gewone taal vragen stellen over je eigen cijfers
 voorWie: "Voor bedrijven waar dezelfde gegevens in meerdere systemen moeten staan, en waar iemand dat nu met de hand bijhoudt. Een koppeling is geen vast ding: het kan een knop zijn die je indrukt, een sync die elke nacht loopt, of iets dat afgaat zodra er in het ene systeem iets verandert."
 verhaal:
   - kop: Hoe vaak moet het overgaan?
@@ -25,4 +32,9 @@ verhaal:
   - kop: Wat je niet moet verwachten
     alineas:
       - Dat het een knop is die je omzet en dat het daarna werkt zoals jij het wil. Een koppeling is maatwerk, en als je proces verandert, moet de koppeling mee veranderen. Daar denk ik in mee.
-extra: []
+  - kop: Waar je gegevens heengaan
+    alineas:
+      - "Klantgegevens kun je niet zomaar naar een server sturen, binnen de EU of daarbuiten. Daar moet een grondslag voor zijn en het hoort in je privacyverklaring te staan. Voor AI geldt hetzelfde: wat je in een prompt zet, gaat naar de aanbieder van dat model."
+      - Ik kijk daarom mee met hoe je er qua AVG voor staat en welke punten aandacht verdienen. Welke gegevens er wel en niet in mogen, leggen we vast voordat er iets aanstaat.
+extra:
+  - ai

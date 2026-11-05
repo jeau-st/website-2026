@@ -131,11 +131,11 @@ export default config({
           },
         }),
         volgorde: volgordeVeld,
-        icoon: icoonVeld("Staat in het menu, in de band op de homepage en bij de dienst."),
+        icoon: icoonVeld("Staat in het menu, op het blok op de homepage en bij de dienst."),
         kort: fields.text({
           label: "Korte regel",
           description:
-            "Een woord of vijf, voor het menu en de band op de homepage. Geen punt aan het eind.",
+            "Een woord of vijf, voor het menu en het blok op de homepage. Geen punt aan het eind.",
           validation: { isRequired: true },
         }),
         kop: fields.text({
@@ -159,9 +159,18 @@ export default config({
         punten: fields.array(
           fields.text({ label: "Punt", validation: { isRequired: true } }),
           {
-            label: "Punten",
+            label: "Wat het is",
             description:
-              "Korte regels onder de alinea. Expres ongelijk van lengte: drie punten met hetzelfde ritme lezen als een gegenereerd lijstje.",
+              "Korte regels: waar de dienst uit bestaat. Staan op /diensten en op de eigen pagina. Expres ongelijk van lengte: drie punten met hetzelfde ritme lezen als een gegenereerd lijstje.",
+            itemLabel: (props) => props.value,
+          },
+        ),
+        oplevert: fields.array(
+          fields.text({ label: "Punt", validation: { isRequired: true } }),
+          {
+            label: "Wat het oplevert",
+            description:
+              "Korte regels: wat de klant eraan heeft als het klaar is. Staan op de eigen pagina naast 'Wat het is'. Geen cijfers die je niet kunt onderbouwen.",
             itemLabel: (props) => props.value,
           },
         ),
@@ -189,10 +198,10 @@ export default config({
         extra: fields.multiselect({
           label: "Extra blokken",
           description:
-            "Blokken die niet uit het verhaal komen maar uit een lijst in site.ts. Staan nu alleen bij CRM-inrichting.",
+            "Blokken die niet uit het verhaal komen maar uit een lijst in site.ts.",
           options: [
             { label: "Wat er in Pipedrive zit", value: "functies" },
-            { label: "Eerst de basis, dan AI", value: "ai" },
+            { label: "AI op je eigen gegevens", value: "ai" },
           ],
           defaultValue: [],
         }),
@@ -221,6 +230,13 @@ export default config({
           description: "Een paar woorden, voor het labeltje op de homepage.",
           validation: { isRequired: true },
         }),
+        opbrengst: fields.text({
+          label: "Opbrengst",
+          multiline: true,
+          description:
+            "Wat deze opdracht opleverde, in een of twee korte zinnen. Dit is wat op de homepage staat, dus beloof niets wat hieronder niet uitgewerkt staat.",
+          validation: { isRequired: true },
+        }),
         bouwstenen: fields.multiselect({
           label: "Bouwstenen",
           description:
@@ -245,7 +261,7 @@ export default config({
         aanpak: alineas("Aanpak", "Wat je hebt gedaan. Puntsgewijs."),
         resultaat: alineas(
           "Resultaat",
-          "Wat er nu anders is. Puntsgewijs. De eerste drie punten van de eerste drie opdrachten staan op de homepage, dus zet het sterkste bovenaan. Geen cijfers die je niet kunt onderbouwen.",
+          "Wat er nu anders is. Puntsgewijs, met het sterkste bovenaan. Geen cijfers die je niet kunt onderbouwen.",
         ),
         todo: fields.checkbox({
           label: "Nog niet af",
@@ -339,9 +355,24 @@ export default config({
           label: "Persoon",
           validation: { isRequired: true },
         }),
+        straat: fields.text({
+          label: "Straat en huisnummer",
+          description:
+            "Staat op /contact en in de gestructureerde data, dus in de kaart die Google van het bedrijf maakt.",
+          validation: { isRequired: true },
+        }),
+        postcode: fields.text({
+          label: "Postcode",
+          validation: { isRequired: true },
+        }),
         plaats: fields.text({
           label: "Plaats",
           validation: { isRequired: true },
+        }),
+        onderdeelVan: fields.text({
+          label: "Onderdeel van",
+          description:
+            "De studio of het verzamelpand waar Jeau.st onder valt. Leeg laten als dat niet zo is.",
         }),
         kvk: fields.text({ label: "KvK", validation: { isRequired: true } }),
         email: fields.text({

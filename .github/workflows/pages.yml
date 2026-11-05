@@ -51,28 +51,31 @@ jobs:
       # Zonder dit bestand in het artefact vergeet Pages bij elke uitrol
       # welk domein erbij hoort en valt hij terug op github.io.
       - run: echo jeau.st > dist/client/CNAME
-      # De omleiding van /pipedrive staat in _redirects, en dat bestand
-      # leest alleen Cloudflare. Die URL stond in de voet, in llms.txt en
-      # in de sitemap, dus hij mag niet doodlopen. Pages kan geen 301,
-      # dus hier een pagina die zichzelf doorstuurt.
+      # De omleidingen staan in _redirects, en dat bestand leest alleen
+      # Cloudflare. Deze URL's stonden in de voet, in llms.txt en in de
+      # sitemap, dus ze mogen niet doodlopen. Pages kan geen 301, dus
+      # hier pagina's die zichzelf doorsturen.
       - run: |
-          mkdir -p dist/client/pipedrive
-          cat > dist/client/pipedrive/index.html <<'HTML'
+          verhuisd() {
+            mkdir -p "dist/client/$1"
+            cat > "dist/client/$1/index.html" <<HTML
           <!doctype html>
           <html lang="nl">
             <head>
               <meta charset="utf-8" />
               <title>Verhuisd</title>
-              <link rel="canonical" href="https://jeau.st/diensten/crm-inrichting/" />
-              <meta http-equiv="refresh" content="0; url=/diensten/crm-inrichting/" />
+              <link rel="canonical" href="https://jeau.st$2" />
+              <meta http-equiv="refresh" content="0; url=$2" />
               <meta name="robots" content="noindex" />
             </head>
             <body>
-              <p>Deze pagina staat nu bij
-                <a href="/diensten/crm-inrichting/">CRM-inrichting</a>.</p>
+              <p>Deze pagina staat nu bij <a href="$2">$3</a>.</p>
             </body>
           </html>
           HTML
+          }
+          verhuisd pipedrive /diensten/crm-inrichting/ CRM-inrichting
+          verhuisd diensten/cijfers-en-ai /diensten/cijfers/ "cijfers waar je op kunt sturen"
       - uses: actions/configure-pages@v5
       # De Cloudflare-adapter zet de pagina's in dist/client en de Worker
       # in dist/server. Alleen het eerste is een statische site.

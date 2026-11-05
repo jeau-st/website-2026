@@ -66,7 +66,10 @@ export type Dienst = {
   kort: string;
   /** Het Lucide-icoon uit `src/icons`, zonder .svg. Zie Icoon.astro. */
   icoon: string;
+  /** Wat de dienst is, puntsgewijs. */
   punten: string[];
+  /** Wat hij oplevert, puntsgewijs. Staat ernaast op de eigen pagina. */
+  oplevert: string[];
   /** De h1 op de eigen pagina. Mag langer zijn dan de titel in de lijst. */
   kop: string;
   /** Meta description van die pagina. Eén zin, met het zoekwoord erin. */
@@ -90,6 +93,13 @@ export type Case = {
   /** Een paar woorden, voor het labeltje op de homepage. */
   kort: string;
   /**
+   * Wat deze opdracht opleverde, in een of twee korte zinnen. Dit is wat
+   * er op de homepage staat. Daar stonden eerst de eerste drie punten
+   * van `resultaat`, en drie keer drie bullets naast elkaar las als een
+   * opsomming van een opsomming.
+   */
+  opbrengst: string;
+  /**
    * Wat er in deze opdracht is aangepakt, als icoonnaam uit `bouwstenen`.
    * Zag je ze op de ring in de hero, dan herken je ze hier terug.
    */
@@ -107,7 +117,10 @@ export type Vraag = {
   todo?: boolean;
 };
 
-type DienstBestand = Omit<Dienst, "slug" | "voorWie" | "verhaal" | "extra"> & {
+type DienstBestand = Omit<
+  Dienst,
+  "slug" | "voorWie" | "verhaal" | "extra"
+> & {
   volgorde: number;
   voorWie: string;
   verhaal: { kop: string; alineas: string[] }[];
@@ -124,6 +137,7 @@ export const diensten: Dienst[] = collectie<DienstBestand>("diensten").map(
     kop: entry.kop,
     meta: entry.meta,
     punten: entry.punten ?? [],
+    oplevert: entry.oplevert ?? [],
     voorWie: entry.voorWie || undefined,
     verhaal: entry.verhaal ?? [],
     extra: entry.extra ?? [],
@@ -135,6 +149,7 @@ export const cases: Case[] = collectie<Case & { volgorde: number }>(
 ).map(({ entry }) => ({
   titel: entry.titel,
   kort: entry.kort,
+  opbrengst: entry.opbrengst,
   bouwstenen: entry.bouwstenen ?? [],
   situatie: entry.situatie ?? [],
   aanpak: entry.aanpak ?? [],
@@ -153,7 +168,12 @@ export const vragen: Vraag[] = collectie<Vraag & { volgorde: number }>(
 type Bedrijfsbestand = {
   naam: string;
   persoon: string;
+  /** Straat en huisnummer. Staat op /contact en in de gestructureerde data. */
+  straat: string;
+  postcode: string;
   plaats: string;
+  /** Het verzamelpand of de studio waar Jeau.st onder valt. Mag leeg. */
+  onderdeelVan?: string;
   kvk: string;
   email: string;
   linkedin: string;
@@ -168,7 +188,10 @@ const gegevens = los<Bedrijfsbestand>("bedrijf");
 export const bedrijf = {
   naam: gegevens.naam,
   persoon: gegevens.persoon,
+  straat: gegevens.straat,
+  postcode: gegevens.postcode,
   plaats: gegevens.plaats,
+  onderdeelVan: gegevens.onderdeelVan ?? '',
   kvk: gegevens.kvk,
   email: gegevens.email,
   linkedin: gegevens.linkedin,

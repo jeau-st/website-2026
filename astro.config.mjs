@@ -30,6 +30,10 @@ export default defineConfig({
   // verdwenen pagina is een 404 voor wie hem had opgeslagen.
   redirects: {
     '/pipedrive': '/diensten/crm-inrichting/',
+    // AI is van deze dienst naar koppelingen en automatisering gegaan,
+    // dus de dienst heet nu alleen nog cijfers. De oude URL stond in de
+    // sitemap en in llms.txt, dus hij blijft werken.
+    '/diensten/cijfers-en-ai': '/diensten/cijfers/',
   },
   // Fonts worden bij de build opgehaald en vanaf ons eigen domein geserveerd,
   // dus geen verzoek naar Google vanuit de browser van de bezoeker.

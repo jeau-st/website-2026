@@ -1,0 +1,26 @@
+titel: Cijfers waar je op kunt sturen
+volgorde: 30
+icoon: chart-column
+kort: Rapportage op wat je echt wilt weten
+kop: Cijfers waar je op kunt sturen
+meta: Rapportage op wat je echt wilt weten, en een signaal als er iets misgaat. Door een CRM-consultant uit 's-Hertogenbosch.
+tekst: Een paar getallen die kloppen zijn meer waard dan een dashboard waar niemand naar kijkt.
+punten:
+  - Rapportage op wat je wilt weten
+  - Signalen als er iets misgaat
+  - Velden die afdwingen dat de cijfers kloppen
+oplevert:
+  - Je weet waar het stokt voordat iemand het meldt
+  - Een paar getallen waar je echt op stuurt
+  - Cijfers die hetzelfde zeggen, wie ze ook opvraagt
+voorWie: Voor bedrijven die wel rapportages hebben maar er niet op sturen.
+verhaal:
+  - kop: Het dashboard van een auto
+    alineas:
+      - Daar staan twee soorten cijfers op. Snelheid, toerental en temperatuur heb je nu nodig, daar stuur je op terwijl je rijdt. Het aantal gereden kilometers, de buitentemperatuur en wanneer je moet tanken zeggen iets over de komende tijd. Een rapportage werkt net zo, en als je die twee door elkaar zet kijkt niemand er meer naar.
+      - Welke cijfers dat bij jou zijn, verschilt per bedrijf. Meestal gaat het over nieuwe aanvragen, hoe die ervoor staan, welke activiteiten eraan vasthangen, en wat er financieel aan zit te komen tegenover wat er binnen is.
+  - kop: Dan moeten de cijfers wel kloppen
+    alineas:
+      - Een rapportage is zo goed als wat eronder zit. Staat een deal al drie maanden in de verkeerde fase, dan klopt elke grafiek waar die in meetelt niet. Datakwaliteit hoort daarom in het proces te zitten en niet in een opschoonactie achteraf.
+      - In Pipedrive kun je velden verplicht maken, ze als belangrijk markeren, of juist afschermen zodat niet iedereen ze kan wijzigen. Dan blijft kloppen wat erin staat zonder dat iemand erachteraan moet.
+extra: []

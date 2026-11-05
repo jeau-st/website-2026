@@ -39,6 +39,11 @@
   color-scheme: dark;
   --c-bg: #090e11;
   --c-kaart: #131b20;
+  /* Alleen voor een kaart die je kunt indrukken, op het moment dat je hem
+     aanwijst of met het toetsenbord bereikt. Eén stap lichter dan de
+     kaart, op dezelfde tint: genoeg om te zien dat het vlak reageert,
+     te weinig om een tweede kleur te worden. */
+  --c-kaart-hover: #1b252b;
   --c-rand: #2d3a43;
   /* Alleen voor scheidslijnen binnen een raster, waar de volle rand te
      veel lawaai geeft omdat de lijnen dicht op elkaar staan. Nooit als
@@ -58,6 +63,8 @@
   color-scheme: light;
   --c-bg: #f8fafc;
   --c-kaart: #ebf1f4;
+  /* In licht gaat het de andere kant op: aanwijzen maakt het vlak donkerder. */
+  --c-kaart-hover: #dde7ec;
   --c-rand: #bfcfd9;
   --c-rand-zacht: #d6e1e8;
   --c-tekst: #101519;
@@ -96,6 +103,7 @@
   /* Rolgebaseerd: deze gebruik je in componenten */
   --color-bg: var(--c-bg);
   --color-kaart: var(--c-kaart);
+  --color-kaart-hover: var(--c-kaart-hover);
   --color-rand: var(--c-rand);
   --color-rand-zacht: var(--c-rand-zacht);
   --color-tekst: var(--c-tekst);

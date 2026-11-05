@@ -10,6 +10,7 @@ import Icoon from "../components/Icoon.astro";
 import Cyclus from "../components/Cyclus.astro";
 import { kiesPersoon } from "../data/namen";
 import Bouwstenen from "../components/Bouwstenen.astro";
+import Kaart from "../components/Kaart.astro";
 import {
   bedrijf,
   cases,
@@ -25,17 +26,21 @@ import Doorlink from "../components/Doorlink.astro";
 const persoon = kiesPersoon();
 
 /* De opdrachten die bij Resultaten op de homepage staan. Drie, want
-   vier kolommen worden te smal voor een opsomming, en de rij moet op
-   een regel passen. Ze komen uit dezelfde lijst als /werk, dus de
-   homepage kan niets beloven wat daar niet uitgewerkt staat. */
+   vier kolommen worden te smal en de rij moet op een regel passen. Ze
+   komen uit dezelfde lijst als /werk, dus de homepage kan niets beloven
+   wat daar niet uitgewerkt staat. */
 const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
 
 /**
  * Elk blok hieronder zegt kort iets en wijst door naar de pagina waar het
  * verhaal staat. Wat hier eerst voluit stond, staat nu op één plek: de
  * processtappen, het ritme na de oplevering en de veelgestelde vragen op
- * /aanpak, waar dit het beste werkt op /diensten, en de achtergrond op
- * /over. Zie docs/structuurvoorstel.md.
+ * /aanpak, en de achtergrond op /over. Zie docs/structuurvoorstel.md.
+ *
+ * Wat AI met je eigen gegevens doet stond hier als eigen sectie. Het
+ * hoort bij koppelingen en automatisering en staat daar op de
+ * dienstpagina: een los blok op de homepage maakte er een onderwerp van
+ * in plaats van een onderdeel.
  */
 ---
 
@@ -55,10 +60,15 @@ const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
       Dezelfde max-w-5xl als elke andere sectie. Hij stond op 6xl, en
       daarmee begon de kop 64 px links van alles eronder: op een breed
       scherm zag je de hero uit de kantlijn lopen. De ring is daarop
-      meegekrompen, zie Schema.astro. */}
+      meegekrompen, zie Schema.astro.
+
+      De twee kolommen waren gelijk, en dan past de langste naam niet op
+      een regel: "Dat doet Sebastiaan altijd" is 554 px bij 48 px Manrope
+      en de kolom was er 484. De tekst krijgt nu 61 procent en de ring
+      39, en de ring is daarop meegekrompen. Zie Schema.astro. */}
   <section class="px-4 py-14 sm:px-6 sm:py-16 lg:pb-14 lg:pt-10">
     <div
-      class="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-14"
+      class="mx-auto grid max-w-5xl items-center gap-10 lg:grid-cols-[minmax(0,0.61fr)_minmax(0,0.39fr)] lg:gap-10"
     >
       <div>
         {/* De naam draagt het accent, want hij is een actie: klikken geeft
@@ -126,34 +136,39 @@ const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
       hetzelfde en dan is het een blokkenschema. */}
   <Sectie id="kort" kop="In het kort" aansluitend>
     {/* Haarlijnen, geen vlakken. Dit is tekst die je leest, en een rand
-        eromheen maakt er zes kaartjes van die je zou kunnen indrukken. */}
+        eromheen maakt er zes kaartjes van die je zou kunnen indrukken.
+
+        Alleen de eerste cel van een rij staat tegen de kantlijn, de rest
+        houdt 24 px van de haarlijn af. Welke cel dat is, hangt af van
+        het aantal kolommen, en dat verschilt per breekpunt.
+
+        Dat stond eerst als `pl-6` met een `nth-child`-uitzondering voor
+        de eerste kolom. Die uitzondering gold vanaf sm en bleef dus ook
+        bij lg staan, en omdat een regel met `nth-child` zwaarder weegt
+        dan `lg:pl-6` wonnen de twee kolommen van sm het van de drie van
+        lg: cel 3 en 5 kropen 24 px naar links en de kolommen lijnden
+        per rij anders uit.
+
+        Nu rekent de pagina het zelf uit. De index is hier bekend, dus
+        per cel staat er gewoon of ze de eerste van haar rij is, en in
+        de css staan alleen gewone klassen die elkaar netjes in volgorde
+        overschrijven. */}
     <dl class="mt-10 grid gap-px bg-rand-zacht sm:grid-cols-2 lg:grid-cols-3">
       {
-        inHetKort.map((regel) => (
-          <div class="min-w-0 bg-bg py-5 sm:px-6 sm:py-6 sm:[&:nth-child(2n+1)]:pl-0 lg:pl-6 lg:[&:nth-child(3n+1)]:pl-0">
+        inHetKort.map((regel, i) => (
+          <div
+            class:list={[
+              "min-w-0 bg-bg py-5 sm:py-6 sm:pr-6",
+              i % 2 !== 0 && "sm:pl-6",
+              i % 3 === 0 ? "lg:pl-0" : "lg:pl-6",
+            ]}
+          >
             <dt class="label">{regel.vraag}</dt>
             <dd class="mt-2 min-w-0 text-tekst">{regel.antwoord}</dd>
           </div>
         ))
       }
     </dl>
-  </Sectie>
-
-  <Sectie
-    id="ai"
-    kop="Eerst de basis, dan AI"
-    intro="AI is zo goed als de gegevens eronder. Staat je proces in een systeem en klopt wat erin staat, dan kun je er wat mee."
-  >
-    <div class="mt-8 max-w-2xl text-zacht">
-      <p>
-        Dat gaat op drie manieren: de AI die in je CRM zelf zit, je eigen AI
-        die rechtstreeks aan je cijfers mag, en de koppelingen waardoor je
-        systemen elkaar op de hoogte houden.
-      </p>
-    </div>
-    <p class="mt-8">
-      <Doorlink href="/diensten/crm-inrichting/#ai">Lees wat AI met je eigen gegevens doet</Doorlink>
-    </p>
   </Sectie>
 
   <Sectie id="herkenning" kop="Komt dit bekend voor?">
@@ -170,7 +185,9 @@ const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
         pijnpunten.map((punt) => (
           <figure class="min-w-0 bg-bg py-6 md:px-6 md:py-0">
             <blockquote>
-              <p class="text-lg text-tekst">&ldquo;{punt.citaat}&rdquo;</p>
+              <p class="font-titel text-lg font-semibold text-kop">
+                &ldquo;{punt.citaat}&rdquo;
+              </p>
             </blockquote>
             <figcaption class="mt-3 text-sm text-zacht">{punt.uitleg}</figcaption>
           </figure>
@@ -198,31 +215,37 @@ const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
     kop="Wat ik doe"
     intro="Vijf soorten werk. De eerste vier volgen de volgorde waarin ik ze aanpak."
   >
-    {/* Eén band en geen vijf kaarten onder elkaar: de vijf soorten werk
-        horen bij elkaar, en vijf losse blokken maakten er vijf keuzes
-        van. De volle uitleg staat op de dienstpagina, hier staat per
-        soort één regel. De band is het haarlijnraster uit CLAUDE.md: de
-        lijnen komen uit de achtergrond, dus er staat nergens een dubbele
-        rand. */}
-    <ol
-      class="mt-10 grid gap-px overflow-hidden rounded-kaart border border-rand bg-rand-zacht sm:grid-cols-2 lg:grid-cols-5"
-    >
+    {/* Eén blok per dienst, en het hele blok is de link. Dit was één
+        band van vijf cellen, en dan leest het als één ding met vijf
+        regels: je ziet niet dat je er vijf kanten op kunt. Een kaart is
+        er volgens CLAUDE.md voor iets dat je aanwijst of indrukt, en dat
+        is hier zo. Aanwijzen maakt het vlak een stap lichter, want op
+        een telefoon bestaat hover niet en moet `drukbaar` het doen.
+
+        Drie kolommen en geen vijf: vijf naast elkaar worden zo smal dat
+        de titel van elke dienst over twee regels valt. De volle uitleg
+        staat op de dienstpagina, hier staat per soort één regel. */}
+    <ol class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {
         diensten.map((dienst, i) => (
-          <li class="relative min-w-0 bg-kaart p-5">
+          <Kaart
+            als="li"
+            krap
+            class="group drukbaar relative transition-colors hover:bg-kaart-hover"
+          >
             <p class="label" aria-hidden="true">
               {String(i + 1).padStart(2, "0")}
             </p>
             <svg
               viewBox="0 0 24 24"
               aria-hidden="true"
-              class="mt-4 size-5 text-zacht"
+              class="mt-4 size-5 text-zacht transition-colors group-hover:text-kop"
             >
               <Icoon naam={dienst.icoon} maat={24} />
             </svg>
-            {/* De link rekt zich over de hele cel uit, want als los stukje
-                tekst is hij op een telefoon te klein om te raken. */}
-            <h3 class="mt-3 text-base">
+            {/* De link rekt zich over het hele blok uit, want als los
+                stukje tekst is hij op een telefoon te klein om te raken. */}
+            <h3 class="mt-3 text-lg">
               <a
                 class="tekstlink after:absolute after:inset-0"
                 href={`/diensten/${dienst.slug}/`}
@@ -231,7 +254,7 @@ const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
               </a>
             </h3>
             <p class="mt-1.5 text-sm text-zacht">{dienst.kort}</p>
-          </li>
+          </Kaart>
         ))
       }
     </ol>
@@ -246,20 +269,20 @@ const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
     intro="Drie opdrachten, en wat er na de oplevering anders is. De iconen zijn de onderdelen uit de ring hierboven die zijn aangepakt."
   >
     {/* Geen kaarten: drie kolommen met een haarlijn ertussen. Wat hier
-        staat lees je, dus het hoeft geen vlak om zich heen. Elke regel
-        komt uit het resultaat van die opdracht op /werk, dus er staat
-        hier niets wat daar niet uitgewerkt is. */}
+        staat lees je, dus het hoeft geen vlak om zich heen.
+
+        Per opdracht één tekstje. Hier stonden de eerste drie punten uit
+        het resultaat op /werk, en drie kolommen met elk drie bullets
+        lazen als een opsomming van opsommingen. Het tekstje staat als
+        `opbrengst` bij de opdracht zelf, dus de homepage belooft nog
+        steeds niets wat op /werk niet uitgewerkt staat. */}
     <ul class="mt-10 grid gap-px bg-rand-zacht md:grid-cols-3">
       {
         opHomepage.map((opdracht) => (
           <li class="min-w-0 bg-bg py-6 md:px-6 md:py-0 md:first:pl-0">
             <p class="label">{opdracht.kort}</p>
             <Bouwstenen namen={opdracht.bouwstenen} maat={8} class="mt-3" />
-            <ul class="mt-4 list-outside list-disc space-y-1.5 pl-4 text-tekst marker:text-rand">
-              {opdracht.resultaat.slice(0, 3).map((punt) => (
-                <li class="min-w-0">{punt}</li>
-              ))}
-            </ul>
+            <p class="mt-4 min-w-0 text-tekst">{opdracht.opbrengst}</p>
           </li>
         ))
       }
@@ -269,7 +292,10 @@ const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
     </p>
   </Sectie>
 
-  <Sectie id="over" kop="Over mij">
+  {/* "Over mij" heette dit, en de tekst eronder ging over één persoon.
+      Komt er iemand bij, dan klopt dat niet meer en zou de site mee
+      moeten veranderen. Het gaat nu over Jeau.st, met Joost erin. */}
+  <Sectie id="over" kop="Over Jeau.st">
     <div class="mt-10">
       {/* Het hele kader, dus geen kolom ernaast: liggend naast tekst wordt
           de foto zo laag dat er een streepje van overblijft. Hij staat
@@ -285,12 +311,13 @@ const opHomepage = cases.filter((item) => !item.todo).slice(0, 3);
 
       <div class="mt-10 max-w-2xl">
         <p class="text-lg text-tekst">
-          Ik ben {bedrijf.persoon}, koppelkoning en procesnerd uit {bedrijf.plaats}.
-          Tien jaar ervaring met salesteams, data-analyse,
+          Jeau.st zit in {bedrijf.plaats}, bij {bedrijf.onderdeelVan}. Achter
+          de naam staat {bedrijf.persoon}, koppelkoning en procesnerd, met
+          tien jaar ervaring in salesteams, data-analyse,
           systeemimplementaties en koppelingen.
         </p>
         <p class="mt-6">
-          <Doorlink href="/over">Lees waar ik het heb geleerd</Doorlink>
+          <Doorlink href="/over">Lees waar die ervaring vandaan komt</Doorlink>
         </p>
       </div>
     </div>

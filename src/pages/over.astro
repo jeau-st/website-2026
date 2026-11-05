@@ -8,10 +8,19 @@ import { bedrijf } from "../data/site";
 import Doorlink from "../components/Doorlink.astro";
 
 /**
- * Over mij stond als sectie op de homepage. Eén pagina over één persoon is
- * wat een zoekmachine en een AI-assistent nodig hebben bij "wie is Joost
- * Beers": een plek met het Person-schema, de achtergrond en de link naar
- * LinkedIn. Op de homepage blijft de foto met twee regels staan.
+ * Deze pagina heette "Over mij" en ging over één persoon. Dat leest
+ * prettig, maar het zet de site vast op de bezetting van vandaag: komt
+ * er iemand bij, dan klopt de helft van de zinnen niet meer. Hij gaat nu
+ * over Jeau.st, met Joost erin.
+ *
+ * De stem blijft wel van Joost. Wie er spreekt staat in
+ * docs/brand-persona.md, en dat verandert niet doordat het bedrijf
+ * groeit. Wat eruit moest zijn de zinnen die beweren dat Jeau.st en
+ * Joost hetzelfde zijn.
+ *
+ * Het Person-blok blijft staan. Op "wie is Joost Beers" is dit de pagina
+ * met de achtergrond en de link naar LinkedIn, en die vraag stelt een
+ * AI-assistent nog steeds.
  */
 const schema = {
   "@type": "Person",
@@ -37,25 +46,27 @@ const schema = {
 ---
 
 <Basis
-  titel="Over Joost Beers, CRM-consultant in 's-Hertogenbosch | Jeau.st"
-  beschrijving="Joost Beers doet Pipedrive-implementaties, koppelingen en procesautomatisering. Tien jaar ervaring met salesteams, data-analyse en systeemimplementaties."
+  titel="Over Jeau.st en Joost Beers, CRM-consultant in 's-Hertogenbosch | Jeau.st"
+  beschrijving="Jeau.st doet Pipedrive-implementaties, koppelingen en procesautomatisering vanuit 's-Hertogenbosch. Achter de naam staat Joost Beers, met tien jaar ervaring."
   extraSchema={schema}
 >
   <section class="px-4 py-20 sm:px-6 sm:py-24">
     <div class="mx-auto max-w-5xl">
       <p class="font-mono text-sm text-zacht">Over</p>
       <h1 class="mt-2 max-w-3xl text-4xl sm:text-5xl lg:text-6xl">
-        Joost Beers, koppelkoning en procesnerd
+        Systemen die met elkaar praten
       </h1>
       <p class="mt-6 max-w-2xl text-lg text-zacht">
-        Ik houd van systemen die met elkaar praten en van processen die
-        kloppen omdat ze doordacht zijn, niet omdat ze altijd zo gingen.
+        Jeau.st richt CRM&apos;s in, koppelt systemen aan elkaar en haalt het
+        handwerk ertussenuit. Vanuit {bedrijf.plaats}, bij {
+          bedrijf.onderdeelVan
+        }.
       </p>
 
       <div class="mt-10">
         <Image
           src={foto}
-          alt={`${bedrijf.persoon}, achter zijn bureau`}
+          alt={`${bedrijf.persoon} achter het bureau`}
           width={896}
           height={448}
           class="w-full max-w-lg rounded-groot border border-rand/60"
@@ -63,6 +74,21 @@ const schema = {
       </div>
     </div>
   </section>
+
+  <Sectie id="wie" kop="Wie je spreekt">
+    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
+      <p>
+        {bedrijf.persoon}, koppelkoning en procesnerd. Ik houd van systemen
+        die met elkaar praten en van processen die kloppen omdat ze
+        doordacht zijn, niet omdat ze altijd zo gingen.
+      </p>
+      <p>
+        Wie bij het eerste gesprek aan tafel zit, bouwt het ook. Daarom neem
+        ik geen opdrachten aan waarvan ik denk dat iemand anders ze beter
+        kan.
+      </p>
+    </div>
+  </Sectie>
 
   <Sectie id="achtergrond" kop="Waar ik het heb geleerd">
     <div class="mt-8 max-w-2xl space-y-4 text-zacht">
@@ -93,10 +119,9 @@ const schema = {
         Bij een klein bedrijf zie ik bovendien meteen wat mijn werk oplevert.
       </p>
       <p>
-        Jeau.st is één persoon. Dezelfde persoon zit aan tafel bij het eerste
-        gesprek en bij de oplevering, en die bouwt het ook. Dat is de reden
-        dat ik geen opdrachten aanneem waarvan ik denk dat iemand anders ze
-        beter kan.
+        Dat zie je terug in hoe het werk loopt. Je hebt één aanspreekpunt,
+        van het eerste gesprek tot een half jaar na de oplevering, en dat is
+        iemand die het systeem zelf heeft gebouwd.
       </p>
     </div>
     <ul class="mt-10 max-w-2xl space-y-3">

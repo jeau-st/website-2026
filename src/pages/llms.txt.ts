@@ -35,8 +35,9 @@ const paginas = [
   },
   {
     pad: "/over",
-    titel: "Over Joost Beers",
-    regel: "Achtergrond, werkwijze en waarom hij dit doet.",
+    titel: "Over Jeau.st",
+    regel:
+      "Wie je spreekt, waar de achtergrond vandaan komt en waarom dit werk gedaan wordt.",
   },
   {
     pad: "/contact",

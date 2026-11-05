@@ -237,3 +237,40 @@ herken je bij een opdracht aan hetzelfde icoon terug.
 van zes losse regels: hetzelfde labeltje, dezelfde iconen en de eerste
 drie punten uit het resultaat. Het eigen lijstje dat daar stond is weg,
 dus de homepage kan niets beloven wat op `/werk` niet uitgewerkt staat.
+
+## Wat er daarna is veranderd
+
+Dit stuk beschrijft het voorstel zoals het is opgeleverd. Daarna is er na
+een ronde met Joost een aantal dingen anders gegaan. De redenen hierboven
+blijven gelden, dus ze staan er nog; wat nu op de site staat, staat
+hieronder.
+
+- **`Eerst de basis, dan AI` is van de homepage af.** AI was daarmee een
+  eigen onderwerp met een eigen blok, en het is een onderdeel. Het staat
+  nu op `/diensten/koppelingen-en-automatisering`, want daar gaat het
+  over: je systemen praten met elkaar, en een model mag aan diezelfde
+  gegevens. De dienst die `cijfers-en-ai` heette, heet nu `cijfers` en
+  gaat alleen nog over rapportage en datakwaliteit. De oude URL stuurt
+  door, zie `astro.config.mjs`.
+- **`Waar dit het beste werkt` is van `/diensten` af.** Het blok noemde
+  bouw en architectuur als voorbeeld, en daarmee las de pagina alsof de
+  rest er niet bij hoort. De verwijzingen die eronder stonden zijn
+  blijven staan.
+- **`Resultaten` op de homepage toont per opdracht één tekstje.** Drie
+  kolommen met elk drie bullets lazen als een opsomming van opsommingen.
+  Het tekstje staat als `opbrengst` bij de opdracht zelf, dus de homepage
+  belooft nog steeds niets wat op `/werk` niet uitgewerkt staat.
+- **`Wat ik doe` is vijf losse kaarten in plaats van één band.** Elke
+  kaart is helemaal klikbaar en wordt lichter als je hem aanwijst. Als
+  band lees je het als één ding met vijf regels, en dan zie je niet dat
+  je er vijf kanten op kunt.
+- **De dienstpagina opent met twee rijtjes.** `Wat dat concreet is` heet
+  nu `Wat het is en wat het oplevert`, zonder vlak eromheen: wat de
+  dienst is naast wat hij oplevert.
+- **`Over mij` heet `Over Jeau.st`.** De pagina ging over één persoon, en
+  daarmee stond de site vast op de bezetting van vandaag. De stem blijft
+  van Joost, maar de zinnen die Jeau.st en Joost gelijkstellen zijn eruit.
+- **Het bezoekadres staat op `/contact`.** Jeau.st zit bij Studio
+  Citadel aan de Citadellaan in 's-Hertogenbosch. Het staat ook in de
+  gestructureerde data, want een bezoekadres is wat een zoekmachine van
+  een lokaal bedrijf verwacht.

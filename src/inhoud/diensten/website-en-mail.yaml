@@ -9,6 +9,10 @@ punten:
   - Eén site waar er nu meerdere zijn
   - Een formulier dat doorloopt naar je CRM
   - Mail, domeinen en DNS op eigen accounts
+oplevert:
+  - Aanvragen komen binnen in je CRM, met de velden die je nodig hebt
+  - Je mail komt aan bij de ontvanger
+  - Je domeinen en accounts staan op jouw naam
 voorWie: "Voor bedrijven met een site die is blijven staan, of met een paar sites uit verschillende jaren die naast elkaar leven. En voor wie merkt dat mail vanaf het eigen domein in de spam belandt. Dit is de laag onder je CRM: hier komen je aanvragen vandaan."
 verhaal:
   - kop: Waarom dit bij het CRM hoort

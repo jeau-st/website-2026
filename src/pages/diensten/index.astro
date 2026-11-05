@@ -12,9 +12,10 @@ import Doorlink from "../../components/Doorlink.astro";
  * pagina's bij elkaar horen en hieronder hangen. Daarom staat hier de
  * ItemList en niet alleen een rij links.
  *
- * Het blok "waar dit het beste werkt" stond op de homepage. Daar hoorde het
- * niet: het antwoordt op de vraag of je bij mij aan het juiste adres bent,
- * en die vraag stel je als je de diensten voor je ziet.
+ * Het blok "waar dit het beste werkt" stond hier eerst onder. Het noemde
+ * bouw en architectuur als voorbeeld, en daarmee las de pagina alsof de
+ * rest er niet bij hoort. De verwijzingen die eronder stonden zijn
+ * blijven staan.
  */
 const schema = {
   "@type": "ItemList",
@@ -57,25 +58,8 @@ const schema = {
     </ol>
   </Sectie>
 
-  <Sectie
-    id="voorwie"
-    kop="Waar dit het beste werkt"
-    intro="Bij bedrijven met weinig projecten die lang duren."
-  >
-    <div class="mt-8 max-w-2xl space-y-4 text-zacht">
-      <p>
-        Bouw en architectuur zijn het duidelijkste voorbeeld. Een traject
-        loopt maanden, er gaat veel informatie in om, afspraken moeten
-        vastliggen, en je wilt zien wat er loopt, wat eraan komt en wat
-        wanneer actie nodig heeft.
-      </p>
-      <p>
-        De winst zit daar in de lengte van het proces en niet in de
-        aantallen. Hoe langer een traject loopt, hoe meer momenten er zijn
-        waarop iets blijft liggen omdat niemand het zag.
-      </p>
-    </div>
-    <ul class="mt-10 max-w-2xl space-y-3">
+  <Sectie id="verder" aansluitend>
+    <ul class="max-w-2xl space-y-3 border-t border-rand/60 pt-8">
       <li>
         <Doorlink href="/aanpak">Lees hoe een traject verloopt</Doorlink>
       </li>

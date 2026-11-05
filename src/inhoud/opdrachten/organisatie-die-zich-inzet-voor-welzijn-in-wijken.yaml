@@ -16,6 +16,7 @@ aanpak:
   - De rest hangt er met n8n aan.
   - De dubbele records opgeruimd.
   - Een ticketsysteem aan het CRM voor de events.
+opbrengst: Op één plek zie je per event wie is uitgenodigd, wie er was en wat de opvolging is.
 resultaat:
   - Per event zie je wie is uitgenodigd, wie zich aanmeldde, wie er was en wat de opvolging is.
   - Eén plek waar je kijkt, in plaats van twee lijsten naast elkaar.

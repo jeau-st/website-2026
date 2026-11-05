@@ -58,11 +58,11 @@ const kruimels = [
    Inhoudsopgave zichzelf weg. */
 const extraDelen = {
   functies: "Wat er in Pipedrive zit",
-  ai: "Eerst de basis, dan AI",
+  ai: "AI op je eigen gegevens",
 } as const;
 
 const opgave = [
-  { id: "watkrijgje", tekst: "Wat dat concreet is" },
+  { id: "watkrijgje", tekst: "Wat het is en wat het oplevert" },
   ...(dienst.verhaal ?? []).map((blok, i) => ({
     id: `hoe-${i + 1}`,
     tekst: blok.kop,
@@ -107,21 +107,34 @@ const schema = {
   </section>
 
   <MetOpgave items={opgave}>
-  <Sectie id="watkrijgje" vol nummer={nr.watkrijgje} kop="Wat dat concreet is">
-    {/* Een haarlijnraster in plaats van pijltjes in een kaart. De lijnen
-        komen uit de achtergrond van de wikkel, die door de gap van 1 px
-        tussen de cellen heen schijnt. Een kolom en niet twee: het aantal
-        punten verschilt per dienst, en bij een oneven aantal blijft er
-        in twee kolommen een lege cel over. */}
-    <ul
-      class="mt-10 grid max-w-2xl gap-px overflow-hidden rounded-kaart border border-rand bg-rand-zacht"
-    >
-      {
-        dienst.punten.map((punt) => (
-          <li class="min-w-0 bg-kaart px-4 py-3 text-tekst">{punt}</li>
-        ))
-      }
-    </ul>
+  <Sectie
+    id="watkrijgje"
+    vol
+    nummer={nr.watkrijgje}
+    kop="Wat het is en wat het oplevert"
+  >
+    {/* Twee rijtjes naast elkaar, zonder vlak eromheen. Dit stond als
+        omlijnd raster van cellen op de pagina, en een vlak hoort volgens
+        CLAUDE.md bij iets dat je aanwijst of indrukt. Dit is een rijtje
+        dat je leest, dus het zijn gewone opsommingen.
+
+        En het zijn er twee, want "wat het is" beantwoordt niet de vraag
+        die eronder zit. Naast elkaar lees je per dienst waar hij uit
+        bestaat en wat je ervoor terugkrijgt. */}
+    <div class="mt-10 grid max-w-3xl gap-8 sm:grid-cols-2 sm:gap-10">
+      <div>
+        <p class="label">Wat het is</p>
+        <ul class="mt-4 list-outside list-disc space-y-2 pl-4 text-tekst marker:text-rand">
+          {dienst.punten.map((punt) => <li class="min-w-0">{punt}</li>)}
+        </ul>
+      </div>
+      <div>
+        <p class="label">Wat het oplevert</p>
+        <ul class="mt-4 list-outside list-disc space-y-2 pl-4 text-tekst marker:text-rand">
+          {dienst.oplevert.map((punt) => <li class="min-w-0">{punt}</li>)}
+        </ul>
+      </div>
+    </div>
 
     {
       !dienst.verhaal && (

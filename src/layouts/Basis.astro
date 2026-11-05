@@ -43,9 +43,19 @@ const bedrijfSchema = {
   },
   address: {
     "@type": "PostalAddress",
+    streetAddress: bedrijf.straat,
+    postalCode: bedrijf.postcode,
     addressLocality: bedrijf.plaats,
     addressCountry: "NL",
   },
+  ...(bedrijf.onderdeelVan
+    ? {
+        parentOrganization: {
+          "@type": "Organization",
+          name: bedrijf.onderdeelVan,
+        },
+      }
+    : {}),
   areaServed: [
     { "@type": "City", name: bedrijf.plaats },
     { "@type": "Country", name: "Nederland" },

@@ -16,14 +16,24 @@ import { bouwstenen } from "../data/site";
  * op de linkerkant en bovenaan, wat het je oplevert op de rechterkant.
  * Wie met de klok mee leest, leest dus van bronnen naar opbrengst.
  *
- * De maat is gebonden aan de kolom waar hij in staat: de hero is
- * max-w-5xl, dus een halve kolom is 484 px en de tekening 480. Groter
- * en hij duwt de hero uit de kantlijn van de rest van de pagina.
+ * De maat is gebonden aan de kolom waar hij in staat. Die kolom was de
+ * helft van de hero en is nu 39 procent, want de kop moet ook bij de
+ * langste naam op een regel passen: "Dat doet Sebastiaan altijd" is
+ * 554 px bij 48 px Manrope. Bij max-w-5xl houdt de tekening dan 365 px
+ * over. Groter en ze duwt de kop naar een tweede regel.
  *
- * Twee opmaken. Vanaf sm de volle ring met de labels naast de punten.
- * Daaronder dezelfde ring maar kleiner, en daar is `kort` nodig: op een
- * telefoon past "slimme workflows" niet naast de cirkel zonder dat de
- * cirkel te klein wordt om nog iets voor te stellen.
+ * Twee opmaken, en welke je ziet hangt af van de ruimte en niet van de
+ * schermbreedte alleen. De volle ring met de labels voluit staat tussen
+ * sm en lg: daar staat de tekening onder de tekst en heeft ze de hele
+ * kolom. Op een telefoon en vanaf lg staat de compacte ring, en daar is
+ * `kort` nodig: "slimme workflows" past niet naast de cirkel zonder dat
+ * de cirkel te klein wordt om nog iets voor te stellen.
+ *
+ * Vanaf lg staat de tekening naast de kop, en die kolom is twee vijfde
+ * van de hero: 365 px, want de kop moet ook bij de langste naam op een
+ * regel passen. De volle ring is daar niet te krap maar te klein: hij
+ * schaalt als geheel mee, dus de labels van 13 px zouden op 8 px
+ * uitkomen. De compacte ring is op dat formaat getekend.
  *
  * Alles staat op `currentColor` en de kleuren komen uit de tokens, dus
  * hij kleurt mee met het thema. Het geheel is aria-hidden, de
@@ -71,7 +81,7 @@ function labelPlek(
 <figure class="mt-8 sm:mt-0">
   {/* Vanaf sm: de volle ring */}
   <svg
-    class="mx-auto hidden h-auto w-full max-w-[30rem] sm:block"
+    class="mx-auto hidden h-auto w-full max-w-[30rem] sm:block lg:hidden"
     viewBox="0 0 560 360"
     role="presentation"
     aria-hidden="true"
@@ -147,9 +157,9 @@ function labelPlek(
     }
   </svg>
 
-  {/* Tot sm: dezelfde ring, kleiner, met de korte labels */}
+  {/* Tot sm en weer vanaf lg: dezelfde ring, kleiner, met de korte labels */}
   <svg
-    class="mx-auto h-auto w-full max-w-[22rem] sm:hidden"
+    class="mx-auto h-auto w-full max-w-[22rem] sm:hidden lg:block lg:max-w-[22.5rem]"
     viewBox="0 0 340 340"
     role="presentation"
     aria-hidden="true"

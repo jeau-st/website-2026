@@ -16,6 +16,7 @@ aanpak:
   - Een database erachter voor de urenadministratie, met n8n aan Pipedrive geknoopt.
   - De documentflow voor de verslaglegging naar partners eraan vast.
   - Intakes en gewonnen deals gaan terug naar Google Ads.
+opbrengst: De batches voor incasso en excasso lopen vanzelf. Na elke stap staat de opvolgtaak klaar.
 resultaat:
   - De incasso- en excassobatches worden vanzelf aangemaakt.
   - Na elke stap staat er een opvolgtaak klaar.
