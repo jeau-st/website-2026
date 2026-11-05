@@ -14,15 +14,28 @@
  * jij bepaalt wanneer je het commit. Op de live site gaat het andersom:
  * daar maakt Keystatic de commit en rolt Cloudflare daarna uit.
  *
+ * Met `npm run cms -- --github` blijft die tweede vlag uit. Dan praat
+ * Keystatic lokaal met GitHub in plaats van met de schijf. Dat heb je
+ * precies één keer nodig: om via /keystatic/setup de GitHub App te laten
+ * aanmaken. Die wizard schrijft de sleutels in .env, en dat kan alleen
+ * op een dev server op Node. Op de Worker weigert hij, met "App setup
+ * only allowed in development".
+ *
  * Het staat in een script en niet in package.json omdat Windows en macOS
  * omgevingsvariabelen anders voor een commando zetten.
  */
 import { spawn } from "node:child_process";
 
+const viaGithub = process.argv.includes("--github");
+
 const kind = spawn("npx", ["astro", "dev"], {
   stdio: "inherit",
   shell: true,
-  env: { ...process.env, CMS: "1", PUBLIC_KEYSTATIC_LOKAAL: "1" },
+  env: {
+    ...process.env,
+    CMS: "1",
+    ...(viaGithub ? {} : { PUBLIC_KEYSTATIC_LOKAAL: "1" }),
+  },
 });
 
 kind.on("exit", (code) => process.exit(code ?? 0));

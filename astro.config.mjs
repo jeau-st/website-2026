@@ -68,6 +68,24 @@ export default defineConfig({
   ],
   vite: {
     plugins: [tailwindcss()],
+    // De naam van de GitHub App in de URL, dus het laatste stuk van
+    // https://github.com/apps/jeau-st-keystatic. Keystatic heeft hem
+    // nodig om naar de installatiepagina te kunnen linken.
+    //
+    // Hij staat hier en niet in .env, want hij is niet geheim: hij staat
+    // gewoon in een openbare URL. Zo hoeft hij ook niet als
+    // buildvariabele bij Cloudflare, en kan een build hem niet missen.
+    // De drie sleutels van de app zijn wel geheim en staan in .env en
+    // als secret op de Worker.
+    define: {
+      "import.meta.env.PUBLIC_KEYSTATIC_GITHUB_APP_SLUG":
+        JSON.stringify("jeau-st-keystatic"),
+    },
+    // Het pakket dat die variabele uitleest moet wel door de gewone
+    // verwerking van Vite heen. Wordt het vooraf gebundeld, dan blijft
+    // `import.meta.env` daar staan zoals het staat en komt de waarde er
+    // nooit in, uit de config niet en uit .env niet.
+    optimizeDeps: { exclude: ["@keystatic/astro"] },
     // Alles wat op de server draait, draait bij `npm run dev` in workerd,
     // en workerd kent geen CommonJS. Een deel van wat Keystatic
     // meebrengt is dat nog wel, dus zonder dit vallen /keystatic en

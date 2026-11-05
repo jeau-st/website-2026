@@ -18,6 +18,17 @@
         "cms"
       ],
       "port": 4321
+    },
+    {
+      "name": "cms-github",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "cms",
+        "--",
+        "--github"
+      ],
+      "port": 4321
     }
   ]
 }
