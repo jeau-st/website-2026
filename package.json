@@ -14,6 +14,7 @@
     "typecheck": "astro check",
     "og": "node scripts/og.mjs",
     "schrijfwijzer": "node scripts/schrijfwijzer.mjs",
+    "meta": "node scripts/meta.mjs",
     "astro": "astro"
   },
   "dependencies": {

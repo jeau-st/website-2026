@@ -64,6 +64,22 @@ Daar mogen ze op een rij staan.
 - Geen prijzen op de site.
 - Achtergrond: tien jaar ervaring, met salesteams, data-analyse, systeemimplementaties en koppelingen. Niet uitsplitsen in jaren per werkgever. Koppelkoning, procesnerd. Werkt met Pipedrive, n8n, Airtable en AI via MCP.
 
+## Titel en meta description
+
+Dit zijn de twee zinnen die mensen zien voordat ze de pagina zien, en ze
+hebben een harde grens.
+
+- De titel is maximaal 60 tekens, het achtervoegsel ` | Jeau.st` meegerekend.
+  Bij een dienstpagina is de titel de kop uit het CMS plus dat achtervoegsel,
+  dus die kop mag tot 50.
+- De meta description is maximaal 155 tekens. Hij is een hele zin, geen
+  opsomming van zoekwoorden, en hij zegt iets anders dan de titel.
+- Twee pagina's met dezelfde titel of dezelfde beschrijving is een fout: dan
+  kiest Google zelf welke hij toont.
+
+`npm run meta` meet het na een build en noemt elke pagina die eroverheen
+gaat. De build zelf draait hem ook, dus te lang betekent: build rood.
+
 ## Werkwijze bij een nieuwe tekst
 
 1. Vraag eerst voor welke plek de tekst is, wat hij moet doen en hoe lang hij mag zijn.

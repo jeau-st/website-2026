@@ -19,6 +19,7 @@ npm run cms
 npm run build
 npm run typecheck
 npm run schrijfwijzer
+npm run meta
 npm run preview
 npm run deploy
 ```
@@ -47,6 +48,7 @@ De build schrijft de pagina's naar `dist/client` en de Worker naar `dist/server`
 - `src/pages/llms.txt.ts`: de inhoudsopgave voor taalmodellen, gegenereerd uit `site.ts`
 - `scripts/og.mjs`: maakt `public/og.png` uit het woordmerk en de huisstijlkleuren, draait met `npm run og`
 - `scripts/schrijfwijzer.mjs`: controleert de zichtbare tekst tegen die wijzer, draait met `npm run schrijfwijzer`
+- `scripts/meta.mjs`: meet de titel en de meta description van elke gebouwde pagina. Draait met `npm run meta` en staat als integratie aan het eind van de build, dus een te lange titel laat de build vallen
 - `src/pages`: routes, een bestand per pagina
 - `src/components`: Sectie, Kaart, Knop, Doorlink, Bouwstenen, Kop, Voet, Todo, Inhoudsopgave, MetOpgave en de inhoudsblokken. `Sectie` met `vol` laat de breedte over aan het raster eromheen, wat de pagina's met een inhoudsopgave doen
 - `src/layouts`: layouts, `Basis.astro` verzorgt head, taal en canonical
@@ -80,11 +82,13 @@ De build schrijft de pagina's naar `dist/client` en de Worker naar `dist/server`
 - Iconen komen uit Lucide. De gebruikte bestanden staan als los svg in `src/icons`, gekopieerd uit `lucide-static` (ISC), zodat in de repo te zien is welke de site gebruikt en een update van het pakket geen tekening stil verandert. Gebruik ze via `Icoon.astro`: binnen een svg rechtstreeks, in html met een `<svg viewBox="0 0 24 24">` eromheen.
 - Het palet is gemeten uit de museumscan van Van Gogh, Zelfportret met grijze vilthoed (s0016V1962), met k-means in Lab en een telling per kleurfamilie. Het doek is voor 49,6% blauw en voor 3,3% groen, dus het palet is blauw. De twee grootste clusters zijn staal `#41515C` en lei `#56646D`, samen 43% van het doek. Warm is oker `#816447` en vlam `#8D531F`, de oranje stippen. Alle rollen erven tint 204 (blauw) of tint 28 (oranje) en verschillen alleen in lichtheid.
 - Het accent verschilt per thema, want één oranje haalt niet in allebei de contrastnorm voor tekst op de knop. Donker gebruikt `#C76A19`, licht `#A75915`. Op een kaart, de krapste ondergrond, haalt allebei 4,5:1.
-- Het accent is de enige warme kleur in de interface en staat alleen op de primaire knop, de focusring, de naamknop in de kop op de homepage en de vinkjes bij de kernpunten in de hero. Niet op links, lijsten, pijltjes, de uitklapper in de kop of de inhoudsopgave.
+- Het accent is de enige warme kleur in de interface en staat alleen op de primaire knop, de focusring, de naamknop in de kop op de homepage, de vinkjes bij de kernpunten in de hero en het vierkantje rechtsonder in de favicon. Niet op links, lijsten, pijltjes, de uitklapper in de kop of de inhoudsopgave.
 - Het woordmerk draagt geen accent maar `merk`: zwart in licht, wit in donker, dezelfde waarde als de tekst.
+- De punt in het woordmerk is vier vierkantjes, 2 bij 2, en daarmee zelf een vierkant. In het pixelfont waren het er twee naast elkaar en dat las als een streepje. `public/favicon.svg` is dat blok los, met het vierkantje rechtsonder in het accent en de andere drie in `zacht`. Twee vaste kleuren en geen `prefers-color-scheme`: een favicon staat op de tabbalk, niet op de site, dus het thema van de site zegt daar niets over. Beide halen op elke gangbare tabbalk meer dan 3,4:1.
 - Alles wat je kunt indrukken krijgt zichtbare feedback bij het aanraken, via de klasse `drukbaar` of een `active:`-variant. Op een telefoon bestaat hover niet, dus zonder dat gebeurt er tussen tikken en navigeren niets.
 - Beweging alleen met transform en opacity, 150 ms, en een menu komt uit zijn eigen knop vandaan via `transform-origin`. Geen bounce zonder gebaar.
 - De kop is doorschijnend met een blur. Kan de browser dat niet, of staat `prefers-reduced-transparency` aan, dan wordt hij dekkend. Allebei staan in `Kop.astro`.
+- Een titel is maximaal 60 tekens en een meta description maximaal 155, inclusief het achtervoegsel ` | Jeau.st`. Daarboven kapt Google af en staat er een halve zin in het zoekresultaat. `npm run meta` meet het op de gebouwde html, want de titel van een dienstpagina is `kop` uit de yaml plus dat achtervoegsel, en in de bron meet je dat niet mee. Twee pagina's met dezelfde titel of beschrijving zijn ook een fout: dan kiest Google er zelf een.
 - Ontbrekende inhoud wordt een zichtbare TODO, nooit een verzonnen tekst.
 - Wat in Keystatic zit is de tekst die verandert: diensten, opdrachten, vragen, de homepageteksten en de bedrijfsgegevens. Wat aan iconen, geometrie of de opbouw van een pagina hangt blijft in `site.ts`. Een nieuw veld voeg je op twee plekken toe: in `keystatic.config.ts` en in het type in `inhoud.ts`. `npm run typecheck` zegt het als ze uit elkaar lopen.
 - Secrets alleen via `npx wrangler secret put` of `.env.local`, nooit in de repo.

@@ -140,15 +140,16 @@ export default config({
         }),
         kop: fields.text({
           label: "Kop op de eigen pagina",
-          description: "De h1. Mag langer zijn dan de titel in de lijst.",
-          validation: { isRequired: true },
+          description:
+            "De h1, en met \" | Jeau.st\" erachter ook de titel in Google. Mag langer zijn dan de titel in de lijst, maar niet boven de 50 tekens: dan kapt Google hem af.",
+          validation: { isRequired: true, length: { max: 50 } },
         }),
         meta: fields.text({
           label: "Meta description",
           multiline: true,
           description:
-            "Eén zin, met het zoekwoord erin. Dit is wat Google onder de titel zet.",
-          validation: { isRequired: true },
+            "Eén zin, met het zoekwoord erin. Dit is wat Google onder de titel zet. Boven de 155 tekens kapt hij af, dus daar stopt dit veld.",
+          validation: { isRequired: true, length: { max: 155 } },
         }),
         tekst: fields.text({
           label: "Alinea in de lijst",

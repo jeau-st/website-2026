@@ -5,6 +5,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 import react from '@astrojs/react';
 import keystatic from '@keystatic/astro';
+import { metaControle } from './scripts/meta.mjs';
 
 /**
  * `npm run cms` zet dit aan. Dan draait de dev server op Node in plaats
@@ -24,7 +25,10 @@ export default defineConfig({
   // React staat er alleen voor de beheerschermen van Keystatic. De
   // publieke pagina's zijn statisch en sturen geen React mee: alleen
   // /keystatic en /api/keystatic draaien op de server.
-  integrations: [sitemap(), react(), keystatic()],
+  // metaControle leest na de build de titel en de beschrijving van elke
+  // pagina en laat de build vallen als er een te lang is. Hij staat
+  // achteraan, want hij heeft de geschreven html nodig.
+  integrations: [sitemap(), react(), keystatic(), metaControle()],
   // /pipedrive is opgegaan in de dienstpagina. De oude URL blijft werken,
   // want hij stond in de voet, in llms.txt en in de sitemap, en een
   // verdwenen pagina is een 404 voor wie hem had opgeslagen.
