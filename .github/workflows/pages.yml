@@ -1,0 +1,69 @@
+# Zet de site tijdelijk ook op GitHub Pages.
+#
+# Dit hoort hier niet thuis en gaat er weer uit. De site draait op een
+# Cloudflare Worker, maar jeau.st kan daar niet heen wijzen zolang de
+# nameservers bij Cloud86 staan: Cloudflare geeft geen certificaat af
+# voor een domein dat niet in het account actief is, en een
+# workers.dev-adres weigert verkeer voor een vreemd domein met een 403.
+#
+# De A-records van jeau.st wijzen nog wel naar GitHub Pages, en GitHub
+# regelt zelf een certificaat. Dus zolang nic.st de nameservers niet
+# omzet, serveert Pages de site op het eigen domein.
+#
+# Twee dingen doet Pages niet: /keystatic, want dat heeft een server
+# nodig, en de omleiding van /pipedrive, want die staat in _redirects en
+# dat bestand kent alleen Cloudflare. Het beheer draai je in die periode
+# lokaal met `npm run cms`.
+#
+# Weghalen zodra de zone in Cloudflare actief is: dit bestand wissen,
+# Pages uitzetten in de repo-instellingen, en het routesblok in
+# wrangler.jsonc uit het commentaar halen. Zie docs/dns-verhuizing.md.
+
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Twee uitrollen tegelijk kan niet, en afbreken halverwege wil je ook
+# niet: dan staat er een halve site.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  bouwen:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      # Zonder dit bestand in het artefact vergeet Pages bij elke uitrol
+      # welk domein erbij hoort en valt hij terug op github.io.
+      - run: echo jeau.st > dist/client/CNAME
+      - uses: actions/configure-pages@v5
+      # De Cloudflare-adapter zet de pagina's in dist/client en de Worker
+      # in dist/server. Alleen het eerste is een statische site.
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/client
+
+  uitrollen:
+    needs: bouwen
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.uitrol.outputs.page_url }}
+    steps:
+      - id: uitrol
+        uses: actions/deploy-pages@v4
