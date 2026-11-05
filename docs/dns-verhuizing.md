@@ -218,7 +218,8 @@ stap 2 is dat binnen vijf minuten overal doorgedrongen.
 
 ### 6. Koppel de Worker
 
-Pas als stap 5 goed is. In `wrangler.jsonc`:
+Pas als stap 5 goed is. Het blok staat sinds 5 november 2026 klaar in
+`wrangler.jsonc`, in commentaar:
 
 ```jsonc
 "routes": [
@@ -227,7 +228,10 @@ Pas als stap 5 goed is. In `wrangler.jsonc`:
 ]
 ```
 
-Dan `npm run deploy`. Cloudflare haalt de A-records van `jeau.st` en de
+Het staat in commentaar omdat wrangler een domein niet kan claimen in
+een zone die nog niet actief is. Zou het al aanstaan, dan liep elke
+build van Workers Builds stuk op de deploy. Haal het commentaar weg,
+zet de komma achter het blok erboven, en push. Of `npm run deploy`. Cloudflare haalt de A-records van `jeau.st` en de
 CNAME van `www` weg en zet er de Worker voor in de plaats, en regelt het
 certificaat.
 

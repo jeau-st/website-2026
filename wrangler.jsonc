@@ -6,4 +6,24 @@
   "observability": {
     "enabled": true
   }
+
+  // Hieronder komt jeau.st aan de Worker te hangen. Het staat nog in
+  // commentaar, en dat is geen slordigheid: zolang de zone niet in dit
+  // Cloudflare-account actief is, kan wrangler het domein niet claimen
+  // en stopt `wrangler deploy` met een fout. Workers Builds draait bij
+  // elke push naar `main`, dus dat zou elke build rood maken.
+  //
+  // Haal het commentaar weg zodra de nameservers van jeau.st bij
+  // Cloudflare staan en de zone actief is, niet eerder. Vergeet de komma
+  // achter het blok hierboven niet. Daarna `npm run deploy`, of gewoon
+  // pushen en de build zijn werk laten doen.
+  //
+  // Cloudflare haalt dan zelf de A-records van jeau.st en de CNAME van
+  // www weg, zet er de Worker voor in de plaats en regelt het
+  // certificaat. Het draaiboek staat in docs/dns-verhuizing.md.
+  //
+  // "routes": [
+  //   { "pattern": "jeau.st", "custom_domain": true },
+  //   { "pattern": "www.jeau.st", "custom_domain": true }
+  // ]
 }
