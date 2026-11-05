@@ -3,49 +3,100 @@ import Woordmerk from "./Woordmerk.astro";
 import { bedrijf, diensten } from "../data/site";
 
 /**
- * Vier kolommen, met een eigen soort inhoud per kolom: wie het is, wat
- * er te koop is, waar je heen kunt, en met wie je te maken hebt. Dat
- * laatste staat helemaal rechts, want het is het minst waarvoor je komt
+ * Drie kolommen: wie het is, wat er te koop is, en met wie je te maken
+ * hebt. Dat laatste staat rechts, want het is het minst waarvoor je komt
  * en het meest waarnaar je zoekt als je het nodig hebt.
  *
- * De derde kolom gaat naar buiten: LinkedIn, en dan de pagina's die over
- * de zaak zelf gaan. `min-h-11` op elke link maakt er een aanraakvlak
- * van, want in een rijtje op een telefoon is dat het verschil tussen
- * mikken en tikken.
+ * Er heeft een kolom "Links" gestaan met LinkedIn, Over Jeau.st, .st?!
+ * en Privacy erin. Dat was een kolom die zichzelf moest uitleggen, en
+ * die vier horen alle vier ergens anders: LinkedIn bij de gegevens, want
+ * daar bereik je iemand mee. `.st?!` onderaan de eerste kolom, want het gaat
+ * over de naam. Privacy achter het copyright, want daar gaat die regel
+ * over. En Over Jeau.st nergens meer: die staat al in de kop.
+ *
+ * Studio Citadel staat in de eerste kolom, onder het woordmerk. Het zegt
+ * iets over wie hier spreekt, niet over waar het bedrijf staat
+ * ingeschreven, dus het hoort bij het merk en niet bij de gegevens. Een
+ * maat kleiner dan de rest: het is een bijzin, geen bewering. De regel
+ * breekt met de hand achter "van", want anders bepaalt de kolombreedte
+ * waar hij omslaat en staat "collectief" los van de naam erachter.
  *
  * De bedrijfsgegevens staan als tekst, net als op de contactpagina. De
  * mail staat daar ook, want het is een gegeven en geen bestemming, ook
- * al kun je erop klikken.
+ * al kun je erop klikken. Elke regel in de voet is daarom 32 px hoog,
+ * of hij nu een link is of niet, zodat het adresblok hetzelfde ritme
+ * houdt als het lijstje ernaast.
  */
 
 const jaar = new Date().getFullYear();
 
 /**
- * Eén klasse voor alle links in de voet, anders staat hij er acht keer.
+ * Twee klassen voor alle links in de voet, anders staan ze er negen keer.
  *
- * Geen onderstreping hier, anders staat de voet vol strepen. Wat de
- * link aanwijsbaar maakt is de kleur die naar de tekstkleur gaat, en op
- * een telefoon `drukbaar`: daar bestaat hover niet, en zonder streep is
- * er dan niets meer dat zegt dat er iets gebeurt.
+ * Geen onderstreping, anders staat de voet vol strepen. Wat de link
+ * aanwijsbaar maakt is de kleur die naar de tekstkleur gaat, en op een
+ * telefoon `drukbaar`: daar bestaat hover niet, en zonder streep is er
+ * dan niets meer dat zegt dat er iets gebeurt.
+ *
+ * Een link in een rijtje is `block` met ruimte boven en onder, dus het
+ * aanraakvlak is de hele regelbreedte van de kolom en niet alleen de
+ * letters. Dat scheelt mikken zonder dat er lucht tussen de regels
+ * komt: een regel is 32 px, waar `min-h-11` er 48 van maakte. Twaalf
+ * regels van 48 lazen als een lijst met gaten.
+ *
+ * Een link die zelf een kop is, of die in een lopende regel staat,
+ * krijgt die ruimte niet. Anders is de kop hoger dan de koppen van de
+ * andere kolommen en zakt zijn tekst naar het midden, en dan staat één
+ * van de drie kolommen lager dan de rest.
  */
-const link =
-  "drukbaar inline-flex min-h-11 items-center transition-colors hover:text-tekst";
+const link = "drukbaar block py-1.5 transition-colors hover:text-tekst";
+const kopLink = "drukbaar transition-colors hover:text-tekst";
 ---
 
 <footer class="border-t border-rand/60 px-4 pb-28 pt-14 sm:px-6 sm:pb-14">
-  <div class="mx-auto grid max-w-5xl gap-10 sm:grid-cols-2 lg:grid-cols-4">
+  <div class="mx-auto grid max-w-5xl gap-10 sm:grid-cols-2 lg:grid-cols-3">
     <div>
       <Woordmerk class="h-6 text-merk" />
       <p class="mt-3 text-sm text-zacht">
         CRM en procesautomatisering voor mkb en scale-ups.
       </p>
+      {/* Studio Citadel is het collectief waar Jeau.st zit. Het beeldmerk
+          is hun eigen favicon: een uitsnede van het bastion, wit op
+          grijsgroen. Dat het vlak zijn eigen achtergrond meebrengt is hier
+          handig, want het enige andere dat ze publiceren is een lichte
+          png van het woordmerk, en die valt in het lichte thema weg.
+
+          Geen pijltje achter de link. Dat is voor een pagina van deze
+          site, en dit gaat naar buiten. */}
+      <a
+        class="drukbaar mt-5 inline-flex items-center gap-3 text-xs text-zacht transition-colors hover:text-tekst"
+        href="https://www.studiocitadel.nl/"
+        target="_blank"
+        rel="noopener"
+      >
+        <img
+          src="/studio-citadel.png"
+          alt=""
+          width="128"
+          height="128"
+          loading="lazy"
+          class="size-8 shrink-0 rounded-klein"
+        />
+        <span class="min-w-0">
+          {bedrijf.naam} is onderdeel van<br />collectief {bedrijf.onderdeelVan}
+        </span>
+      </a>
+
+      <p class="mt-4 text-sm text-zacht">
+        <a class={link} href="/st">.st?!</a>
+      </p>
     </div>
 
     <div>
       <h2 class="text-sm font-semibold">
-        <a class={link} href="/diensten">Diensten</a>
+        <a class={kopLink} href="/diensten">Diensten</a>
       </h2>
-      <ul class="mt-2 space-y-1 text-sm text-zacht">
+      <ul class="mt-1 text-sm text-zacht">
         {
           diensten.map((dienst) => (
             <li>
@@ -59,69 +110,33 @@ const link =
     </div>
 
     <div>
-      <h2 class="text-sm font-semibold">Links</h2>
-      <ul class="mt-2 space-y-1 text-sm text-zacht">
-        <li>
-          <a
-            class={link}
-            href={bedrijf.linkedin}
-            target="_blank"
-            rel="noopener"
-          >
-            LinkedIn
-          </a>
-        </li>
-        <li><a class={link} href="/over">Over Jeau.st</a></li>
-        <li><a class={link} href="/st">.st?!</a></li>
-        <li><a class={link} href="/privacy">Privacy</a></li>
-      </ul>
-    </div>
-
-    <div>
       <h2 class="text-sm font-semibold">{bedrijf.naam}</h2>
-      <div class="mt-2 space-y-1 text-sm text-zacht">
-        <p>{bedrijf.straat}</p>
-        <p>{bedrijf.postcode}&nbsp;{bedrijf.plaats}</p>
-        <p class="min-w-0 break-words">
-          <a class={link} href={`mailto:${bedrijf.email}`}>
-            {bedrijf.email}
-          </a>
-        </p>
-        <p>KvK&nbsp;{bedrijf.kvk}</p>
+      <div class="mt-1 text-sm text-zacht">
+        <p class="py-1.5">{bedrijf.straat}</p>
+        <p class="py-1.5">{bedrijf.postcode}&nbsp;{bedrijf.plaats}</p>
+        <a
+          class={`${link} min-w-0 break-words`}
+          href={`mailto:${bedrijf.email}`}
+        >
+          {bedrijf.email}
+        </a>
+        <p class="py-1.5">KvK&nbsp;{bedrijf.kvk}</p>
+        <a
+          class={link}
+          href={bedrijf.linkedin}
+          target="_blank"
+          rel="noopener"
+        >
+          Connect op LinkedIn
+        </a>
       </div>
-
-      {/* Studio Citadel is het collectief waar Jeau.st zit. Het beeldmerk
-          is hun eigen favicon: een uitsnede van het bastion, wit op
-          grijsgroen. Dat het vlak zijn eigen achtergrond meebrengt is hier
-          handig, want het enige andere dat ze publiceren is een lichte
-          png van het woordmerk, en die valt in het lichte thema weg.
-
-          Geen pijltje achter de link. Dat is voor een pagina van deze
-          site, en dit gaat naar buiten. */}
-      <a
-        class="drukbaar mt-6 inline-flex items-center gap-3 text-sm text-zacht transition-colors hover:text-tekst"
-        href="https://www.studiocitadel.nl/"
-        target="_blank"
-        rel="noopener"
-      >
-        <img
-          src="/studio-citadel.png"
-          alt=""
-          width="128"
-          height="128"
-          loading="lazy"
-          class="size-9 shrink-0 rounded-klein"
-        />
-        <span class="min-w-0">
-          {bedrijf.naam} is onderdeel van het collectief {
-            bedrijf.onderdeelVan
-          }
-        </span>
-      </a>
     </div>
   </div>
 
-  <p class="mx-auto mt-12 max-w-5xl text-sm text-zacht">
-    &copy; {jaar} {bedrijf.naam}
+  <p
+    class="mx-auto mt-12 flex max-w-5xl flex-wrap items-center gap-x-5 text-sm text-zacht"
+  >
+    <span>&copy; {jaar} {bedrijf.naam}</span>
+    <a class={kopLink} href="/privacy">Privacy</a>
   </p>
 </footer>
