@@ -200,6 +200,12 @@ hun kant om. Lukt dat niet, dan is de omweg Cloudflare om een ander
 nameserverpaar vragen, in de hoop dat die namen bij de registry wel
 bekend zijn.
 
+Later op 5 november 2026 nog een keer geprobeerd, met dezelfde twee
+namen en de drie velden van Cloud86 leeggemaakt. Woordelijk dezelfde
+foutmelding, en de velden stonden erna weer op Cloud86. Het ligt dus
+niet aan een tijdelijke hapering en ook niet aan de volgorde waarin je
+de namen invult. Opnieuw proberen heeft geen zin tot nic.st antwoordt.
+
 ### 5. Controleer de mail voordat je verdergaat
 
 Niet doorgaan tot dit klopt:
