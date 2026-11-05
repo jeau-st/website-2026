@@ -22,12 +22,48 @@ Tot dat moment draait de site op
 
 Bijgewerkt op 5 november 2026.
 
-Stap 1 tot en met 3 zijn gedaan. De zone staat compleet in Cloudflare,
+Stap 1 tot en met 3 zijn gedaan. De zone staat in Cloudflare,
 gecontroleerd tegen de export, en alles staat op DNS only. Stap 4 is
 geprobeerd en geweigerd door de registry: zie daar.
 
 De delegatie staat dus nog bij Cloud86 en er is voor bezoekers en mail
-niets veranderd.
+niets veranderd. Daardoor kon de zone in Cloudflare alvast worden
+opgeschoond zonder risico: wat daar staat gaat pas tellen als de
+nameservers om zijn.
+
+## Wat er in Cloudflare staat
+
+Na het opschonen van 5 november 2026 zijn het 13 records.
+
+| Naam | Type | Waarde | Waarom |
+| --- | --- | --- | --- |
+| `jeau.st` | A | 4x GitHub Pages | Verdwijnt bij stap 6, de Worker komt ervoor in de plaats |
+| `www` | CNAME | `jooozt.github.io` | Idem |
+| `bbc` | A | `45.82.191.53` | Bosch Backgammon Club, draait op de hosting van Cloud86 |
+| `jeau.st` | MX | `jeau-st.mail.protection.outlook.com` | Microsoft 365 |
+| `jeau.st` | TXT | `v=spf1 include:spf.protection.outlook.com -all` | Microsoft 365 |
+| `autodiscover` | CNAME | `autodiscover.outlook.com` | Outlook stelt zichzelf ermee in |
+| `selector1._domainkey` | CNAME | Microsoft | DKIM |
+| `selector2._domainkey` | CNAME | Microsoft | DKIM |
+| `_dmarc` | TXT | `v=DMARC1; p=none; sp=none; rua=mailto:joost@jeau.st; fo=1;` | Rapportage staat nu aan |
+| `jeau.st` | TXT | `atlassian-domain-verification=...` | Eigendomsbewijs voor jeaust.atlassian.net |
+
+Weggehaald: `citadel`, `ftp`, `smtp`, `mail`, `service` en de vier
+Atlassian-mailrecords. `ftp`, `smtp` en `mail` wezen alle drie naar
+`jeau.st` zelf, dus naar de website; dat zijn standaardrecords van
+Cloud86 die hier niets doen en die bij `mail` en `smtp` ook nog eens de
+verkeerde indruk wekken. `service` verwees via redirect.pizza naar het
+Atlassian-serviceportaal, en dat wordt niet meer gebruikt.
+
+Van Atlassian zijn de vier mailrecords weg: twee DKIM-sleutels, het
+bouncedomein en de sending-domain-verification. Het vijfde record,
+`atlassian-domain-verification`, is blijven staan: dat is geen
+mailrecord maar het eigendomsbewijs waarmee Atlassian `jeau.st` als
+jouw domein kent. Dat hangt aan de Jira-omgeving, niet aan mail.
+
+`bbc.jeau.st` wijst naar de gedeelde hosting van Cloud86 en er staat een
+werkende site op. Het opzeggen van die hosting is dus een apart besluit,
+los van het opzeggen van de DNS daar.
 
 ## Wat er nu staat
 
@@ -208,26 +244,25 @@ laat `www` uit de routes.
   antwoordt `jeau.st` met een 404 tot de Worker eraan hangt. Zolang
   GitHub het domein geclaimd houdt, kan niemand anders het claimen, maar
   daarna staat het in de weg.
-- Haal `ftp`, `smtp` en `mail` weg. Die wijzen alle drie naar `jeau.st` en
-  komen dus op de website uit. Dat zijn standaardrecords van Cloud86 die
-  hier niets doen.
-- Zeg de hosting bij Cloud86 pas op als alles een week goed draait.
+- Verwijder de zone bij Cloud86. Die is dan niets meer dan een tweede
+  waarheid die stilletjes uit de pas kan gaan lopen. Doe dit pas als de
+  delegatie om is en de mail een week goed loopt, want tot dat moment is
+  hij je enige weg terug.
+- Zeg de hosting bij Cloud86 apart op, en niet zonder na te denken over
+  `bbc.jeau.st`: die site staat erop.
 
 ## Wat ik hierna zou aanzetten
 
 Dit hoeft niet voor de verhuizing, maar het is het natuurlijke moment.
 
-**DMARC aanscherpen.** Er staat nu `v=DMARC1; p=none; sp=none;`. Dat
-vraagt niets en rapporteert niets, dus je weet niet wie er namens jou
-mailt. Zet er eerst een rapportageadres bij:
+**DMARC aanscherpen.** De eerste stap staat er: het record vraagt nu om
+rapporten op `joost@jeau.st`. Die komen als xml-bijlage binnen, een
+paar per dag, en vertellen je wie er namens jou mailt.
 
-```
-v=DMARC1; p=none; rua=mailto:dmarc@jeau.st; fo=1;
-```
-
-Kijk een paar weken naar de rapporten, en ga dan naar `p=quarantine` en
-later `p=reject`. SPF staat al op `-all` en DKIM is actief op twee
-selectors, dus de basis is er.
+Kijk er een paar weken naar, en ga dan naar `p=quarantine` en later
+`p=reject`. SPF staat al op `-all` en DKIM is actief op twee selectors,
+dus de basis is er. Verhoog pas als de rapporten laten zien dat alles
+wat legitiem namens jou verstuurt, door SPF of DKIM komt.
 
 **CAA toevoegen.** Nu mag elke certificaatautoriteit een certificaat voor
 `jeau.st` uitgeven. Na de verhuizing geeft Cloudflare je certificaten uit:
