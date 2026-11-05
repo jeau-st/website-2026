@@ -202,8 +202,12 @@ laat `www` uit de routes.
 ### 7. Ruim op
 
 - Haal het custom domain weg bij de oude GitHub Pages-repo, en het
-  `CNAME`-bestand erin. Zolang GitHub het domein geclaimd houdt, kan
-  niemand anders het claimen, maar het staat ook in de weg.
+  `CNAME`-bestand erin. **Pas na stap 6, niet eerder.** GitHub Pages
+  kiest de site op de Host-header, niet op het IP-adres: haal je het
+  domein daar weg terwijl de A-records nog naar GitHub wijzen, dan
+  antwoordt `jeau.st` met een 404 tot de Worker eraan hangt. Zolang
+  GitHub het domein geclaimd houdt, kan niemand anders het claimen, maar
+  daarna staat het in de weg.
 - Haal `ftp`, `smtp` en `mail` weg. Die wijzen alle drie naar `jeau.st` en
   komen dus op de website uit. Dat zijn standaardrecords van Cloud86 die
   hier niets doen.
