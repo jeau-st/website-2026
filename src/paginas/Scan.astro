@@ -1,0 +1,30 @@
+---
+import Basis from "../layouts/Basis.astro";
+import Scan from "../components/Scan.astro";
+import type { Taal } from "../data/taal";
+import { teksten } from "../data/teksten";
+
+/**
+ * De koppelscan, voor wie nog geen gesprek wil plannen. De scan zelf staat
+ * in `components/Scan.astro`, de rekenregels in `data/scan.ts` en de
+ * afspraken met n8n in docs/koppelscan.md.
+ */
+interface Props {
+  taal: Taal;
+}
+
+const { taal } = Astro.props;
+const t = teksten[taal].scan;
+---
+
+<Basis titel={t.titel} beschrijving={t.beschrijving}>
+  <section class="px-4 pb-0 pt-14 sm:px-6 sm:pt-16">
+    <div class="mx-auto max-w-5xl">
+      <h1 class="max-w-3xl text-4xl sm:text-5xl lg:text-6xl">{t.kop}</h1>
+      <p class="mt-6 max-w-2xl text-lg text-zacht">{t.intro}</p>
+      <div class="mt-10">
+        <Scan taal={taal} />
+      </div>
+    </div>
+  </section>
+</Basis>

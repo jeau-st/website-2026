@@ -79,6 +79,7 @@ export const routes = {
   contact: { nl: "/contact", en: "/en/contact" },
   privacy: { nl: "/privacy", en: "/en/privacy" },
   st: { nl: "/st", en: "/en/st" },
+  scan: { nl: "/scan", en: "/en/scan" },
 } as const satisfies Record<string, PerTaal<string>>;
 
 export type Route = keyof typeof routes;

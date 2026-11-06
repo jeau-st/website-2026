@@ -288,6 +288,131 @@ const nl = {
     mail: "Mail",
     linkedin: "LinkedIn",
     onderdeelVan: "Onderdeel van {studio}",
+    scanLink: "Nog niet klaar voor een gesprek? Doe eerst de koppelscan",
+    formKop: "Of stuur een bericht",
+    formIntro:
+      "Vertel kort waar je tegenaan loopt. Ik reageer via de weg die je invult.",
+    formVraag: "Waar loop je tegenaan?",
+    formVraagVoorbeeld: "Offertes maken we in Word en de facturen tik ik over in Moneybird.",
+    formKnop: "Verstuur je bericht",
+    formVraagFout: "Schrijf kort waar je tegenaan loopt",
+    formBedanktKop: "Dank je, je bericht is binnen",
+    formBedanktTekst: "Ik lees het en neem contact op via de weg die je hebt ingevuld.",
+  },
+
+  scan: {
+    titel: "Koppelscan: zie waar je handwerk zit | Jeau.st",
+    beschrijving:
+      "Acht vragen, drie minuten klikken. Je ziet direct waar je systemen langs elkaar werken en welke koppeling het eerst tijd oplevert.",
+    kop: "Zie in drie minuten waar je handwerk zit",
+    intro:
+      "Acht vragen over je systemen, je overtikwerk en wie het oplost als er iets stukgaat. Je klikt alleen blokken aan. De uitslag staat meteen op je scherm, zonder dat je eerst je mailadres hoeft te geven.",
+    startKop: "Acht vragen, drie minuten",
+    startTekst: "Klik een antwoord aan en je gaat vanzelf door. Terug kan altijd.",
+    start: "Start de scan",
+    vorige: "Vorige",
+    verder: "Verder",
+    anders: "Anders",
+    andersVoorbeeld: "Typ je antwoord",
+    andersFout: "Typ eerst kort je antwoord",
+    voortgang: "Vraag {nu} van {totaal}",
+    vragen: [
+      {
+        vraag: "Hoeveel mensen werken er bij jullie?",
+        opties: ["Alleen ik", "2 tot 10", "11 tot 50", "Meer dan 50"],
+      },
+      {
+        vraag: "Met hoeveel losse systemen werk je?",
+        opties: ["1 of 2", "3 tot 5", "6 of meer", "Geen idee"],
+      },
+      {
+        vraag: "Hoeveel uur per week gaat er naar overtikken en kopiëren?",
+        opties: ["Minder dan 2", "2 tot 5", "5 tot 10", "Meer dan 10"],
+      },
+      {
+        vraag: "Waar zit het meeste handwerk?",
+        opties: [
+          "Offertes en facturen",
+          "Planning en uren",
+          "Klantgegevens bijhouden",
+          "Rapportages maken",
+        ],
+      },
+      {
+        vraag: "Praten je systemen met elkaar?",
+        opties: ["Ja, alles is gekoppeld", "Deels", "Nee, alles los", "Geen idee"],
+      },
+      {
+        vraag: "Waar staat de stand van zaken over klanten en omzet?",
+        opties: ["In één systeem", "Verspreid over meerdere", "In iemands hoofd"],
+      },
+      {
+        vraag: "Wie lost het op als een koppeling of sheet stukgaat?",
+        opties: ["Wij zelf", "Eén collega die het weet", "Een externe partij", "Niemand eigenlijk"],
+      },
+      {
+        vraag: "Gebruik je AI op je eigen bedrijfsdata?",
+        opties: ["Nee", "Losse vragen in ChatGPT", "Gekoppeld aan onze systemen"],
+      },
+    ],
+    organisatieKop: "Voor welke organisatie doe je de scan?",
+    organisatieTekst:
+      "Dan leg ik je antwoorden naast wat er openbaar over je bedrijf te vinden is, zodat het advies over jouw situatie gaat.",
+    organisatie: "Organisatie",
+    organisatieVoorbeeld: "Bakkerij De Korenaar",
+    organisatieFout: "Vul de naam van je organisatie in",
+    website: "Website",
+    websiteHint: "Mag leeg blijven",
+    websiteVoorbeeld: "dekorenaar.nl",
+    naarUitslag: "Bekijk je uitslag",
+    uitslagKop: "Je uitslag",
+    themas: {
+      systemen: "Systemen",
+      handwerk: "Handwerk",
+      data: "Data",
+      beheer: "Beheer",
+      ai: "AI",
+    },
+    niveaus: ["Hier zit werk", "Kan beter", "Op orde"],
+    tijdKop: "Terug te winnen",
+    tijdWaarde: "Ongeveer {uren} uur per maand",
+    tijdUitleg:
+      "Een ruwe schatting: de helft van de uren overtikwerk die je opgaf. Hoeveel het echt is, hangt af van je systemen.",
+    winstenKop: "Waar ik zou beginnen",
+    winstPerPlek: [
+      "Offerte en factuur uit één bron. Een getekende offerte zet de factuur klaar in je boekhouding.",
+      "Uren direct op het juiste project. Wat in de planning staat, komt in je urenregistratie en daarna op de factuur.",
+      "Eén plek voor je klantgegevens. Een nieuw contact in je CRM staat meteen goed in je boekhouding.",
+      "Een rapport dat zichzelf bijwerkt. De cijfers komen rechtstreeks uit je systemen, dus niemand plakt meer exports aan elkaar.",
+    ],
+    winstAnders: "De taak die je zelf noemde. Die bespreken we als eerste.",
+    winstPerThema: {
+      systemen: "Breng je systemen in kaart: welke gegevens staan waar, en welke koppeling scheelt het meest.",
+      handwerk: "Zoek de taak die elke week terugkomt. Daar levert automatiseren het snelst iets op.",
+      data: "Kies één bron voor klanten en omzet. De rest van je systemen leest daaruit.",
+      beheer: "Leg vast hoe je koppelingen werken en wie ze bewaakt. Gaat er iets mis, dan krijg je meteen een melding.",
+      ai: "Zet AI op je eigen gegevens. Met een koppeling via MCP stel je vragen aan je CRM in gewone taal.",
+    },
+    contactKop: "Wil je hier iets mee?",
+    contactTekst:
+      "Laat je gegevens achter, dan maak ik een uitgebreider advies met een voorbeeld van een proces in jouw bedrijf.",
+    naam: "Naam",
+    mail: "E-mail",
+    mailHint: "Dan stuur ik je het advies en mag ik je mailen",
+    telefoon: "Telefoon",
+    telefoonHint: "Dan mag ik je bellen over je uitslag",
+    knop: "Neem contact met mij op",
+    akkoord:
+      "Door op de knop te klikken mag Jeau.st je benaderen via de gegevens die je hebt ingevuld. Afmelden kan altijd.",
+    privacyLink: "Lees hoe ik met je gegevens omga",
+    bereikFout: "Vul je mailadres of je telefoonnummer in",
+    mailFout: "Dat mailadres klopt niet",
+    bedanktKop: "Dank je, ik neem contact op",
+    bedanktTekst:
+      "Het advies komt naar je toe via de weg die je hebt ingevuld. Liever meteen een moment kiezen? Plan dan een belafspraak.",
+    verzendFout: "Versturen lukte niet. Probeer het nog eens, of mail naar {mail}.",
+    zonderScript: "De scan werkt met JavaScript. Staat dat uit, plan dan een belafspraak of stuur een mail.",
+    todoWebhook: "Webhook-URL voor de scan, zet PUBLIC_SCAN_WEBHOOK in .env.local",
   },
 
   privacy: {
@@ -304,7 +429,7 @@ const nl = {
       "Ik gebruik Cloudflare Web Analytics. Dat werkt zonder cookies en zonder een profiel van je op te bouwen. Ik zie hoeveel mensen welke pagina bekijken, niet wie je bent.",
     contactKop: "Als je contact opneemt",
     contactTekst:
-      "Mail je of bel je, dan bewaar ik wat je stuurt zolang dat nodig is om je te kunnen helpen. Plan je een belafspraak, dan loopt dat via de afsprakenplanner van Microsoft Bookings en komen je naam, mailadres en het gekozen tijdstip bij Microsoft en daarna in mijn CRM te staan.",
+      "Mail je, bel je of stuur je een bericht via het formulier, dan bewaar ik wat je stuurt zolang dat nodig is om je te kunnen helpen. Doe je de koppelscan, dan gaan je antwoorden en de naam van je organisatie naar mijn CRM, en zoek ik openbare informatie over je organisatie op om het advies te maken. Laat je daar een mailadres of telefoonnummer achter, dan mag ik je via die weg benaderen, en alleen via die weg. Plan je een belafspraak, dan loopt dat via de afsprakenplanner van Microsoft Bookings en komen je naam, mailadres en het gekozen tijdstip bij Microsoft en daarna in mijn CRM te staan.",
     rechtenKop: "Je rechten",
     rechtenVoor:
       "Je mag opvragen welke gegevens ik van je heb, ze laten corrigeren of laten verwijderen. Een mail naar ",
@@ -330,6 +455,16 @@ const nl = {
         naam: "Pipedrive",
         waarvoor:
           "Mijn CRM. Neem je contact op of plan je een afspraak, dan leg ik je naam, je bedrijf en waar we het over hadden daar vast.",
+      },
+      {
+        naam: "n8n",
+        waarvoor:
+          "De automatisering die een ingevulde scan of een bericht via het formulier ontvangt en doorzet naar mijn CRM en mijn mail.",
+      },
+      {
+        naam: "Anthropic",
+        waarvoor:
+          "Claude, het taalmodel van Anthropic, maakt uit je scanantwoorden en openbare informatie over je organisatie een eerste analyse. Die lees ik na voordat ik contact opneem.",
       },
       {
         naam: "OpenStreetMap",
@@ -394,7 +529,8 @@ const nl = {
       werk: "Vier geanonimiseerde opdrachten als situatie, aanpak en resultaat.",
       over:
         "Wie je spreekt, waar de achtergrond vandaan komt en waarom dit werk gedaan wordt.",
-      contact: "Een belafspraak van 30 minuten plannen of mailen.",
+      contact: "Een belafspraak van 30 minuten plannen, een bericht sturen of mailen.",
+      scan: "Acht klikvragen over systemen en handwerk, met direct een uitslag.",
       privacy: "Welke gegevens de site verwerkt en welke niet.",
       st: "Het verhaal achter het domein en achter Sao Tome en Principe.",
     },
@@ -405,6 +541,7 @@ const nl = {
       werk: "Werk",
       over: "Over Jeau.st",
       contact: "Contact",
+      scan: "Koppelscan",
       privacy: "Privacy",
       st: "Waarom .st",
     },
@@ -659,6 +796,131 @@ const en: typeof nl = {
     mail: "Email",
     linkedin: "LinkedIn",
     onderdeelVan: "Part of {studio}",
+    scanLink: "Not ready for a call yet? Take the integration scan first",
+    formKop: "Or send a message",
+    formIntro:
+      "Tell me briefly what gets stuck. I will reply through whichever channel you fill in.",
+    formVraag: "What gets stuck?",
+    formVraagVoorbeeld: "We write quotes in Word and I retype the invoices into Moneybird.",
+    formKnop: "Send your message",
+    formVraagFout: "Write a line about what gets stuck",
+    formBedanktKop: "Thanks, your message is in",
+    formBedanktTekst: "I will read it and get back to you through the channel you filled in.",
+  },
+
+  scan: {
+    titel: "Integration scan: find your manual work | Jeau.st",
+    beschrijving:
+      "Eight questions, three minutes of clicking. You see straight away where your systems work past each other and which link saves time first.",
+    kop: "See in three minutes where your manual work sits",
+    intro:
+      "Eight questions about your systems, the retyping you do and who fixes things when they break. You only click blocks. The result appears on screen straight away, and you do not have to hand over your email address first.",
+    startKop: "Eight questions, three minutes",
+    startTekst: "Click an answer and you move on by yourself. You can always go back.",
+    start: "Start the scan",
+    vorige: "Back",
+    verder: "Next",
+    anders: "Something else",
+    andersVoorbeeld: "Type your answer",
+    andersFout: "Type a short answer first",
+    voortgang: "Question {nu} of {totaal}",
+    vragen: [
+      {
+        vraag: "How many people work at your organisation?",
+        opties: ["Just me", "2 to 10", "11 to 50", "More than 50"],
+      },
+      {
+        vraag: "How many separate systems do you work with?",
+        opties: ["1 or 2", "3 to 5", "6 or more", "No idea"],
+      },
+      {
+        vraag: "How many hours a week go into retyping and copying?",
+        opties: ["Under 2", "2 to 5", "5 to 10", "More than 10"],
+      },
+      {
+        vraag: "Where does most of the manual work sit?",
+        opties: [
+          "Quotes and invoices",
+          "Planning and hours",
+          "Keeping customer data up to date",
+          "Building reports",
+        ],
+      },
+      {
+        vraag: "Do your systems talk to each other?",
+        opties: ["Yes, everything is linked", "Partly", "No, all separate", "No idea"],
+      },
+      {
+        vraag: "Where do you find the current state of customers and revenue?",
+        opties: ["In one system", "Spread over several", "In someone's head"],
+      },
+      {
+        vraag: "Who fixes it when a link or a sheet breaks?",
+        opties: ["We do", "One colleague who knows", "An outside party", "Nobody, really"],
+      },
+      {
+        vraag: "Do you use AI on your own business data?",
+        opties: ["No", "Loose questions in ChatGPT", "Linked to our systems"],
+      },
+    ],
+    organisatieKop: "Which organisation are you doing the scan for?",
+    organisatieTekst:
+      "Then I can set your answers next to what is publicly known about your company, so the advice is about your situation.",
+    organisatie: "Organisation",
+    organisatieVoorbeeld: "Northfield Joinery",
+    organisatieFout: "Fill in the name of your organisation",
+    website: "Website",
+    websiteHint: "Can stay empty",
+    websiteVoorbeeld: "northfieldjoinery.co.uk",
+    naarUitslag: "See your result",
+    uitslagKop: "Your result",
+    themas: {
+      systemen: "Systems",
+      handwerk: "Manual work",
+      data: "Data",
+      beheer: "Upkeep",
+      ai: "AI",
+    },
+    niveaus: ["Work to do", "Could be better", "In good shape"],
+    tijdKop: "Time to win back",
+    tijdWaarde: "Around {uren} hours a month",
+    tijdUitleg:
+      "A rough estimate: half of the retyping hours you gave. How much it really is depends on your systems.",
+    winstenKop: "Where I would start",
+    winstPerPlek: [
+      "Quote and invoice from one source. A signed quote sets up the invoice in your accounts.",
+      "Hours straight onto the right project. What is in the planning goes into your time tracking and then onto the invoice.",
+      "One place for customer data. A new contact in your CRM shows up correctly in your accounts straight away.",
+      "A report that updates itself. The figures come straight from your systems, so nobody stitches exports together any more.",
+    ],
+    winstAnders: "The task you named yourself. We talk about that one first.",
+    winstPerThema: {
+      systemen: "Map your systems: which data sits where, and which link saves the most.",
+      handwerk: "Find the task that comes back every week. Automating that pays off soonest.",
+      data: "Pick one source for customers and revenue. The rest of your systems read from it.",
+      beheer: "Write down how your links work and who watches them. If something goes wrong, you get a message straight away.",
+      ai: "Put AI on your own data. With a link over MCP you ask your CRM questions in plain language.",
+    },
+    contactKop: "Want to do something with this?",
+    contactTekst:
+      "Leave your details and I will put together fuller advice, with an example of a process in your company.",
+    naam: "Name",
+    mail: "Email",
+    mailHint: "Then I send you the advice and may email you",
+    telefoon: "Phone",
+    telefoonHint: "Then I may call you about your result",
+    knop: "Get in touch with me",
+    akkoord:
+      "By clicking the button you allow Jeau.st to contact you through the details you filled in. You can opt out at any time.",
+    privacyLink: "Read how I handle your data",
+    bereikFout: "Fill in your email address or your phone number",
+    mailFout: "That email address does not look right",
+    bedanktKop: "Thanks, I will be in touch",
+    bedanktTekst:
+      "The advice reaches you through the channel you filled in. Rather pick a moment now? Then book a call.",
+    verzendFout: "Sending did not work. Try again, or email {mail}.",
+    zonderScript: "The scan needs JavaScript. If it is switched off, book a call or send an email.",
+    todoWebhook: "Webhook URL for the scan, set PUBLIC_SCAN_WEBHOOK in .env.local",
   },
 
   privacy: {
@@ -675,7 +937,7 @@ const en: typeof nl = {
       "I use Cloudflare Web Analytics. It works without cookies and without building a profile of you. I see how many people look at which page, not who you are.",
     contactKop: "If you get in touch",
     contactTekst:
-      "If you email or call, I keep what you send for as long as I need it to help you. If you book a call, that runs through Microsoft Bookings, so your name, email address and the slot you picked end up with Microsoft and after that in my CRM.",
+      "If you email, call or send a message through the form, I keep what you send for as long as I need it to help you. If you take the integration scan, your answers and the name of your organisation go to my CRM, and I look up public information about your organisation to write the advice. If you leave an email address or phone number there, I may contact you through that channel, and only that one. If you book a call, that runs through Microsoft Bookings, so your name, email address and the slot you picked end up with Microsoft and after that in my CRM.",
     rechtenKop: "Your rights",
     rechtenVoor:
       "You can ask which data I hold about you, have it corrected or have it deleted. An email to ",
@@ -701,6 +963,16 @@ const en: typeof nl = {
         naam: "Pipedrive",
         waarvoor:
           "My CRM. If you get in touch or book a call, I record your name, your company and what we talked about there.",
+      },
+      {
+        naam: "n8n",
+        waarvoor:
+          "The automation that receives a completed scan or a message from the form and passes it on to my CRM and my mail.",
+      },
+      {
+        naam: "Anthropic",
+        waarvoor:
+          "Claude, the language model made by Anthropic, turns your scan answers and public information about your organisation into a first analysis. I read it before I get in touch.",
       },
       {
         naam: "OpenStreetMap",
@@ -765,7 +1037,8 @@ const en: typeof nl = {
       werk: "Four anonymised projects as situation, approach and result.",
       over:
         "Who you are talking to, where the experience comes from and why this work gets done.",
-      contact: "Booking a 30-minute call, or getting in touch by email.",
+      contact: "Booking a 30-minute call, sending a message, or getting in touch by email.",
+      scan: "Eight click-through questions about systems and manual work, with an instant result.",
       privacy: "Which data the site processes and which it does not.",
       st: "The story behind the domain and behind Sao Tome and Principe.",
     },
@@ -776,6 +1049,7 @@ const en: typeof nl = {
       werk: "Work",
       over: "About Jeau.st",
       contact: "Contact",
+      scan: "Integration scan",
       privacy: "Privacy",
       st: "Why .st",
     },

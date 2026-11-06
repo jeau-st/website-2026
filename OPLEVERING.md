@@ -8,6 +8,8 @@ hieronder staat, is werk dat nog moet gebeuren voordat de site live kan.
 | Wat | Waar | Toelichting |
 | --- | --- | --- |
 | Privacytekst juridisch laten nalezen | `src/pages/privacy.astro` | De verwerkerslijst staat er nu: Cloudflare, Microsoft, Pipedrive en Google Maps. Laat het geheel nalezen door iemand die er verstand van heeft voordat de site live gaat. |
+| n8n-workflow voor scan en formulier | n8n Jeau.st | Zonder webhook-URL staat er een TODO op /scan en /contact. De payload en de stappen staan in `docs/koppelscan.md`. Zet daarna `PUBLIC_SCAN_WEBHOOK` in de build. |
+| Privacytekst bij scan en formulier | `src/data/teksten.ts`, privacy | n8n en Anthropic staan er nu bij als verwerker, en de tekst zegt dat je de AI-analyse naleest voordat je contact opneemt. Gaat de mail ooit automatisch de deur uit, pas dan die zin aan. Neem dit mee in de juridische controle. |
 
 ## Instellen voor of na livegang
 
