@@ -27,6 +27,7 @@ const volgorde: Route[] = [
   "werk",
   "over",
   "contact",
+  "scan",
   "privacy",
   "st",
 ];

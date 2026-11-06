@@ -1,0 +1,465 @@
+---
+import Kaart from "./Kaart.astro";
+import Knop from "./Knop.astro";
+import Todo from "./Todo.astro";
+import { bedrijf } from "../data/site";
+import { route, type Taal } from "../data/taal";
+import { teksten, vul } from "../data/teksten";
+import {
+  akkoordVersie,
+  scanVragen,
+  terugTeWinnen,
+  themas,
+  urenPerWeek,
+} from "../data/scan";
+
+/**
+ * De koppelscan: acht klikvragen, de organisatie, de uitslag en daaronder
+ * de vraag of je er iets mee wilt.
+ *
+ * Een blok aanklikken is antwoorden: na een tel staat de volgende vraag
+ * er. Alleen "Anders" vraagt om typen, en dan komt er een veld met een
+ * verderknop. Elke vraag heeft een knop terug.
+ *
+ * De uitslag staat er voordat je contactgegevens geeft. Dat is een keuze
+ * over toestemming: hangt de uitslag af van je mailadres, dan is het
+ * akkoord onder de knop afgedwongen en telt het niet. Zie
+ * docs/koppelscan.md.
+ *
+ * Twee berichten naar dezelfde webhook, met hetzelfde `id`: `uitslag`
+ * zodra iemand de organisatie invult, zodat n8n al kan gaan zoeken, en
+ * `contact` als iemand zijn gegevens achterlaat. Zonder webhook-URL in de
+ * build staat er een zichtbare TODO en gaat het bericht naar de console,
+ * zodat de flow lokaal te testen is.
+ */
+interface Props {
+  taal: Taal;
+}
+
+const { taal } = Astro.props;
+const t = teksten[taal].scan;
+const webhook = import.meta.env.PUBLIC_SCAN_WEBHOOK ?? "";
+
+const gegevens = {
+  taal,
+  webhook,
+  akkoordVersie,
+  urenPerWeek,
+  terugTeWinnen,
+  themas,
+  regels: scanVragen,
+  t,
+  verzendFout: vul(t.verzendFout, { mail: bedrijf.email }),
+};
+
+const primair =
+  "drukbaar inline-flex items-center justify-center gap-2 rounded-klein bg-accent px-7 py-3.5 text-sm font-medium tracking-[0.02em] text-op-accent transition-colors duration-150 hover:bg-tekst";
+const terug =
+  "drukbaar inline-flex min-h-11 items-center gap-2 text-sm text-zacht transition-colors duration-150 hover:text-tekst";
+const blok =
+  "drukbaar flex min-h-14 w-full items-center rounded-kaart border border-rand bg-kaart px-5 py-3 text-left text-tekst transition-colors duration-150 hover:bg-kaart-hover aria-pressed:border-tekst aria-pressed:bg-kaart-hover";
+const veld =
+  "mt-2 block w-full rounded-klein border border-rand bg-bg px-4 py-3 text-tekst placeholder:text-zacht focus:border-tekst";
+const fout = "mt-2 hidden text-sm text-tekst";
+---
+
+{webhook === "" && <Todo wat={t.todoWebhook} />}
+
+<Kaart gewicht="groot" class="scan max-w-3xl">
+  <script type="application/json" data-scan-gegevens set:html={JSON.stringify(gegevens)} />
+
+  <noscript><p>{t.zonderScript}</p></noscript>
+
+  <div data-voortgang hidden class="mb-8">
+    <p class="label" data-voortgang-tekst></p>
+    <div class="mt-3 h-1 overflow-hidden rounded-klein bg-rand-zacht">
+      <div data-voortgang-balk class="h-1 bg-tekst transition-transform duration-150" style="transform-origin:left;transform:scaleX(0)"></div>
+    </div>
+  </div>
+
+  <div data-scherm="start" hidden>
+    <h2 tabindex="-1" class="text-2xl sm:text-3xl">{t.startKop}</h2>
+    <p class="mt-4 text-tekst">{t.startTekst}</p>
+    <button type="button" class:list={[primair, "mt-8"]} data-start>{t.start}</button>
+  </div>
+
+  {
+    t.vragen.map((vraag, i) => (
+      <div data-scherm={`v${i}`} data-vraag={i} hidden>
+        <h2 tabindex="-1" class="text-2xl sm:text-3xl">{vraag.vraag}</h2>
+        <div class="mt-8 grid gap-3 sm:grid-cols-2">
+          {vraag.opties.map((optie, j) => (
+            <button type="button" class={blok} data-optie={j} aria-pressed="false">
+              {optie}
+            </button>
+          ))}
+          {scanVragen[i]!.anders && (
+            <button type="button" class:list={[blok, "border-dashed text-zacht"]} data-anders aria-pressed="false">
+              {t.anders}
+            </button>
+          )}
+        </div>
+        {scanVragen[i]!.anders && (
+          <div data-anders-veld hidden class="mt-4">
+            <label class="sr-only" for={`anders-${i}`}>{t.anders}</label>
+            <div class="flex flex-col gap-3 sm:flex-row">
+              <input id={`anders-${i}`} type="text" maxlength="200" class:list={[veld, "mt-0 sm:flex-1"]} placeholder={t.andersVoorbeeld} />
+              <button type="button" class={primair} data-anders-verder>{t.verder}</button>
+            </div>
+            <p class={fout} data-fout>{t.andersFout}</p>
+          </div>
+        )}
+        <button type="button" class:list={[terug, "mt-8"]} data-vorige>
+          <span aria-hidden="true">&larr;</span> {t.vorige}
+        </button>
+      </div>
+    ))
+  }
+
+  <form data-scherm="organisatie" hidden novalidate>
+    <h2 tabindex="-1" class="text-2xl sm:text-3xl">{t.organisatieKop}</h2>
+    <p class="mt-4 text-tekst">{t.organisatieTekst}</p>
+    <div class="mt-8 grid gap-5 sm:grid-cols-2">
+      <div>
+        <label for="scan-organisatie" class="text-sm text-zacht">{t.organisatie}</label>
+        <input id="scan-organisatie" name="organisatie" type="text" required autocomplete="organization" maxlength="120" class={veld} placeholder={t.organisatieVoorbeeld} />
+        <p class={fout} data-fout>{t.organisatieFout}</p>
+      </div>
+      <div>
+        <label for="scan-website" class="text-sm text-zacht">{t.website} <span class="text-zacht">({t.websiteHint})</span></label>
+        <input id="scan-website" name="website" type="text" inputmode="url" autocomplete="url" maxlength="200" class={veld} placeholder={t.websiteVoorbeeld} />
+      </div>
+    </div>
+    <div class="mt-8 flex flex-wrap items-center justify-between gap-4">
+      <button type="button" class={terug} data-vorige>
+        <span aria-hidden="true">&larr;</span> {t.vorige}
+      </button>
+      <button type="submit" class={primair}>{t.naarUitslag}</button>
+    </div>
+  </form>
+
+  <div data-scherm="uitslag" hidden>
+    <h2 tabindex="-1" class="text-2xl sm:text-3xl">{t.uitslagKop}</h2>
+
+    <dl class="mt-8 grid gap-px overflow-hidden rounded-kaart border border-rand bg-rand-zacht sm:grid-cols-5" data-themas></dl>
+
+    <div class="mt-8">
+      <p class="label">{t.tijdKop}</p>
+      <p class="mt-2 text-2xl text-kop" data-uren></p>
+      <p class="mt-2 text-sm text-zacht">{t.tijdUitleg}</p>
+    </div>
+
+    <div class="mt-8">
+      <p class="label">{t.winstenKop}</p>
+      <ol class="mt-3 grid gap-px overflow-hidden rounded-kaart border border-rand bg-rand-zacht" data-winsten></ol>
+    </div>
+
+    <form class="mt-12 border-t border-rand pt-8" data-contact novalidate>
+      <h3 class="text-xl">{t.contactKop}</h3>
+      <p class="mt-2 text-tekst">{t.contactTekst}</p>
+      <div class="mt-6 grid gap-5 sm:grid-cols-3">
+        <div>
+          <label for="scan-naam" class="text-sm text-zacht">{t.naam}</label>
+          <input id="scan-naam" name="naam" type="text" autocomplete="name" maxlength="120" class={veld} />
+        </div>
+        <div>
+          <label for="scan-mail" class="text-sm text-zacht">{t.mail}</label>
+          <input id="scan-mail" name="email" type="email" autocomplete="email" maxlength="200" class={veld} aria-describedby="scan-mail-hint" />
+          <p id="scan-mail-hint" class="mt-1 text-sm text-zacht">{t.mailHint}</p>
+        </div>
+        <div>
+          <label for="scan-tel" class="text-sm text-zacht">{t.telefoon}</label>
+          <input id="scan-tel" name="telefoon" type="tel" autocomplete="tel" maxlength="40" class={veld} aria-describedby="scan-tel-hint" />
+          <p id="scan-tel-hint" class="mt-1 text-sm text-zacht">{t.telefoonHint}</p>
+        </div>
+      </div>
+      <p class={fout} data-fout-bereik>{t.bereikFout}</p>
+      <p class={fout} data-fout-mail>{t.mailFout}</p>
+      <p class={fout} data-fout-verzenden>{gegevens.verzendFout}</p>
+      <div class="mt-6 flex flex-wrap items-center justify-between gap-4">
+        <button type="button" class={terug} data-vorige>
+          <span aria-hidden="true">&larr;</span> {t.vorige}
+        </button>
+        <button type="submit" class={primair}>{t.knop}</button>
+      </div>
+      <p class="mt-4 text-sm text-zacht" data-akkoord>
+        {t.akkoord} <a class="tekstlink text-tekst" href={route("privacy", taal)}>{t.privacyLink}</a>
+      </p>
+    </form>
+  </div>
+
+  <div data-scherm="bedankt" hidden>
+    <h2 tabindex="-1" class="text-2xl sm:text-3xl">{t.bedanktKop}</h2>
+    <p class="mt-4 text-tekst">{t.bedanktTekst}</p>
+    <div class="mt-8"><Knop /></div>
+  </div>
+</Kaart>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .scan [data-scherm]:not([hidden]) {
+      animation: scan-in 150ms ease-out;
+    }
+  }
+  @keyframes scan-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+</style>
+
+<script>
+  type Regel = { id: string; thema?: string; punten?: number[]; anders?: boolean };
+  type Antwoord = { id: string; vraag: string; antwoord: string; optie: number | null };
+
+  for (const kaart of document.querySelectorAll<HTMLElement>(".scan")) {
+    const bron = kaart.querySelector("[data-scan-gegevens]");
+    if (!bron?.textContent) continue;
+    const g = JSON.parse(bron.textContent);
+    const t = g.t;
+    const regels: Regel[] = g.regels;
+    const aantal = regels.length;
+    const id = crypto.randomUUID?.() ?? String(Date.now());
+    const antwoorden: (Antwoord | undefined)[] = new Array(aantal);
+    let organisatie = "";
+    let website = "";
+    let uitslag: Record<string, unknown> = {};
+
+    const schermen = [...kaart.querySelectorAll<HTMLElement>("[data-scherm]")];
+    const voortgang = kaart.querySelector<HTMLElement>("[data-voortgang]")!;
+    const voortgangTekst = kaart.querySelector<HTMLElement>("[data-voortgang-tekst]")!;
+    const balk = kaart.querySelector<HTMLElement>("[data-voortgang-balk]")!;
+    let huidig = "start";
+
+    function toon(naam: string, focus = true) {
+      huidig = naam;
+      for (const s of schermen) s.hidden = s.dataset.scherm !== naam;
+      const vraag = naam.startsWith("v") ? Number(naam.slice(1)) : null;
+      voortgang.hidden = vraag === null && naam !== "organisatie";
+      const nu = vraag === null ? aantal + 1 : vraag + 1;
+      voortgangTekst.textContent = t.voortgang
+        .replace("{nu}", String(Math.min(nu, aantal)))
+        .replace("{totaal}", String(aantal));
+      balk.style.transform = `scaleX(${(nu - 1) / aantal})`;
+      if (focus) kaart.querySelector<HTMLElement>(`[data-scherm="${naam}"] h2`)?.focus({ preventScroll: true });
+      const boven = kaart.getBoundingClientRect().top;
+      if (focus && boven < 0) kaart.scrollIntoView({ block: "start", behavior: "smooth" });
+    }
+
+    function volgende() {
+      const i = huidig.startsWith("v") ? Number(huidig.slice(1)) : -1;
+      toon(i + 1 < aantal ? `v${i + 1}` : "organisatie");
+    }
+
+    function vorige() {
+      if (huidig === "uitslag") return toon("organisatie");
+      if (huidig === "organisatie") return toon(`v${aantal - 1}`);
+      const i = Number(huidig.slice(1));
+      toon(i > 0 ? `v${i - 1}` : "start");
+    }
+
+    function verstuur(stap: string, extra: Record<string, unknown> = {}) {
+      const bericht = {
+        bron: "koppelscan",
+        stap,
+        id,
+        taal: g.taal,
+        pagina: location.href,
+        verstuurd: new Date().toISOString(),
+        organisatie,
+        website,
+        antwoorden,
+        uitslag,
+        ...extra,
+      };
+      if (!g.webhook) {
+        console.info("Koppelscan zonder webhook. Dit zou verstuurd worden:", bericht);
+        return Promise.resolve(true);
+      }
+      return fetch(g.webhook, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bericht),
+        keepalive: true,
+      })
+        .then((r) => r.ok)
+        .catch(() => false);
+    }
+
+    function zetFout(el: Element | null, aan: boolean) {
+      el?.classList.toggle("hidden", !aan);
+    }
+
+    kaart.querySelector("[data-start]")?.addEventListener("click", () => toon("v0"));
+    for (const knop of kaart.querySelectorAll("[data-vorige]")) knop.addEventListener("click", vorige);
+
+    for (const scherm of kaart.querySelectorAll<HTMLElement>("[data-vraag]")) {
+      const i = Number(scherm.dataset.vraag);
+      const knoppen = [...scherm.querySelectorAll<HTMLButtonElement>("[data-optie], [data-anders]")];
+      const druk = (gekozen: HTMLButtonElement) =>
+        knoppen.forEach((k) => k.setAttribute("aria-pressed", String(k === gekozen)));
+      const andersVeld = scherm.querySelector<HTMLElement>("[data-anders-veld]");
+      const invoer = andersVeld?.querySelector("input");
+
+      for (const knop of scherm.querySelectorAll<HTMLButtonElement>("[data-optie]")) {
+        knop.addEventListener("click", () => {
+          druk(knop);
+          if (andersVeld) andersVeld.hidden = true;
+          const j = Number(knop.dataset.optie);
+          antwoorden[i] = { id: regels[i]!.id, vraag: t.vragen[i].vraag, antwoord: t.vragen[i].opties[j], optie: j };
+          setTimeout(volgende, 180);
+        });
+      }
+
+      const anders = scherm.querySelector<HTMLButtonElement>("[data-anders]");
+      anders?.addEventListener("click", () => {
+        druk(anders);
+        andersVeld!.hidden = false;
+        invoer?.focus();
+      });
+
+      const bevestig = () => {
+        const waarde = invoer?.value.trim() ?? "";
+        zetFout(andersVeld!.querySelector("[data-fout]"), !waarde);
+        if (!waarde) return;
+        antwoorden[i] = { id: regels[i]!.id, vraag: t.vragen[i].vraag, antwoord: waarde, optie: null };
+        volgende();
+      };
+      andersVeld?.querySelector("[data-anders-verder]")?.addEventListener("click", bevestig);
+      invoer?.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          bevestig();
+        }
+      });
+      invoer?.addEventListener("input", () => zetFout(andersVeld!.querySelector("[data-fout]"), false));
+    }
+
+    function reken() {
+      const totaal: Record<string, number[]> = {};
+      regels.forEach((regel, i) => {
+        const a = antwoorden[i];
+        if (!regel.thema || !regel.punten || !a) return;
+        (totaal[regel.thema] ??= []).push(a.optie === null ? 1 : regel.punten[a.optie]!);
+      });
+      const scores: Record<string, { gemiddelde: number; niveau: number }> = {};
+      for (const thema of g.themas as string[]) {
+        const lijst = totaal[thema];
+        if (!lijst?.length) continue;
+        const gemiddelde = lijst.reduce((x, y) => x + y, 0) / lijst.length;
+        scores[thema] = { gemiddelde, niveau: gemiddelde < 0.7 ? 0 : gemiddelde < 1.4 ? 1 : 2 };
+      }
+      const urenIndex = regels.findIndex((r) => r.id === "uren");
+      const keuze = antwoorden[urenIndex]?.optie ?? 0;
+      const ruw = g.urenPerWeek[keuze] * 4.3 * g.terugTeWinnen;
+      const urenPerMaand = Math.max(5, Math.floor(ruw / 5) * 5);
+
+      const plekIndex = regels.findIndex((r) => r.id === "plek");
+      const plek = antwoorden[plekIndex];
+      const winsten: string[] = [plek && plek.optie !== null ? t.winstPerPlek[plek.optie] : t.winstAnders];
+      Object.entries(scores)
+        .filter(([, s]) => s.niveau < 2)
+        .sort((a, b) => a[1].gemiddelde - b[1].gemiddelde)
+        .forEach(([thema]) => {
+          if (winsten.length < 3) winsten.push(t.winstPerThema[thema]);
+        });
+      for (const thema of g.themas as string[]) {
+        if (winsten.length >= 3) break;
+        if (!winsten.includes(t.winstPerThema[thema])) winsten.push(t.winstPerThema[thema]);
+      }
+      return { scores, urenPerMaand, winsten };
+    }
+
+    function toonUitslag(u: ReturnType<typeof reken>) {
+      const dl = kaart.querySelector("[data-themas]")!;
+      dl.replaceChildren();
+      for (const thema of g.themas as string[]) {
+        const s = u.scores[thema];
+        if (!s) continue;
+        const cel = document.createElement("div");
+        cel.className = "bg-kaart p-4";
+        const dt = document.createElement("dt");
+        dt.className = "label";
+        dt.textContent = t.themas[thema];
+        const meter = document.createElement("dd");
+        meter.className = "mt-3 flex gap-1";
+        meter.setAttribute("aria-hidden", "true");
+        for (let k = 0; k < 3; k++) {
+          const blokje = document.createElement("span");
+          blokje.className = `h-2 flex-1 rounded-[2px] ${k <= s.niveau ? "bg-tekst" : "bg-rand"}`;
+          meter.append(blokje);
+        }
+        const dd = document.createElement("dd");
+        dd.className = "mt-2 text-sm text-tekst";
+        dd.textContent = t.niveaus[s.niveau];
+        cel.append(dt, meter, dd);
+        dl.append(cel);
+      }
+      kaart.querySelector("[data-uren]")!.textContent = t.tijdWaarde.replace("{uren}", String(u.urenPerMaand));
+      const ol = kaart.querySelector("[data-winsten]")!;
+      ol.replaceChildren(
+        ...u.winsten.map((tekst, k) => {
+          const li = document.createElement("li");
+          li.className = "flex gap-4 bg-kaart p-4 text-tekst";
+          const nr = document.createElement("span");
+          nr.className = "label shrink-0 pt-1";
+          nr.textContent = String(k + 1).padStart(2, "0");
+          const p = document.createElement("span");
+          p.textContent = tekst;
+          li.append(nr, p);
+          return li;
+        }),
+      );
+    }
+
+    const orgForm = kaart.querySelector<HTMLFormElement>('[data-scherm="organisatie"]')!;
+    const orgVeld = orgForm.querySelector<HTMLInputElement>('[name="organisatie"]')!;
+    orgVeld.addEventListener("input", () => zetFout(orgForm.querySelector("[data-fout]"), false));
+    orgForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      organisatie = orgVeld.value.trim();
+      website = orgForm.querySelector<HTMLInputElement>('[name="website"]')!.value.trim();
+      zetFout(orgForm.querySelector("[data-fout]"), !organisatie);
+      if (!organisatie) return orgVeld.focus();
+      const u = reken();
+      uitslag = u;
+      toonUitslag(u);
+      verstuur("uitslag");
+      toon("uitslag");
+    });
+
+    const contact = kaart.querySelector<HTMLFormElement>("[data-contact]")!;
+    contact.addEventListener("input", () =>
+      contact.querySelectorAll("[data-fout-bereik], [data-fout-mail], [data-fout-verzenden]").forEach((el) => zetFout(el, false)),
+    );
+    contact.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const waarde = (naam: string) => contact.querySelector<HTMLInputElement>(`[name="${naam}"]`)!.value.trim();
+      const naam = waarde("naam");
+      const email = waarde("email");
+      const telefoon = waarde("telefoon");
+      const mailGoed = !email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      zetFout(contact.querySelector("[data-fout-bereik]"), !email && !telefoon);
+      zetFout(contact.querySelector("[data-fout-mail]"), !mailGoed);
+      if ((!email && !telefoon) || !mailGoed) return;
+      const knop = contact.querySelector<HTMLButtonElement>('[type="submit"]')!;
+      knop.setAttribute("aria-busy", "true");
+      const gelukt = await verstuur("contact", {
+        contact: { naam, email, telefoon },
+        toestemming: {
+          email: Boolean(email),
+          telefoon: Boolean(telefoon),
+          tekst: t.akkoord,
+          versie: g.akkoordVersie,
+          moment: new Date().toISOString(),
+        },
+      });
+      knop.removeAttribute("aria-busy");
+      if (!gelukt) return zetFout(contact.querySelector("[data-fout-verzenden]"), true);
+      toon("bedankt");
+    });
+
+    toon("start", false);
+  }
+</script>

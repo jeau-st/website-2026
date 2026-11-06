@@ -6,7 +6,7 @@ Nieuwe website voor jeau.st, de eigen site van Jeau.st. Eigenaar: Jeau.st | Klan
 
 - Astro 7, Tailwind v4 via `@tailwindcss/vite`, hosting Cloudflare Workers via `@astrojs/cloudflare`
 - Fonts: Manrope voor de koppen, Inter voor de lopende tekst, IBM Plex Mono voor de labels, alle drie via de Astro fonts-API met de Fontsource-provider, zelf gehost, geen verzoek naar Google. Het woordmerk is geen font maar een pad in `src/components/Woordmerk.astro`
-- Primaire actie: Pipedrive-afspraakplanner. Geen contactformulier
+- Primaire actie: Pipedrive-afspraakplanner. Daarnaast een contactformulier op /contact en de koppelscan op /scan, allebei naar een n8n-webhook. Zie `docs/koppelscan.md`
 - Twee talen via de i18n van Astro: Nederlands in de wortel, Engels onder `/en/` met Engelse slugs. Geen automatische omschakeling op `Accept-Language`
 
 Output is statisch. De adapter staat er zodat losse endpoints of server islands later kunnen, zonder herinrichting. De vorige site staat in `C:\Users\joost\dev\Website Jeau.st\jeau-st-site` (statische HTML, Tailwind v4, GitHub Pages) en dient als referentie voor content en huisstijl.
@@ -42,6 +42,8 @@ De build schrijft de pagina's naar `dist/client` en de Worker naar `dist/server`
 - `src/paginas`: de pagina's zelf, één component per pagina met `taal` als prop. `src/pages` heeft er alleen de routes van, twee per pagina
 - `keystatic.config.ts`: welke schermen en velden er zijn, met de huisregel per veld als helptekst
 - `docs/keystatic.md`: wat er in het CMS zit, hoe je het lokaal draait en wat er nog moet voor GitHub-modus
+- `src/data/scan.ts`: de rekenregels van de koppelscan (punten per antwoord, thema's, urenschatting). De vragen zelf staan in `teksten.ts`; een controle bij de build laat hem vallen als die twee uit de pas lopen
+- `src/components/Scan.astro` en `src/components/Contactformulier.astro`: de scan en het formulier, met de payload naar n8n. De afspraken met de workflow staan in `docs/koppelscan.md`
 - `src/data/namen.ts`: de namen waaruit de kop op de homepage kiest, en de functie die er een uitzoekt
 - `OPLEVERING.md`: wat Joost nog moet invullen voor livegang
 - `SCHRIJFWIJZER.md`: stem, verboden woorden en werkwijze voor alle tekst op de site, met een eigen sectie voor het Engels

@@ -1,0 +1,150 @@
+---
+import Todo from "./Todo.astro";
+import { bedrijf } from "../data/site";
+import { akkoordVersie } from "../data/scan";
+import { route, type Taal } from "../data/taal";
+import { teksten, vul } from "../data/teksten";
+
+/**
+ * Het contactformulier op /contact. Naam, organisatie, een mailadres of
+ * telefoonnummer en waar je tegenaan loopt. Het gaat naar een n8n-webhook
+ * met `bron: "contactformulier"`, dezelfde workflow als de koppelscan mag
+ * hem ontvangen. Zie docs/koppelscan.md.
+ *
+ * Toestemming per kanaal: vul je een mailadres in, dan mag er gemaild
+ * worden, een telefoonnummer, dan mag er gebeld worden. Dat staat bij de
+ * velden en onder de knop, en gaat met tekst en versie mee naar het CRM.
+ */
+interface Props {
+  taal: Taal;
+}
+
+const { taal } = Astro.props;
+const t = teksten[taal];
+const s = t.scan;
+const webhook =
+  import.meta.env.PUBLIC_CONTACT_WEBHOOK || import.meta.env.PUBLIC_SCAN_WEBHOOK || "";
+
+const gegevens = {
+  taal,
+  webhook,
+  akkoord: s.akkoord,
+  akkoordVersie,
+};
+
+const primair =
+  "drukbaar inline-flex items-center justify-center gap-2 rounded-klein bg-accent px-7 py-3.5 text-sm font-medium tracking-[0.02em] text-op-accent transition-colors duration-150 hover:bg-tekst";
+const veld =
+  "mt-2 block w-full rounded-klein border border-rand bg-bg px-4 py-3 text-tekst placeholder:text-zacht focus:border-tekst";
+const fout = "mt-2 hidden text-sm text-tekst";
+---
+
+{webhook === "" && <Todo wat={s.todoWebhook} />}
+
+<div class="contactformulier max-w-3xl">
+  <script type="application/json" data-formulier-gegevens set:html={JSON.stringify(gegevens)} />
+  <form class="grid gap-5 sm:grid-cols-2" novalidate data-formulier>
+    <div>
+      <label for="cf-naam" class="text-sm text-zacht">{s.naam}</label>
+      <input id="cf-naam" name="naam" type="text" autocomplete="name" maxlength="120" class={veld} />
+    </div>
+    <div>
+      <label for="cf-organisatie" class="text-sm text-zacht">{s.organisatie}</label>
+      <input id="cf-organisatie" name="organisatie" type="text" autocomplete="organization" maxlength="120" class={veld} placeholder={s.organisatieVoorbeeld} />
+      <p class={fout} data-fout-organisatie>{s.organisatieFout}</p>
+    </div>
+    <div>
+      <label for="cf-mail" class="text-sm text-zacht">{s.mail}</label>
+      <input id="cf-mail" name="email" type="email" autocomplete="email" maxlength="200" class={veld} aria-describedby="cf-mail-hint" />
+      <p id="cf-mail-hint" class="mt-1 text-sm text-zacht">{s.mailHint}</p>
+    </div>
+    <div>
+      <label for="cf-tel" class="text-sm text-zacht">{s.telefoon}</label>
+      <input id="cf-tel" name="telefoon" type="tel" autocomplete="tel" maxlength="40" class={veld} aria-describedby="cf-tel-hint" />
+      <p id="cf-tel-hint" class="mt-1 text-sm text-zacht">{s.telefoonHint}</p>
+    </div>
+    <div class="sm:col-span-2">
+      <label for="cf-vraag" class="text-sm text-zacht">{t.contact.formVraag}</label>
+      <textarea id="cf-vraag" name="bericht" rows="5" maxlength="3000" class={veld} placeholder={t.contact.formVraagVoorbeeld}></textarea>
+      <p class={fout} data-fout-vraag>{t.contact.formVraagFout}</p>
+      <p class={fout} data-fout-bereik>{s.bereikFout}</p>
+      <p class={fout} data-fout-mail>{s.mailFout}</p>
+      <p class={fout} data-fout-verzenden>{vul(s.verzendFout, { mail: bedrijf.email })}</p>
+    </div>
+    <div class="sm:col-span-2">
+      <button type="submit" class={primair}>{t.contact.formKnop}</button>
+      <p class="mt-4 text-sm text-zacht">
+        {s.akkoord} <a class="tekstlink text-tekst" href={route("privacy", taal)}>{s.privacyLink}</a>
+      </p>
+    </div>
+  </form>
+  <div data-formulier-bedankt hidden tabindex="-1">
+    <h3 class="text-xl">{t.contact.formBedanktKop}</h3>
+    <p class="mt-2 text-tekst">{t.contact.formBedanktTekst}</p>
+  </div>
+</div>
+
+<script>
+  for (const blok of document.querySelectorAll<HTMLElement>(".contactformulier")) {
+    const g = JSON.parse(blok.querySelector("[data-formulier-gegevens]")?.textContent ?? "{}");
+    const form = blok.querySelector<HTMLFormElement>("[data-formulier]")!;
+    const bedankt = blok.querySelector<HTMLElement>("[data-formulier-bedankt]")!;
+    const zet = (sel: string, aan: boolean) => form.querySelector(sel)?.classList.toggle("hidden", !aan);
+    const waarde = (naam: string) =>
+      form.querySelector<HTMLInputElement | HTMLTextAreaElement>(`[name="${naam}"]`)!.value.trim();
+
+    form.addEventListener("input", () =>
+      ["[data-fout-organisatie]", "[data-fout-vraag]", "[data-fout-bereik]", "[data-fout-mail]", "[data-fout-verzenden]"].forEach((s) => zet(s, false)),
+    );
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const velden = {
+        naam: waarde("naam"),
+        organisatie: waarde("organisatie"),
+        email: waarde("email"),
+        telefoon: waarde("telefoon"),
+        bericht: waarde("bericht"),
+      };
+      const mailGoed = !velden.email || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(velden.email);
+      zet("[data-fout-organisatie]", !velden.organisatie);
+      zet("[data-fout-vraag]", !velden.bericht);
+      zet("[data-fout-bereik]", !velden.email && !velden.telefoon);
+      zet("[data-fout-mail]", !mailGoed);
+      if (!velden.organisatie || !velden.bericht || (!velden.email && !velden.telefoon) || !mailGoed) return;
+
+      const bericht = {
+        bron: "contactformulier",
+        id: crypto.randomUUID?.() ?? String(Date.now()),
+        taal: g.taal,
+        pagina: location.href,
+        verstuurd: new Date().toISOString(),
+        ...velden,
+        toestemming: {
+          email: Boolean(velden.email),
+          telefoon: Boolean(velden.telefoon),
+          tekst: g.akkoord,
+          versie: g.akkoordVersie,
+          moment: new Date().toISOString(),
+        },
+      };
+
+      let gelukt = true;
+      if (g.webhook) {
+        gelukt = await fetch(g.webhook, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(bericht),
+        })
+          .then((r) => r.ok)
+          .catch(() => false);
+      } else {
+        console.info("Contactformulier zonder webhook. Dit zou verstuurd worden:", bericht);
+      }
+      if (!gelukt) return zet("[data-fout-verzenden]", true);
+      form.hidden = true;
+      bedankt.hidden = false;
+      bedankt.focus();
+    });
+  }
+</script>

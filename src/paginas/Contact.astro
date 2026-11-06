@@ -2,8 +2,10 @@
 import Basis from "../layouts/Basis.astro";
 import Sectie from "../components/Sectie.astro";
 import Knop from "../components/Knop.astro";
+import Doorlink from "../components/Doorlink.astro";
+import Contactformulier from "../components/Contactformulier.astro";
 import { bedrijf } from "../data/site";
-import type { Taal } from "../data/taal";
+import { route, type Taal } from "../data/taal";
 import { teksten, vul } from "../data/teksten";
 
 /* Geen telefoonnummer. Zie de toelichting bij `bedrijf` in inhoud.ts. */
@@ -35,8 +37,17 @@ const gegevens = [
       <div class="mt-10">
         <Knop toonToelichting />
       </div>
+      <Doorlink class="mt-6" href={route("scan", taal)}>{t.contact.scanLink}</Doorlink>
     </div>
   </section>
+
+  {/* Het formulier is er voor wie niet wil bellen maar wel iets kwijt
+      wil. De scan staat erboven als link, voor wie eerst zelf wil kijken. */}
+  <Sectie id="bericht" kop={t.contact.formKop} intro={t.contact.formIntro}>
+    <div class="mt-10">
+      <Contactformulier taal={taal} />
+    </div>
+  </Sectie>
 
   <Sectie
     id="gegevens"
