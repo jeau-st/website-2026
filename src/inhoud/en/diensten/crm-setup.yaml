@@ -14,16 +14,27 @@ punten:
   - Pipelines and stages that follow your process
   - Migration from spreadsheets, mailbox or an old system
   - Fields, permissions and reporting
+  - Setting up Nova, the AI in Pipedrive
 oplevert:
   - Everyone works the same way
   - You see at a glance what is running and what is coming
   - Your old data is in there, cleaned up and usable
+  - Nova gives answers you can build on
 voorWie: >-
   For companies still working in spreadsheets, or with a CRM nobody really
   uses. That system is badly set up, it is connected to nothing, or both.
   Picking a new system is quickly done. The question is what happens to the
   data you already have.
 verhaal:
+  - kop: Why Pipedrive
+    alineas:
+      - >-
+        Pipedrive is easy to find your way around, and that is why a team keeps
+        using it. It is affordable for a small company and it connects to
+        almost anything. So it is usually my pick.
+      - >-
+        If it does not suit your process, you hear that in the first
+        conversation. Even if that means I send you to someone else.
   - kop: The migration is the real work
     alineas:
       - >-
@@ -42,5 +53,15 @@ verhaal:
         than you would think. Even so I bring the history along, because a
         customer from four years ago can call tomorrow. At that moment you want
         to see what you agreed back then.
+  - kop: Making Nova work
+    alineas:
+      - >-
+        Every CRM is getting AI on board. In Pipedrive it is called Nova. It
+        summarises calls, keeps records up to date and suggests a next step.
+      - >-
+        That AI is as good as the data it looks at. Duplicate contacts, or
+        fields everyone fills in their own way, and you get confident nonsense
+        back. So setting up Nova starts with cleaning up. One meaning per
+        field, stages that are right, and agreements on what the team records.
 extra:
   - functies

@@ -116,7 +116,7 @@ const nl = {
     leadMidden:
       " op vakantie is. Dan blijkt dat het proces alleen in ",
     leadNa:
-      " hoofd zat. Ik zorg voor een systeem dat werkt voor je hele team. En een goede basis voor jouw AI-ambities.",
+      " hoofd zat. Ik zorg voor een systeem dat werkt voor je hele team. Met gegevens die zo kloppen dat je AI er iets mee kan.",
     herkenningKop: "Komt dit bekend voor?",
     herkenningIntro: "Drie dingen die ik bijna elk gesprek hoor.",
     volgordeKop: "De volgorde is het werk",
@@ -257,7 +257,7 @@ const nl = {
     ],
     achtergrondKop: "Waar ik het heb geleerd",
     achtergrondAlineas: [
-      "Tien jaar ervaring, met salesteams, data-analyse, systeemimplementaties en koppelingen. Hetzelfde systeem dus vanuit de bouw, vanuit het gebruik en vanuit de cijfers.",
+      "Tien jaar ervaring, met salesteams, data-analyse, systeemimplementaties en koppelingen. Hetzelfde systeem dus vanuit de bouw, vanuit het gebruik en vanuit de cijfers. De laatste jaren deed ik drie volledige Pipedrive-implementaties, met migratie en maatwerk.",
       "En overal zag ik hetzelfde: wat ingewikkeld is, wordt niet gebruikt. Iemand verzint er een omweg voor, en die omweg wordt het proces.",
       "Daar komt mijn belangrijkste regel vandaan. Als niemand behalve ik het begrijpt, is het te slim gebouwd.",
       "Die regel geldt ook voor AI, en dat zit inmiddels in bijna alles wat ik bouw. Een stap die tekst leest en eruit haalt wat in het systeem moet, of een MCP-server waarmee Claude rechtstreeks met je CRM praat. Prima, zolang je kunt nakijken wat het heeft gedaan. Kan dat niet, dan gaat het er niet in.",
@@ -487,7 +487,7 @@ const en: typeof nl = {
     leadVoor: "Until ",
     leadMidden: " goes on holiday. Then it turns out the process only lived in ",
     leadNa:
-      " head. I build a system that works for your whole team, and a basis your AI plans can stand on.",
+      " head. I build a system that works for your whole team, with data clean enough for your AI to use.",
     herkenningKop: "Sound familiar?",
     herkenningIntro: "Three things I hear in almost every conversation.",
     volgordeKop: "The order is the work",
@@ -628,7 +628,7 @@ const en: typeof nl = {
     ],
     achtergrondKop: "Where I learned it",
     achtergrondAlineas: [
-      "Ten years of experience, with sales teams, data analysis, system implementations and integrations. The same system seen from the build, from the use and from the figures.",
+      "Ten years of experience, with sales teams, data analysis, system implementations and integrations. The same system seen from the build, from the use and from the figures. In recent years that meant three full Pipedrive implementations, migration and custom work included.",
       "And everywhere I saw the same thing: what is complicated does not get used. Someone invents a detour around it, and the detour becomes the process.",
       "That is where my main rule comes from. If nobody but me understands it, it is built too cleverly.",
       "The rule holds for AI too, and AI is in almost everything I build by now. A step that reads text and pulls out what has to go into the system, or an MCP server that lets Claude talk straight to your CRM. Fine, as long as you can check what it did. If you cannot, it does not go in.",

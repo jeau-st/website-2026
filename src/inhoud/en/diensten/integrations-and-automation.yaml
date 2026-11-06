@@ -66,6 +66,19 @@ verhaal:
         updating contact details, or checking whether someone already exists
         before a second contact is created. That comes back in almost every
         project.
+      - >-
+        Your workflows run in an environment that belongs to you. If you ever
+        move to another CRM, your processes come along and only the link to the
+        new system gets rewired.
+  - kop: AI across all your systems
+    alineas:
+      - >-
+        The AI in your CRM sees what is in your CRM. Your accounts, your
+        mailbox and your planning stay out of its view.
+      - >-
+        With an MCP connection Claude can look into all of those systems, with
+        the permissions you set. Ask which customers have an unpaid invoice and
+        got a quote this month, and you get one answer.
   - kop: What not to expect
     alineas:
       - >-
