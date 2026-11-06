@@ -29,6 +29,11 @@ verhaal:
     alineas:
       - "Ik bouw met n8n. Dat is van een Duits bedrijf en de cloudversie draait op servers in de EU. Het werkt goed samen met AI-modellen, en je kunt het in eigen beheer houden. Dat laatste weegt voor mij het zwaarst: je ziet precies welke informatie wanneer waarheen gaat. Mis je iets in een systeem, dan zie je waar het is blijven steken. Wil je zelf meekijken als er iets misgaat, dan kan dat."
       - "Eén grote workflow die alles doet, is één ding dat kan omvallen. Ik hak ze daarom op in stukken met elk hun eigen foutafhandeling, zodat de rest doorloopt als er ergens iets vastloopt. Die stukken zijn ook herbruikbaar: contactgegevens bijwerken, of kijken of iemand al bestaat voordat er een tweede contact wordt aangemaakt. Dat komt in bijna elk project terug."
+      - Je workflows draaien in een omgeving die van jou is. Stap je ooit over op een ander CRM, dan gaan je processen mee en wordt alleen de koppeling naar het nieuwe systeem omgezet.
+  - kop: AI over al je systemen
+    alineas:
+      - De AI in je CRM ziet wat er in je CRM staat. Je boekhouding, je mailbox en je planning ziet hij niet.
+      - Met een MCP-koppeling mag Claude in al die systemen kijken, met de rechten die jij instelt. Vraag welke klanten een openstaande factuur hebben en deze maand een offerte kregen, en je krijgt één antwoord.
   - kop: Wat je niet moet verwachten
     alineas:
       - Dat het een knop is die je omzet en dat het daarna werkt zoals jij het wil. Een koppeling is maatwerk, en als je proces verandert, moet de koppeling mee veranderen. Daar denk ik in mee.
